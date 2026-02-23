@@ -75,6 +75,13 @@ function addPreviewBanner(html, previewId, prospectName, expiresAt) {
   </div>
 </div>
 <div style="height:44px;"></div>
+<style>
+@media(max-width:768px){
+  #ms-preview-banner{flex-direction:column!important;gap:8px!important;text-align:center!important;padding:10px 16px!important;}
+  #ms-preview-banner>div{justify-content:center!important;}
+  #ms-preview-banner a{width:100%!important;text-align:center!important;box-sizing:border-box!important;}
+}
+</style>
 <!-- END PREVIEW BANNER -->
 `;
 

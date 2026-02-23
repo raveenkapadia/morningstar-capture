@@ -132,24 +132,86 @@ footer{background:var(--deep);padding:52px 64px;}
 .foot-ul li:hover{color:var(--silver);}
 .foot-bar{padding-top:24px;border-top:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;}
 .foot-bar p{font-size:10px;color:rgba(255,255,255,.18);letter-spacing:.5px;}
+
+/* HAMBURGER — hidden on desktop */
+.menu-toggle{display:none;background:none;border:none;font-size:24px;color:#fff;padding:8px;cursor:pointer;}
+
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE — 768px and below
+   ═══════════════════════════════════════════════════════════════ */
+@media(max-width:768px){
+
+/* TOPBAR */
+.topbar{padding:8px 20px;flex-direction:column;gap:6px;align-items:center;text-align:center;}
+
+/* NAV */
+nav{padding:0 20px;height:60px;}
+.nav-links{display:none;}
+.menu-toggle{display:block;}
+.nav-emergency{padding:8px 16px;font-size:9px;}
+.logo-name{font-size:15px;}
+
+/* HERO */
+.hero{grid-template-columns:1fr;min-height:auto;}
+.hero-left{padding:40px 20px 48px;}
+.hero-h1{font-size:36px;}
+.hero-p{font-size:14px;max-width:100%;}
+.hero-btns{flex-direction:column;}
+.btn-red,.btn-outline{width:100%;text-align:center;min-height:48px;display:flex;align-items:center;justify-content:center;}
+.hero-metrics{grid-template-columns:repeat(3,1fr);}
+.metric{padding:14px 8px;}
+.metric strong{font-size:22px;}
+.hero-right{min-height:280px;}
+.hero-right-content{padding:24px 20px;}
+.doctor-panel{max-width:100%;padding:24px;}
+.hero-urgency{padding:14px 20px;flex-direction:column;gap:8px;text-align:center;}
+
+/* TRUST */
+.trust{grid-template-columns:1fr 1fr;gap:1px;}
+.trust-cell{padding:16px 18px;}
+
+/* SERVICES */
+.services{padding:48px 20px;}
+h2{font-size:28px;}
+.services-grid{grid-template-columns:1fr;gap:1px;}
+
+/* TECHNOLOGY */
+.technology{padding:48px 20px;}
+.tech-inner{grid-template-columns:1fr;gap:36px;}
+.tech-visual{grid-template-columns:1fr 1fr;gap:1px;}
+
+/* BOOKING */
+.booking{padding:48px 20px;}
+.booking-inner{grid-template-columns:1fr;gap:32px;}
+.booking-form{padding:28px 20px;}
+.f-row{grid-template-columns:1fr;gap:12px;}
+.f input,.f select{min-height:44px;font-size:14px;}
+.submit{min-height:48px;}
+
+/* FOOTER */
+footer{padding:36px 20px;}
+.foot-grid{grid-template-columns:1fr;gap:28px;}
+.foot-bar{flex-direction:column;gap:8px;text-align:center;}
+}
 </style>
 </head>
 <body>
 
 <div class="topbar">
   <div style="display:flex;gap:32px;">
-    <div class="top-item">📍 <span>{{CLINIC_ADDRESS}}</span></div>
-    <div class="top-item">🕐 <span>Sat–Thu 8am–8pm</span></div>
+    <div class="top-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> <span>{{CLINIC_ADDRESS}}</span></div>
+    <div class="top-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> <span>Sat–Thu 8am–8pm</span></div>
   </div>
-  <div class="top-emergency">🚨 Cardiac Emergency Line: {{CLINIC_PHONE}}</div>
+  <div class="top-emergency"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px"><path d="M12 2L2 22h20L12 2z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Cardiac Emergency Line: {{CLINIC_PHONE}}</div>
 </div>
 
 <nav>
   <div class="logo">
-    <div class="logo-mark">❤️</div>
+    <div class="logo-mark"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
     <div><div class="logo-name">{{CLINIC_NAME}}</div><div class="logo-spec">Cardiology & Heart Care</div></div>
   </div>
   <div class="nav-links"><a href="#">Services</a><a href="#">Technology</a><a href="#">Our Cardiologist</a><a href="#">Patients</a></div>
+  <button class="menu-toggle" aria-label="Menu">&#9776;</button>
   <button class="nav-emergency">Emergency: {{CLINIC_PHONE}}</button>
 </nav>
 
@@ -184,17 +246,17 @@ footer{background:var(--deep);padding:52px 64px;}
       </div>
     </div>
     <div class="hero-urgency">
-      <div class="urgency-text">🚨 Cardiac Emergency? We're Available Now</div>
+      <div class="urgency-text"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px"><path d="M12 2L2 22h20L12 2z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Cardiac Emergency? We're Available Now</div>
       <div class="urgency-phone">{{CLINIC_PHONE}}</div>
     </div>
   </div>
 </div>
 
 <div class="trust">
-  <div class="trust-cell"><div class="trust-icon">🏛️</div><div><div class="trust-label">DHA Licensed</div><div class="trust-sub">Accredited cardiologist</div></div></div>
-  <div class="trust-cell"><div class="trust-icon">🔬</div><div><div class="trust-label">Advanced Diagnostics</div><div class="trust-sub">Echo, Holter, Stress Test</div></div></div>
-  <div class="trust-cell"><div class="trust-icon">💳</div><div><div class="trust-label">All Insurance Accepted</div><div class="trust-sub">Direct billing available</div></div></div>
-  <div class="trust-cell"><div class="trust-icon">🌍</div><div><div class="trust-label">Arabic & English</div><div class="trust-sub">Bilingual cardiac care</div></div></div>
+  <div class="trust-cell"><div class="trust-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M8 10v11M12 10v11M16 10v11M20 10v11"/></svg></div><div><div class="trust-label">DHA Licensed</div><div class="trust-sub">Accredited cardiologist</div></div></div>
+  <div class="trust-cell"><div class="trust-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18h8M3 22h18M14 22a7 7 0 1 0 0-14h-1M9 14h2M9 8a6 6 0 0 1 6-6v1M7 2v4"/></svg></div><div><div class="trust-label">Advanced Diagnostics</div><div class="trust-sub">Echo, Holter, Stress Test</div></div></div>
+  <div class="trust-cell"><div class="trust-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div><div><div class="trust-label">All Insurance Accepted</div><div class="trust-sub">Direct billing available</div></div></div>
+  <div class="trust-cell"><div class="trust-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div><div><div class="trust-label">Arabic & English</div><div class="trust-sub">Bilingual cardiac care</div></div></div>
 </div>
 
 <section class="services">
@@ -217,9 +279,9 @@ footer{background:var(--deep);padding:52px 64px;}
       <h2>Precision<br>Diagnostics</h2>
       <p>State-of-the-art cardiac imaging and monitoring equipment enables accurate, early diagnosis — the cornerstone of effective cardiac care.</p>
       <div class="tech-list">
-        <div class="tech-item"><div class="tech-item-icon">❤️</div><div><div class="tech-item-label">3D Echocardiography</div><div class="tech-item-desc">High-resolution 3D cardiac imaging for structural heart disease assessment</div></div></div>
-        <div class="tech-item"><div class="tech-item-icon">📊</div><div><div class="tech-item-label">Digital ECG & Holter</div><div class="tech-item-desc">12-lead ECG and up to 72-hour ambulatory cardiac monitoring</div></div></div>
-        <div class="tech-item"><div class="tech-item-icon">🏃</div><div><div class="tech-item-label">Treadmill Stress Test</div><div class="tech-item-desc">Exercise ECG testing with continuous BP and cardiac monitoring</div></div></div>
+        <div class="tech-item"><div class="tech-item-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><div><div class="tech-item-label">3D Echocardiography</div><div class="tech-item-desc">High-resolution 3D cardiac imaging for structural heart disease assessment</div></div></div>
+        <div class="tech-item"><div class="tech-item-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><div><div class="tech-item-label">Digital ECG & Holter</div><div class="tech-item-desc">12-lead ECG and up to 72-hour ambulatory cardiac monitoring</div></div></div>
+        <div class="tech-item"><div class="tech-item-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="17" cy="4" r="2"/><path d="M15 7l-5 5 4 4-3 6M7 12l-2 6M2 17l3.5-1"/></svg></div><div><div class="tech-item-label">Treadmill Stress Test</div><div class="tech-item-desc">Exercise ECG testing with continuous BP and cardiac monitoring</div></div></div>
       </div>
     </div>
     <div class="tech-visual">
@@ -238,7 +300,7 @@ footer{background:var(--deep);padding:52px 64px;}
       <h2>Book Your<br>Cardiac Consultation</h2>
       <p>Same-week appointments available for new patients. Urgent referrals prioritised. Direct billing for all major insurance providers.</p>
       <div class="emergency-box">
-        <strong>🚨 Chest Pain or Cardiac Emergency?</strong>
+        <strong><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px"><path d="M12 2L2 22h20L12 2z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Chest Pain or Cardiac Emergency?</strong>
         <span>Call us immediately on {{CLINIC_PHONE}} — available 24/7 for cardiac emergencies.</span>
       </div>
     </div>

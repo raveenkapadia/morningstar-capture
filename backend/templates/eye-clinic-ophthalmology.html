@@ -130,16 +130,64 @@ footer{background:var(--dark);padding:52px 60px;}
 .foot-ul li:hover{color:var(--cyan);}
 .foot-bar{padding-top:24px;border-top:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;}
 .foot-bar p{font-size:10px;color:rgba(255,255,255,.18);}
+
+/* HAMBURGER */
+.menu-toggle{display:none;background:none;border:none;font-size:24px;color:#fff;padding:8px;cursor:pointer;}
+
+@media(max-width:768px){
+nav{padding:0 20px;height:60px;}
+.nav-links{display:none;}
+.menu-toggle{display:block;}
+.nav-cta{padding:8px 14px;font-size:10px;}
+.logo-name{font-size:14px;}
+
+.hero{grid-template-columns:1fr;min-height:auto;}
+.hero-left{padding:40px 20px 48px;}
+.hero-h1{font-size:36px;}
+.hero-p{font-size:14px;max-width:100%;}
+.hero-btns{flex-direction:column;}
+.btn-cyan,.btn-ghost{width:100%;text-align:center;min-height:48px;display:flex;align-items:center;justify-content:center;}
+.hero-stats{grid-template-columns:repeat(3,1fr);}
+.h-stat strong{font-size:22px;}
+.hero-right{min-height:200px;}
+
+.trust{padding:12px 20px;flex-wrap:wrap;gap:10px 20px;justify-content:flex-start;}
+
+.services{padding:48px 20px;}
+h2{font-size:30px;}
+.services-intro{flex-direction:column;gap:12px;align-items:flex-start;}
+.services-intro p{max-width:100%;}
+.svc-grid{grid-template-columns:1fr;gap:12px;}
+
+.tech{padding:48px 20px;}
+.tech-inner{grid-template-columns:1fr;gap:36px;}
+.tech-stat-grid{grid-template-columns:1fr 1fr;gap:12px;}
+
+.doctor{padding:48px 20px;}
+.doctor-inner{grid-template-columns:1fr;gap:32px;}
+
+.booking{padding:48px 20px;}
+.booking-inner{grid-template-columns:1fr;gap:32px;}
+.booking-form{padding:28px 20px;}
+.f-row{grid-template-columns:1fr;gap:12px;}
+.f input,.f select{min-height:44px;font-size:14px;}
+.submit{min-height:48px;}
+
+footer{padding:36px 20px;}
+.foot-grid{grid-template-columns:1fr;gap:28px;}
+.foot-bar{flex-direction:column;gap:8px;text-align:center;}
+}
 </style>
 </head>
 <body>
 
 <nav>
   <div class="logo">
-    <div class="logo-icon">👁️</div>
+    <div class="logo-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
     <div><div class="logo-name">{{CLINIC_NAME}}</div><div class="logo-tag">Eye Clinic & Ophthalmology</div></div>
   </div>
   <div class="nav-links"><a href="#">Services</a><a href="#">LASIK</a><a href="#">Cataract</a><a href="#">Our Surgeon</a><a href="#">Contact</a></div>
+  <button class="menu-toggle" aria-label="Menu">&#9776;</button>
   <button class="nav-cta">Book Eye Test</button>
 </nav>
 
@@ -176,11 +224,11 @@ footer{background:var(--dark);padding:52px 60px;}
 </div>
 
 <div class="trust">
-  <div class="trust-item">👁️ DHA Licensed</div>
-  <div class="trust-item">✓ FDA-Approved LASIK Technology</div>
-  <div class="trust-item">✓ All Insurance Accepted</div>
-  <div class="trust-item">✓ Arabic & English</div>
-  <div class="trust-item">✓ Free Initial Eye Screening</div>
+  <div class="trust-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> DHA Licensed</div>
+  <div class="trust-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px"><polyline points="20 6 9 17 4 12"/></svg> FDA-Approved LASIK Technology</div>
+  <div class="trust-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px"><polyline points="20 6 9 17 4 12"/></svg> All Insurance Accepted</div>
+  <div class="trust-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px"><polyline points="20 6 9 17 4 12"/></svg> Arabic & English</div>
+  <div class="trust-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px"><polyline points="20 6 9 17 4 12"/></svg> Free Initial Eye Screening</div>
 </div>
 
 <section class="services">
@@ -189,12 +237,12 @@ footer{background:var(--dark);padding:52px 60px;}
     <p>Advanced diagnostics and treatments for every eye condition — all under one specialist roof.</p>
   </div>
   <div class="svc-grid">
-    <div class="svc"><div class="svc-icon">⚡</div><div class="svc-name">LASIK Eye Surgery</div><p class="svc-desc">Wavefront-guided LASIK for glasses and contact-lens freedom. Life-changing results in 15 minutes per eye.</p><div class="svc-from">From AED 3,500 / eye</div></div>
-    <div class="svc"><div class="svc-icon">🔬</div><div class="svc-name">Cataract Surgery</div><p class="svc-desc">Premium lens cataract surgery with monofocal, multifocal and toric intraocular lens options.</p><div class="svc-from">Covered by most insurance</div></div>
-    <div class="svc"><div class="svc-icon">📊</div><div class="svc-name">Comprehensive Eye Exam</div><p class="svc-desc">Full vision assessment, intraocular pressure, retinal imaging and prescription update.</p><div class="svc-from">From AED 150</div></div>
-    <div class="svc"><div class="svc-icon">🩺</div><div class="svc-name">Glaucoma Treatment</div><p class="svc-desc">Early detection, monitoring and management of all types of glaucoma with latest diagnostic tools.</p><div class="svc-from">Insurance covered</div></div>
-    <div class="svc"><div class="svc-icon">💧</div><div class="svc-name">Dry Eye Management</div><p class="svc-desc">Comprehensive dry eye assessment with IPL therapy, LipiFlow and customised tear management protocols.</p><div class="svc-from">From AED 250</div></div>
-    <div class="svc"><div class="svc-icon">👁️</div><div class="svc-name">Retina & Diabetic Eye</div><p class="svc-desc">OCT retinal imaging, diabetic retinopathy screening, macular degeneration and retinal injections.</p><div class="svc-from">Insurance covered</div></div>
+    <div class="svc"><div class="svc-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div><div class="svc-name">LASIK Eye Surgery</div><p class="svc-desc">Wavefront-guided LASIK for glasses and contact-lens freedom. Life-changing results in 15 minutes per eye.</p><div class="svc-from">From AED 3,500 / eye</div></div>
+    <div class="svc"><div class="svc-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18h8M3 22h18M14 22a7 7 0 1 0 0-14h-1M9 14h2M9 8a6 6 0 0 1 6-6v1M7 2v4"/></svg></div><div class="svc-name">Cataract Surgery</div><p class="svc-desc">Premium lens cataract surgery with monofocal, multifocal and toric intraocular lens options.</p><div class="svc-from">Covered by most insurance</div></div>
+    <div class="svc"><div class="svc-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><div class="svc-name">Comprehensive Eye Exam</div><p class="svc-desc">Full vision assessment, intraocular pressure, retinal imaging and prescription update.</p><div class="svc-from">From AED 150</div></div>
+    <div class="svc"><div class="svc-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.8 2.655A1 1 0 0 0 4 3.645v.21c0 1.42.78 2.726 2.033 3.394l.455.243c.734.39 1.612.39 2.346 0l.455-.243A3.804 3.804 0 0 0 11.322 3.855v-.21a1 1 0 0 0-.8-.99l-.66-.11a5.235 5.235 0 0 0-3.4 0l-.66.11z"/><path d="M6 12v3.5A4 4 0 0 0 14 15.5V12"/><circle cx="14" cy="10" r="2"/></svg></div><div class="svc-name">Glaucoma Treatment</div><p class="svc-desc">Early detection, monitoring and management of all types of glaucoma with latest diagnostic tools.</p><div class="svc-from">Insurance covered</div></div>
+    <div class="svc"><div class="svc-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg></div><div class="svc-name">Dry Eye Management</div><p class="svc-desc">Comprehensive dry eye assessment with IPL therapy, LipiFlow and customised tear management protocols.</p><div class="svc-from">From AED 250</div></div>
+    <div class="svc"><div class="svc-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div><div class="svc-name">Retina & Diabetic Eye</div><p class="svc-desc">OCT retinal imaging, diabetic retinopathy screening, macular degeneration and retinal injections.</p><div class="svc-from">Insurance covered</div></div>
   </div>
 </section>
 
@@ -205,10 +253,10 @@ footer{background:var(--dark);padding:52px 60px;}
       <h2>Precision Tech<br>for Perfect Vision</h2>
       <p>We invest in the most advanced ophthalmic equipment available — because better tools mean better outcomes for your eyes.</p>
       <div class="tech-items">
-        <div class="tech-item"><div class="ti-icon">⚡</div><div><div class="ti-label">Wavefront-Guided LASIK</div><div class="ti-desc">Custom LASIK mapped to your unique eye fingerprint for exceptional visual quality</div></div></div>
-        <div class="tech-item"><div class="ti-icon">📡</div><div><div class="ti-label">OCT Retinal Imaging</div><div class="ti-desc">High-resolution cross-sectional scans of the retina for early disease detection</div></div></div>
-        <div class="tech-item"><div class="ti-icon">🔬</div><div><div class="ti-label">Zeiss Slit Lamp</div><div class="ti-desc">Premium biomicroscopy for detailed anterior and posterior segment examination</div></div></div>
-        <div class="tech-item"><div class="ti-icon">📊</div><div><div class="ti-label">Corneal Topography</div><div class="ti-desc">3D mapping of corneal curvature for LASIK screening and contact lens fitting</div></div></div>
+        <div class="tech-item"><div class="ti-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div><div><div class="ti-label">Wavefront-Guided LASIK</div><div class="ti-desc">Custom LASIK mapped to your unique eye fingerprint for exceptional visual quality</div></div></div>
+        <div class="tech-item"><div class="ti-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9"/><path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5"/><circle cx="12" cy="12" r="2"/><path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5"/><path d="M19.1 4.9C23 8.8 23 15.1 19.1 19"/></svg></div><div><div class="ti-label">OCT Retinal Imaging</div><div class="ti-desc">High-resolution cross-sectional scans of the retina for early disease detection</div></div></div>
+        <div class="tech-item"><div class="ti-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18h8M3 22h18M14 22a7 7 0 1 0 0-14h-1M9 14h2M9 8a6 6 0 0 1 6-6v1M7 2v4"/></svg></div><div><div class="ti-label">Zeiss Slit Lamp</div><div class="ti-desc">Premium biomicroscopy for detailed anterior and posterior segment examination</div></div></div>
+        <div class="tech-item"><div class="ti-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><div><div class="ti-label">Corneal Topography</div><div class="ti-desc">3D mapping of corneal curvature for LASIK screening and contact lens fitting</div></div></div>
       </div>
     </div>
     <div class="tech-stat-grid">
@@ -222,7 +270,7 @@ footer{background:var(--dark);padding:52px 60px;}
 
 <section class="doctor">
   <div class="doctor-inner">
-    <div class="doc-photo"><img src="{{DOCTOR_IMAGE}}" alt="">👁️</div>
+    <div class="doc-photo"><img src="{{DOCTOR_IMAGE}}" alt=""><svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
     <div class="doc-copy">
       <p class="sec-label">Your Eye Surgeon</p>
       <div class="doc-name">{{DOCTOR_NAME}}</div>
@@ -244,11 +292,11 @@ footer{background:var(--dark);padding:52px 60px;}
       <h2>Free Eye Screening<br>for New Patients</h2>
       <p>Book a comprehensive eye check or LASIK suitability assessment. Free initial screening included for all new patients.</p>
       <div class="contact-list">
-        <div class="citem"><span>📞</span> {{CLINIC_PHONE}}</div>
-        <div class="citem"><span>📍</span> {{CLINIC_ADDRESS}}</div>
-        <div class="citem"><span>🕐</span> Sat–Thu 9am–8pm · Fri 12–6pm</div>
+        <div class="citem"><span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span> {{CLINIC_PHONE}}</div>
+        <div class="citem"><span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span> {{CLINIC_ADDRESS}}</div>
+        <div class="citem"><span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span> Sat–Thu 9am–8pm · Fri 12–6pm</div>
       </div>
-      <button class="wa">💬 WhatsApp Us</button>
+      <button class="wa"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> WhatsApp Us</button>
     </div>
     <div class="booking-form">
       <div class="bf-h">Book Eye Appointment</div>

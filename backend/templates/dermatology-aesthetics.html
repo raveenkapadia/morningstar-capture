@@ -125,6 +125,64 @@ footer{background:var(--black);padding:52px 64px;}
 .foot-col ul li:hover{color:var(--rose);}
 .foot-bar{padding-top:24px;border-top:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;}
 .foot-bar p{font-size:9px;color:rgba(255,255,255,.2);letter-spacing:1px;}
+
+/* HAMBURGER — hidden on desktop */
+.menu-toggle{display:none;background:none;border:none;font-size:24px;color:var(--black);padding:8px;cursor:pointer;}
+
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE — 768px and below
+   ═══════════════════════════════════════════════════════════════ */
+@media(max-width:768px){
+
+/* NAV */
+nav{padding:0 20px;height:60px;}
+.nav-links{display:none;}
+.menu-toggle{display:block;}
+.nav-cta{padding:8px 16px;font-size:9px;}
+.nav-logo{font-size:15px;letter-spacing:2px;}
+
+/* HERO */
+.hero{grid-template-columns:1fr;min-height:auto;}
+.hero-left{padding:40px 20px 48px;}
+.hero-h1{font-size:38px;}
+.hero-sub{font-size:13px;max-width:100%;}
+.hero-actions{flex-direction:column;align-items:stretch;}
+.btn-rose,.btn-text{width:100%;text-align:center;min-height:48px;display:flex;align-items:center;justify-content:center;}
+.hero-awards{flex-wrap:wrap;gap:20px;justify-content:flex-start;}
+.hero-right{min-height:250px;}
+
+/* INTRO STRIP */
+.intro-strip{padding:16px 20px;flex-wrap:wrap;gap:12px 24px;justify-content:center;}
+
+/* TREATMENTS */
+.treatments{padding:48px 20px;}
+h2{font-size:28px;}
+.sec-head{flex-direction:column;align-items:flex-start;gap:12px;}
+.treatments-grid{grid-template-columns:1fr;gap:1px;}
+
+/* PROCESS */
+.process{padding:48px 20px;}
+.process-steps{grid-template-columns:1fr 1fr;gap:24px;}
+.process-steps::before{display:none;}
+
+/* DOCTOR */
+.doctor{padding:48px 20px;}
+.doctor-inner{grid-template-columns:1fr;gap:36px;}
+.doctor-float{position:static;display:inline-block;margin-top:12px;}
+
+/* BOOKING */
+.booking{padding:48px 20px;}
+.booking-inner{grid-template-columns:1fr;gap:32px;}
+.booking-panel{padding:28px 20px;}
+.field-row{grid-template-columns:1fr;gap:14px;}
+.field input,.field select{min-height:44px;font-size:14px;}
+.book-btn{min-height:48px;}
+
+/* FOOTER */
+footer{padding:36px 20px;}
+.foot-grid{grid-template-columns:1fr;gap:28px;}
+.foot-bar{flex-direction:column;gap:8px;text-align:center;}
+}
 </style>
 </head>
 <body>
@@ -134,6 +192,7 @@ footer{background:var(--black);padding:52px 64px;}
   <div class="nav-links">
     <a href="#">Treatments</a><a href="#">Skin Care</a><a href="#">Our Doctor</a><a href="#">Results</a><a href="#">Contact</a>
   </div>
+  <button class="menu-toggle" aria-label="Menu">&#9776;</button>
   <button class="nav-cta">Book Consultation</button>
 </nav>
 
@@ -201,7 +260,7 @@ footer{background:var(--black);padding:52px 64px;}
 <section class="doctor">
   <div class="doctor-inner">
     <div class="doctor-visual">
-      <div class="doctor-img"><img src="{{DOCTOR_IMAGE}}" alt="">👩‍⚕️</div>
+      <div class="doctor-img"><img src="{{DOCTOR_IMAGE}}" alt=""><svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><line x1="12" y1="11" x2="12" y2="14"/><line x1="10.5" y1="12.5" x2="13.5" y2="12.5"/></svg></div>
       <div class="doctor-float"><strong>15+</strong><span>Years Experience</span></div>
     </div>
     <div class="doctor-copy">
@@ -225,10 +284,10 @@ footer{background:var(--black);padding:52px 64px;}
       <h2>Begin Your<br>Skin Journey</h2>
       <p>Book a consultation and receive a full skin assessment with your personalised treatment plan. In-clinic or virtual consultations available.</p>
       <div class="contact-items">
-        <div class="contact-item"><span>📞</span> {{CLINIC_PHONE}}</div>
-        <div class="contact-item"><span>💬</span> WhatsApp: {{CLINIC_PHONE}}</div>
-        <div class="contact-item"><span>📍</span> {{CLINIC_ADDRESS}}</div>
-        <div class="contact-item"><span>🕐</span> Sat–Thu 9am–8pm · Fri 12–5pm</div>
+        <div class="contact-item"><span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span> {{CLINIC_PHONE}}</div>
+        <div class="contact-item"><span><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span> WhatsApp: {{CLINIC_PHONE}}</div>
+        <div class="contact-item"><span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span> {{CLINIC_ADDRESS}}</div>
+        <div class="contact-item"><span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span> Sat–Thu 9am–8pm · Fri 12–5pm</div>
       </div>
     </div>
     <div class="booking-panel">
