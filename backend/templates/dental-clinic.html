@@ -126,6 +126,87 @@ footer{background:var(--ink);padding:48px 64px;}
 .foot-ul li:hover{color:var(--sky);}
 .foot-bottom{padding-top:24px;border-top:1px solid rgba(255,255,255,.07);display:flex;justify-content:space-between;}
 .foot-bottom p{font-size:11px;color:rgba(255,255,255,.2);}
+
+/* HAMBURGER — hidden on desktop */
+.menu-toggle{display:none;background:none;font-size:24px;color:var(--ink);padding:8px;}
+
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE — 768px and below
+   ═══════════════════════════════════════════════════════════════ */
+@media(max-width:768px){
+
+/* NAV */
+nav{padding:0 20px;height:60px;}
+.nav-links{display:none;}
+.menu-toggle{display:block;}
+.nav-cta{padding:8px 16px;font-size:12px;}
+.logo-text{font-size:16px;}
+
+/* HERO */
+.hero{grid-template-columns:1fr;padding:36px 20px 40px;gap:32px;min-height:auto;}
+.hero-h1{font-size:32px;line-height:1.12;}
+.hero-p{font-size:14px;max-width:100%;margin-bottom:24px;}
+.hero-btns{flex-direction:column;}
+.hero-btns .btn-teal,.hero-btns .btn-ghost{width:100%;text-align:center;min-height:48px;display:flex;align-items:center;justify-content:center;font-size:15px;}
+.hero-social-proof{gap:16px;flex-wrap:wrap;}
+.proof-item strong{font-size:22px;}
+.hero-visual{aspect-ratio:4/3;border-radius:16px;order:2;}
+.hero-visual-badge{bottom:12px;left:12px;right:12px;padding:10px 14px;}
+
+/* TRUST BAR */
+.trust{padding:16px 20px;flex-wrap:wrap;gap:12px 20px;justify-content:flex-start;}
+.trust-divider{display:none;}
+.trust-item{font-size:11px;}
+
+/* ALL SECTIONS — side padding */
+.services,.results,.team,.booking{padding:48px 20px;}
+section.services{padding:48px 20px;}
+section.results{padding:48px 20px;}
+section.team{padding:48px 20px;}
+section.booking{padding:48px 20px;}
+
+/* HEADINGS */
+h2{font-size:26px;}
+
+/* SERVICES */
+.services-intro{flex-direction:column;gap:12px;align-items:flex-start;}
+.services-intro p{max-width:100%;font-size:13px;}
+.services-grid{grid-template-columns:1fr;gap:12px;}
+.svc{padding:22px;}
+
+/* RESULTS / WHY CHOOSE US */
+.results-inner{grid-template-columns:1fr;gap:36px;}
+.results-copy p{font-size:13px;}
+.results-copy .btn-teal{width:100%;min-height:48px;display:flex;align-items:center;justify-content:center;font-size:15px;}
+.results-visual{grid-template-columns:1fr 1fr;gap:10px;}
+.result-card{padding:16px;}
+.result-card .big{font-size:28px;}
+
+/* TEAM */
+.team-grid{grid-template-columns:1fr;gap:16px;}
+.team-card{display:flex;flex-direction:row;align-items:stretch;}
+.team-photo{aspect-ratio:1;width:120px;min-height:120px;flex-shrink:0;}
+.team-info{padding:16px;display:flex;flex-direction:column;justify-content:center;}
+.team-name{font-size:16px;}
+.team-exp{flex-wrap:wrap;gap:6px;}
+
+/* BOOKING */
+.booking-inner{grid-template-columns:1fr;gap:32px;}
+.booking-copy h2{font-size:28px;}
+.booking-copy p{font-size:13px;}
+.whatsapp{width:100%;justify-content:center;min-height:48px;font-size:15px;}
+.hours{margin-top:20px;}
+.booking-form{padding:24px 20px;}
+.form-h{font-size:20px;}
+.f-row{grid-template-columns:1fr;gap:12px;}
+.f input,.f select{min-height:44px;font-size:14px;}
+.submit{min-height:48px;font-size:15px;}
+
+/* FOOTER */
+footer{padding:36px 20px;}
+.foot-row{grid-template-columns:1fr;gap:28px;}
+.foot-bottom{flex-direction:column;gap:8px;text-align:center;}
+}
 </style>
 </head>
 <body>
@@ -136,6 +217,7 @@ footer{background:var(--ink);padding:48px 64px;}
     <div class="logo-text">{{CLINIC_NAME}}<sub>Dental & Orthodontics</sub></div>
   </div>
   <div class="nav-links"><a href="#">Services</a><a href="#">Orthodontics</a><a href="#">Implants</a><a href="#">Our Team</a><a href="#">Contact</a></div>
+  <button class="menu-toggle" aria-label="Menu">☰</button>
   <button class="nav-cta">Book Appointment</button>
 </nav>
 
