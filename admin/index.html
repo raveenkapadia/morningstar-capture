@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MorningStar - Admin Panel</title>
+  <style>
+    /* ---- Reset & Base ---- */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, monospace;
+      background: #f5f5f5;
+      color: #1a1a1a;
+      line-height: 1.5;
+    }
+
+    /* ---- Login Screen ---- */
+    #login-screen {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #1a1a1a;
+    }
+
+    .login-box {
+      background: #fff;
+      padding: 40px;
+      border-radius: 12px;
+      width: 360px;
+      text-align: center;
+    }
+
+    .login-box h1 {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .login-box p {
+      font-size: 13px;
+      color: #888;
+      margin-bottom: 24px;
+    }
+
+    .login-box input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 14px;
+      margin-bottom: 16px;
+      outline: none;
+    }
+
+    .login-box input:focus {
+      border-color: #1a1a1a;
+    }
+
+    .login-box button {
+      width: 100%;
+      padding: 12px;
+      background: #1a1a1a;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .login-box button:hover {
+      background: #333;
+    }
+
+    .login-error {
+      color: #d32f2f;
+      font-size: 13px;
+      margin-top: 12px;
+      display: none;
+    }
+
+    /* ---- Admin Dashboard ---- */
+    #admin-panel {
+      display: none;
+    }
+
+    .topbar {
+      background: #1a1a1a;
+      color: #fff;
+      padding: 16px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .topbar h1 {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .topbar .stats-bar {
+      font-size: 13px;
+      color: #aaa;
+    }
+
+    .topbar .stats-bar span {
+      margin-left: 20px;
+    }
+
+    .logout-btn {
+      background: none;
+      border: 1px solid #555;
+      color: #aaa;
+      padding: 6px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .logout-btn:hover {
+      border-color: #fff;
+      color: #fff;
+    }
+
+    /* ---- Captures List ---- */
+    .container {
+      max-width: 1100px;
+      margin: 24px auto;
+      padding: 0 24px;
+    }
+
+    .capture-card {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 16px;
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .capture-thumb {
+      width: 120px;
+      height: 80px;
+      border-radius: 6px;
+      object-fit: cover;
+      background: #f0f0f0;
+      border: 1px solid #e0e0e0;
+      flex-shrink: 0;
+    }
+
+    .capture-thumb-placeholder {
+      width: 120px;
+      height: 80px;
+      border-radius: 6px;
+      background: #f0f0f0;
+      border: 1px solid #e0e0e0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ccc;
+      font-size: 11px;
+      flex-shrink: 0;
+    }
+
+    .capture-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .capture-url {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1a1a1a;
+      word-break: break-all;
+      margin-bottom: 4px;
+    }
+
+    .capture-url a {
+      color: #1a1a1a;
+      text-decoration: none;
+    }
+
+    .capture-url a:hover {
+      text-decoration: underline;
+    }
+
+    .capture-meta {
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 8px;
+    }
+
+    .capture-title {
+      font-size: 13px;
+      color: #555;
+      margin-bottom: 8px;
+      font-style: italic;
+    }
+
+    .capture-colors {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+
+    .capture-swatch {
+      width: 22px;
+      height: 22px;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+    }
+
+    .capture-headings {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 10px;
+    }
+
+    .capture-headings span {
+      display: inline-block;
+      background: #f0f0f0;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin: 2px 4px 2px 0;
+      font-size: 11px;
+    }
+
+    .capture-stats {
+      font-size: 11px;
+      color: #aaa;
+      margin-bottom: 10px;
+    }
+
+    /* ---- Analytics Row ---- */
+    .capture-analytics {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .analytics-item {
+      font-size: 11px;
+      color: #555;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .analytics-item strong {
+      color: #1a1a1a;
+      font-size: 13px;
+    }
+
+    .analytics-item .label {
+      color: #999;
+    }
+
+    /* ---- Preview Buttons Row ---- */
+    .preview-buttons {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn-preview {
+      padding: 5px 12px;
+      border: 1px solid #6c5ce7;
+      border-radius: 5px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      color: #6c5ce7;
+      background: #f8f7ff;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .btn-preview:hover {
+      background: #6c5ce7;
+      color: #fff;
+    }
+
+    .most-viewed-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 600;
+      background: #dfe6e9;
+      color: #636e72;
+    }
+
+    /* ---- Status Badge ---- */
+    .status-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .status-pending {
+      background: #fff3e0;
+      color: #e65100;
+    }
+
+    .status-approved {
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+
+    .status-rejected {
+      background: #ffebee;
+      color: #c62828;
+    }
+
+    /* ---- Action Buttons ---- */
+    .capture-actions {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      align-items: flex-end;
+    }
+
+    .btn {
+      padding: 6px 16px;
+      border: none;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      min-width: 90px;
+      text-align: center;
+    }
+
+    .btn-approve {
+      background: #2e7d32;
+      color: #fff;
+    }
+
+    .btn-approve:hover {
+      background: #1b5e20;
+    }
+
+    .btn-reject {
+      background: #c62828;
+      color: #fff;
+    }
+
+    .btn-reject:hover {
+      background: #b71c1c;
+    }
+
+    .btn-pending {
+      background: #e65100;
+      color: #fff;
+    }
+
+    .btn-pending:hover {
+      background: #bf360c;
+    }
+
+    .btn-delete {
+      background: none;
+      border: 1px solid #ddd;
+      color: #999;
+      font-size: 11px;
+    }
+
+    .btn-delete:hover {
+      border-color: #c62828;
+      color: #c62828;
+    }
+
+    .slug-display {
+      font-size: 11px;
+      color: #2e7d32;
+      font-family: monospace;
+      margin-top: 4px;
+      background: #e8f5e9;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    /* ---- Empty State ---- */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #aaa;
+    }
+
+    .empty-state h2 {
+      font-size: 18px;
+      margin-bottom: 8px;
+      color: #999;
+    }
+
+    .empty-state p {
+      font-size: 14px;
+    }
+
+    /* ---- Filter Bar ---- */
+    .filter-bar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .filter-btn {
+      padding: 6px 14px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      background: #fff;
+      font-size: 12px;
+      cursor: pointer;
+      color: #666;
+    }
+
+    .filter-btn.active {
+      background: #1a1a1a;
+      color: #fff;
+      border-color: #1a1a1a;
+    }
+
+    .filter-btn:hover {
+      border-color: #999;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ======== LOGIN SCREEN ======== -->
+  <div id="login-screen">
+    <div class="login-box">
+      <h1>MorningStar Admin</h1>
+      <p>Enter password to continue</p>
+      <input type="password" id="password-input" placeholder="Password" autofocus>
+      <button id="login-btn" onclick="tryLogin()">Login</button>
+      <div class="login-error" id="login-error">Incorrect password. Try again.</div>
+    </div>
+  </div>
+
+  <!-- ======== ADMIN PANEL ======== -->
+  <div id="admin-panel">
+
+    <!-- Top Bar -->
+    <div class="topbar">
+      <h1>MorningStar Admin</h1>
+      <div class="stats-bar">
+        <span id="total-count">0 captures</span>
+        <span id="pending-count">0 pending</span>
+        <span id="approved-count">0 approved</span>
+      </div>
+      <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+
+      <!-- Filter buttons -->
+      <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all" onclick="setFilter('all', this)">All</button>
+        <button class="filter-btn" data-filter="pending" onclick="setFilter('pending', this)">Pending</button>
+        <button class="filter-btn" data-filter="approved" onclick="setFilter('approved', this)">Approved</button>
+        <button class="filter-btn" data-filter="rejected" onclick="setFilter('rejected', this)">Rejected</button>
+      </div>
+
+      <!-- Captures list -->
+      <div id="captures-list"></div>
+    </div>
+  </div>
+
+  <script>
+    // ============================================
+    // CONFIG
+    // ============================================
+    // Auto-detect: if served from Vercel, use same origin. If local, use localhost.
+    const BACKEND_URL = window.location.hostname === 'localhost'
+      ? 'http://localhost:3001'
+      : window.location.origin;
+    const PASSWORD = 'morningstar2026';
+
+    let allCaptures = [];
+    let currentFilter = 'all';
+
+    // ============================================
+    // LOGIN
+    // ============================================
+    // Allow Enter key on password input
+    document.getElementById('password-input').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') tryLogin();
+    });
+
+    function tryLogin() {
+      const input = document.getElementById('password-input');
+      const error = document.getElementById('login-error');
+
+      if (input.value === PASSWORD) {
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('admin-panel').style.display = 'block';
+        loadCaptures();
+      } else {
+        error.style.display = 'block';
+        input.value = '';
+        input.focus();
+      }
+    }
+
+    function logout() {
+      document.getElementById('admin-panel').style.display = 'none';
+      document.getElementById('login-screen').style.display = 'flex';
+      document.getElementById('password-input').value = '';
+      document.getElementById('login-error').style.display = 'none';
+    }
+
+    // ============================================
+    // LOAD & DISPLAY CAPTURES
+    // ============================================
+    async function loadCaptures() {
+      try {
+        const res = await fetch(`${BACKEND_URL}/api/captures`);
+        allCaptures = await res.json();
+        updateStats();
+        renderCaptures();
+      } catch (err) {
+        document.getElementById('captures-list').innerHTML =
+          '<div class="empty-state"><h2>Cannot connect to server</h2><p>Make sure the backend is running.</p></div>';
+      }
+    }
+
+    function updateStats() {
+      const total = allCaptures.length;
+      const pending = allCaptures.filter(c => c.status === 'pending').length;
+      const approved = allCaptures.filter(c => c.status === 'approved').length;
+
+      document.getElementById('total-count').textContent = `${total} capture${total !== 1 ? 's' : ''}`;
+      document.getElementById('pending-count').textContent = `${pending} pending`;
+      document.getElementById('approved-count').textContent = `${approved} approved`;
+    }
+
+    function setFilter(filter, btn) {
+      currentFilter = filter;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderCaptures();
+    }
+
+    function renderCaptures() {
+      const list = document.getElementById('captures-list');
+      const filtered = currentFilter === 'all'
+        ? allCaptures
+        : allCaptures.filter(c => c.status === currentFilter);
+
+      if (filtered.length === 0) {
+        list.innerHTML = '<div class="empty-state"><h2>No captures yet</h2><p>Captures from the extension will appear here.</p></div>';
+        return;
+      }
+
+      list.innerHTML = filtered.map(capture => {
+        const date = new Date(capture.timestamp).toLocaleString();
+        const firstImage = capture.images && capture.images.length > 0 ? capture.images[0] : null;
+
+        // Color swatches HTML
+        const swatchesHtml = (capture.colors || [])
+          .map(c => `<div class="capture-swatch" style="background:${c}" title="${c}"></div>`)
+          .join('');
+
+        // Headings HTML
+        const headingsHtml = (capture.headings || [])
+          .slice(0, 5)
+          .map(h => `<span>&lt;${h.tag}&gt; ${escapeHtml(h.text.substring(0, 60))}</span>`)
+          .join('');
+
+        // Thumbnail HTML
+        const thumbHtml = firstImage
+          ? `<img class="capture-thumb" src="${escapeHtml(firstImage)}" alt="thumbnail" onerror="this.style.display='none'">`
+          : `<div class="capture-thumb-placeholder">No image</div>`;
+
+        // Status badge
+        const statusBadge = `<span class="status-badge status-${capture.status}">${capture.status}</span>`;
+
+        // Action buttons based on status
+        let actionsHtml = '';
+        if (capture.status === 'pending') {
+          actionsHtml = `
+            <button class="btn btn-approve" onclick="updateStatus('${capture.id}', 'approved')">Approve</button>
+            <button class="btn btn-reject" onclick="updateStatus('${capture.id}', 'rejected')">Reject</button>
+          `;
+        } else if (capture.status === 'approved') {
+          actionsHtml = `
+            <button class="btn btn-pending" onclick="updateStatus('${capture.id}', 'pending')">Reset</button>
+            <button class="btn btn-reject" onclick="updateStatus('${capture.id}', 'rejected')">Reject</button>
+          `;
+        } else {
+          actionsHtml = `
+            <button class="btn btn-approve" onclick="updateStatus('${capture.id}', 'approved')">Approve</button>
+            <button class="btn btn-pending" onclick="updateStatus('${capture.id}', 'pending')">Reset</button>
+          `;
+        }
+
+        // Slug display (only when approved)
+        const slugHtml = capture.slug
+          ? `<div class="slug-display">${capture.slug}</div>`
+          : '';
+
+        // Preview buttons (only for approved captures with a slug)
+        let previewHtml = '';
+        if (capture.slug && capture.status === 'approved') {
+          previewHtml = `
+            <div class="preview-buttons">
+              <a class="btn-preview" href="/preview/${capture.slug}?t=1" target="_blank">&#127912; Preview T1</a>
+              <a class="btn-preview" href="/preview/${capture.slug}?t=2" target="_blank">&#128293; Preview T2</a>
+              <a class="btn-preview" href="/preview/${capture.slug}?t=3" target="_blank">&#10024; Preview T3</a>
+            </div>
+          `;
+        }
+
+        // Analytics row (only for approved captures)
+        let analyticsHtml = '';
+        if (capture.status === 'approved') {
+          const views = capture.views || 0;
+          const ctaClicks = capture.cta_clicks || 0;
+          const tv = capture.template_views || { '1': 0, '2': 0, '3': 0 };
+          // Find most viewed template
+          let mostViewed = 'Elegant';
+          const tvMax = Math.max(tv['1'] || 0, tv['2'] || 0, tv['3'] || 0);
+          if (tvMax > 0) {
+            if ((tv['2'] || 0) === tvMax) mostViewed = 'Bold';
+            else if ((tv['3'] || 0) === tvMax) mostViewed = 'Minimal';
+          }
+          analyticsHtml = `
+            <div class="capture-analytics">
+              <div class="analytics-item"><strong>${views}</strong> <span class="label">Views</span></div>
+              <div class="analytics-item"><strong>${ctaClicks}</strong> <span class="label">CTA Clicks</span></div>
+              <div class="analytics-item"><span class="label">Most viewed:</span> <span class="most-viewed-badge">${mostViewed}</span></div>
+            </div>
+          `;
+        }
+
+        return `
+          <div class="capture-card">
+            ${thumbHtml}
+            <div class="capture-info">
+              <div class="capture-url"><a href="${escapeHtml(capture.url)}" target="_blank">${escapeHtml(capture.url)}</a></div>
+              <div class="capture-meta">${date} ${statusBadge} ${slugHtml}</div>
+              ${capture.title ? `<div class="capture-title">"${escapeHtml(capture.title)}"</div>` : ''}
+              ${swatchesHtml ? `<div class="capture-colors">${swatchesHtml}</div>` : ''}
+              ${headingsHtml ? `<div class="capture-headings">${headingsHtml}</div>` : ''}
+              <div class="capture-stats">${capture.images ? capture.images.length : 0} images found</div>
+              ${analyticsHtml}
+              ${previewHtml}
+            </div>
+            <div class="capture-actions">
+              ${actionsHtml}
+              <button class="btn btn-delete" onclick="deleteCapture('${capture.id}')">Delete</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // ============================================
+    // ACTIONS
+    // ============================================
+    async function updateStatus(id, status) {
+      try {
+        await fetch(`${BACKEND_URL}/api/capture/${id}/status`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status })
+        });
+        loadCaptures();
+      } catch (err) {
+        alert('Error updating status. Is the server running?');
+      }
+    }
+
+    async function deleteCapture(id) {
+      if (!confirm('Delete this capture? This cannot be undone.')) return;
+
+      try {
+        await fetch(`${BACKEND_URL}/api/capture/${id}`, {
+          method: 'DELETE'
+        });
+        loadCaptures();
+      } catch (err) {
+        alert('Error deleting capture. Is the server running?');
+      }
+    }
+
+    // ---- Helper: Escape HTML to prevent XSS ----
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // Auto-refresh every 30 seconds
+    setInterval(() => {
+      if (document.getElementById('admin-panel').style.display !== 'none') {
+        loadCaptures();
+      }
+    }, 30000);
+  </script>
+</body>
+</html>

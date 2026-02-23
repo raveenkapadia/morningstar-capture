@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perfume — Elegant Redesign Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Raleway:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --amber:#C4860A;--amber-pale:rgba(196,134,10,.15);--bg:#FAF7F2;--cream:#FDFBF7;
+    --warm:#F2EDE4;--ink:#1A1208;--muted:rgba(26,18,8,.42);--border:rgba(26,18,8,.08);
+    --border-amber:rgba(196,134,10,.2);
+  }
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+  body{background:var(--cream);font-family:'Raleway',sans-serif;color:var(--ink);overflow-x:hidden;}
+
+  .expiry{background:var(--ink);color:rgba(250,247,242,.6);text-align:center;padding:10px 20px;font-size:9px;letter-spacing:.3em;text-transform:uppercase;}
+  .expiry strong{color:#E8C870;font-weight:400;}
+
+  nav{position:sticky;top:0;z-index:200;background:rgba(253,251,247,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--border-amber);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 56px;height:68px;}
+  .nav-left{display:flex;gap:32px;list-style:none;}
+  .nav-left a,.nav-right a{font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);text-decoration:none;font-weight:300;transition:color .2s;}
+  .nav-left a:hover,.nav-right a:hover{color:var(--amber);}
+  .nav-brand{font-family:'Libre Baskerville',serif;font-size:20px;font-weight:400;letter-spacing:.22em;text-transform:uppercase;color:var(--ink);text-align:center;}
+  .nav-right{display:flex;gap:28px;list-style:none;justify-content:flex-end;align-items:center;}
+  .nav-btn{background:transparent;color:var(--ink);border:1px solid var(--border-amber);padding:9px 22px;font-size:9px;letter-spacing:.25em;text-transform:uppercase;cursor:pointer;font-family:'Raleway',sans-serif;transition:all .2s;}
+  .nav-btn:hover{background:var(--ink);color:var(--bg);}
+
+  /* HERO — full poetic atmosphere */
+  .hero{position:relative;height:100vh;min-height:640px;overflow:hidden;display:flex;align-items:flex-end;}
+  .hero-bg{position:absolute;inset:0;}
+  .hero-bg img{width:100%;height:100%;object-fit:cover;filter:brightness(.5) saturate(.7);transition:transform 14s ease;}
+  .hero:hover .hero-bg img{transform:scale(1.04);}
+  .hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(26,18,8,.9) 0%,rgba(26,18,8,.35) 55%,transparent 100%);}
+  .hero-content{position:relative;z-index:10;padding:0 80px 90px;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:flex-end;}
+  .hero-season{font-size:9px;letter-spacing:.45em;text-transform:uppercase;color:rgba(196,134,10,.6);margin-bottom:20px;}
+  .hero-title{font-family:'Libre Baskerville',serif;font-size:clamp(52px,7vw,94px);font-weight:400;line-height:.95;color:#fff;margin-bottom:24px;}
+  .hero-title em{font-style:italic;display:block;color:rgba(232,200,112,.9);}
+  .hero-tagline{font-size:14px;font-weight:300;color:rgba(255,255,255,.58);margin-bottom:44px;line-height:1.9;max-width:420px;}
+  .hero-actions{display:flex;gap:16px;flex-wrap:wrap;}
+  .btn-amber{display:inline-block;background:var(--amber);color:#fff;padding:15px 40px;font-size:9px;letter-spacing:.28em;text-transform:uppercase;text-decoration:none;font-weight:400;border:1px solid var(--amber);transition:all .25s;}
+  .btn-amber:hover{background:transparent;color:var(--amber);}
+  .btn-ghost-light{display:inline-block;background:transparent;color:rgba(255,255,255,.7);padding:14px 40px;font-size:9px;letter-spacing:.28em;text-transform:uppercase;text-decoration:none;font-weight:300;border:1px solid rgba(255,255,255,.2);transition:all .25s;}
+  .btn-ghost-light:hover{border-color:rgba(232,200,112,.5);color:rgba(232,200,112,.9);}
+  .hero-right{text-align:right;}
+  .hero-notes-label{font-size:9px;letter-spacing:.38em;text-transform:uppercase;color:rgba(196,134,10,.55);margin-bottom:14px;}
+  .hero-notes{display:flex;flex-direction:column;gap:8px;align-items:flex-end;}
+  .hero-note{font-family:'Libre Baskerville',serif;font-size:18px;font-style:italic;color:rgba(255,255,255,.55);font-weight:400;}
+  .hero-note.top{color:rgba(255,255,255,.85);}
+  .hero-note.mid{color:rgba(255,255,255,.65);}
+  .hero-note.base{color:rgba(255,255,255,.45);}
+
+  .ticker{background:var(--ink);padding:14px 0;overflow:hidden;}
+  .ticker-inner{display:inline-block;white-space:nowrap;animation:slide 30s linear infinite;font-size:9px;letter-spacing:.38em;text-transform:uppercase;color:rgba(250,247,242,.35);font-weight:300;}
+  .ticker-inner span{margin:0 36px;color:var(--amber);}
+  @keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  .stats-bar{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--border-amber);background:var(--cream);}
+  .stat{padding:32px 20px;text-align:center;border-right:1px solid var(--border-amber);}
+  .stat:last-child{border-right:none;}
+  .stat-num{font-family:'Libre Baskerville',serif;font-size:38px;font-weight:400;color:var(--amber);line-height:1;margin-bottom:8px;}
+  .stat-label{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);}
+
+  .section{padding:100px 80px;}
+  .section.bg-warm{background:var(--warm);}
+  .s-label{font-size:9px;letter-spacing:.42em;text-transform:uppercase;color:var(--amber);margin-bottom:14px;}
+  .s-title{font-family:'Libre Baskerville',serif;font-size:clamp(32px,4vw,52px);font-weight:400;color:var(--ink);line-height:1.1;}
+  .s-title em{font-style:italic;}
+  .s-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px;}
+  .s-sub{font-size:14px;line-height:1.9;color:var(--muted);font-weight:300;margin-top:16px;max-width:540px;}
+  .view-all{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--amber);text-decoration:none;border-bottom:1px solid var(--border-amber);padding-bottom:2px;}
+
+  /* Product grid — portrait, atmospheric */
+  .products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;}
+  .product-card{cursor:pointer;}
+  .product-img{aspect-ratio:2/3;overflow:hidden;background:var(--warm);position:relative;margin-bottom:20px;}
+  .product-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.92) saturate(.85);transition:transform .7s ease;}
+  .product-card:hover .product-img img{transform:scale(1.05);}
+  .product-overlay{position:absolute;inset:0;background:rgba(26,18,8,.75);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s;}
+  .product-card:hover .product-overlay{opacity:1;}
+  .po-btn{background:var(--amber);color:#fff;border:none;padding:12px 28px;font-size:9px;letter-spacing:.25em;text-transform:uppercase;cursor:pointer;font-family:'Raleway',sans-serif;}
+  .product-name{font-family:'Libre Baskerville',serif;font-size:19px;font-weight:400;color:var(--ink);margin-bottom:6px;}
+  .product-type{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);margin-bottom:8px;}
+  .product-notes{font-size:12px;color:var(--muted);font-weight:300;font-style:italic;margin-bottom:8px;}
+  .product-price{font-size:14px;color:var(--ink);}
+
+  /* Note pyramid */
+  .notes-section{padding:100px 80px;}
+  .notes-pyramid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border-amber);border:1px solid var(--border-amber);margin-top:64px;}
+  .note-tier{background:var(--cream);padding:56px 44px;position:relative;}
+  .note-tier::before{content:attr(data-tier);position:absolute;top:28px;right:28px;font-family:'Libre Baskerville',serif;font-size:64px;font-weight:400;color:var(--amber-pale);line-height:1;font-style:italic;}
+  .nt-name{font-size:9px;letter-spacing:.35em;text-transform:uppercase;color:var(--amber);margin-bottom:20px;}
+  .nt-title{font-family:'Libre Baskerville',serif;font-size:24px;font-weight:400;color:var(--ink);margin-bottom:16px;}
+  .nt-ingredients{display:flex;flex-wrap:wrap;gap:8px;}
+  .ingredient{background:var(--warm);border:1px solid var(--border-amber);padding:6px 14px;font-size:10px;letter-spacing:.12em;color:var(--ink);font-weight:300;}
+
+  .feature-split{display:grid;grid-template-columns:1fr 1fr;min-height:580px;}
+  .fs-img{overflow:hidden;}
+  .fs-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.88) saturate(.75);transition:transform 8s;}
+  .fs-img:hover img{transform:scale(1.03);}
+  .fs-content{background:var(--ink);display:flex;flex-direction:column;justify-content:center;padding:80px;}
+  .fs-label{font-size:9px;letter-spacing:.42em;text-transform:uppercase;color:rgba(196,134,10,.55);margin-bottom:20px;}
+  .fs-title{font-family:'Libre Baskerville',serif;font-size:clamp(28px,3.5vw,48px);font-weight:400;color:#fff;line-height:1.15;margin-bottom:24px;}
+  .fs-title em{font-style:italic;color:rgba(232,200,112,.9);}
+  .fs-text{font-size:14px;line-height:2;color:rgba(250,247,242,.55);font-weight:300;margin-bottom:40px;max-width:360px;}
+  .btn-amber-outline{display:inline-block;background:transparent;color:var(--amber);padding:14px 32px;font-size:9px;letter-spacing:.28em;text-transform:uppercase;text-decoration:none;border:1px solid var(--border-amber);transition:all .25s;align-self:flex-start;}
+  .btn-amber-outline:hover{background:var(--amber);color:#fff;}
+
+  .process-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:48px;margin-top:64px;}
+  .step{text-align:center;}
+  .step-num{font-family:'Libre Baskerville',serif;font-size:52px;font-weight:400;color:var(--amber-pale);line-height:1;margin-bottom:16px;font-style:italic;}
+  .step-icon{font-size:24px;margin-bottom:14px;}
+  .step-title{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--ink);margin-bottom:12px;font-weight:400;}
+  .step-desc{font-size:13px;line-height:1.9;color:var(--muted);font-weight:300;}
+
+  .full-banner{position:relative;height:480px;overflow:hidden;}
+  .full-banner img{width:100%;height:100%;object-fit:cover;filter:brightness(.4) saturate(.5);}
+  .fb-content{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px;}
+  .fb-line{width:60px;height:1px;background:rgba(196,134,10,.5);margin:0 auto 24px;}
+  .fb-title{font-family:'Libre Baskerville',serif;font-size:clamp(28px,4.5vw,60px);font-weight:400;font-style:italic;color:#fff;margin-bottom:16px;}
+  .fb-sub{font-size:14px;color:rgba(255,255,255,.55);font-weight:300;margin-bottom:36px;}
+
+  .reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:60px;}
+  .review-card{background:var(--warm);padding:44px 36px;border-top:2px solid var(--amber);}
+  .review-stars{color:var(--amber);letter-spacing:4px;font-size:11px;margin-bottom:18px;}
+  .review-text{font-family:'Libre Baskerville',serif;font-size:16px;font-style:italic;line-height:1.85;color:var(--ink);margin-bottom:20px;font-weight:400;}
+  .review-author{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--amber);}
+  .review-location{font-size:11px;color:var(--muted);margin-top:4px;}
+
+  .newsletter{background:var(--warm);padding:80px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;border-top:1px solid var(--border-amber);}
+  .nl-label{font-size:9px;letter-spacing:.42em;text-transform:uppercase;color:var(--amber);margin-bottom:14px;}
+  .nl-title{font-family:'Libre Baskerville',serif;font-size:36px;font-weight:400;color:var(--ink);}
+  .nl-title em{font-style:italic;}
+  .nl-desc{font-size:13px;color:var(--muted);margin-top:12px;font-weight:300;line-height:1.7;}
+  .nl-form{display:flex;}
+  .nl-input{flex:1;padding:14px 20px;background:#fff;border:1px solid var(--border-amber);color:var(--ink);font-family:'Raleway',sans-serif;font-size:13px;outline:none;border-right:none;}
+  .nl-input:focus{border-color:var(--amber);}
+  .nl-input::placeholder{color:var(--muted);font-size:12px;}
+  .nl-submit{background:var(--ink);color:var(--bg);border:none;padding:14px 28px;font-family:'Raleway',sans-serif;font-size:9px;letter-spacing:.25em;text-transform:uppercase;cursor:pointer;white-space:nowrap;transition:background .2s;}
+  .nl-submit:hover{background:var(--amber);}
+  .nl-note{font-size:11px;color:var(--muted);margin-top:12px;}
+
+  footer{background:var(--ink);padding:80px 80px 40px;}
+  .footer-grid{display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:60px;padding-bottom:60px;border-bottom:1px solid rgba(196,134,10,.12);}
+  .footer-logo{font-family:'Libre Baskerville',serif;font-size:22px;letter-spacing:.2em;text-transform:uppercase;color:rgba(250,247,242,.9);margin-bottom:8px;}
+  .footer-tagline{font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:rgba(196,134,10,.55);margin-bottom:18px;}
+  .footer-desc{font-size:13px;line-height:1.85;color:rgba(250,247,242,.28);font-weight:300;margin-bottom:28px;max-width:240px;}
+  .footer-social{display:flex;gap:12px;margin-bottom:24px;}
+  .social-link{width:36px;height:36px;border:1px solid rgba(196,134,10,.18);display:flex;align-items:center;justify-content:center;font-size:13px;text-decoration:none;color:rgba(250,247,242,.35);transition:all .2s;}
+  .social-link:hover{border-color:var(--amber);color:var(--amber);}
+  .footer-cert{display:flex;gap:8px;flex-wrap:wrap;}
+  .cert-item{border:1px solid rgba(196,134,10,.15);padding:5px 10px;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(196,134,10,.4);}
+  .footer-col-title{font-size:9px;letter-spacing:.35em;text-transform:uppercase;color:rgba(196,134,10,.8);margin-bottom:24px;}
+  .footer-links{list-style:none;display:flex;flex-direction:column;gap:12px;}
+  .footer-links a{font-size:13px;color:rgba(250,247,242,.32);text-decoration:none;font-weight:300;transition:color .2s;}
+  .footer-links a:hover{color:rgba(250,247,242,.8);}
+  .footer-contact{list-style:none;display:flex;flex-direction:column;gap:14px;}
+  .fc-item{display:flex;gap:12px;}
+  .fc-icon{font-size:13px;flex-shrink:0;}
+  .fc-text{font-size:12px;color:rgba(250,247,242,.32);font-weight:300;line-height:1.6;}
+  .fc-text a{color:inherit;text-decoration:none;transition:color .2s;}
+  .fc-text a:hover{color:var(--amber);}
+  .footer-bottom{padding-top:32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+  .footer-legal{font-size:11px;color:rgba(250,247,242,.18);}
+  .footer-legal-links{display:flex;gap:24px;}
+  .footer-legal-links a{font-size:11px;color:rgba(250,247,242,.18);text-decoration:none;}
+  .footer-legal-links a:hover{color:rgba(250,247,242,.5);}
+  .footer-powered{font-size:9px;letter-spacing:.2em;color:rgba(250,247,242,.12);text-transform:uppercase;}
+
+  .sticky-cta{display:none;position:fixed;bottom:0;left:0;right:0;z-index:300;background:rgba(253,251,247,.98);border-top:1px solid var(--border-amber);padding:14px 20px;flex-direction:column;gap:10px;}
+  .sticky-label{font-size:9px;letter-spacing:.22em;text-transform:uppercase;text-align:center;color:var(--muted);}
+  .sticky-buttons{display:flex;gap:10px;}
+  .s-book{flex:1;background:transparent;border:1px solid var(--border);color:var(--ink);padding:13px;font-size:9px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;font-family:'Raleway',sans-serif;}
+  .s-buy{flex:1.5;background:var(--ink);border:none;color:var(--bg);padding:13px;font-size:9px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;font-family:'Raleway',sans-serif;}
+
+  .switcher{position:fixed;bottom:30px;right:30px;z-index:400;}
+  .switcher-btn{background:var(--ink);color:#fff;border:none;width:50px;height:50px;border-radius:50%;font-size:18px;cursor:pointer;box-shadow:0 6px 24px rgba(26,18,8,.2);display:flex;align-items:center;justify-content:center;}
+  .switcher-menu{position:absolute;bottom:62px;right:0;background:var(--cream);border:1px solid var(--border-amber);padding:16px 20px;min-width:200px;display:none;box-shadow:0 12px 40px rgba(26,18,8,.08);}
+  .switcher-menu.open{display:block;}
+  .sm-title{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;}
+  .s-opt{display:flex;align-items:center;gap:12px;padding:9px 0;font-size:13px;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--border);transition:color .2s;font-weight:300;}
+  .s-opt:last-child{border-bottom:none;}
+  .s-opt.active{color:var(--amber);}
+  .s-dot{width:7px;height:7px;border-radius:50%;border:1.5px solid var(--amber);}
+  .s-dot.filled{background:var(--amber);}
+
+  .fade-up{opacity:0;transform:translateY(28px);transition:opacity .9s ease,transform .9s ease;}
+  .fade-up.visible{opacity:1;transform:translateY(0);}
+
+  @media(max-width:768px){
+    nav{grid-template-columns:1fr;height:auto;padding:16px 20px;justify-items:center;}.nav-left,.nav-right{display:none;}
+    .hero{height:100svh;}.hero-content{grid-template-columns:1fr;padding:0 24px 60px;gap:0;}.hero-right{display:none;}
+    .hero-title{font-size:52px;}
+    .stats-bar{grid-template-columns:repeat(2,1fr);}
+    .section{padding:60px 24px;}
+    .products-grid{grid-template-columns:1fr 1fr;gap:20px;}
+    .notes-pyramid{grid-template-columns:1fr;}
+    .feature-split{grid-template-columns:1fr;}.fs-img{height:60vw;}.fs-content{padding:48px 24px;}
+    .process-grid{grid-template-columns:repeat(2,1fr);gap:32px;}
+    .full-banner{height:320px;}
+    .reviews-grid{grid-template-columns:1fr;gap:24px;}
+    .newsletter{grid-template-columns:1fr;padding:48px 24px;gap:32px;}.nl-form{flex-direction:column;}
+    footer{padding:60px 24px 36px;}.footer-grid{grid-template-columns:1fr 1fr;gap:36px;}
+    .footer-bottom{flex-direction:column;align-items:flex-start;}
+    .sticky-cta{display:flex;}.switcher{bottom:100px;right:16px;}
+  }
+</style>
+</head>
+<body>
+<div class="expiry">⏰ Preview expires in <strong id="cd">6d 23h 41m</strong> &nbsp;·&nbsp; Exclusive redesign for your brand</div>
+<nav>
+  <ul class="nav-left"><li><a href="#">Fragrances</a></li><li><a href="#">Collections</a></li><li><a href="#">Candles</a></li></ul>
+  <div class="nav-brand">Your Brand</div>
+  <ul class="nav-right"><li><a href="#">Our Story</a></li><li><a href="#">Boutiques</a></li><li><button class="nav-btn">Shop Now</button></li></ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"><img src="https://images.unsplash.com/photo-1541643600914-78b084683702?w=1400&q=90" alt=""></div>
+  <div class="hero-content">
+    <div>
+      <p class="hero-season">Eau de Parfum · 2026 Collection</p>
+      <h1 class="hero-title">Wear a<br><em>Memory.</em></h1>
+      <p class="hero-tagline">Fragrances composed in Grasse, bottled with intention. Each scent an invitation to remember — or to begin.</p>
+      <div class="hero-actions"><a href="#" class="btn-amber">Explore Collection</a><a href="#" class="btn-ghost-light">Find Your Scent</a></div>
+    </div>
+    <div class="hero-right">
+      <p class="hero-notes-label">Fragrance Notes</p>
+      <div class="hero-notes">
+        <span class="hero-note top">Top: Bergamot · Pink Pepper</span>
+        <span class="hero-note mid">Heart: Rose · Oud · Iris</span>
+        <span class="hero-note base">Base: Sandalwood · Musk · Amber</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="ticker"><div class="ticker-inner">Composed in Grasse <span>·</span> Ethically Sourced Ingredients <span>·</span> UAE Exclusive <span>·</span> Alcohol-Free Options <span>·</span> Free Engraving <span>·</span> Composed in Grasse <span>·</span> Ethically Sourced <span>·</span> UAE Exclusive <span>·</span></div></div>
+
+<div class="stats-bar">
+  <div class="stat fade-up"><div class="stat-num">1932</div><div class="stat-label">Year Founded</div></div>
+  <div class="stat fade-up"><div class="stat-num">60+</div><div class="stat-label">Unique Scents</div></div>
+  <div class="stat fade-up"><div class="stat-num">Grasse</div><div class="stat-label">Composed In</div></div>
+  <div class="stat fade-up"><div class="stat-num">100%</div><div class="stat-label">Natural Extraction</div></div>
+</div>
+
+<section class="section">
+  <div class="s-header fade-up"><div><p class="s-label">The Collection</p><h2 class="s-title">Fragrances for<br><em>Every Mood</em></h2></div><a href="#" class="view-all">View All</a></div>
+  <div class="products-grid">
+    <div class="product-card fade-up"><div class="product-img"><img src="https://images.unsplash.com/photo-1523293182086-7651a899d37f?w=500&q=85" alt=""><div class="product-overlay"><button class="po-btn">Add to Bag</button></div></div><div class="product-name">Aoud Royale</div><div class="product-type">Eau de Parfum · 100ml</div><div class="product-notes">Oud · Rose · Amber</div><div class="product-price">AED 480</div></div>
+    <div class="product-card fade-up"><div class="product-img"><img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?w=500&q=85" alt=""><div class="product-overlay"><button class="po-btn">Add to Bag</button></div></div><div class="product-name">Soir de Jasmin</div><div class="product-type">Eau de Parfum · 50ml</div><div class="product-notes">Jasmine · Neroli · Vetiver</div><div class="product-price">AED 320</div></div>
+    <div class="product-card fade-up"><div class="product-img"><img src="https://images.unsplash.com/photo-1601295020059-d0671027e3fc?w=500&q=85" alt=""><div class="product-overlay"><button class="po-btn">Add to Bag</button></div></div><div class="product-name">Cedar & Silk</div><div class="product-type">Eau de Cologne · 75ml</div><div class="product-notes">Cedar · Musk · Bergamot</div><div class="product-price">AED 290</div></div>
+  </div>
+</section>
+
+<section class="notes-section bg-warm">
+  <div class="s-header fade-up"><div><p class="s-label">The Art of Composition</p><h2 class="s-title">Three Tiers of<br><em>A Great Fragrance</em></h2></div></div>
+  <div class="notes-pyramid">
+    <div class="note-tier fade-up" data-tier="I"><div class="nt-name">Top Notes</div><h3 class="nt-title">The First Impression</h3><div class="nt-ingredients"><span class="ingredient">Bergamot</span><span class="ingredient">Pink Pepper</span><span class="ingredient">Citrus</span><span class="ingredient">Cardamom</span></div></div>
+    <div class="note-tier fade-up" data-tier="II"><div class="nt-name">Heart Notes</div><h3 class="nt-title">The Soul of the Scent</h3><div class="nt-ingredients"><span class="ingredient">Rose Absolute</span><span class="ingredient">Oud</span><span class="ingredient">Iris</span><span class="ingredient">Jasmine</span></div></div>
+    <div class="note-tier fade-up" data-tier="III"><div class="nt-name">Base Notes</div><h3 class="nt-title">The Lasting Memory</h3><div class="nt-ingredients"><span class="ingredient">Sandalwood</span><span class="ingredient">Amber</span><span class="ingredient">Musk</span><span class="ingredient">Vetiver</span></div></div>
+  </div>
+</section>
+
+<div class="feature-split">
+  <div class="fs-img"><img src="https://images.unsplash.com/photo-1590736969955-71cc94901144?w=800&q=85" alt=""></div>
+  <div class="fs-content fade-up"><p class="fs-label">Our Philosophy</p><h2 class="fs-title">Composed in<br><em>Grasse.</em><br>Bottled in Love.</h2><p class="fs-text">Every fragrance begins with a journey to the source — the flower fields of Grasse, the oud forests of Cambodia, the spice markets of India. We work with the same small family suppliers for over four decades.</p><a href="#" class="btn-amber-outline">Our Story</a></div>
+</div>
+
+<section class="section">
+  <div class="s-header fade-up" style="margin-bottom:0"><div><p class="s-label">The Process</p><h2 class="s-title">From Bloom<br><em>to Bottle</em></h2></div></div>
+  <div class="process-grid">
+    <div class="step fade-up"><div class="step-num">01</div><div class="step-icon">🌹</div><div class="step-title">Harvest</div><div class="step-desc">Flowers picked at dawn by hand at peak bloom. Timing is everything in fragrance.</div></div>
+    <div class="step fade-up"><div class="step-num">02</div><div class="step-icon">🧪</div><div class="step-title">Extraction</div><div class="step-desc">Cold-press and steam distillation to preserve the most delicate aromatic compounds.</div></div>
+    <div class="step fade-up"><div class="step-num">03</div><div class="step-icon">🎨</div><div class="step-title">Composition</div><div class="step-desc">Our master perfumer blends up to 80 ingredients over months of iteration.</div></div>
+    <div class="step fade-up"><div class="step-num">04</div><div class="step-icon">🫙</div><div class="step-title">Bottling</div><div class="step-desc">Hand-filled in our atelier. Each bottle inspected individually before leaving.</div></div>
+  </div>
+</section>
+
+<div class="full-banner"><img src="https://images.unsplash.com/photo-1547887538-047e959e2b13?w=1400&q=85" alt=""><div class="fb-content"><div class="fb-line"></div><h2 class="fb-title">Bespoke Fragrance</h2><p class="fb-sub">Work with our master perfumer to create your signature scent.</p><a href="#" class="btn-amber">Begin Your Scent Journey</a></div></div>
+
+<section class="section bg-warm"><div class="s-header fade-up"><div><p class="s-label">Client Stories</p><h2 class="s-title">Worn with<br><em>Devotion</em></h2></div></div><div class="reviews-grid"><div class="review-card fade-up"><div class="review-stars">★★★★★</div><p class="review-text">"Aoud Royale is the most complex fragrance I have encountered. I receive compliments everywhere I wear it. It is simply extraordinary."</p><div class="review-author">Fatima A.</div><div class="review-location">Dubai, UAE</div></div><div class="review-card fade-up"><div class="review-stars">★★★★★</div><p class="review-text">"The bespoke experience was unlike anything I have known. My perfumer understood my brief perfectly. I wear nothing else now."</p><div class="review-author">Sophie M.</div><div class="review-location">Paris / Dubai</div></div><div class="review-card fade-up"><div class="review-stars">★★★★★</div><p class="review-text">"I have been searching for a signature jasmine fragrance for years. Soir de Jasmin is it. The longevity is remarkable."</p><div class="review-author">Priya R.</div><div class="review-location">Abu Dhabi</div></div></div></section>
+
+<div class="newsletter"><div class="fade-up"><p class="nl-label">Fragrance Intelligence</p><h3 class="nl-title">New arrivals.<br><em>First to know.</em></h3><p class="nl-desc">Join our private list for exclusive launches, seasonal collections, and olfactory events.</p></div><div class="fade-up"><div class="nl-form"><input class="nl-input" type="email" placeholder="Your email address"><button class="nl-submit">Subscribe</button></div><p class="nl-note">No spam. Scent stories and new arrivals only. Unsubscribe anytime.</p></div></div>
+
+<footer><div class="footer-grid"><div><div class="footer-logo">Your Brand</div><div class="footer-tagline">Perfumers · Est. 1932 · Grasse</div><p class="footer-desc">Artisan fragrance house rooted in the traditions of Grasse. Every scent composed with intention and respect for the source.</p><div class="footer-social"><a href="#" class="social-link">𝕏</a><a href="#" class="social-link">in</a><a href="#" class="social-link">📷</a><a href="#" class="social-link">▶</a></div><div class="footer-cert"><span class="cert-item">Natural Extracts</span><span class="cert-item">Cruelty Free</span></div></div><div><div class="footer-col-title">Shop</div><ul class="footer-links"><li><a href="#">Eau de Parfum</a></li><li><a href="#">Eau de Cologne</a></li><li><a href="#">Candles</a></li><li><a href="#">Room Sprays</a></li><li><a href="#">Gift Sets</a></li><li><a href="#">Bespoke</a></li></ul></div><div><div class="footer-col-title">Services</div><ul class="footer-links"><li><a href="#">Fragrance Finder</a></li><li><a href="#">Bespoke Service</a></li><li><a href="#">Engraving</a></li><li><a href="#">Gift Wrapping</a></li><li><a href="#">Corporate Gifting</a></li><li><a href="#">Shipping & Returns</a></li></ul></div><div><div class="footer-col-title">Visit</div><ul class="footer-contact"><li class="fc-item"><span class="fc-icon">📍</span><span class="fc-text">City Walk, Building 6<br>Dubai, UAE</span></li><li class="fc-item"><span class="fc-icon">📞</span><span class="fc-text"><a href="tel:+97144000000">+971 4 400 0000</a></span></li><li class="fc-item"><span class="fc-icon">✉️</span><span class="fc-text"><a href="#"><span class="__cf_email__" data-cfemail="92faf7fefefdd2ebfde7e0f0e0f3fcf6bcf1fdff">[email&#160;protected]</span></a></span></li><li class="fc-item"><span class="fc-icon">🕐</span><span class="fc-text">Daily: 10am–10pm<br>Bespoke by appointment</span></li></ul></div></div><div class="footer-bottom"><div class="footer-legal">© 2026 Your Brand Parfums. All rights reserved.</div><div class="footer-legal-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></div><div class="footer-powered">Preview by MorningStar.ai</div></div></footer>
+
+<div class="sticky-cta"><div class="sticky-label">Like this redesign?</div><div class="sticky-buttons"><button class="s-book">Book a Call</button><button class="s-buy">Get This — AED 9,200</button></div></div>
+<div class="switcher"><div class="switcher-menu" id="sm"><div class="sm-title">Perfume Templates</div><a class="s-opt active" href="perfume-elegant.html"><div class="s-dot filled"></div> Elegant</a><a class="s-opt" href="perfume-bold.html"><div class="s-dot"></div> Bold</a><a class="s-opt" href="perfume-minimal.html"><div class="s-dot"></div> Minimal</a></div><button class="switcher-btn" onclick="document.getElementById('sm').classList.toggle('open')">🎨</button></div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const obs=new IntersectionObserver(e=>e.forEach(i=>{if(i.isIntersecting)i.target.classList.add('visible')}),{threshold:.1});
+document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+function tick(){const df=new Date(Date.now()+7*86

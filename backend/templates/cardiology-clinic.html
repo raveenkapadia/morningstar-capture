@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{CLINIC_NAME}} — Cardiology & Heart Care</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--deep:#06122B;--navy:#0A1F4E;--blue:#1346A0;--blue-lt:#EEF3FD;--red:#C0392B;--red-lt:#FDEEEC;--silver:#C8D4E8;--white:#fff;--off:#F4F7FC;--muted:#5A6E90;--border:#D8E2F0;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--white);font-family:'IBM Plex Sans',sans-serif;color:var(--deep);}
+button{cursor:pointer;border:none;font-family:'IBM Plex Sans',sans-serif;}
+a{text-decoration:none;color:inherit;}
+
+/* TOP */
+.topbar{background:var(--deep);padding:9px 64px;display:flex;justify-content:space-between;}
+.top-item{font-size:11px;color:rgba(255,255,255,.45);letter-spacing:.5px;}
+.top-item span{color:var(--silver);}
+.top-emergency{font-size:11px;color:var(--red);font-weight:600;letter-spacing:.5px;display:flex;align-items:center;gap:6px;}
+
+/* NAV */
+nav{background:var(--navy);height:72px;padding:0 64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.logo{display:flex;align-items:center;gap:14px;}
+.logo-mark{width:42px;height:42px;border:1.5px solid rgba(200,212,232,.25);display:flex;align-items:center;justify-content:center;font-size:20px;}
+.logo-name{font-family:'Libre Baskerville',serif;font-size:18px;color:#fff;letter-spacing:.5px;}
+.logo-spec{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--silver);opacity:.5;margin-top:1px;}
+.nav-links{display:flex;gap:32px;}
+.nav-links a{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.45);transition:color .2s;}
+.nav-links a:hover{color:var(--silver);}
+.nav-emergency{background:var(--red);color:#fff;padding:10px 22px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;transition:background .2s;}
+.nav-emergency:hover{background:#a93226;}
+
+/* HERO */
+.hero{display:grid;grid-template-columns:1fr 1fr;min-height:88vh;}
+.hero-left{background:var(--deep);padding:88px 72px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;}
+.hero-left::before{content:'';position:absolute;top:-100px;right:-100px;width:400px;height:400px;background:radial-gradient(circle,rgba(19,70,160,.3) 0%,transparent 70%);pointer-events:none;}
+.hero-eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:28px;}
+.eyebrow-line{width:32px;height:1px;background:var(--red);}
+.eyebrow-text{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--red);}
+.hero-h1{font-family:'Libre Baskerville',serif;font-size:clamp(34px,4vw,54px);color:#fff;line-height:1.12;font-weight:400;margin-bottom:20px;}
+.hero-h1 em{font-style:italic;color:var(--silver);}
+.hero-p{font-size:14px;color:rgba(255,255,255,.5);line-height:1.9;font-weight:300;max-width:420px;margin-bottom:36px;}
+.hero-btns{display:flex;gap:14px;margin-bottom:52px;}
+.btn-red{background:var(--red);color:#fff;padding:13px 32px;font-size:10px;letter-spacing:2px;text-transform:uppercase;transition:background .2s;}
+.btn-red:hover{background:#a93226;}
+.btn-outline{border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.6);background:none;padding:13px 28px;font-size:10px;letter-spacing:2px;text-transform:uppercase;transition:all .2s;}
+.btn-outline:hover{border-color:var(--silver);color:var(--silver);}
+.hero-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.05);}
+.metric{padding:20px;text-align:center;}
+.metric strong{font-family:'Libre Baskerville',serif;font-size:28px;color:var(--silver);display:block;}
+.metric span{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.3);}
+.hero-right{background:var(--blue-lt);display:grid;grid-template-rows:1fr auto;position:relative;}
+.hero-img{background:url('{{HERO_IMAGE}}') center/cover;opacity:.15;position:absolute;inset:0;}
+.hero-right-content{padding:60px;position:relative;z-index:1;display:flex;align-items:center;justify-content:center;}
+.doctor-panel{background:rgba(255,255,255,.95);padding:32px;border-left:4px solid var(--red);max-width:320px;box-shadow:0 24px 64px rgba(6,18,43,.12);}
+.panel-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:10px;}
+.panel-name{font-family:'Libre Baskerville',serif;font-size:22px;color:var(--deep);margin-bottom:4px;}
+.panel-spec{font-size:11px;color:var(--muted);margin-bottom:16px;}
+.panel-quals{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;}
+.panel-qual{background:var(--blue-lt);color:var(--blue);font-size:9px;font-weight:600;padding:4px 10px;letter-spacing:.5px;}
+.panel-cta{background:var(--red);color:#fff;padding:11px 24px;font-size:9px;letter-spacing:2px;text-transform:uppercase;width:100%;transition:background .2s;}
+.panel-cta:hover{background:#a93226;}
+.hero-urgency{background:var(--red);padding:16px 60px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:1;}
+.urgency-text{font-size:11px;letter-spacing:1px;color:#fff;}
+.urgency-phone{font-family:'Libre Baskerville',serif;font-size:18px;color:#fff;letter-spacing:1px;}
+
+/* TRUST */
+.trust{background:var(--off);display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--border);}
+.trust-cell{padding:22px 28px;border-right:1px solid var(--border);display:flex;align-items:center;gap:12px;}
+.trust-cell:last-child{border-right:none;}
+.trust-icon{font-size:22px;flex-shrink:0;}
+.trust-label{font-size:12px;font-weight:600;color:var(--deep);}
+.trust-sub{font-size:11px;color:var(--muted);}
+
+/* SERVICES */
+.services{padding:80px 64px;background:var(--white);}
+.sec-label{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--red);margin-bottom:8px;}
+h2{font-family:'Libre Baskerville',serif;font-size:36px;font-weight:400;color:var(--deep);}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);margin-top:48px;}
+.svc{background:var(--white);padding:32px 28px;transition:background .3s;}
+.svc:hover{background:var(--blue-lt);}
+.svc-code{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--blue);margin-bottom:14px;font-weight:600;}
+.svc-name{font-family:'Libre Baskerville',serif;font-size:18px;color:var(--deep);margin-bottom:10px;}
+.svc-desc{font-size:12px;color:var(--muted);line-height:1.75;}
+
+/* TECHNOLOGY */
+.technology{background:var(--deep);padding:80px 64px;}
+.tech-inner{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;}
+.tech-copy .sec-label{color:var(--silver);opacity:.6;}
+.tech-copy h2{color:#fff;margin-bottom:16px;}
+.tech-copy p{font-size:13px;color:rgba(255,255,255,.45);line-height:1.85;font-weight:300;margin-bottom:28px;}
+.tech-list{display:flex;flex-direction:column;gap:14px;}
+.tech-item{display:flex;align-items:flex-start;gap:14px;padding:16px;border:1px solid rgba(255,255,255,.06);transition:border-color .3s;}
+.tech-item:hover{border-color:rgba(255,255,255,.15);}
+.tech-item-icon{font-size:20px;flex-shrink:0;}
+.tech-item-label{font-size:12px;font-weight:600;color:rgba(255,255,255,.7);margin-bottom:3px;}
+.tech-item-desc{font-size:11px;color:rgba(255,255,255,.3);line-height:1.6;}
+.tech-visual{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);padding:36px;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.05);}
+.tech-stat{background:var(--deep);padding:28px;text-align:center;}
+.tech-stat strong{font-family:'Libre Baskerville',serif;font-size:34px;color:var(--silver);display:block;margin-bottom:6px;}
+.tech-stat span{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.3);}
+
+/* BOOKING */
+.booking{background:var(--off);padding:80px 64px;}
+.booking-inner{display:grid;grid-template-columns:1fr 1fr;gap:64px;}
+.booking-copy .sec-label{color:var(--red);}
+.booking-copy h2{color:var(--deep);margin-bottom:14px;}
+.booking-copy p{font-size:13px;color:var(--muted);line-height:1.85;margin-bottom:24px;}
+.emergency-box{background:var(--red-lt);border-left:4px solid var(--red);padding:20px 24px;margin-bottom:24px;}
+.emergency-box strong{font-size:13px;color:var(--red);display:block;margin-bottom:4px;}
+.emergency-box span{font-size:12px;color:var(--muted);}
+.booking-form{background:var(--white);border:1px solid var(--border);padding:36px;}
+.form-h{font-family:'Libre Baskerville',serif;font-size:22px;color:var(--deep);margin-bottom:4px;}
+.form-sub{font-size:11px;color:var(--muted);margin-bottom:24px;}
+.f{margin-bottom:16px;}
+.f label{display:block;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
+.f input,.f select{width:100%;border:1px solid var(--border);padding:10px 13px;font-family:'IBM Plex Sans',sans-serif;font-size:13px;color:var(--deep);outline:none;transition:border-color .2s;}
+.f input:focus,.f select:focus{border-color:var(--blue);}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.submit{background:var(--navy);color:#fff;width:100%;padding:13px;font-family:'IBM Plex Sans',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;transition:background .2s;margin-top:6px;}
+.submit:hover{background:var(--red);}
+
+/* FOOTER */
+footer{background:var(--deep);padding:52px 64px;}
+.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:52px;margin-bottom:32px;}
+.foot-name{font-family:'Libre Baskerville',serif;font-size:20px;color:#fff;margin-bottom:4px;}
+.foot-spec{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:14px;}
+.foot-p{font-size:11px;color:rgba(255,255,255,.3);line-height:1.75;}
+.foot-h{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.2);margin-bottom:14px;}
+.foot-ul{list-style:none;}
+.foot-ul li{font-size:11px;color:rgba(255,255,255,.3);margin-bottom:9px;cursor:pointer;transition:color .2s;}
+.foot-ul li:hover{color:var(--silver);}
+.foot-bar{padding-top:24px;border-top:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;}
+.foot-bar p{font-size:10px;color:rgba(255,255,255,.18);letter-spacing:.5px;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div style="display:flex;gap:32px;">
+    <div class="top-item">📍 <span>{{CLINIC_ADDRESS}}</span></div>
+    <div class="top-item">🕐 <span>Sat–Thu 8am–8pm</span></div>
+  </div>
+  <div class="top-emergency">🚨 Cardiac Emergency Line: {{CLINIC_PHONE}}</div>
+</div>
+
+<nav>
+  <div class="logo">
+    <div class="logo-mark">❤️</div>
+    <div><div class="logo-name">{{CLINIC_NAME}}</div><div class="logo-spec">Cardiology & Heart Care</div></div>
+  </div>
+  <div class="nav-links"><a href="#">Services</a><a href="#">Technology</a><a href="#">Our Cardiologist</a><a href="#">Patients</a></div>
+  <button class="nav-emergency">Emergency: {{CLINIC_PHONE}}</button>
+</nav>
+
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow"><div class="eyebrow-line"></div><div class="eyebrow-text">Advanced Cardiac Care · Dubai</div></div>
+    <h1 class="hero-h1">Your Heart<br>Deserves<br><em>Expert Hands.</em></h1>
+    <p class="hero-p">Comprehensive cardiology services from diagnosis to intervention. State-of-the-art technology, precise expertise, compassionate care.</p>
+    <div class="hero-btns">
+      <button class="btn-red">Book Consultation</button>
+      <button class="btn-outline">View Services</button>
+    </div>
+    <div class="hero-metrics">
+      <div class="metric"><strong>20+</strong><span>Years Expertise</span></div>
+      <div class="metric"><strong>5,000+</strong><span>Patients Treated</span></div>
+      <div class="metric"><strong>4.9★</strong><span>Google Rating</span></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img"></div>
+    <div class="hero-right-content">
+      <div class="doctor-panel">
+        <div class="panel-label">Lead Cardiologist</div>
+        <div class="panel-name">{{DOCTOR_NAME}}</div>
+        <div class="panel-spec">Interventional Cardiology · DHA Licensed</div>
+        <div class="panel-quals">
+          <span class="panel-qual">MD Cardiology</span>
+          <span class="panel-qual">Interventional</span>
+          <span class="panel-qual">DHA Licensed</span>
+        </div>
+        <button class="panel-cta">Book Appointment</button>
+      </div>
+    </div>
+    <div class="hero-urgency">
+      <div class="urgency-text">🚨 Cardiac Emergency? We're Available Now</div>
+      <div class="urgency-phone">{{CLINIC_PHONE}}</div>
+    </div>
+  </div>
+</div>
+
+<div class="trust">
+  <div class="trust-cell"><div class="trust-icon">🏛️</div><div><div class="trust-label">DHA Licensed</div><div class="trust-sub">Accredited cardiologist</div></div></div>
+  <div class="trust-cell"><div class="trust-icon">🔬</div><div><div class="trust-label">Advanced Diagnostics</div><div class="trust-sub">Echo, Holter, Stress Test</div></div></div>
+  <div class="trust-cell"><div class="trust-icon">💳</div><div><div class="trust-label">All Insurance Accepted</div><div class="trust-sub">Direct billing available</div></div></div>
+  <div class="trust-cell"><div class="trust-icon">🌍</div><div><div class="trust-label">Arabic & English</div><div class="trust-sub">Bilingual cardiac care</div></div></div>
+</div>
+
+<section class="services">
+  <p class="sec-label">Cardiac Services</p>
+  <h2>Comprehensive Heart Care</h2>
+  <div class="services-grid">
+    <div class="svc"><div class="svc-code">Diagnostics</div><div class="svc-name">Echocardiography</div><p class="svc-desc">Advanced 2D/3D echo and Doppler ultrasound for detailed assessment of heart structure and function.</p></div>
+    <div class="svc"><div class="svc-code">Monitoring</div><div class="svc-name">Holter & Stress Testing</div><p class="svc-desc">24–72 hour cardiac monitoring and exercise stress ECG for arrhythmia and ischaemia detection.</p></div>
+    <div class="svc"><div class="svc-code">Prevention</div><div class="svc-name">Cardiac Risk Assessment</div><p class="svc-desc">Comprehensive cardiovascular risk profiling including lipid panels, inflammatory markers and calcium scoring.</p></div>
+    <div class="svc"><div class="svc-code">Chronic</div><div class="svc-name">Hypertension Management</div><p class="svc-desc">Evidence-based blood pressure management with medication optimisation, lifestyle guidance and monitoring.</p></div>
+    <div class="svc"><div class="svc-code">Chronic</div><div class="svc-name">Heart Failure Care</div><p class="svc-desc">Ongoing management of systolic and diastolic heart failure with treatment optimisation and monitoring.</p></div>
+    <div class="svc"><div class="svc-code">Intervention</div><div class="svc-name">Pre/Post-Op Assessment</div><p class="svc-desc">Comprehensive cardiac evaluation before surgery and post-cardiac procedure follow-up and rehabilitation.</p></div>
+  </div>
+</section>
+
+<section class="technology">
+  <div class="tech-inner">
+    <div class="tech-copy">
+      <p class="sec-label">Our Technology</p>
+      <h2>Precision<br>Diagnostics</h2>
+      <p>State-of-the-art cardiac imaging and monitoring equipment enables accurate, early diagnosis — the cornerstone of effective cardiac care.</p>
+      <div class="tech-list">
+        <div class="tech-item"><div class="tech-item-icon">❤️</div><div><div class="tech-item-label">3D Echocardiography</div><div class="tech-item-desc">High-resolution 3D cardiac imaging for structural heart disease assessment</div></div></div>
+        <div class="tech-item"><div class="tech-item-icon">📊</div><div><div class="tech-item-label">Digital ECG & Holter</div><div class="tech-item-desc">12-lead ECG and up to 72-hour ambulatory cardiac monitoring</div></div></div>
+        <div class="tech-item"><div class="tech-item-icon">🏃</div><div><div class="tech-item-label">Treadmill Stress Test</div><div class="tech-item-desc">Exercise ECG testing with continuous BP and cardiac monitoring</div></div></div>
+      </div>
+    </div>
+    <div class="tech-visual">
+      <div class="tech-stat"><strong>99%</strong><span>Diagnostic Accuracy</span></div>
+      <div class="tech-stat"><strong>24/7</strong><span>Emergency Line</span></div>
+      <div class="tech-stat"><strong>5K+</strong><span>Patients Treated</span></div>
+      <div class="tech-stat"><strong>20+</strong><span>Years Experience</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="booking">
+  <div class="booking-inner">
+    <div class="booking-copy">
+      <p class="sec-label">Appointments</p>
+      <h2>Book Your<br>Cardiac Consultation</h2>
+      <p>Same-week appointments available for new patients. Urgent referrals prioritised. Direct billing for all major insurance providers.</p>
+      <div class="emergency-box">
+        <strong>🚨 Chest Pain or Cardiac Emergency?</strong>
+        <span>Call us immediately on {{CLINIC_PHONE}} — available 24/7 for cardiac emergencies.</span>
+      </div>
+    </div>
+    <div class="booking-form">
+      <div class="form-h">Request Appointment</div>
+      <div class="form-sub">We'll confirm within 2 hours. Urgent cases prioritised.</div>
+      <div class="f-row">
+        <div class="f"><label>Full Name</label><input type="text" placeholder="Your name"></div>
+        <div class="f"><label>Phone</label><input type="text" placeholder="+971 xx xxx xxxx"></div>
+      </div>
+      <div class="f"><label>Reason for Visit</label>
+        <select><option>New Patient Consultation</option><option>Chest Pain / Palpitations</option><option>Echocardiogram</option><option>Holter / Stress Test</option><option>Follow-Up</option><option>Pre-Surgery Assessment</option></select>
+      </div>
+      <div class="f-row">
+        <div class="f"><label>Preferred Date</label><input type="date"></div>
+        <div class="f"><label>Insurance</label><input type="text" placeholder="Insurance provider"></div>
+      </div>
+      <button class="submit">Request Appointment</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-grid">
+    <div><div class="foot-name">{{CLINIC_NAME}}</div><div class="foot-spec">Cardiology & Heart Care · Dubai</div><p class="foot-p">Advanced cardiac diagnostics and care. DHA licensed. All major insurance accepted. Emergency line available 24/7.</p></div>
+    <div class="foot-col"><div class="foot-h">Services</div><ul class="foot-ul"><li>Echocardiography</li><li>Holter Monitoring</li><li>Stress Testing</li><li>Hypertension</li><li>Heart Failure</li></ul></div>
+    <div class="foot-col"><div class="foot-h">Clinic</div><ul class="foot-ul"><li>Our Cardiologist</li><li>Technology</li><li>Insurance</li><li>Patient Info</li></ul></div>
+    <div class="foot-col"><div class="foot-h">Contact</div><ul class="foot-ul"><li>{{CLINIC_PHONE}}</li><li>{{CLINIC_ADDRESS}}</li></ul></div>
+  </div>
+  <div class="foot-bar"><p>© 2026 {{CLINIC_NAME}} · Dubai · DHA Licensed Cardiology</p><p>Privacy Policy</p></div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fragrance Redesign Preview — Oud</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Raleway:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --amber:#C8923C;
+    --amber-light:#E8C078;
+    --amber-dim:rgba(200,146,60,.4);
+    --bg:#060408;
+    --surface:#0d0810;
+    --card:#130a0e;
+    --ink:#F0EAE0;
+    --muted:rgba(240,234,224,.42);
+    --border:rgba(200,146,60,.14);
+    --border-soft:rgba(240,234,224,.06);
+  }
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);font-family:'Raleway',sans-serif;color:var(--ink);overflow-x:hidden}
+
+  .expiry{background:linear-gradient(90deg,#1a0a12,#0d0810);border-bottom:1px solid var(--border);text-align:center;padding:10px 20px;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:rgba(240,234,224,.4)}
+  .expiry strong{color:var(--amber-light);font-weight:400}
+
+  nav{position:sticky;top:0;z-index:200;background:rgba(6,4,8,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 52px;height:64px;display:flex;align-items:center;justify-content:space-between}
+  .nav-brand{font-family:'EB Garamond',serif;font-size:22px;font-weight:400;letter-spacing:.16em;color:var(--amber);text-transform:uppercase;font-style:italic}
+  .nav-links{display:flex;gap:32px;list-style:none}
+  .nav-links a{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);text-decoration:none;font-weight:300;transition:color .2s}
+  .nav-links a:hover{color:var(--amber)}
+  .nav-cta{background:transparent;color:var(--amber);border:1px solid var(--border);padding:9px 22px;font-size:9px;letter-spacing:.28em;text-transform:uppercase;cursor:pointer;font-family:'Raleway',sans-serif;transition:all .25s}
+  .nav-cta:hover{background:var(--amber);color:var(--bg)}
+
+  /* HERO — FULL IMMERSIVE */
+  .hero{position:relative;height:100svh;min-height:600px;overflow:hidden;display:flex;align-items:center}
+  .hero-bg{position:absolute;inset:0}
+  .hero-bg img{width:100%;height:100%;object-fit:cover;filter:brightness(.2) saturate(.5);transition:transform 14s ease}
+  .hero:hover .hero-bg img{transform:scale(1.04)}
+  .hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(6,4,8,.92) 0%,rgba(6,4,8,.5) 50%,transparent 80%)}
+  .hero-bg::before{content:'';position:absolute;bottom:0;left:0;width:60%;height:70%;background:radial-gradient(ellipse at 20% 80%,rgba(200,146,60,.12) 0%,transparent 60%)}
+  .hero-content{position:relative;z-index:10;padding:0 80px;max-width:700px}
+  .hero-badge{display:inline-block;background:rgba(200,146,60,.1);border:1px solid var(--border);color:var(--amber);padding:8px 20px;font-size:9px;letter-spacing:.38em;text-transform:uppercase;margin-bottom:28px;font-weight:300}
+  .hero-title{font-family:'EB Garamond',serif;font-size:clamp(52px,8.5vw,116px);font-weight:400;line-height:.92;color:var(--ink);margin-bottom:24px}
+  .hero-title em{font-style:italic;color:var(--amber);display:block}
+  .hero-tagline{font-size:14px;font-weight:300;color:var(--muted);margin-bottom:48px;line-height:1.9;max-width:420px;letter-spacing:.03em}
+  .hero-actions{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:64px}
+  .btn-amber{display:inline-block;background:var(--amber);color:var(--bg);padding:14px 40px;font-size:9px;letter-spacing:.32em;text-transform:uppercase;text-decoration:none;font-weight:500;border:1px solid var(--amber);transition:all .25s}
+  .btn-amber:hover{background:transparent;color:var(--amber)}
+  .btn-ghost{display:inline-block;background:transparent;color:rgba(240,234,224,.6);padding:13px 40px;font-size:9px;letter-spacing:.32em;text-transform:uppercase;text-decoration:none;font-weight:300;border:1px solid rgba(240,234,224,.18);transition:all .25s}
+  .btn-ghost:hover{border-color:var(--amber);color:var(--amber)}
+  /* Notes display */
+  .hero-notes{display:flex;gap:32px;flex-wrap:wrap}
+  .note-group{}
+  .ng-label{font-size:8px;letter-spacing:.38em;text-transform:uppercase;color:rgba(240,234,224,.3);margin-bottom:8px;font-weight:300}
+  .ng-notes{display:flex;gap:8px;flex-wrap:wrap}
+  .ng-note{border:1px solid var(--border);padding:5px 12px;font-size:10px;color:var(--amber);letter-spacing:.1em;font-weight:300}
+  .hero-scroll{position:absolute;bottom:36px;right:52px;z-index:10;display:flex;flex-direction:column;align-items:center;gap:10px}
+  .hero-scroll span{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:rgba(240,234,224,.25);writing-mode:vertical-rl;transform:rotate(180deg)}
+  .scroll-line{width:1px;height:48px;background:linear-gradient(to bottom,transparent,var(--amber-dim))}
+
+  /* TICKER */
+  .ticker{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 0;overflow:hidden}
+  .ticker-inner{display:inline-block;white-space:nowrap;animation:slide 28s linear infinite;font-size:9px;letter-spacing:.4em;text-transform:uppercase;color:rgba(240,234,224,.28);font-weight:300}
+  .ticker-inner span{margin:0 36px;color:var(--amber)}
+  @keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* PROOF */
+  .proof-bar{display:grid;grid-template-columns:repeat(4,1fr);background:var(--surface);border-bottom:1px solid var(--border)}
+  .proof-stat{padding:36px 20px;text-align:center;border-right:1px solid var(--border)}
+  .proof-stat:last-child{border-right:none}
+  .ps-num{font-family:'EB Garamond',serif;font-size:44px;font-weight:400;color:var(--amber);line-height:1;margin-bottom:8px;font-style:italic}
+  .ps-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-weight:300}
+
+  .section{padding:100px 60px}
+  .section.alt{background:var(--surface)}
+  .s-label{font-size:9px;letter-spacing:.42em;text-transform:uppercase;color:var(--amber);margin-bottom:14px;font-weight:300}
+  .s-title{font-family:'EB Garamond',serif;font-size:clamp(34px,4.5vw,58px);font-weight:400;color:var(--ink);line-height:1.1}
+  .s-title em{font-style:italic;color:var(--amber)}
+
+  /* FRAGRANCE GRID */
+  .fragrance-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border-soft)}
+  .frag-card{background:var(--card);cursor:pointer;transition:background .3s;position:relative;overflow:hidden}
+  .frag-card:hover{background:#1a0e14}
+  .frag-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--amber),transparent);opacity:0;transition:opacity .3s}
+  .frag-card:hover::before{opacity:1}
+  .frag-img{position:relative;overflow:hidden;aspect-ratio:3/4;background:#0a060c}
+  .frag-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.7) saturate(.5);transition:transform .7s,filter .4s}
+  .frag-card:hover .frag-img img{transform:scale(1.05);filter:brightness(.5) saturate(.4)}
+  .frag-overlay{position:absolute;inset:0;background:rgba(6,4,8,.8);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .35s}
+  .frag-card:hover .frag-overlay{opacity:1}
+  .fo-btn{background:var(--amber);color:var(--bg);border:none;padding:11px 28px;font-size:9px;letter-spacing:.28em;text-transform:uppercase;cursor:pointer;font-family:'Raleway',sans-serif;font-weight:500}
+  .frag-info{padding:24px 28px}
+  .frag-family{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--amber);margin-bottom:8px;font-weight:300}
+  .frag-name{font-family:'EB Garamond',serif;font-size:22px;font-weight:400;color:var(--ink);margin-bottom:6px;font-style:italic}
+  .frag-notes{font-size:11px;color:var(--muted);margin-bottom:12px;font-weight:300;line-height:1.6}
+  .frag-size-price{display:flex;justify-content:space-between;align-items:center}
+  .frag-sizes{display:flex;gap:8px}
+  .frag-size{border:1px solid var(--border);padding:4px 10px;font-size:10px;color:var(--muted);font-weight:300}
+  .frag-price{font-size:14px;color:var(--amber-light)}
+
+  /* NOTES ANATOMY */
+  .notes-anatomy{display:grid;grid-template-columns:1fr 1fr;gap:0;min-height:580px}
+  .na-img{overflow:hidden;position:relative}
+  .na-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.35) saturate(.4)}
+  .na-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,transparent 60%,var(--surface) 100%)}
+  .na-content{background:var(--surface);display:flex;flex-direction:column;justify-content:center;padding:80px;border-left:1px solid var(--border)}
+  .na-label{font-size:9px;letter-spacing:.42em;text-transform:uppercase;color:var(--amber);margin-bottom:20px;font-weight:300}
+  .na-title{font-family:'EB Garamond',serif;font-size:clamp(28px,3.5vw,48px);font-weight:400;color:var(--ink);line-height:1.1;margin-bottom:32px}
+  .na-title em{font-style:italic;color:var(--amber)}
+  .notes-stack{display:flex;flex-direction:column;gap:0;margin-bottom:36px}
+  .note-tier{padding:20px 0;border-bottom:1px solid var(--border)}
+  .note-tier:last-child{border-bottom:none}
+  .nt-label{font-size:9px;letter-spacing:.35em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+  .nt-notes{display:flex;gap:8px;flex-wrap:wrap}
+  .nt-note{background:rgba(200,146,60,.08);border:1px solid var(--border);padding:6px 14px;font-size:11px;color:var(--amber-light);letter-spacing:.1em;font-weight:300}
+
+  /* INTENSITY BAR */
+  .intensity{padding:48px 0 0}
+  .int-title{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;font-weight:300}
+  .int-bar{height:2px;background:rgba(240,234,224,.08);position:relative;margin-bottom:8px}
+  .int-fill{height:100%;background:linear-gradient(to right,var(--amber-dim),var(--amber));width:85%}
+  .int-labels{display:flex;justify-content:space-between;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(240,234,224,.25)}
+
+  /* RITUAL */
+  .ritual-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border-soft)}
+  .ritual-step{background:var(--card);padding:48px 32px;text-align:center}
+  .rs-num{font-family:'EB Garamond',serif;font-size:52px;font-weight:400;color:rgba(200,146,60,.12);line-height:1;margin-bottom:16px;font-style:italic}
+  .rs-icon{font-size:24px;margin-bottom:14px}
+  .rs-title{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--amber);margin-bottom:12px;font-weight:400}
+  .rs-desc{font-size:13px;line-height:1.9;color:var(--muted);font-weight:300}
+
+  /* FULL BANNER */
+  .banner{position:relative;height:60vh;min-height:400px;overflow:hidden;display:flex;align-items:center;justify-content:center;text-align:center}
+  .banner img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.15) saturate(.3)}
+  .banner::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(200,146,60,.1) 0%,transparent 65%)}
+  .banner-content{position:relative;z-index:2;max-width:700px;padding:40px}
+  .banner-divider{width:48px;height:1px;background:var(--amber);margin:0 auto 28px}
+  .banner-label{font-size:9px;letter-spacing:.42em;text-transform:uppercase;color:var(--amber-dim);margin-bottom:18px}
+  .banner-title{font-family:'EB Garamond',serif;font-size:clamp(36px,5.5vw,72px);font-weight:400;color:#fff;line-height:1.0;margin-bottom:20px;font-style:italic}
+  .banner-sub{font-size:13px;color:rgba(255,255,255,.45);font-weight:300;margin-bottom:36px;line-height:1.8;max-width:500px;margin-left:auto;margin-right:auto}
+
+  /* HERITAGE */
+  .heritage{display:grid;grid-template-columns:1fr 1fr;min-height:540px}
+  .h-img{overflow:hidden}
+  .h-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.3) saturate(.4);transition:transform 10s}
+  .h-img:hover img{transform:scale(1.03)}
+  .h-content{background:var(--amber);display:flex;flex-direction:column;justify-content:center;padding:80px}
+  .hc-label{font-size:9px;letter-spacing:.42em;text-transform:uppercase;color:rgba(6,4,8,.45);margin-bottom:20px}
+  .hc-title{font-family:'EB Garamond',serif;font-size:clamp(30px,3.5vw,52px);font-weight:400;color:var(--bg);line-height:1.1;margin-bottom:20px;font-style:italic}
+  .hc-desc{font-size:13px;line-height:2;color:rgba(6,4,8,.6);font-weight:300;margin-bottom:36px;max-width:360px}
+  .btn-dark{display:inline-block;background:var(--bg);color:var(--amber);padding:13px 36px;font-size:9px;letter-spacing:.32em;text-transform:uppercase;text-decoration:none;font-weight:400;align-self:flex-start;transition:background .2s}
+  .btn-dark:hover{background:#1a0a12}
+
+  /* REVIEWS */
+  .reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border-soft)}
+  .review-card{background:var(--card);padding:44px 36px}
+  .r-stars{letter-spacing:3px;color:var(--amber);font-size:12px;margin-bottom:18px}
+  .r-quote{font-family:'EB Garamond',serif;font-size:44px;color:rgba(200,146,60,.2);line-height:.6;margin-bottom:14px;font-style:italic}
+  .r-text{font-family:'EB Garamond',serif;font-size:17px;font-style:italic;line-height:1.9;color:rgba(240,234,224,.7);margin-bottom:20px;font-weight:400}
+  .r-author{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+  .r-fragrance{font-size:10px;color:var(--amber);margin-top:4px;letter-spacing:.1em}
+
+  /* NEWSLETTER + FOOTER */
+  .footer-nl{background:var(--surface);border-top:1px solid var(--border);padding:64px 60px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+  .nl-label{font-size:9px;letter-spacing:.42em;text-transform:uppercase;color:var(--amber);margin-bottom:14px}
+  .nl-title{font-family:'EB Garamond',serif;font-size:38px;font-weight:400;color:var(--ink);line-height:1.2;font-style:italic}
+  .nl-form{display:flex}
+  .nl-input{flex:1;padding:14px 20px;background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--ink);font-family:'Raleway',sans-serif;font-size:13px;outline:none;border-right:none}
+  .nl-input::placeholder{color:var(--muted);font-size:12px}
+  .nl-submit{background:var(--amber);color:var(--bg);border:none;padding:14px 28px;font-family:'Raleway',sans-serif;font-size:9px;letter-spacing:.28em;text-transform:uppercase;cursor:pointer;white-space:nowrap;font-weight:500}
+  .nl-note{font-size:11px;color:rgba(240,234,224,.2);margin-top:12px;font-weight:300}
+
+  footer{background:#030206;padding:80px 60px 40px}
+  .footer-grid{display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:56px;padding-bottom:56px;border-bottom:1px solid rgba(200,146,60,.08)}
+  .footer-logo{font-family:'EB Garamond',serif;font-size:26px;font-weight:400;color:rgba(240,234,224,.9);letter-spacing:.12em;text-transform:uppercase;margin-bottom:16px;font-style:italic}
+  .footer-brand-desc{font-size:13px;line-height:1.9;color:rgba(240,234,224,.28);font-weight:300;margin-bottom:28px;max-width:240px}
+  .footer-social{display:flex;gap:12px}
+  .social-link{width:36px;height:36px;border:1px solid rgba(200,146,60,.15);display:flex;align-items:center;justify-content:center;font-size:13px;text-decoration:none;color:rgba(240,234,224,.3);transition:all .2s}
+  .social-link:hover{border-color:var(--amber);color:var(--amber)}
+  .footer-col-title{font-size:9px;letter-spacing:.35em;text-transform:uppercase;color:rgba(240,234,224,.8);margin-bottom:24px;font-weight:400}
+  .footer-links-list{list-style:none;display:flex;flex-direction:column;gap:12px}
+  .footer-links-list a{font-size:13px;color:rgba(240,234,224,.3);text-decoration:none;font-weight:300;transition:color .2s}
+  .footer-links-list a:hover{color:var(--amber)}
+  .footer-contact-list{list-style:none;display:flex;flex-direction:column;gap:14px}
+  .contact-item{display:flex;gap:12px}
+  .contact-icon{font-size:14px;flex-shrink:0}
+  .contact-text{font-size:12px;color:rgba(240,234,224,.3);font-weight:300;line-height:1.7}
+  .contact-text a{color:inherit;text-decoration:none;transition:color .2s}
+  .contact-text a:hover{color:var(--amber)}
+  .footer-bottom{padding-top:32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+  .footer-legal{font-size:11px;color:rgba(240,234,224,.18)}
+  .footer-legal-links{display:flex;gap:24px}
+  .footer-legal-links a{font-size:11px;color:rgba(240,234,224,.18);text-decoration:none;transition:color .2s}
+  .footer-legal-links a:hover{color:rgba(240,234,224,.5)}
+  .footer-powered{font-size:9px;letter-spacing:.22em;color:rgba(240,234,224,.12);text-transform:uppercase}
+
+  .sticky-cta{display:none;position:fixed;bottom:0;left:0;right:0;z-index:300;background:rgba(6,4,8,.97);border-top:1px solid var(--border);padding:14px 20px;flex-direction:column;gap:10px;backdrop-filter:blur(12px)}
+  .sticky-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;text-align:center;color:var(--muted)}
+  .sticky-buttons{display:flex;gap:10px}
+  .s-book{flex:1;background:transparent;border:1px solid var(--border);color:var(--amber);padding:13px;font-size:9px;letter-spacing:.25em;text-transform:uppercase;cursor:pointer;font-family:'Raleway',sans-serif}
+  .s-buy{flex:1.5;background:var(--amber);border:none;color:var(--bg);padding:13px;font-size:9px;letter-spacing:.25em;text-transform:uppercase;cursor:pointer;font-family:'Raleway',sans-serif;font-weight:500}
+
+  .switcher{position:fixed;bottom:30px;right:30px;z-index:400}
+  .switcher-btn{background:var(--surface);color:var(--amber);border:1px solid var(--border);width:50px;height:50px;border-radius:50%;font-size:18px;cursor:pointer;box-shadow:0 6px 28px rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center}
+  .switcher-menu{position:absolute;bottom:62px;right:0;background:var(--card);border:1px solid var(--border);padding:16px 20px;min-width:220px;display:none;box-shadow:0 12px 40px rgba(0,0,0,.7)}
+  .switcher-menu.open{display:block}
+  .sm-title{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+  .s-opt{display:flex;align-items:center;gap:12px;padding:9px 0;font-size:12px;color:rgba(240,234,224,.45);text-decoration:none;border-bottom:1px solid var(--border-soft);transition:color .2s;font-weight:300}
+  .s-opt:last-child{border-bottom:none}
+  .s-opt.active{color:var(--amber)}
+  .s-dot{width:7px;height:7px;border-radius:50%;border:1.5px solid var(--amber)}
+  .s-dot.filled{background:var(--amber)}
+
+  .fade-up{opacity:0;transform:translateY(28px);transition:opacity .9s ease,transform .9s ease}
+  .fade-up.visible{opacity:1;transform:translateY(0)}
+  .stagger-1{transition-delay:.1s}.stagger-2{transition-delay:.2s}.stagger-3{transition-delay:.3s}
+
+  @media(max-width:768px){
+    nav{padding:16px 20px}
+    .nav-links{display:none}
+    .hero-content{padding:0 24px}
+    .hero-title{font-size:52px}
+    .hero-scroll{display:none}
+    .proof-bar{grid-template-columns:repeat(2,1fr)}
+    .section{padding:60px 24px}
+    .fragrance-grid{grid-template-columns:1fr 1fr}
+    .notes-anatomy{grid-template-columns:1fr}
+    .na-img{height:60vw}
+    .na-content{padding:44px 24px;border-left:none;border-top:1px solid var(--border)}
+    .ritual-grid{grid-template-columns:1fr 1fr}
+    .banner{height:80vw}
+    .heritage{grid-template-columns:1fr}
+    .h-img{height:60vw}
+    .h-content{padding:48px 24px}
+    .reviews-grid{grid-template-columns:1fr}
+    .footer-nl{grid-template-columns:1fr;padding:48px 24px;gap:32px}
+    .nl-form{flex-direction:column}
+    footer{padding:56px 24px 32px}
+    .footer-grid{grid-template-columns:1fr 1fr;gap:36px}
+    .footer-bottom{flex-direction:column;align-items:flex-start}
+    .sticky-cta{display:flex}
+    .switcher{bottom:100px;right:16px}
+  }
+</style>
+</head>
+<body>
+
+<div class="expiry">⏰ Preview expires in: <strong id="countdown">6d 23h 41m</strong> &nbsp;·&nbsp; Crafted exclusively for your brand</div>
+
+<nav>
+  <div class="nav-brand">Your Brand</div>
+  <ul class="nav-links">
+    <li><a href="#">Collections</a></li>
+    <li><a href="#">Oud</a></a></li>
+    <li><a href="#">Attars</a></li>
+    <li><a href="#">Heritage</a></li>
+  </ul>
+  <button class="nav-cta">Discover</button>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"><img src="https://images.unsplash.com/photo-1547887538-e3a2f32cb1cc?w=1600&q=90" alt=""></div>
+  <div class="hero-content">
+    <div class="hero-badge">Arabian Perfumery · Est. 1982</div>
+    <h1 class="hero-title">Worn by<br>those who<br><em>dare.</em></h1>
+    <p class="hero-tagline">Oud from Cambodia. Rose from Taif. Musk from the heart of the Arabian Peninsula. Fragrances built for depth, for presence, for memory.</p>
+    <div class="hero-actions">
+      <a href="#" class="btn-amber">Explore Collection</a>
+      <a href="#" class="btn-ghost">Our Heritage</a>
+    </div>
+    <div class="hero-notes">
+      <div class="note-group"><div class="ng-label">Top Notes</div><div class="ng-notes"><span class="ng-note">Saffron</span><span class="ng-note">Bergamot</span></div></div>
+      <div class="note-group"><div class="ng-label">Heart Notes</div><div class="ng-notes"><span class="ng-note">Rose</span><span class="ng-note">Oud</span></div></div>
+      <div class="note-group"><div class="ng-label">Base Notes</div><div class="ng-notes"><span class="ng-note">Amber</span><span class="ng-note">Musk</span></div></div>
+    </div>
+  </div>
+  <div class="hero-scroll"><span>Scroll</span><div class="scroll-line"></div></div>
+</section>
+
+<div class="ticker">
+  <div class="ticker-inner">Cambodian Oud <span>·</span> Taif Rose <span>·</span> White Musk <span>·</span> Ambergris <span>·</span> Saffron <span>·</span> Indian Sandalwood <span>·</span> Cambodian Oud <span>·</span> Taif Rose <span>·</span> White Musk <span>·</span> Ambergris <span>·</span></div>
+</div>
+
+<div class="proof-bar">
+  <div class="proof-stat fade-up"><div class="ps-num">40+</div><div class="ps-label">Years Perfuming</div></div>
+  <div class="proof-stat fade-up stagger-1"><div class="ps-num">80+</div><div class="ps-label">Unique Fragrances</div></div>
+  <div class="proof-stat fade-up stagger-2"><div class="ps-num">12</div><div class="ps-label">Countries of Origin</div></div>
+  <div class="proof-stat fade-up stagger-3"><div class="ps-num">GCC</div><div class="ps-label">Award Winner</div></div>
+</div>
+
+<section class="section alt">
+  <div class="s-label fade-up" style="margin-bottom:14px">The Collection</div>
+  <h2 class="s-title fade-up" style="margin-bottom:52px">Scents of the <em>Ancient World</em></h2>
+  <div class="fragrance-grid">
+    <div class="frag-card fade-up"><div class="frag-img"><img src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=600&q=85" alt=""><div class="frag-overlay"><button class="fo-btn">Discover</button></div></div><div class="frag-info"><div class="frag-family">Oud Oriental</div><div class="frag-name">Cambodian Night</div><div class="frag-notes">Oud · Rose · Amber · Saffron</div><div class="frag-size-price"><div class="frag-sizes"><span class="frag-size">30ml</span><span class="frag-size">50ml</span><span class="frag-size">100ml</span></div><div class="frag-price">AED 450</div></div></div></div>
+    <div class="frag-card fade-up stagger-1"><div class="frag-img"><img src="https://images.unsplash.com/photo-1541643600914-78b084683702?w=600&q=85" alt=""><div class="frag-overlay"><button class="fo-btn">Discover</button></div></div><div class="frag-info"><div class="frag-family">Floral Musk</div><div class="frag-name">Taif Rosé</div><div class="frag-notes">Rose · White Musk · Sandalwood</div><div class="frag-size-price"><div class="frag-sizes"><span class="frag-size">30ml</span><span class="frag-size">75ml</span></div><div class="frag-price">AED 320</div></div></div></div>
+    <div class="frag-card fade-up stagger-2"><div class="frag-img"><img src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=600&q=85" alt=""><div class="frag-overlay"><button class="fo-btn">Discover</button></div></div><div class="frag-info"><div class="frag-family">Amber Woody</div><div class="frag-name">Desert Smoke</div><div class="frag-notes">Amber · Incense · Patchouli · Musk</div><div class="frag-size-price"><div class="frag-sizes"><span class="frag-size">50ml</span><span class="frag-size">100ml</span></div><div class="frag-price">AED 380</div></div></div></div>
+  </div>
+</section>
+
+<div class="notes-anatomy">
+  <div class="na-img"><img src="https://images.unsplash.com/photo-1547887538-e3a2f32cb1cc?w=900&q=85" alt=""></div>
+  <div class="na-content fade-up">
+    <p class="na-label">Fragrance Architecture</p>
+    <h2 class="na-title">The Notes of<br><em>Cambodian Night</em></h2>
+    <div class="notes-stack">
+      <div class="note-tier"><div class="nt-label">Top Notes — First Impression</div><div class="nt-notes"><span class="nt-note">Saffron</span><span class="nt-note">Bergamot</span><span class="nt-note">Pink Pepper</span></div></div>
+      <div class="note-tier"><div class="nt-label">Heart Notes — The Soul</div><div class="nt-notes"><span class="nt-note">Cambodian Oud</span><span class="nt-note">Taif Rose</span><span class="nt-note">Jasmine</span></div></div>
+      <div class="note-tier"><div class="nt-label">Base Notes — The Memory</div><div class="nt-notes"><span class="nt-note">White Ambergris</span><span class="nt-note">Sandalwood</span><span class="nt-note">Musk</span></div></div>
+    </div>
+    <div class="intensity">
+      <div class="int-title">Projection & Sillage</div>
+      <div class="int-bar"><div class="int-fill"></div></div>
+      <div class="int-labels"><span>Subtle</span><span>Powerful</span></div>
+    </div>
+    <br><a href="#" class="btn-amber" style="margin-top:32px">Shop Now — AED 450</a>
+  </div>
+</div>
+
+<section class="section">
+  <div class="s-label fade-up" style="text-align:center;margin-bottom:14px">The Ritual</div>
+  <h2 class="s-title fade-up" style="text-align:center;margin-bottom:52px">How to Wear <em>Oud</em></h2>
+  <div class="ritual-grid">
+    <div class="ritual-step fade-up"><div class="rs-num">01</div><div class="rs-icon">🚿</div><div class="rs-title">Prepare</div><div class="rs-desc">Apply to clean, moisturised skin. The warmth of your body activates the fragrance and allows the notes to bloom.</div></div>
+    <div class="ritual-step fade-up stagger-1"><div class="rs-num">02</div><div class="rs-icon">✨</div><div class="rs-title">Apply</div><div class="rs-desc">Pulse points — the wrists, neck, behind the ears, the inside of the elbow. Never rub. Let it breathe.</div></div>
+    <div class="ritual-step fade-up stagger-2"><div class="rs-num">03</div><div class="rs-icon">🌫️</div><div class="rs-title">Layer</div><div class="rs-desc">For deeper presence, layer with our matching oud oil beneath. The two interact and evolve on your skin throughout the day.</div></div>
+    <div class="ritual-step fade-up stagger-3"><div class="rs-num">04</div><div class="rs-icon">🕰️</div><div class="rs-title">Experience</div><div class="rs-desc">Give it 30 minutes. The top notes fade and the heart emerges. The true scent of oud is patient — and so are those who wear it.</div></div>
+  </div>
+</section>
+
+<div class="banner">
+  <img src="https://images.unsplash.com/photo-1512207846876-bb54ef5056fe?w=1600&q=85" alt="">
+  <div class="banner-content fade-up">
+    <div class="banner-divider"></div>
+    <p class="banner-label">Bespoke Attar</p>
+    <h2 class="banner-title">A scent only<br>you will carry.</h2>
+    <p class="banner-sub">Commission a bespoke attar — a fragrance composed entirely for you, blended from the world's rarest raw materials, and bottled in our hand-etched crystal flacons.</p>
+    <a href="#" class="btn-amber">Begin Your Scent</a>
+  </div>
+</div>
+
+<div class="heritage">
+  <div class="h-img"><img src="https://images.unsplash.com/photo-1547887538-e3a2f32cb1cc?w=900&q=85" alt=""></div>
+  <div class="h-content fade-up">
+    <p class="hc-label">Our Heritage</p>
+    <h2 class="hc-title">40 Years of<br>Arabian Perfumery</h2>
+    <p class="hc-desc">We began with one master perfumer, a small atelier in the Gold Souk, and an unwavering belief that the Arabian Peninsula has the finest olfactory tradition on earth. We still believe that.</p>
+    <a href="#" class="btn-dark">Read Our Story</a>
+  </div>
+</div>
+
+<section class="section alt">
+  <div class="s-label fade-up" style="text-align:center;margin-bottom:14px">Those Who Wear It</div>
+  <h2 class="s-title fade-up" style="text-align:center;margin-bottom:52px">Words of <em>Devotion</em></h2>
+  <div class="reviews-grid">
+    <div class="review-card fade-up"><div class="r-stars">★★★★★</div><div class="r-quote">"</div><p class="r-text">Cambodian Night is the only fragrance I have worn for 11 years. People don't ask what I'm wearing — they ask who I am when I walk in.</p><div class="r-author">Mohammed Al Zaabi</div><div class="r-fragrance">Cambodian Night · Dubai</div></div>
+    <div class="review-card fade-up stagger-1"><div class="r-stars">★★★★★</div><div class="r-quote">"</div><p class="r-text">I have visited perfumeries from Paris to Tokyo. Nothing comes close to the depth and longevity of what is crafted here. This is oud at its finest.</p><div class="r-author">Laila Al Rashidi</div><div class="r-fragrance">Taif Rosé · Riyadh</div></div>
+    <div class="review-card fade-up stagger-2"><div class="r-stars">★★★★★</div><div class="r-quote">"</div><p class="r-text">The bespoke attar service was extraordinary. They created something that was entirely mine — a scent I had felt in my imagination but never found. Until now.</p><div class="r-author">Hamad Al Falasi</div><div class="r-fragrance">Bespoke Attar · Abu Dhabi</div></div>
+  </div>
+</section>
+
+<div class="footer-nl">
+  <div class="fade-up"><p class="nl-label">The Inner Circle</p><h3 class="nl-title">New releases.<br>First to discover.</h3></div>
+  <div class="fade-up stagger-1">
+    <div class="nl-form"><input class="nl-input" type="email" placeholder="Your email address"><button class="nl-submit">Subscribe</button></div>
+    <p class="nl-note">Limited releases and private previews for subscribers only.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">Your Brand</div>
+      <p class="footer-brand-desc">Arabian perfumery rooted in 40 years of tradition. Oud, rose, and the rarest raw materials — crafted into scents that last a lifetime.</p>
+      <div class="footer-social">
+        <a href="#" class="social-link">𝕏</a>
+        <a href="#" class="social-link">in</a>
+        <a href="#" class="social-link">📷</a>
+        <a href="#" class="social-link">▶</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Collections</div>
+      <ul class="footer-links-list"><li><a href="#">Oud Collection</a></li><li><a href="#">Attars & Oils</a></li><li><a href="#">Floral</a></li><li><a href="#">Woody & Amber</a></li><li><a href="#">Gift Sets</a></li><li><a href="#">Bespoke</a></li></ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Services</div>
+      <ul class="footer-links-list"><li><a href="#">Bespoke Attar</a></li><li><a href="#">Fragrance Consultation</a></li><li><a href="#">Corporate Gifting</a></li><li><a href="#">Wedding Fragrances</a></li><li><a href="#">Fragrance Layering</a></li><li><a href="#">Gift Wrapping</a></li></ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Visit Us</div>
+      <ul class="footer-contact-list">
+        <li class="contact-item"><span class="contact-icon">📍</span><span class="contact-text">Gold Souk, Deira<br>Dubai, UAE</span></li>
+        <li class="contact-item"><span class="contact-icon">📞</span><span class="contact-text"><a href="tel:+97144000000">+971 4 400 0000</a></span></li>
+        <li class="contact-item"><span class="contact-icon">✉️</span><span class="contact-text"><a href="/cdn-cgi/l/email-protection#563722223724162f39232434243738327835393b"><span class="__cf_email__" data-cfemail="7f1e0b0b1e0d3f06100a0d1d0d1e111b511c1012">[email&#160;protected]</span></a></span></li>
+        <li class="contact-item"><span class="contact-icon">🕐</span><span class="contact-text">Sat–Thu: 9am–11pm<br>Fri: 2pm–11pm</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-legal">© 2026 Your Brand Perfumes. All rights reserved.</div>
+    <div class="footer-legal-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Returns</a><a href="#">Accessibility</a></div>
+    <div class="footer-powered">Preview by MorningStar.ai</div>
+  </div>
+</footer>
+
+<div class="sticky-cta">
+  <div class="sticky-label">Like this redesign for your brand?</div>
+  <div class="sticky-buttons"><button class="s-book">Book a Call</button><button class="s-buy">Get This — AED 9,200</button></div>
+</div>
+
+<div class="switcher">
+  <div class="switcher-menu" id="sm">
+    <div class="sm-title">Fragrance Variants</div>
+    <a class="s-opt active" href="perfume-oud.html"><div class="s-dot filled"></div> Oud — Arabian Dark</a>
+    <a class="s-opt" href="perfume-parisien.html"><div class="s-dot"></div> Parisien — French White</a>
+    <a class="s-opt" href="perfume-botanique.html"><div class="s-dot"></div> Botanique — Natural Sage</a>
+  </div>
+  <button class="switcher-btn" onclick="document.getElementById('sm').classList.toggle('open')">🎨</button>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const obs=new IntersectionObserver(e=>e.forEach(i=>{if(i.isIntersecting)i.target.classList.add('visible')}),{threshold:.1});
+document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+function tick

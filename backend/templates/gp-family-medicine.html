@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{CLINIC_NAME}} — Family Medicine</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #1B3A5C;
+  --navy-lt: #2C5282;
+  --gold: #C9973A;
+  --gold-lt: #F0D49A;
+  --cream: #FBF8F3;
+  --warm-white: #FFFFFF;
+  --sage: #5A7A6E;
+  --text: #2D3748;
+  --muted: rgba(45,55,72,.52);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--cream);font-family:'Source Sans 3',sans-serif;color:var(--text);}
+a{text-decoration:none;color:inherit;}
+button{cursor:pointer;border:none;font-family:'Source Sans 3',sans-serif;}
+
+/* TOP BAR */
+.topbar{background:var(--navy);padding:9px 60px;display:flex;justify-content:space-between;align-items:center;}
+.topbar-left{display:flex;gap:28px;}
+.topbar-item{font-size:11px;letter-spacing:1px;color:rgba(255,255,255,.65);display:flex;align-items:center;gap:6px;}
+.topbar-item span{color:var(--gold-lt);}
+.topbar-right{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);}
+
+/* NAV */
+nav{background:var(--warm-white);padding:0 60px;height:76px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 16px rgba(27,58,92,.08);position:sticky;top:0;z-index:1000;}
+.nav-brand{display:flex;align-items:center;gap:14px;}
+.nav-logo-mark{width:44px;height:44px;background:var(--navy);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff;}
+.nav-name{font-family:'Playfair Display',serif;font-size:20px;color:var(--navy);font-weight:600;}
+.nav-tagline{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--sage);margin-top:1px;}
+.nav-links{display:flex;gap:34px;}
+.nav-links a{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--text);opacity:.6;transition:opacity .2s;}
+.nav-links a:hover{opacity:1;}
+.nav-cta{background:var(--gold);color:#fff;padding:11px 28px;font-size:10px;letter-spacing:2px;text-transform:uppercase;transition:background .2s;}
+.nav-cta:hover{background:var(--navy);}
+
+/* HERO */
+.hero{display:grid;grid-template-columns:1fr 1fr;min-height:580px;}
+.hero-copy{background:var(--navy);padding:72px 64px;display:flex;flex-direction:column;justify-content:center;}
+.hero-eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:24px;}
+.hero-eyebrow-line{width:28px;height:1px;background:var(--gold);}
+.hero-eyebrow span{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);}
+.hero-h1{font-family:'Playfair Display',serif;font-size:clamp(36px,4vw,56px);color:#fff;font-weight:400;line-height:1.12;margin-bottom:20px;}
+.hero-h1 em{font-style:italic;color:var(--gold-lt);}
+.hero-sub{font-size:15px;color:rgba(255,255,255,.6);line-height:1.8;font-weight:300;max-width:420px;margin-bottom:36px;}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap;}
+.btn-gold{background:var(--gold);color:#fff;padding:14px 36px;font-size:10px;letter-spacing:2px;text-transform:uppercase;transition:all .25s;}
+.btn-gold:hover{background:#b8832a;transform:translateY(-1px);}
+.btn-outline{border:1px solid rgba(255,255,255,.3);color:#fff;background:transparent;padding:14px 30px;font-size:10px;letter-spacing:2px;text-transform:uppercase;transition:all .25s;}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold);}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.08);margin-top:44px;}
+.hero-stat{padding:20px 0;text-align:center;}
+.hero-stat strong{font-family:'Playfair Display',serif;font-size:32px;color:var(--gold-lt);display:block;font-weight:600;}
+.hero-stat span{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.45);}
+.hero-image{background:linear-gradient(135deg,#2C5282 0%,#1B3A5C 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.hero-image-bg{position:absolute;inset:0;background:url('{{HERO_IMAGE}}') center/cover no-repeat;opacity:.4;}
+.hero-image-content{position:relative;z-index:1;text-align:center;padding:40px;}
+.hero-doctor-card{background:rgba(255,255,255,.1);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.15);padding:28px 36px;}
+.hero-doctor-card .title{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+.hero-doctor-card .name{font-family:'Playfair Display',serif;font-size:22px;color:#fff;margin-bottom:4px;}
+.hero-doctor-card .spec{font-size:12px;color:rgba(255,255,255,.55);}
+
+/* TRUST BAR */
+.trust{background:var(--warm-white);display:grid;grid-template-columns:repeat(4,1fr);border-top:3px solid var(--gold);}
+.trust-cell{padding:24px 28px;border-right:1px solid rgba(27,58,92,.07);display:flex;align-items:center;gap:14px;}
+.trust-cell:last-child{border-right:none;}
+.trust-icon{font-size:24px;flex-shrink:0;}
+.trust-label{font-size:12px;font-weight:600;color:var(--navy);margin-bottom:2px;}
+.trust-sub{font-size:11px;color:var(--muted);}
+
+/* SERVICES */
+.services{padding:80px 60px;background:var(--cream);}
+.section-head{text-align:center;margin-bottom:52px;}
+.eyebrow{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+h2{font-family:'Playfair Display',serif;font-size:38px;font-weight:400;color:var(--navy);}
+h2 em{font-style:italic;}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.service-card{background:var(--warm-white);padding:32px;border-left:3px solid transparent;transition:all .3s;}
+.service-card:hover{border-left-color:var(--gold);transform:translateX(4px);box-shadow:0 8px 32px rgba(27,58,92,.08);}
+.service-icon{font-size:28px;margin-bottom:16px;}
+.service-name{font-family:'Playfair Display',serif;font-size:19px;color:var(--navy);margin-bottom:8px;}
+.service-desc{font-size:13px;color:var(--muted);line-height:1.75;}
+
+/* DOCTOR SECTION */
+.doctor{background:var(--navy);padding:80px 60px;}
+.doctor-inner{display:grid;grid-template-columns:1fr 1.4fr;gap:72px;align-items:center;}
+.doctor-photo{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;font-size:48px;position:relative;overflow:hidden;}
+.doctor-photo img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;}
+.doctor-copy .eyebrow{color:var(--gold);}
+.doctor-copy h2{color:#fff;margin-bottom:8px;}
+.doctor-copy .spec{font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:20px;}
+.doctor-copy p{font-size:14px;color:rgba(255,255,255,.6);line-height:1.85;font-weight:300;margin-bottom:28px;}
+.doctor-quals{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:32px;}
+.qual-badge{background:rgba(201,151,58,.15);border:1px solid rgba(201,151,58,.3);color:var(--gold-lt);font-size:10px;letter-spacing:1px;padding:6px 14px;}
+
+/* BOOKING */
+.booking{background:var(--warm-white);padding:80px 60px;}
+.booking-inner{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;}
+.booking-copy .eyebrow{color:var(--gold);}
+.booking-copy h2{color:var(--navy);margin-bottom:16px;}
+.booking-copy p{font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:28px;}
+.whatsapp-btn{background:#25D366;color:#fff;padding:14px 32px;font-size:11px;letter-spacing:2px;text-transform:uppercase;display:inline-flex;align-items:center;gap:10px;transition:background .2s;}
+.whatsapp-btn:hover{background:#1ebe5d;}
+.booking-form{background:var(--cream);padding:36px;}
+.form-title{font-family:'Playfair Display',serif;font-size:20px;color:var(--navy);margin-bottom:24px;}
+.form-row{margin-bottom:16px;}
+.form-row label{display:block;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+.form-row input,.form-row select{width:100%;border:1px solid rgba(27,58,92,.12);background:var(--warm-white);padding:12px 14px;font-family:'Source Sans 3',sans-serif;font-size:13px;color:var(--text);outline:none;transition:border-color .2s;}
+.form-row input:focus,.form-row select:focus{border-color:var(--gold);}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.submit-btn{background:var(--navy);color:#fff;width:100%;padding:14px;font-size:11px;letter-spacing:2px;text-transform:uppercase;transition:background .2s;margin-top:8px;}
+.submit-btn:hover{background:var(--gold);}
+
+/* REVIEWS */
+.reviews{background:var(--cream);padding:80px 60px;}
+.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px;}
+.review-card{background:var(--warm-white);padding:28px;border-top:3px solid var(--gold-lt);}
+.review-stars{color:var(--gold);font-size:13px;letter-spacing:2px;margin-bottom:12px;}
+.review-text{font-family:'Playfair Display',serif;font-style:italic;font-size:16px;color:var(--navy);line-height:1.65;margin-bottom:14px;}
+.review-author{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);}
+
+/* FOOTER */
+footer{background:var(--navy);padding:52px 60px;}
+.foot-inner{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:52px;margin-bottom:36px;}
+.foot-brand-name{font-family:'Playfair Display',serif;font-size:22px;color:#fff;margin-bottom:4px;}
+.foot-brand-tag{font-size:10px;letter-spacing:2px;color:var(--gold);margin-bottom:14px;text-transform:uppercase;}
+.foot-brand p{font-size:12px;color:rgba(255,255,255,.45);line-height:1.8;font-weight:300;}
+.foot-col h4{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:18px;}
+.foot-col ul{list-style:none;}
+.foot-col ul li{font-size:12px;color:rgba(255,255,255,.45);margin-bottom:10px;cursor:pointer;transition:color .2s;}
+.foot-col ul li:hover{color:var(--gold-lt);}
+.foot-bar{padding-top:24px;border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;}
+.foot-bar p{font-size:10px;color:rgba(255,255,255,.25);letter-spacing:1px;}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <div class="topbar-item">📍 <span>{{CLINIC_ADDRESS}}</span></div>
+    <div class="topbar-item">📞 <span>{{CLINIC_PHONE}}</span></div>
+    <div class="topbar-item">🕐 <span>Sat–Thu: 8am – 8pm</span></div>
+  </div>
+  <div class="topbar-right">DHA Licensed Clinic</div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">
+    <div class="nav-logo-mark">🏥</div>
+    <div>
+      <div class="nav-name">{{CLINIC_NAME}}</div>
+      <div class="nav-tagline">Family Medicine & General Practice</div>
+    </div>
+  </div>
+  <div class="nav-links">
+    <a href="#">Services</a>
+    <a href="#">Our Doctor</a>
+    <a href="#">Patient Info</a>
+    <a href="#">Contact</a>
+  </div>
+  <button class="nav-cta">Book Appointment</button>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-copy">
+    <div class="hero-eyebrow"><div class="hero-eyebrow-line"></div><span>Trusted Family Care · Dubai</span></div>
+    <h1>Your Health,<br><em>Our Priority</em><br>Every Visit.</h1>
+    <p class="hero-sub">Comprehensive family medicine for all ages. From routine checkups to chronic disease management — expert care with a personal touch.</p>
+    <div class="hero-btns">
+      <button class="btn-gold">Book Appointment</button>
+      <button class="btn-outline">WhatsApp Us</button>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><strong>12+</strong><span>Years of Care</span></div>
+      <div class="hero-stat"><strong>8,000+</strong><span>Patients</span></div>
+      <div class="hero-stat"><strong>4.9★</strong><span>Google Rating</span></div>
+    </div>
+  </div>
+  <div class="hero-image">
+    <div class="hero-image-bg"></div>
+    <div class="hero-image-content">
+      <div class="hero-doctor-card">
+        <div class="title">Lead Physician</div>
+        <div class="name">{{DOCTOR_NAME}}</div>
+        <div class="spec">MBBS · Family Medicine Specialist</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TRUST BAR -->
+<div class="trust">
+  <div class="trust-cell"><div class="trust-icon">🏛️</div><div><div class="trust-label">DHA Licensed</div><div class="trust-sub">Fully accredited clinic</div></div></div>
+  <div class="trust-cell"><div class="trust-icon">⚡</div><div><div class="trust-label">Same-Day Appointments</div><div class="trust-sub">No long waiting times</div></div></div>
+  <div class="trust-cell"><div class="trust-icon">💬</div><div><div class="trust-label">Arabic & English</div><div class="trust-sub">Bilingual care team</div></div></div>
+  <div class="trust-cell"><div class="trust-icon">🩺</div><div><div class="trust-label">Home Visits Available</div><div class="trust-sub">For elderly & immobile patients</div></div></div>
+</div>
+
+<!-- SERVICES -->
+<section class="services">
+  <div class="section-head">
+    <p class="eyebrow">What We Offer</p>
+    <h2>Comprehensive <em>Family Care</em></h2>
+  </div>
+  <div class="services-grid">
+    <div class="service-card"><div class="service-icon">🩺</div><div class="service-name">General Consultation</div><p class="service-desc">Diagnosis and treatment for acute and chronic conditions, with thorough examination and personalised care plans.</p></div>
+    <div class="service-card"><div class="service-icon">💉</div><div class="service-name">Vaccination & Immunisation</div><p class="service-desc">Full vaccination programs for children and adults, including travel vaccines and annual flu shots.</p></div>
+    <div class="service-card"><div class="service-icon">🧪</div><div class="service-name">Laboratory & Blood Tests</div><p class="service-desc">In-clinic blood draws with fast turnaround. Results sent directly to your phone via WhatsApp.</p></div>
+    <div class="service-card"><div class="service-icon">❤️</div><div class="service-name">Chronic Disease Management</div><p class="service-desc">Ongoing management of diabetes, hypertension, thyroid conditions and other long-term health concerns.</p></div>
+    <div class="service-card"><div class="service-icon">👶</div><div class="service-name">Child Health Checkups</div><p class="service-desc">School entry medicals, growth monitoring, developmental assessments and school fitness certificates.</p></div>
+    <div class="service-card"><div class="service-icon">📋</div><div class="service-name">Medical Certificates</div><p class="service-desc">Fitness certificates, sick leave letters, insurance forms and all official medical documentation.</p></div>
+  </div>
+</section>
+
+<!-- DOCTOR -->
+<section class="doctor">
+  <div class="doctor-inner">
+    <div class="doctor-photo"><img src="{{DOCTOR_IMAGE}}" alt="{{DOCTOR_NAME}}">👨‍⚕️</div>
+    <div class="doctor-copy">
+      <p class="eyebrow">Meet Your Doctor</p>
+      <h2 style="color:#fff;">{{DOCTOR_NAME}}</h2>
+      <div class="spec">MBBS · Family Medicine Specialist · 12 Years Experience</div>
+      <p>A compassionate and highly experienced family physician dedicated to providing personalised, evidence-based care for patients of all ages. Known for taking time to listen and explain, Dr. {{DOCTOR_FIRSTNAME}} believes in treating the whole person — not just the symptoms.</p>
+      <div class="doctor-quals">
+        <div class="qual-badge">MBBS — AIIMS</div>
+        <div class="qual-badge">DHA Licensed</div>
+        <div class="qual-badge">Family Medicine</div>
+        <div class="qual-badge">Diabetes Specialist</div>
+      </div>
+      <button class="btn-gold">Book with {{DOCTOR_FIRSTNAME}}</button>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section class="booking">
+  <div class="booking-inner">
+    <div class="booking-copy">
+      <p class="eyebrow">Get in Touch</p>
+      <h2 style="color:var(--navy);">Book Your <em>Appointment</em></h2>
+      <p>Same-day and next-day appointments available. Book online, call us, or simply WhatsApp — we respond within minutes.</p>
+      <button class="whatsapp-btn">💬 WhatsApp: {{CLINIC_PHONE}}</button>
+      <div style="margin-top:28px;padding-top:28px;border-top:1px solid rgba(27,58,92,.1);">
+        <div style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Opening Hours</div>
+        <div style="font-size:13px;color:var(--navy);line-height:2;">Saturday – Thursday: 8:00am – 8:00pm<br>Friday: 10:00am – 4:00pm</div>
+      </div>
+    </div>
+    <div class="booking-form">
+      <div class="form-title">Request Appointment</div>
+      <div class="form-grid">
+        <div class="form-row"><label>First Name</label><input type="text" placeholder="Ahmad"></div>
+        <div class="form-row"><label>Last Name</label><input type="text" placeholder="Al Rashid"></div>
+      </div>
+      <div class="form-row"><label>Phone / WhatsApp</label><input type="text" placeholder="+971 50 xxx xxxx"></div>
+      <div class="form-row"><label>Reason for Visit</label><select><option>General Consultation</option><option>Follow-up</option><option>Blood Test</option><option>Vaccination</option><option>Medical Certificate</option></select></div>
+      <div class="form-row"><label>Preferred Date</label><input type="date"></div>
+      <button class="submit-btn">Confirm Appointment</button>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews">
+  <div class="section-head">
+    <p class="eyebrow">Patient Stories</p>
+    <h2>What Our <em>Patients Say</em></h2>
+  </div>
+  <div class="reviews-grid">
+    <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Dr. {{DOCTOR_FIRSTNAME}} took so much time to explain my condition. First doctor who actually listened. My whole family goes here now."</p><div class="review-author">— Layla M., Dubai</div></div>
+    <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Got a same-day appointment, no waiting, results on WhatsApp within hours. This is how healthcare should work."</p><div class="review-author">— Ravi K., Sharjah</div></div>
+    <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Been coming here for 4 years. The doctor knows our whole family's history. Feels like a real family doctor."</p><div class="review-author">— Sarah J., Dubai</div></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-inner">
+    <div class="foot-brand">
+      <div class="foot-brand-name">{{CLINIC_NAME}}</div>
+      <div class="foot-brand-tag">Family Medicine & General Practice</div>
+      <p>Providing trusted family healthcare in Dubai. DHA licensed. Accepting all major insurance plans.</p>
+    </div>
+    <div class="foot-col"><h4>Services</h4><ul><li>General Consultation</li><li>Vaccinations</li><li>Blood Tests</li><li>Chronic Disease</li><li>Child Health</li></ul></div>
+    <div class="foot-col"><h4>Information</h4><ul><li>Insurance Accepted</li><li>Patient Forms</li><li>How to Find Us</li><li>Privacy Policy</li></ul></div>
+    <div class="foot-col"><h4>Contact</h4><ul><li>{{CLINIC_PHONE}}</li><li>{{CLINIC_EMAIL}}</li><li>{{CLINIC_ADDRESS}}</li></ul></div>
+  </div>
+  <div class="foot-bar">
+    <p>© 2026 {{CLINIC_NAME}} · Dubai, UAE · DHA License #XXXXXX</p>
+    <p>All rights reserved · Privacy Policy</p>
+  </div>
+</footer>
+
+</body>
+</html>

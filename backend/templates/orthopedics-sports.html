@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{CLINIC_NAME}} — Orthopaedics & Sports Medicine</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;1,700&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--orange:#E8530A;--orange-lt:#FEF0E9;--charcoal:#1C1C1E;--dark:#111;--grey:#3A3A3C;--mid:#8E8E93;--light:#F5F5F7;--white:#fff;--border:#E5E5EA;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--white);font-family:'Barlow',sans-serif;color:var(--charcoal);}
+button{cursor:pointer;border:none;font-family:'Barlow',sans-serif;}
+a{text-decoration:none;color:inherit;}
+
+/* NAV */
+nav{height:68px;padding:0 60px;display:flex;align-items:center;justify-content:space-between;background:var(--charcoal);position:sticky;top:0;z-index:100;}
+.logo{display:flex;align-items:center;gap:12px;}
+.logo-mark{width:36px;height:36px;background:var(--orange);display:flex;align-items:center;justify-content:center;font-size:18px;clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);}
+.logo-name{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:2px;}
+.logo-spec{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.35);margin-top:1px;}
+.nav-links{display:flex;gap:28px;}
+.nav-links a{font-size:12px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.45);transition:color .2s;}
+.nav-links a:hover{color:#fff;}
+.nav-cta{background:var(--orange);color:#fff;padding:10px 24px;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;transition:background .2s;}
+.nav-cta:hover{background:#d44800;}
+
+/* HERO */
+.hero{background:var(--dark);min-height:90vh;display:grid;grid-template-columns:1fr 1fr;position:relative;overflow:hidden;}
+.hero::after{content:'';position:absolute;bottom:0;left:50%;right:0;height:4px;background:var(--orange);}
+.hero-left{padding:96px 72px;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:1;}
+.hero-tag{display:flex;align-items:center;gap:10px;margin-bottom:24px;}
+.hero-tag-dot{width:8px;height:8px;background:var(--orange);clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%);}
+.hero-tag-text{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--orange);font-weight:600;}
+.hero-h1{font-family:'Barlow Condensed',sans-serif;font-size:clamp(52px,7vw,88px);font-weight:800;color:#fff;text-transform:uppercase;line-height:.95;letter-spacing:-1px;margin-bottom:20px;}
+.hero-h1 .line2{color:var(--orange);}
+.hero-h1 .line3{color:rgba(255,255,255,.2);font-weight:400;font-style:italic;font-size:.7em;}
+.hero-p{font-size:15px;color:rgba(255,255,255,.5);line-height:1.75;max-width:400px;margin-bottom:36px;font-weight:300;}
+.hero-btns{display:flex;gap:12px;}
+.btn-orange{background:var(--orange);color:#fff;padding:14px 32px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;transition:all .2s;}
+.btn-orange:hover{background:#d44800;transform:translateX(3px);}
+.btn-border{border:1.5px solid rgba(255,255,255,.2);color:rgba(255,255,255,.6);background:none;padding:14px 28px;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;transition:all .2s;}
+.btn-border:hover{border-color:var(--orange);color:var(--orange);}
+.hero-numbers{display:flex;gap:36px;margin-top:48px;padding-top:36px;border-top:1px solid rgba(255,255,255,.07);}
+.h-num strong{font-family:'Barlow Condensed',sans-serif;font-size:42px;font-weight:800;color:#fff;line-height:1;display:block;}
+.h-num span{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.3);}
+.hero-right{background:var(--grey);position:relative;display:flex;align-items:center;justify-content:center;}
+.hero-right-img{position:absolute;inset:0;background:url('{{HERO_IMAGE}}') center/cover;opacity:.2;}
+.hero-right-content{position:relative;z-index:1;padding:40px;}
+.speciality-tags{display:flex;flex-direction:column;gap:8px;}
+.spec-tag{background:rgba(255,255,255,.05);border-left:3px solid var(--orange);padding:14px 20px;color:#fff;font-size:13px;font-weight:600;letter-spacing:.5px;transition:background .2s;}
+.spec-tag:hover{background:rgba(232,83,10,.15);}
+.spec-tag span{font-size:10px;color:rgba(255,255,255,.3);display:block;font-weight:400;margin-top:2px;}
+
+/* TRUST BAR */
+.trust{background:var(--orange);padding:16px 60px;display:flex;align-items:center;justify-content:center;gap:48px;}
+.trust-item{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.85);}
+.trust-item::before{content:'✓';background:rgba(255,255,255,.2);width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;flex-shrink:0;}
+
+/* CONDITIONS */
+.conditions{padding:80px 60px;background:var(--white);}
+.sec-tag{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--orange);margin-bottom:6px;}
+h2{font-family:'Barlow Condensed',sans-serif;font-size:48px;font-weight:800;text-transform:uppercase;letter-spacing:-1px;color:var(--charcoal);}
+.cond-intro{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:44px;}
+.cond-intro p{font-size:14px;color:var(--mid);max-width:400px;line-height:1.75;}
+.cond-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.cond-card{background:var(--light);padding:28px;border-bottom:3px solid transparent;transition:all .3s;cursor:pointer;}
+.cond-card:hover{border-bottom-color:var(--orange);background:var(--orange-lt);}
+.cond-icon{font-size:28px;margin-bottom:14px;}
+.cond-name{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--charcoal);margin-bottom:8px;}
+.cond-desc{font-size:12px;color:var(--mid);line-height:1.7;}
+
+/* PROCESS */
+.process{background:var(--charcoal);padding:80px 60px;}
+.process-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:48px;}
+.p-step{padding:28px;border:1px solid rgba(255,255,255,.07);transition:border-color .3s;}
+.p-step:hover{border-color:var(--orange);}
+.p-num{font-family:'Barlow Condensed',sans-serif;font-size:52px;font-weight:800;color:rgba(255,255,255,.05);line-height:1;margin-bottom:14px;}
+.p-name{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#fff;margin-bottom:8px;}
+.p-desc{font-size:12px;color:rgba(255,255,255,.35);line-height:1.7;}
+
+/* DOCTOR */
+.doctor{background:var(--light);padding:80px 60px;}
+.doctor-inner{display:grid;grid-template-columns:1fr 1.3fr;gap:64px;align-items:center;}
+.doc-photo{background:var(--charcoal);aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;font-size:64px;overflow:hidden;position:relative;}
+.doc-photo img{width:100%;height:100%;object-fit:cover;}
+.doc-photo::after{content:'';position:absolute;left:0;bottom:0;width:4px;height:100%;background:var(--orange);}
+.doc-copy .sec-tag{color:var(--orange);}
+.doc-name{font-family:'Barlow Condensed',sans-serif;font-size:44px;font-weight:800;text-transform:uppercase;letter-spacing:-1px;color:var(--charcoal);line-height:1;margin-bottom:6px;}
+.doc-spec{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--orange);margin-bottom:16px;}
+.doc-p{font-size:14px;color:var(--mid);line-height:1.8;margin-bottom:24px;}
+.doc-creds{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px;}
+.cred{background:var(--charcoal);color:#fff;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:6px 14px;}
+
+/* BOOKING */
+.booking{background:var(--white);padding:80px 60px;}
+.booking-inner{display:grid;grid-template-columns:1fr 1fr;gap:64px;}
+.booking-copy .sec-tag{color:var(--orange);}
+.booking-copy h2{color:var(--charcoal);margin-bottom:14px;}
+.booking-copy p{font-size:14px;color:var(--mid);line-height:1.8;margin-bottom:24px;}
+.wa{background:#25D366;color:#fff;padding:13px 28px;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;display:inline-flex;align-items:center;gap:8px;}
+.booking-form{background:var(--light);padding:36px;}
+.bf-h{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;text-transform:uppercase;letter-spacing:-1px;color:var(--charcoal);margin-bottom:4px;}
+.bf-sub{font-size:12px;color:var(--mid);margin-bottom:22px;}
+.f{margin-bottom:14px;}
+.f label{display:block;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--mid);margin-bottom:4px;}
+.f input,.f select{width:100%;border:none;border-bottom:2px solid var(--border);background:transparent;padding:9px 0;font-family:'Barlow',sans-serif;font-size:13px;color:var(--charcoal);outline:none;transition:border-color .2s;}
+.f input:focus,.f select:focus{border-bottom-color:var(--orange);}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.sub{background:var(--orange);color:#fff;width:100%;padding:14px;font-family:'Barlow',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-top:10px;transition:background .2s;}
+.sub:hover{background:#d44800;}
+
+/* FOOTER */
+footer{background:var(--dark);padding:52px 60px;}
+.f-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:52px;margin-bottom:32px;}
+.f-name{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;text-transform:uppercase;letter-spacing:2px;color:#fff;margin-bottom:4px;}
+.f-spec{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--orange);margin-bottom:12px;}
+.f-p{font-size:12px;color:rgba(255,255,255,.3);line-height:1.75;}
+.f-h{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.2);margin-bottom:14px;}
+.f-ul{list-style:none;}
+.f-ul li{font-size:12px;color:rgba(255,255,255,.3);margin-bottom:9px;cursor:pointer;transition:color .2s;}
+.f-ul li:hover{color:var(--orange);}
+.f-bar{padding-top:24px;border-top:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;}
+.f-bar p{font-size:10px;color:rgba(255,255,255,.18);}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">
+    <div class="logo-mark">🦴</div>
+    <div><div class="logo-name">{{CLINIC_NAME}}</div><div class="logo-spec">Orthopaedics · Sports Medicine</div></div>
+  </div>
+  <div class="nav-links"><a href="#">Conditions</a><a href="#">Treatments</a><a href="#">Sports Injuries</a><a href="#">Our Surgeon</a></div>
+  <button class="nav-cta">Book Now</button>
+</nav>
+
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-tag"><div class="hero-tag-dot"></div><div class="hero-tag-text">Dubai's Leading Orthopaedic Clinic</div></div>
+    <h1 class="hero-h1">Move<br><span class="line2">Without</span><br><span class="line3">Limits.</span></h1>
+    <p class="hero-p">Advanced orthopaedic surgery and sports medicine. From ACL reconstruction to joint replacements — we get you back to doing what you love.</p>
+    <div class="hero-btns">
+      <button class="btn-orange">Book Consultation</button>
+      <button class="btn-border">View Treatments</button>
+    </div>
+    <div class="hero-numbers">
+      <div class="h-num"><strong>18+</strong><span>Years Expertise</span></div>
+      <div class="h-num"><strong>4,000+</strong><span>Surgeries</span></div>
+      <div class="h-num"><strong>4.9★</strong><span>Google Rating</span></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-right-img"></div>
+    <div class="hero-right-content">
+      <div class="speciality-tags">
+        <div class="spec-tag">Knee & Hip Replacement<span>Partial & total joint replacement</span></div>
+        <div class="spec-tag">Sports Injuries & ACL<span>Arthroscopic & minimally invasive</span></div>
+        <div class="spec-tag">Shoulder & Rotator Cuff<span>Repair, stabilisation & reconstruction</span></div>
+        <div class="spec-tag">Spine & Back Pain<span>Disc surgery & decompression</span></div>
+        <div class="spec-tag">Fracture Management<span>Acute trauma & complex reconstruction</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="trust">
+  <div class="trust-item">DHA Licensed Surgeon</div>
+  <div class="trust-item">Minimally Invasive Surgery</div>
+  <div class="trust-item">All Insurance Accepted</div>
+  <div class="trust-item">Same-Day Appointments</div>
+  <div class="trust-item">Arabic & English</div>
+</div>
+
+<section class="conditions">
+  <div class="cond-intro">
+    <div><p class="sec-tag">Conditions We Treat</p><h2>We Fix What<br>Holds You Back</h2></div>
+    <p>From sports injuries to age-related joint conditions, we provide expert orthopaedic care across all body regions.</p>
+  </div>
+  <div class="cond-grid">
+    <div class="cond-card"><div class="cond-icon">🦵</div><div class="cond-name">Knee Pain & Injury</div><p class="cond-desc">ACL/PCL tears, meniscus injuries, knee replacement, patellofemoral syndrome and chronic knee pain.</p></div>
+    <div class="cond-card"><div class="cond-icon">🦷</div><div class="cond-name">Hip Pain & Arthritis</div><p class="cond-desc">Hip replacement, labral tears, hip dysplasia, bursitis and hip arthroscopy.</p></div>
+    <div class="cond-card"><div class="cond-icon">💪</div><div class="cond-name">Shoulder Conditions</div><p class="cond-desc">Rotator cuff tears, frozen shoulder, shoulder instability and SLAP lesion repair.</p></div>
+    <div class="cond-card"><div class="cond-icon">🦶</div><div class="cond-name">Foot & Ankle</div><p class="cond-desc">Achilles tendon repair, ankle instability, bunion correction and flatfoot reconstruction.</p></div>
+    <div class="cond-card"><div class="cond-icon">🧠</div><div class="cond-name">Spine & Back Pain</div><p class="cond-desc">Herniated disc, spinal stenosis, spondylolisthesis, nerve decompression and minimally invasive spine surgery.</p></div>
+    <div class="cond-card"><div class="cond-icon">🤕</div><div class="cond-name">Sports Injuries</div><p class="cond-desc">Acute trauma management, ligament reconstruction, tendon repair and return-to-sport rehabilitation.</p></div>
+  </div>
+</section>
+
+<section class="process">
+  <p class="sec-tag" style="color:rgba(255,255,255,.4);">Your Treatment Journey</p>
+  <h2 style="color:#fff;margin-bottom:0;">From Pain to<br><span style="color:var(--orange);">Performance.</span></h2>
+  <div class="process-steps">
+    <div class="p-step"><div class="p-num">01</div><div class="p-name">Consultation</div><p class="p-desc">Thorough clinical assessment with advanced imaging review. Clear diagnosis and treatment options explained.</p></div>
+    <div class="p-step"><div class="p-num">02</div><div class="p-name">Treatment Plan</div><p class="p-desc">Personalised plan — conservative physiotherapy first where appropriate, surgery only when necessary.</p></div>
+    <div class="p-step"><div class="p-num">03</div><div class="p-name">Procedure</div><p class="p-desc">Minimally invasive techniques where possible. State-of-the-art surgical equipment and techniques.</p></div>
+    <div class="p-step"><div class="p-num">04</div><div class="p-name">Rehabilitation</div><p class="p-desc">Structured post-op rehab plan with physiotherapy referral and regular progress monitoring.</p></div>
+  </div>
+</section>
+
+<section class="doctor">
+  <div class="doctor-inner">
+    <div class="doc-photo"><img src="{{DOCTOR_IMAGE}}" alt="">🦴</div>
+    <div class="doc-copy">
+      <p class="sec-tag">Your Orthopaedic Surgeon</p>
+      <div class="doc-name">{{DOCTOR_NAME}}</div>
+      <div class="doc-spec">FRCS (Orth) · Consultant Orthopaedic Surgeon</div>
+      <p class="doc-p">Fellowship-trained orthopaedic surgeon with subspecialty expertise in sports medicine and arthroscopic surgery. Operated on professional athletes and weekend warriors alike — with the same commitment to excellent outcomes.</p>
+      <div class="doc-creds">
+        <span class="cred">MBBS</span><span class="cred">FRCS (Orth)</span>
+        <span class="cred">DHA Licensed</span><span class="cred">Sports Medicine</span>
+      </div>
+      <button class="btn-orange">Book with {{DOCTOR_FIRSTNAME}}</button>
+    </div>
+  </div>
+</section>
+
+<section class="booking">
+  <div class="booking-inner">
+    <div class="booking-copy">
+      <p class="sec-tag">Get In Touch</p>
+      <h2>Stop Waiting.<br>Start Moving.</h2>
+      <p>Same-week appointments for new patients. Urgent sports injuries seen within 24 hours. Direct billing for all major insurance providers.</p>
+      <button class="wa">💬 WhatsApp: {{CLINIC_PHONE}}</button>
+    </div>
+    <div class="booking-form">
+      <div class="bf-h">Book Appointment</div>
+      <div class="bf-sub">Urgent sports injuries seen within 24 hours.</div>
+      <div class="f-row">
+        <div class="f"><label>Full Name</label><input type="text" placeholder="Your name"></div>
+        <div class="f"><label>Phone</label><input type="text" placeholder="+971 xx xxx xxxx"></div>
+      </div>
+      <div class="f"><label>Area of Concern</label>
+        <select><option>Knee</option><option>Hip</option><option>Shoulder</option><option>Spine / Back</option><option>Foot / Ankle</option><option>Sports Injury</option><option>Other / Not Sure</option></select>
+      </div>
+      <div class="f"><label>How Urgent?</label>
+        <select><option>Routine (this week)</option><option>Urgent (within 24–48 hrs)</option><option>Follow-Up Appointment</option></select>
+      </div>
+      <button class="sub">Book Appointment</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="f-grid">
+    <div><div class="f-name">{{CLINIC_NAME}}</div><div class="f-spec">Orthopaedics · Sports Medicine</div><p class="f-p">Advanced orthopaedic surgery and sports medicine in Dubai. DHA licensed. All insurance accepted.</p></div>
+    <div><div class="f-h">Conditions</div><ul class="f-ul"><li>Knee & Hip</li><li>Shoulder</li><li>Spine</li><li>Sports Injuries</li><li>Foot & Ankle</li></ul></div>
+    <div><div class="f-h">Clinic</div><ul class="f-ul"><li>Our Surgeon</li><li>Technology</li><li>Insurance</li><li>Patient Info</li></ul></div>
+    <div><div class="f-h">Contact</div><ul class="f-ul"><li>{{CLINIC_PHONE}}</li><li>{{CLINIC_ADDRESS}}</li></ul></div>
+  </div>
+  <div class="f-bar"><p>© 2026 {{CLINIC_NAME}} · Dubai · DHA Licensed</p><p>Privacy Policy</p></div>
+</footer>
+</body>
+</html>

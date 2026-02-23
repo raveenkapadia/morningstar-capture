@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{CLINIC_NAME}} — Women's Health & Gynaecology</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Mulish:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--mauve:#8B5E7E;--mauve-lt:#F5EBF3;--blush:#E8A5BF;--blush-pale:#FDF5F8;--rose:#C45C8A;--dusty:#B07FA3;--sage:#7A9E8A;--cream:#FAF8F5;--white:#fff;--ink:#2D1F2E;--muted:#7A6B78;--border:#E8DDE5;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--cream);font-family:'Mulish',sans-serif;color:var(--ink);}
+button{cursor:pointer;border:none;font-family:'Mulish',sans-serif;}
+a{text-decoration:none;color:inherit;}
+
+/* NAV */
+nav{background:var(--white);height:72px;padding:0 60px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;}
+.logo{display:flex;align-items:center;gap:12px;}
+.logo-icon{width:38px;height:38px;background:var(--mauve-lt);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;}
+.logo-name{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--ink);font-weight:600;}
+.logo-sub{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--dusty);margin-top:1px;}
+.nav-links{display:flex;gap:32px;}
+.nav-links a{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-weight:500;transition:color .2s;}
+.nav-links a:hover{color:var(--mauve);}
+.nav-cta{background:var(--mauve);color:#fff;padding:11px 26px;border-radius:100px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;font-weight:600;transition:background .2s;}
+.nav-cta:hover{background:var(--rose);}
+
+/* HERO */
+.hero{display:grid;grid-template-columns:1fr 1fr;min-height:85vh;}
+.hero-left{padding:84px 72px;display:flex;flex-direction:column;justify-content:center;background:var(--blush-pale);}
+.hero-eyebrow{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--dusty);margin-bottom:18px;display:flex;align-items:center;gap:10px;}
+.hero-eyebrow::before{content:'';width:20px;height:1px;background:var(--blush);}
+.hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(40px,5vw,66px);font-weight:300;line-height:1.08;color:var(--ink);margin-bottom:18px;}
+.hero-h1 em{font-style:italic;color:var(--mauve);}
+.hero-p{font-size:14px;color:var(--muted);line-height:1.85;font-weight:300;max-width:420px;margin-bottom:36px;}
+.hero-btns{display:flex;gap:12px;}
+.btn-mauve{background:var(--mauve);color:#fff;padding:13px 32px;border-radius:100px;font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:600;transition:all .2s;}
+.btn-mauve:hover{background:var(--rose);}
+.btn-outline{border:1.5px solid var(--blush);color:var(--mauve);background:none;padding:13px 24px;border-radius:100px;font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:600;transition:all .2s;}
+.btn-outline:hover{background:var(--mauve-lt);}
+.hero-pillars{display:flex;gap:0;margin-top:48px;border-top:1px solid var(--border);padding-top:28px;}
+.pillar{text-align:center;flex:1;padding:0 16px;border-right:1px solid var(--border);}
+.pillar:last-child{border-right:none;}
+.pillar strong{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--mauve);display:block;font-weight:600;}
+.pillar span{font-size:10px;letter-spacing:1px;color:var(--muted);}
+.hero-right{background:var(--mauve);position:relative;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background:url('{{HERO_IMAGE}}') center/cover;opacity:.25;}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(139,94,126,.9) 0%,transparent 50%);}
+.hero-right-content{position:relative;z-index:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;padding:48px;}
+.service-pills{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;}
+.service-pill{background:rgba(255,255,255,.12);backdrop-filter:blur(8px);color:rgba(255,255,255,.8);font-size:11px;font-weight:500;padding:7px 16px;border-radius:100px;border:1px solid rgba(255,255,255,.15);}
+.hero-promise{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:300;font-style:italic;color:rgba(255,255,255,.75);line-height:1.5;}
+
+/* TRUST */
+.trust{background:var(--ink);padding:18px 60px;display:flex;align-items:center;justify-content:center;gap:48px;}
+.trust-item{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.45);display:flex;align-items:center;gap:8px;}
+.trust-item span{color:var(--blush);}
+
+/* SERVICES */
+.services{padding:80px 60px;background:var(--white);}
+.sec-label{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--dusty);margin-bottom:8px;}
+h2{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:300;color:var(--ink);}
+h2 em{font-style:italic;color:var(--mauve);}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px;}
+.svc-card{background:var(--cream);padding:28px;border:1.5px solid transparent;border-radius:2px;transition:all .3s;}
+.svc-card:hover{border-color:var(--blush);background:var(--blush-pale);}
+.svc-icon{font-size:26px;margin-bottom:14px;}
+.svc-name{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--ink);margin-bottom:8px;font-weight:600;}
+.svc-desc{font-size:12px;color:var(--muted);line-height:1.75;font-weight:300;}
+
+/* PHILOSOPHY */
+.philosophy{background:var(--mauve-lt);padding:80px 60px;}
+.phil-inner{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;}
+.phil-copy .sec-label{color:var(--dusty);}
+.phil-copy h2{color:var(--ink);margin-bottom:16px;}
+.phil-copy p{font-size:14px;color:var(--muted);line-height:1.85;font-weight:300;margin-bottom:28px;}
+.phil-points{display:flex;flex-direction:column;gap:14px;margin-bottom:32px;}
+.phil-point{display:flex;align-items:flex-start;gap:12px;}
+.point-dot{width:6px;height:6px;background:var(--mauve);border-radius:50%;flex-shrink:0;margin-top:6px;}
+.point-text{font-size:13px;color:var(--ink);line-height:1.7;}
+.phil-visual{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.phil-card{background:var(--white);padding:24px;text-align:center;border-radius:4px;}
+.phil-card strong{font-family:'Cormorant Garamond',serif;font-size:34px;color:var(--mauve);display:block;font-weight:600;}
+.phil-card span{font-size:11px;color:var(--muted);letter-spacing:.5px;}
+
+/* DOCTOR */
+.doctor{background:var(--white);padding:80px 60px;}
+.doctor-inner{display:grid;grid-template-columns:1fr 1.3fr;gap:64px;align-items:center;}
+.doc-photo{background:var(--mauve-lt);aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;font-size:64px;overflow:hidden;position:relative;}
+.doc-photo img{width:100%;height:100%;object-fit:cover;}
+.doc-accent{position:absolute;bottom:0;left:0;right:0;height:6px;background:linear-gradient(to right,var(--blush),var(--mauve));}
+.doc-copy .sec-label{color:var(--dusty);}
+.doc-name{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--ink);margin-bottom:4px;}
+.doc-spec{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--mauve);font-weight:600;margin-bottom:16px;}
+.doc-bio{font-size:13px;color:var(--muted);line-height:1.85;font-weight:300;margin-bottom:24px;}
+.doc-quals{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px;}
+.qual{background:var(--mauve-lt);color:var(--mauve);font-size:10px;font-weight:600;padding:5px 14px;border-radius:100px;}
+
+/* BOOKING */
+.booking{background:var(--ink);padding:80px 60px;}
+.booking-inner{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;}
+.booking-copy h2{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:300;color:#fff;font-style:italic;margin-bottom:14px;}
+.booking-copy p{font-size:13px;color:rgba(255,255,255,.5);line-height:1.85;font-weight:300;margin-bottom:28px;}
+.booking-info{display:flex;flex-direction:column;gap:12px;}
+.binfo{display:flex;align-items:center;gap:12px;font-size:13px;color:rgba(255,255,255,.5);}
+.binfo span{color:var(--blush);font-size:16px;}
+.wa-btn{background:var(--mauve);color:#fff;padding:13px 28px;border-radius:100px;font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:600;display:inline-flex;align-items:center;gap:8px;margin-top:24px;transition:background .2s;}
+.wa-btn:hover{background:var(--rose);}
+.booking-form{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);padding:36px;backdrop-filter:blur(8px);}
+.bf-h{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;color:#fff;margin-bottom:4px;}
+.bf-sub{font-size:11px;color:rgba(255,255,255,.35);margin-bottom:24px;letter-spacing:.5px;}
+.f{margin-bottom:16px;}
+.f label{display:block;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:5px;}
+.f input,.f select{width:100%;border:none;border-bottom:1px solid rgba(255,255,255,.1);background:transparent;padding:10px 0;font-family:'Mulish',sans-serif;font-size:13px;color:#fff;outline:none;transition:border-color .2s;}
+.f input:focus,.f select:focus{border-bottom-color:var(--blush);}
+.f select option{background:#2D1F2E;}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.submit-btn{background:var(--mauve);color:#fff;width:100%;padding:13px;border-radius:100px;font-family:'Mulish',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:600;margin-top:8px;transition:background .2s;}
+.submit-btn:hover{background:var(--rose);}
+
+/* FOOTER */
+footer{background:#1A0E1A;padding:52px 60px;}
+.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:52px;margin-bottom:32px;}
+.foot-name{font-family:'Cormorant Garamond',serif;font-size:22px;color:#fff;margin-bottom:4px;font-weight:300;}
+.foot-spec{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--dusty);opacity:.5;margin-bottom:14px;}
+.foot-p{font-size:11px;color:rgba(255,255,255,.25);line-height:1.75;font-weight:300;}
+.foot-h{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.2);margin-bottom:14px;}
+.foot-ul{list-style:none;}
+.foot-ul li{font-size:11px;color:rgba(255,255,255,.25);margin-bottom:9px;cursor:pointer;transition:color .2s;font-weight:300;}
+.foot-ul li:hover{color:var(--blush);}
+.foot-bar{padding-top:24px;border-top:1px solid rgba(255,255,255,.05);display:flex;justify-content:space-between;}
+.foot-bar p{font-size:10px;color:rgba(255,255,255,.15);}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">
+    <div class="logo-icon">🌸</div>
+    <div><div class="logo-name">{{CLINIC_NAME}}</div><div class="logo-sub">Women's Health & Gynaecology</div></div>
+  </div>
+  <div class="nav-links"><a href="#">Services</a><a href="#">Maternity</a><a href="#">Our Doctor</a><a href="#">Patient Care</a></div>
+  <button class="nav-cta">Book Consultation</button>
+</nav>
+
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Specialist Women's Healthcare · Dubai</div>
+    <h1 class="hero-h1">Care designed<br>for <em>every woman,</em><br>every stage.</h1>
+    <p class="hero-p">From routine gynaecology to complex fertility treatment and comprehensive maternity care — we provide expert, compassionate support throughout your health journey.</p>
+    <div class="hero-btns">
+      <button class="btn-mauve">Book Appointment</button>
+      <button class="btn-outline">Our Services</button>
+    </div>
+    <div class="hero-pillars">
+      <div class="pillar"><strong>15+</strong><span>Years Experience</span></div>
+      <div class="pillar"><strong>3,000+</strong><span>Patients</span></div>
+      <div class="pillar"><strong>4.9★</strong><span>Google Rating</span></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-right-content">
+      <div class="service-pills">
+        <span class="service-pill">Gynaecology</span>
+        <span class="service-pill">Obstetrics & Maternity</span>
+        <span class="service-pill">Fertility</span>
+        <span class="service-pill">Menopause Care</span>
+        <span class="service-pill">HPV & Screening</span>
+      </div>
+      <div class="hero-promise">"Every woman deserves a doctor who truly listens."</div>
+    </div>
+  </div>
+</div>
+
+<div class="trust">
+  <div class="trust-item"><span>🏛️</span> DHA Licensed</div>
+  <div class="trust-item"><span>💬</span> Arabic & English</div>
+  <div class="trust-item"><span>🔒</span> Strictly Private & Confidential</div>
+  <div class="trust-item"><span>💳</span> All Insurance Accepted</div>
+  <div class="trust-item"><span>⚡</span> Same-Day Appointments</div>
+</div>
+
+<section class="services">
+  <p class="sec-label">Our Services</p>
+  <h2>Complete Women's <em>Healthcare</em></h2>
+  <div class="services-grid">
+    <div class="svc-card"><div class="svc-icon">🌸</div><div class="svc-name">Gynaecology</div><p class="svc-desc">Routine and complex gynaecological care including PCOS, endometriosis, fibroids, ovarian cysts and abnormal bleeding.</p></div>
+    <div class="svc-card"><div class="svc-icon">🤰</div><div class="svc-name">Obstetrics & Maternity</div><p class="svc-desc">Full antenatal and postnatal care, high-risk pregnancy management, ultrasound and birth planning.</p></div>
+    <div class="svc-card"><div class="svc-icon">🧬</div><div class="svc-name">Fertility Assessment</div><p class="svc-desc">Comprehensive fertility evaluation including hormonal testing, ultrasound and treatment options guidance.</p></div>
+    <div class="svc-card"><div class="svc-icon">💊</div><div class="svc-name">Contraception</div><p class="svc-desc">All contraceptive options including coil insertion, implant and long-acting methods with full counselling.</p></div>
+    <div class="svc-card"><div class="svc-icon">🔬</div><div class="svc-name">Cervical Screening & HPV</div><p class="svc-desc">Smear tests, colposcopy, HPV vaccination and cervical cancer prevention with annual health screens.</p></div>
+    <div class="svc-card"><div class="svc-icon">🌙</div><div class="svc-name">Menopause Management</div><p class="svc-desc">Menopause symptom assessment, HRT counselling, osteoporosis screening and wellbeing support.</p></div>
+  </div>
+</section>
+
+<section class="philosophy">
+  <div class="phil-inner">
+    <div class="phil-copy">
+      <p class="sec-label">Our Approach</p>
+      <h2>Healthcare that <em>honours you</em></h2>
+      <p>We believe every woman deserves to feel heard, respected and truly cared for. Our approach is evidence-based, compassionate and always patient-centred.</p>
+      <div class="phil-points">
+        <div class="phil-point"><div class="point-dot"></div><div class="point-text">Private, confidential consultations in a safe environment</div></div>
+        <div class="phil-point"><div class="point-dot"></div><div class="point-text">Time taken to explain all options clearly — no rushing</div></div>
+        <div class="phil-point"><div class="point-dot"></div><div class="point-text">Female option always available — your comfort matters</div></div>
+        <div class="phil-point"><div class="point-dot"></div><div class="point-text">Bilingual care — Arabic and English consultations</div></div>
+      </div>
+      <button class="btn-mauve">Book Consultation</button>
+    </div>
+    <div class="phil-visual">
+      <div class="phil-card"><strong>15+</strong><span>Years of Women's Care</span></div>
+      <div class="phil-card"><strong>98%</strong><span>Patient Satisfaction</span></div>
+      <div class="phil-card"><strong>3K+</strong><span>Patients Treated</span></div>
+      <div class="phil-card"><strong>4.9★</strong><span>Google Rating</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="doctor">
+  <div class="doctor-inner">
+    <div class="doc-photo"><img src="{{DOCTOR_IMAGE}}" alt="">👩‍⚕️<div class="doc-accent"></div></div>
+    <div class="doc-copy">
+      <p class="sec-label">Your Gynaecologist</p>
+      <div class="doc-name">{{DOCTOR_NAME}}</div>
+      <div class="doc-spec">MRCOG · Consultant Gynaecologist & Obstetrician</div>
+      <p class="doc-bio">A compassionate and highly experienced gynaecologist dedicated to providing patient-centred women's healthcare. Known for her warmth, thoroughness and ability to put even anxious patients completely at ease. Fluent in Arabic and English.</p>
+      <div class="doc-quals">
+        <span class="qual">MBBS</span><span class="qual">MRCOG</span>
+        <span class="qual">DHA Licensed</span><span class="qual">Fertility Specialist</span>
+      </div>
+      <button class="btn-mauve">Book with {{DOCTOR_FIRSTNAME}}</button>
+    </div>
+  </div>
+</section>
+
+<section class="booking">
+  <div class="booking-inner">
+    <div class="booking-copy">
+      <h2>Your health journey begins here.</h2>
+      <p>Book in confidence. All consultations are strictly private and confidential. Same-week appointments available. Insurance direct billing offered.</p>
+      <div class="booking-info">
+        <div class="binfo"><span>📞</span> {{CLINIC_PHONE}}</div>
+        <div class="binfo"><span>📍</span> {{CLINIC_ADDRESS}}</div>
+        <div class="binfo"><span>🕐</span> Sat–Thu 9am–8pm · Fri 12–5pm</div>
+        <div class="binfo"><span>🔒</span> Strictly private & confidential</div>
+      </div>
+      <button class="wa-btn">💬 WhatsApp Us Now</button>
+    </div>
+    <div class="booking-form">
+      <div class="bf-h">Book Appointment</div>
+      <div class="bf-sub">We respond within 2 hours · All enquiries confidential</div>
+      <div class="f-row">
+        <div class="f"><label>Your Name</label><input type="text" placeholder="First name"></div>
+        <div class="f"><label>Phone / WhatsApp</label><input type="text" placeholder="+971 xx xxx xxxx"></div>
+      </div>
+      <div class="f"><label>Service Required</label>
+        <select><option>General Gynaecology</option><option>Maternity / Antenatal</option><option>Fertility Assessment</option><option>Contraception</option><option>Cervical Smear / HPV</option><option>Menopause</option><option>Not Sure / General</option></select>
+      </div>
+      <div class="f"><label>Preferred Date</label><input type="date"></div>
+      <button class="submit-btn">Request Appointment</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-grid">
+    <div><div class="foot-name">{{CLINIC_NAME}}</div><div class="foot-spec">Women's Health · Dubai</div><p class="foot-p">Specialist women's healthcare in Dubai. DHA licensed. All insurance accepted. Arabic & English.</p></div>
+    <div><div class="foot-h">Services</div><ul class="foot-ul"><li>Gynaecology</li><li>Maternity</li><li>Fertility</li><li>Cervical Screening</li><li>Menopause</li></ul></div>
+    <div><div class="foot-h">Clinic</div><ul class="foot-ul"><li>Our Doctor</li><li>Patient Privacy</li><li>Insurance</li><li>Locations</li></ul></div>
+    <div><div class="foot-h">Contact</div><ul class="foot-ul"><li>{{CLINIC_PHONE}}</li><li>{{CLINIC_ADDRESS}}</li></ul></div>
+  </div>
+  <div class="foot-bar"><p>© 2026 {{CLINIC_NAME}} · Dubai · DHA Licensed</p><p>Privacy Policy · Confidentiality</p></div>
+</footer>
+</body>
+</html>

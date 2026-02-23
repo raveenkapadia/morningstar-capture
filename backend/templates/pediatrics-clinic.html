@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{CLINIC_NAME}} — Paediatrics & Child Health</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&family=Fraunces:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--sun:#F5C842;--sun-lt:#FEF7DC;--coral:#F47B5A;--mint:#3DBD8F;--mint-lt:#E0F5EE;--sky:#5AACE0;--sky-lt:#E0F1FC;--purple:#9B72CF;--white:#FFF;--off:#FAFAF8;--ink:#1A1F2E;--muted:#6B7280;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--white);font-family:'Nunito',sans-serif;color:var(--ink);}
+button{cursor:pointer;border:none;font-family:'Nunito',sans-serif;}
+
+/* NAV */
+nav{height:72px;padding:0 56px;display:flex;align-items:center;justify-content:space-between;background:var(--white);border-bottom:2px solid #F0F0EE;position:sticky;top:0;z-index:100;}
+.logo{display:flex;align-items:center;gap:10px;}
+.logo-bubble{width:40px;height:40px;background:var(--sun);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;}
+.logo-name{font-family:'Fraunces',serif;font-size:20px;color:var(--ink);}
+.logo-sub{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--mint);margin-top:-2px;}
+.nav-links{display:flex;gap:28px;}
+.nav-links a{font-size:13px;font-weight:600;color:var(--muted);text-decoration:none;transition:color .2s;}
+.nav-links a:hover{color:var(--coral);}
+.nav-cta{background:var(--coral);color:#fff;padding:10px 22px;border-radius:100px;font-size:13px;font-weight:700;transition:all .2s;}
+.nav-cta:hover{background:var(--mint);transform:scale(1.03);}
+
+/* HERO */
+.hero{background:var(--sun-lt);padding:72px 56px;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--sun);color:var(--ink);padding:8px 16px;border-radius:100px;font-size:11px;font-weight:800;letter-spacing:.5px;margin-bottom:20px;}
+.hero-h1{font-family:'Fraunces',serif;font-size:clamp(36px,4.5vw,58px);line-height:1.1;color:var(--ink);margin-bottom:16px;}
+.hero-h1 .coral{color:var(--coral);}
+.hero-h1 .mint{color:var(--mint);}
+.hero-p{font-size:15px;color:var(--muted);line-height:1.8;font-weight:400;max-width:440px;margin-bottom:32px;}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;}
+.btn-coral{background:var(--coral);color:#fff;padding:13px 28px;border-radius:100px;font-size:13px;font-weight:700;transition:all .2s;}
+.btn-coral:hover{background:#e0633e;transform:translateY(-2px);}
+.btn-mint{background:var(--mint);color:#fff;padding:13px 24px;border-radius:100px;font-size:13px;font-weight:700;transition:all .2s;}
+.btn-mint:hover{background:#2fa87a;transform:translateY(-2px);}
+.hero-stats{display:flex;gap:28px;margin-top:32px;}
+.stat-pill{background:var(--white);padding:12px 20px;border-radius:100px;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,.06);}
+.stat-pill strong{font-family:'Fraunces',serif;font-size:22px;color:var(--coral);display:block;}
+.stat-pill span{font-size:10px;font-weight:700;color:var(--muted);}
+.hero-visual{position:relative;}
+.hero-main-box{background:var(--coral);border-radius:32px;aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:80px;overflow:hidden;position:relative;}
+.hero-main-box img{width:100%;height:100%;object-fit:cover;border-radius:32px;}
+.floating-card{position:absolute;background:var(--white);border-radius:16px;padding:12px 16px;box-shadow:0 8px 24px rgba(0,0,0,.1);}
+.floating-card.top{top:-16px;right:-16px;}
+.floating-card.bottom{bottom:-16px;left:-16px;}
+.floating-card .fc-emoji{font-size:20px;}
+.floating-card .fc-text{font-size:11px;font-weight:700;color:var(--ink);}
+.floating-card .fc-sub{font-size:10px;color:var(--muted);}
+
+/* AGE STRIPS */
+.ages{background:var(--ink);padding:18px 56px;display:flex;align-items:center;justify-content:center;gap:8px;overflow-x:auto;}
+.age-tag{background:rgba(255,255,255,.08);color:rgba(255,255,255,.6);padding:7px 16px;border-radius:100px;font-size:11px;font-weight:700;white-space:nowrap;transition:all .2s;cursor:pointer;}
+.age-tag:hover,.age-tag.active{background:var(--sun);color:var(--ink);}
+.ages-label{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.3);margin-right:16px;white-space:nowrap;}
+
+/* SERVICES */
+.services{padding:72px 56px;background:var(--white);}
+.sec-tag{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--coral);margin-bottom:6px;}
+h2{font-family:'Fraunces',serif;font-size:38px;color:var(--ink);}
+.services-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:40px;}
+.svc-card{border-radius:20px;padding:28px;border:2px solid transparent;transition:all .3s;}
+.svc-card.yellow{background:var(--sun-lt);}.svc-card.yellow:hover{border-color:var(--sun);}
+.svc-card.mint{background:var(--mint-lt);}.svc-card.mint:hover{border-color:var(--mint);}
+.svc-card.sky{background:var(--sky-lt);}.svc-card.sky:hover{border-color:var(--sky);}
+.svc-card.purple{background:#F5EFFE;}.svc-card.purple:hover{border-color:var(--purple);}
+.svc-emoji{font-size:32px;margin-bottom:14px;}
+.svc-name{font-family:'Fraunces',serif;font-size:21px;color:var(--ink);margin-bottom:8px;}
+.svc-desc{font-size:13px;color:var(--muted);line-height:1.7;}
+
+/* DOCTOR */
+.doctor{background:var(--mint-lt);padding:72px 56px;}
+.doctor-inner{display:grid;grid-template-columns:1fr 1.2fr;gap:64px;align-items:center;}
+.doc-photo-wrap{position:relative;}
+.doc-photo{background:var(--mint);border-radius:32px;aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;font-size:64px;overflow:hidden;}
+.doc-photo img{width:100%;height:100%;object-fit:cover;border-radius:32px;}
+.doc-badge{position:absolute;bottom:-20px;right:-20px;background:var(--sun);border-radius:20px;padding:14px 18px;box-shadow:0 8px 24px rgba(0,0,0,.12);}
+.doc-badge strong{font-family:'Fraunces',serif;font-size:26px;color:var(--ink);display:block;}
+.doc-badge span{font-size:10px;font-weight:700;color:rgba(26,31,46,.6);}
+.doc-copy .sec-tag{color:var(--mint);}
+.doc-name{font-family:'Fraunces',serif;font-size:36px;color:var(--ink);margin-bottom:4px;}
+.doc-spec{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--mint);margin-bottom:16px;}
+.doc-bio{font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:24px;}
+.doc-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px;}
+.doc-tag{background:var(--white);color:var(--ink);font-size:11px;font-weight:700;padding:6px 14px;border-radius:100px;}
+
+/* REVIEWS */
+.reviews{background:var(--white);padding:72px 56px;}
+.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px;}
+.review{background:var(--off);border-radius:20px;padding:24px;}
+.review-stars{font-size:14px;letter-spacing:2px;margin-bottom:10px;}
+.review-text{font-size:13px;color:var(--ink);line-height:1.7;margin-bottom:14px;font-style:italic;}
+.review-author{font-size:11px;font-weight:700;color:var(--muted);}
+.review-type{display:inline-block;background:var(--sun-lt);color:var(--ink);font-size:9px;font-weight:800;padding:3px 10px;border-radius:100px;margin-bottom:10px;letter-spacing:.5px;}
+
+/* BOOKING */
+.booking{background:var(--coral);padding:72px 56px;}
+.booking-inner{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;}
+.booking-copy h2{font-family:'Fraunces',serif;font-size:44px;color:#fff;margin-bottom:14px;}
+.booking-copy p{font-size:14px;color:rgba(255,255,255,.75);line-height:1.8;margin-bottom:28px;}
+.wa-btn{background:#25D366;color:#fff;padding:13px 28px;border-radius:100px;font-size:13px;font-weight:700;display:inline-flex;align-items:center;gap:8px;}
+.booking-form{background:#fff;border-radius:24px;padding:36px;}
+.bf-h{font-family:'Fraunces',serif;font-size:24px;color:var(--ink);margin-bottom:4px;}
+.bf-sub{font-size:12px;color:var(--muted);margin-bottom:24px;}
+.f{margin-bottom:14px;}
+.f label{display:block;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:5px;}
+.f input,.f select{width:100%;border:2px solid #F0F0EE;border-radius:10px;padding:10px 13px;font-size:13px;font-family:'Nunito',sans-serif;color:var(--ink);outline:none;transition:border-color .2s;}
+.f input:focus,.f select:focus{border-color:var(--coral);}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.submit{background:var(--coral);color:#fff;width:100%;padding:13px;border-radius:100px;font-size:13px;font-weight:700;margin-top:8px;transition:all .2s;}
+.submit:hover{background:var(--mint);}
+
+/* FOOTER */
+footer{background:var(--ink);padding:48px 56px;}
+.f-row2{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:28px;}
+.f-brand{font-family:'Fraunces',serif;font-size:20px;color:#fff;margin-bottom:8px;}
+.f-brand-sub{font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--mint);margin-bottom:12px;}
+.f-p{font-size:12px;color:rgba(255,255,255,.3);line-height:1.75;}
+.f-h{font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:12px;}
+.f-ul{list-style:none;}
+.f-ul li{font-size:12px;color:rgba(255,255,255,.3);margin-bottom:8px;cursor:pointer;transition:color .2s;}
+.f-ul li:hover{color:var(--sun);}
+.f-bottom{padding-top:20px;border-top:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;}
+.f-bottom p{font-size:11px;color:rgba(255,255,255,.2);}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">
+    <div class="logo-bubble">⭐</div>
+    <div><div class="logo-name">{{CLINIC_NAME}}</div><div class="logo-sub">Children's Health</div></div>
+  </div>
+  <div class="nav-links"><a href="#">Services</a><a href="#">Vaccinations</a><a href="#">Our Doctor</a><a href="#">Baby Care</a><a href="#">Contact</a></div>
+  <button class="nav-cta">Book Now 🌟</button>
+</nav>
+
+<div class="hero">
+  <div>
+    <div class="hero-badge">⭐ Dubai's Trusted Paediatric Clinic</div>
+    <h1 class="hero-h1">Little ones<br>deserve the<br><span class="coral">best</span> <span class="mint">care.</span></h1>
+    <p class="hero-p">Specialist paediatric healthcare for newborns through teenagers. Expert, gentle and child-friendly — because happy kids heal faster.</p>
+    <div class="hero-btns">
+      <button class="btn-coral">Book Appointment</button>
+      <button class="btn-mint">WhatsApp Us</button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-pill"><strong>12+</strong><span>Years Caring</span></div>
+      <div class="stat-pill"><strong>10K+</strong><span>Happy Children</span></div>
+      <div class="stat-pill"><strong>4.9★</strong><span>Google Rating</span></div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-main-box"><img src="{{HERO_IMAGE}}" alt="">🌟</div>
+    <div class="floating-card top"><div class="fc-emoji">💉</div><div class="fc-text">Vaccinations</div><div class="fc-sub">Full schedule available</div></div>
+    <div class="floating-card bottom"><div class="fc-emoji">⚡</div><div class="fc-text">Same-Day Appointments</div><div class="fc-sub">No long waiting</div></div>
+  </div>
+</div>
+
+<div class="ages">
+  <div class="ages-label">We Care For:</div>
+  <div class="age-tag active">Newborns</div>
+  <div class="age-tag">1–3 Years</div>
+  <div class="age-tag">3–6 Years</div>
+  <div class="age-tag">6–12 Years</div>
+  <div class="age-tag">Teenagers</div>
+  <div class="age-tag">School Medicals</div>
+  <div class="age-tag">Travel Vaccines</div>
+</div>
+
+<section class="services">
+  <p class="sec-tag">What We Offer</p>
+  <h2>Complete Paediatric Care</h2>
+  <div class="services-grid">
+    <div class="svc-card yellow"><div class="svc-emoji">🩺</div><div class="svc-name">Well-Baby & Child Checkups</div><p class="svc-desc">Regular growth monitoring, developmental assessments and health checkups from birth through adolescence.</p></div>
+    <div class="svc-card mint"><div class="svc-emoji">💉</div><div class="svc-name">Vaccination Programme</div><p class="svc-desc">Complete immunisation schedule following UAE MOH guidelines. Catch-up vaccines and travel immunisations.</p></div>
+    <div class="svc-card sky"><div class="svc-emoji">🤒</div><div class="svc-name">Sick Child Consultations</div><p class="svc-desc">Fever, infection, respiratory illness, stomach bugs and all acute childhood conditions. Same-day appointments available.</p></div>
+    <div class="svc-card purple"><div class="svc-emoji">📋</div><div class="svc-name">School & Activity Medicals</div><p class="svc-desc">School fitness certificates, sports medicals, nursery forms and all official paediatric documentation.</p></div>
+  </div>
+</section>
+
+<section class="doctor">
+  <div class="doctor-inner">
+    <div class="doc-photo-wrap">
+      <div class="doc-photo"><img src="{{DOCTOR_IMAGE}}" alt="">👨‍⚕️</div>
+      <div class="doc-badge"><strong>12+</strong><span>Years Caring<br>for Children</span></div>
+    </div>
+    <div class="doc-copy">
+      <p class="sec-tag">Your Paediatrician</p>
+      <div class="doc-name">{{DOCTOR_NAME}}</div>
+      <div class="doc-spec">MD Paediatrics · Child Development Specialist</div>
+      <p class="doc-bio">A warm, patient and highly skilled paediatrician who has dedicated his career to children's health. Known for a calming bedside manner that puts even the most anxious children at ease.</p>
+      <div class="doc-tags">
+        <span class="doc-tag">MD Paediatrics</span><span class="doc-tag">DHA Licensed</span>
+        <span class="doc-tag">Neonatology</span><span class="doc-tag">Child Development</span>
+      </div>
+      <button class="btn-coral">Book with Dr. {{DOCTOR_FIRSTNAME}}</button>
+    </div>
+  </div>
+</section>
+
+<section class="reviews">
+  <p class="sec-tag">Parent Reviews</p>
+  <h2>What Parents Say</h2>
+  <div class="reviews-grid">
+    <div class="review"><div class="review-type">⭐ Verified Parent</div><div class="review-stars">★★★★★</div><p class="review-text">"My son used to cry going to any doctor. Now he asks to visit Dr. {{DOCTOR_FIRSTNAME}}. That says everything."</p><div class="review-author">— Aisha M., Mother of 3</div></div>
+    <div class="review"><div class="review-type">⭐ Verified Parent</div><div class="review-stars">★★★★★</div><p class="review-text">"Fast appointment, no waiting, doctor took all the time needed. Best paediatrician we've found in Dubai."</p><div class="review-author">— James T., Father</div></div>
+    <div class="review"><div class="review-type">⭐ Verified Parent</div><div class="review-stars">★★★★★</div><p class="review-text">"We've been bringing our twins here since birth. The whole team is wonderful, patient and so good with children."</p><div class="review-author">— Priya K., Mother of Twins</div></div>
+  </div>
+</section>
+
+<section class="booking">
+  <div class="booking-inner">
+    <div class="booking-copy">
+      <h2>Your child's health starts here. 🌟</h2>
+      <p>Same-day appointments available for sick children. Book online or WhatsApp us — we respond fast, because we know you can't wait when your little one is unwell.</p>
+      <button class="wa-btn">💬 WhatsApp: {{CLINIC_PHONE}}</button>
+    </div>
+    <div class="booking-form">
+      <div class="bf-h">Book Appointment</div>
+      <div class="bf-sub">Same-day appointments available for sick children.</div>
+      <div class="f-row">
+        <div class="f"><label>Parent Name</label><input type="text" placeholder="Your name"></div>
+        <div class="f"><label>Phone / WhatsApp</label><input type="text" placeholder="+971 xx xxx xxxx"></div>
+      </div>
+      <div class="f-row">
+        <div class="f"><label>Child's Name</label><input type="text" placeholder="Child's name"></div>
+        <div class="f"><label>Child's Age</label><select><option>Newborn (0–12m)</option><option>1–3 Years</option><option>3–6 Years</option><option>6–12 Years</option><option>12+ Years</option></select></div>
+      </div>
+      <div class="f"><label>Reason for Visit</label><select><option>Routine Checkup</option><option>Vaccination</option><option>Sick Child (fever/illness)</option><option>School Medical</option><option>Developmental Assessment</option></select></div>
+      <button class="submit">Book Appointment ✨</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="f-row2">
+    <div><div class="f-brand">{{CLINIC_NAME}}</div><div class="f-brand-sub">Children's Health · Dubai</div><p class="f-p">Specialist paediatric healthcare for newborns through teenagers. DHA licensed. All insurance accepted.</p></div>
+    <div><div class="f-h">Services</div><ul class="f-ul"><li>Well-Baby Checkups</li><li>Vaccinations</li><li>Sick Consultations</li><li>School Medicals</li></ul></div>
+    <div><div class="f-h">Information</div><ul class="f-ul"><li>Vaccine Schedule</li><li>Insurance Plans</li><li>Patient Forms</li><li>FAQ</li></ul></div>
+    <div><div class="f-h">Contact</div><ul class="f-ul"><li>{{CLINIC_PHONE}}</li><li>{{CLINIC_ADDRESS}}</li></ul></div>
+  </div>
+  <div class="f-bottom"><p>© 2026 {{CLINIC_NAME}} · Dubai · DHA Licensed</p><p>Privacy Policy</p></div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,349 @@
+amp(28px,3.5vw,50px);font-weight:400;color:var(--ink);line-height:1.1;margin-bottom:20px;font-style:italic}
+  .if-title em{color:var(--sage)}
+  .if-desc{font-size:13px;line-height:2.1;color:var(--muted);font-weight:300;margin-bottom:20px;max-width:360px}
+  .if-ingredients{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:36px}
+  .if-ing{display:flex;gap:12px;align-items:flex-start;padding:14px;background:var(--sage-pale);border:1px solid rgba(122,158,126,.15)}
+  .if-ing-icon{font-size:18px;flex-shrink:0}
+  .if-ing-name{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);font-weight:400;margin-bottom:3px}
+  .if-ing-origin{font-size:10px;color:var(--muted);font-weight:300}
+
+  /* TRANSPARENCY */
+  .transparency{background:var(--ink);padding:80px 60px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+  .tr-label{font-size:9px;letter-spacing:.42em;text-transform:uppercase;color:rgba(248,245,240,.4);margin-bottom:14px}
+  .tr-title{font-family:'Lora',serif;font-size:clamp(30px,3.5vw,50px);font-weight:400;color:#fff;line-height:1.15;margin-bottom:20px;font-style:italic}
+  .tr-desc{font-size:13px;line-height:2;color:rgba(248,245,240,.5);font-weight:300;max-width:380px}
+  .certifications{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(248,245,240,.06)}
+  .cert{background:rgba(248,245,240,.04);padding:28px 24px;text-align:center}
+  .cert-icon{font-size:24px;margin-bottom:12px}
+  .cert-title{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--sage-light);margin-bottom:6px;font-weight:400}
+  .cert-desc{font-size:12px;color:rgba(248,245,240,.35);font-weight:300}
+
+  /* COLLECTION PHILOSOPHY */
+  .philosophy-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+  .phil-card{border:1px solid var(--border);padding:44px 32px;background:var(--white)}
+  .phil-icon{font-size:28px;margin-bottom:18px}
+  .phil-num{font-family:'Lora',serif;font-size:44px;font-weight:400;color:rgba(122,158,126,.12);line-height:1;margin-bottom:8px;font-style:italic}
+  .phil-title{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink);margin-bottom:12px;font-weight:400}
+  .phil-desc{font-size:13px;line-height:1.9;color:var(--muted);font-weight:300}
+
+  /* BANNER */
+  .banner{position:relative;height:58vh;min-height:380px;overflow:hidden;display:flex;align-items:center;justify-content:flex-start}
+  .banner img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.4) saturate(.6)}
+  .banner::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,rgba(30,42,30,.8) 0%,transparent 60%)}
+  .banner-content{position:relative;z-index:2;padding:80px;max-width:580px}
+  .banner-rule{width:40px;height:1px;background:var(--sage-light);margin-bottom:24px}
+  .banner-label{font-size:9px;letter-spacing:.42em;text-transform:uppercase;color:rgba(168,197,171,.55);margin-bottom:16px}
+  .banner-title{font-family:'Lora',serif;font-size:clamp(34px,4.5vw,60px);font-weight:400;color:#fff;line-height:1.1;margin-bottom:20px;font-style:italic}
+  .banner-sub{font-size:13px;color:rgba(255,255,255,.5);font-weight:300;margin-bottom:32px;line-height:1.8}
+
+  /* GIFT SETS */
+  .gift-split{display:grid;grid-template-columns:1fr 1fr;min-height:500px}
+  .gs-img{overflow:hidden}
+  .gs-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.8) saturate(.6);transition:transform 10s}
+  .gs-img:hover img{transform:scale(1.03)}
+  .gs-content{background:var(--sage);display:flex;flex-direction:column;justify-content:center;padding:80px}
+  .gc-label{font-size:9px;letter-spacing:.42em;text-transform:uppercase;color:rgba(248,245,240,.5);margin-bottom:20px}
+  .gc-title{font-family:'Lora',serif;font-size:clamp(28px,3.5vw,48px);font-weight:400;color:#fff;line-height:1.15;margin-bottom:20px;font-style:italic}
+  .gc-desc{font-size:13px;line-height:2;color:rgba(248,245,240,.65);font-weight:300;margin-bottom:32px;max-width:360px}
+  .btn-cream{display:inline-block;background:var(--cream);color:var(--sage);padding:13px 36px;font-size:9px;letter-spacing:.3em;text-transform:uppercase;text-decoration:none;font-weight:400;align-self:flex-start;transition:background .2s}
+  .btn-cream:hover{background:#fff}
+
+  /* REVIEWS */
+  .reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .review-card{border:1px solid var(--border);padding:40px 32px;background:var(--white)}
+  .r-stars{letter-spacing:3px;color:var(--sage);font-size:12px;margin-bottom:16px}
+  .r-quote{font-family:'Lora',serif;font-size:42px;color:rgba(122,158,126,.2);line-height:.6;margin-bottom:14px;font-style:italic}
+  .r-text{font-family:'Lora',serif;font-size:16px;font-style:italic;line-height:1.95;color:rgba(30,42,30,.68);margin-bottom:20px;font-weight:400}
+  .r-author{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+  .r-frag{font-size:10px;color:var(--sage);margin-top:4px}
+
+  /* NEWSLETTER + FOOTER */
+  .footer-nl{background:var(--ink);padding:64px 60px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+  .nl-label{font-size:9px;letter-spacing:.42em;text-transform:uppercase;color:rgba(248,245,240,.35);margin-bottom:14px}
+  .nl-title{font-family:'Lora',serif;font-size:36px;font-weight:400;color:#fff;line-height:1.2;font-style:italic}
+  .nl-form{display:flex}
+  .nl-input{flex:1;padding:14px 20px;background:rgba(255,255,255,.05);border:1px solid rgba(122,158,126,.2);color:#fff;font-family:'Raleway',sans-serif;font-size:13px;outline:none;border-right:none}
+  .nl-input::placeholder{color:rgba(255,255,255,.3);font-size:12px}
+  .nl-submit{background:var(--sage);color:#fff;border:none;padding:14px 28px;font-family:'Raleway',sans-serif;font-size:9px;letter-spacing:.28em;text-transform:uppercase;cursor:pointer;white-space:nowrap;transition:background .2s}
+  .nl-submit:hover{background:#698c6d}
+  .nl-note{font-size:11px;color:rgba(255,255,255,.2);margin-top:12px;font-weight:300}
+
+  footer{background:#f5f2ed;border-top:1px solid var(--border);padding:80px 60px 40px}
+  .footer-grid{display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:56px;padding-bottom:56px;border-bottom:1px solid var(--border)}
+  .footer-logo{font-family:'Lora',serif;font-size:22px;font-weight:400;color:var(--ink);margin-bottom:16px;font-style:italic}
+  .footer-brand-desc{font-size:13px;line-height:1.9;color:var(--muted);font-weight:300;margin-bottom:28px;max-width:240px}
+  .footer-badges{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
+  .fb{background:var(--sage-pale);border:1px solid rgba(122,158,126,.2);padding:5px 12px;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--sage);font-weight:300}
+  .footer-col-title{font-size:9px;letter-spacing:.35em;text-transform:uppercase;color:var(--ink);margin-bottom:24px;font-weight:500}
+  .footer-links-list{list-style:none;display:flex;flex-direction:column;gap:12px}
+  .footer-links-list a{font-size:13px;color:var(--muted);text-decoration:none;font-weight:300;transition:color .2s}
+  .footer-links-list a:hover{color:var(--sage)}
+  .footer-contact-list{list-style:none;display:flex;flex-direction:column;gap:14px}
+  .contact-item{display:flex;gap:12px}
+  .contact-icon{font-size:14px;flex-shrink:0}
+  .contact-text{font-size:12px;color:var(--muted);font-weight:300;line-height:1.7}
+  .contact-text a{color:inherit;text-decoration:none;transition:color .2s}
+  .contact-text a:hover{color:var(--sage)}
+  .footer-bottom{padding-top:32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+  .footer-legal{font-size:11px;color:var(--muted)}
+  .footer-legal-links{display:flex;gap:24px}
+  .footer-legal-links a{font-size:11px;color:var(--muted);text-decoration:none;transition:color .2s}
+  .footer-legal-links a:hover{color:var(--ink)}
+  .footer-powered{font-size:9px;letter-spacing:.22em;color:rgba(30,42,30,.18);text-transform:uppercase}
+
+  .sticky-cta{display:none;position:fixed;bottom:0;left:0;right:0;z-index:300;background:rgba(248,245,240,.97);border-top:1px solid var(--border);padding:14px 20px;flex-direction:column;gap:10px;backdrop-filter:blur(12px)}
+  .sticky-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;text-align:center;color:var(--muted)}
+  .sticky-buttons{display:flex;gap:10px}
+  .s-book{flex:1;background:transparent;border:1px solid var(--border-strong);color:var(--ink);padding:13px;font-size:9px;letter-spacing:.25em;text-transform:uppercase;cursor:pointer;font-family:'Raleway',sans-serif}
+  .s-buy{flex:1.5;background:var(--sage);border:none;color:#fff;padding:13px;font-size:9px;letter-spacing:.25em;text-transform:uppercase;cursor:pointer;font-family:'Raleway',sans-serif}
+
+  .switcher{position:fixed;bottom:30px;right:30px;z-index:400}
+  .switcher-btn{background:var(--ink);color:var(--sage-light);border:none;width:50px;height:50px;border-radius:50%;font-size:18px;cursor:pointer;box-shadow:0 6px 24px rgba(30,42,30,.2);display:flex;align-items:center;justify-content:center}
+  .switcher-menu{position:absolute;bottom:62px;right:0;background:var(--cream);border:1px solid var(--border);padding:16px 20px;min-width:220px;display:none;box-shadow:0 12px 40px rgba(30,42,30,.08)}
+  .switcher-menu.open{display:block}
+  .sm-title{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+  .s-opt{display:flex;align-items:center;gap:12px;padding:9px 0;font-size:12px;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--border);transition:color .2s;font-weight:300}
+  .s-opt:last-child{border-bottom:none}
+  .s-opt.active{color:var(--sage)}
+  .s-dot{width:7px;height:7px;border-radius:50%;border:1.5px solid var(--sage)}
+  .s-dot.filled{background:var(--sage)}
+
+  .fade-up{opacity:0;transform:translateY(28px);transition:opacity .9s ease,transform .9s ease}
+  .fade-up.visible{opacity:1;transform:translateY(0)}
+  .stagger-1{transition-delay:.1s}.stagger-2{transition-delay:.2s}.stagger-3{transition-delay:.3s}
+
+  @media(max-width:768px){
+    nav{padding:16px 20px}
+    .nav-links{display:none}
+    .hero{grid-template-columns:1fr;min-height:auto}
+    .hero-left{height:65vw}
+    .hero-right{padding:48px 24px}
+    .section{padding:60px 24px}
+    .product-grid{grid-template-columns:repeat(2,1fr);gap:20px}
+    .ingredients-feature{grid-template-columns:1fr}
+    .if-img{height:60vw}
+    .if-content{padding:44px 24px}
+    .if-ingredients{grid-template-columns:1fr}
+    .transparency{grid-template-columns:1fr;padding:56px 24px;gap:40px}
+    .certifications{grid-template-columns:1fr 1fr}
+    .philosophy-grid{grid-template-columns:1fr}
+    .banner{height:80vw}
+    .banner-content{padding:48px 24px}
+    .gift-split{grid-template-columns:1fr}
+    .gs-img{height:60vw}
+    .gs-content{padding:48px 24px}
+    .reviews-grid{grid-template-columns:1fr}
+    .footer-nl{grid-template-columns:1fr;padding:48px 24px;gap:32px}
+    .nl-form{flex-direction:column}
+    footer{padding:56px 24px 32px}
+    .footer-grid{grid-template-columns:1fr 1fr;gap:36px}
+    .footer-bottom{flex-direction:column;align-items:flex-start}
+    .proof-bar{grid-template-columns:repeat(2,1fr)}
+    .sticky-cta{display:flex}
+    .switcher{bottom:100px;right:16px}
+  }
+</style>
+</head>
+<body>
+
+<div class="expiry">⏰ Preview expires in: <strong id="countdown">6d 23h 41m</strong> &nbsp;·&nbsp; Designed exclusively for your brand</div>
+
+<nav>
+  <div class="nav-brand">Your Brand</div>
+  <ul class="nav-links">
+    <li><a href="#">Collections</a></li>
+    <li><a href="#">Ingredients</a></li>
+    <li><a href="#">Gifting</a></li>
+    <li><a href="#">Our Story</a></li>
+  </ul>
+  <button class="nav-cta">Shop Now</button>
+</nav>
+
+<section class="hero">
+  <div class="hero-left">
+    <img src="https://images.unsplash.com/photo-1516802273409-68526ee1bdd6?w=900&q=85" alt="">
+  </div>
+  <div class="hero-right">
+    <div class="hero-badge">Natural · Transparent · Botanical</div>
+    <h1 class="hero-title">From the<br>garden.<br><em>To your skin.</em></h1>
+    <p class="hero-tagline">Fragrance rooted in nature. Every ingredient traceable. Every bottle refillable. Beauty that doesn't cost the earth — literally.</p>
+    <div class="hero-actions">
+      <a href="#" class="btn-sage">Shop Collection</a>
+      <a href="#" class="btn-ghost">Our Ingredients</a>
+    </div>
+    <div class="hero-ingredients">
+      <div class="hi-label">Key Botanicals</div>
+      <div class="hi-tags">
+        <span class="hi-tag">English Rose</span>
+        <span class="hi-tag">Cedarwood</span>
+        <span class="hi-tag">Vetiver</span>
+        <span class="hi-tag">White Tea</span>
+        <span class="hi-tag">Bergamot</span>
+        <span class="hi-tag">Patchouli</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="ingredient-ticker">
+  <div class="ing-inner">English Rose · Cedarwood · Vetiver · White Tea · Bergamot · Patchouli · Neroli · Ylang-Ylang · Oakmoss · English Rose · Cedarwood · Vetiver · White Tea · Bergamot · Patchouli ·</div>
+</div>
+
+<div class="proof-bar">
+  <div class="pi fade-up"><div class="pi-num">100%</div><div class="pi-label">Natural Origin</div></div>
+  <div class="pi fade-up stagger-1"><div class="pi-num">0%</div><div class="pi-label">Synthetics</div></div>
+  <div class="pi fade-up stagger-2"><div class="pi-num">30+</div><div class="pi-label">Fragrances</div></div>
+  <div class="pi fade-up stagger-3"><div class="pi-num">♻️</div><div class="pi-label">Refillable Bottles</div></div>
+</div>
+
+<section class="section alt">
+  <div class="s-label fade-up" style="margin-bottom:14px">The Collection</div>
+  <h2 class="s-title fade-up" style="margin-bottom:52px">Grown in <em>Nature</em></h2>
+  <div class="product-grid">
+    <div class="product-card fade-up"><div class="product-img"><img src="https://images.unsplash.com/photo-1541643600914-78b084683702?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">Discover</button></div></div><div class="product-family">Floral</div><div class="product-name">Garden Rose</div><div class="product-notes">Rose · Peony · White Musk · Vetiver</div><div class="product-row"><span class="product-vol">50ml · 100ml</span><span class="product-price">AED 295</span></div></div>
+    <div class="product-card fade-up stagger-1"><div class="product-img"><img src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">Discover</button></div></div><div class="product-family">Woody</div><div class="product-name">Forest Cedar</div><div class="product-notes">Cedarwood · Oakmoss · Bergamot</div><div class="product-row"><span class="product-vol">50ml · 100ml</span><span class="product-price">AED 320</span></div></div>
+    <div class="product-card fade-up stagger-2"><div class="product-img"><img src="https://images.unsplash.com/photo-1512207846876-bb54ef5056fe?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">Discover</button></div></div><div class="product-family">Citrus</div><div class="product-name">White Tea & Neroli</div><div class="product-notes">White Tea · Neroli · Green Accord</div><div class="product-row"><span class="product-vol">50ml · 100ml</span><span class="product-price">AED 275</span></div></div>
+  </div>
+</section>
+
+<section class="section white">
+  <div class="ingredients-feature" style="display:grid;grid-template-columns:1fr 1fr;min-height:560px">
+    <div class="if-img"><img src="https://images.unsplash.com/photo-1516802273409-68526ee1bdd6?w=900&q=85" alt=""></div>
+    <div class="if-content fade-up">
+      <p class="if-label">Our Ingredients</p>
+      <h2 class="if-title">Every note.<br><em>Traceable.</em></h2>
+      <p class="if-desc">We publish the full origin of every ingredient we use. You should know where your fragrance comes from — and so should we.</p>
+      <div class="if-ingredients">
+        <div class="if-ing"><span class="if-ing-icon">🌹</span><div><div class="if-ing-name">English Rose</div><div class="if-ing-origin">Devon, UK</div></div></div>
+        <div class="if-ing"><span class="if-ing-icon">🌲</span><div><div class="if-ing-name">Cedarwood</div><div class="if-ing-origin">Virginia, USA</div></div></div>
+        <div class="if-ing"><span class="if-ing-icon">🌿</span><div><div class="if-ing-name">Vetiver</div><div class="if-ing-origin">Haiti</div></div></div>
+        <div class="if-ing"><span class="if-ing-icon">🍋</span><div><div class="if-ing-name">Bergamot</div><div class="if-ing-origin">Calabria, Italy</div></div></div>
+      </div>
+      <a href="#" class="btn-sage">Full Ingredient Map</a>
+    </div>
+  </div>
+</section>
+
+<div class="transparency">
+  <div class="fade-up">
+    <p class="tr-label">Our Commitment</p>
+    <h2 class="tr-title">Nothing to<br>hide.</h2>
+    <p class="tr-desc">Full ingredient disclosure. Refillable bottles. Carbon-neutral delivery. We believe the fragrance industry can be beautiful without being harmful.</p>
+  </div>
+  <div class="certifications fade-up stagger-1">
+    <div class="cert"><div class="cert-icon">🌿</div><div class="cert-title">100% Natural</div><div class="cert-desc">No synthetic musks or phthalates</div></div>
+    <div class="cert"><div class="cert-icon">♻️</div><div class="cert-title">Refillable</div><div class="cert-desc">Every bottle can be refilled instore</div></div>
+    <div class="cert"><div class="cert-icon">🐰</div><div class="cert-title">Cruelty Free</div><div class="cert-desc">Leaping Bunny certified</div></div>
+    <div class="cert"><div class="cert-icon">🌍</div><div class="cert-title">Carbon Neutral</div><div class="cert-desc">All deliveries offset</div></div>
+  </div>
+</div>
+
+<section class="section alt">
+  <div class="s-label fade-up" style="text-align:center;margin-bottom:14px">Why Botanique</div>
+  <h2 class="s-title fade-up" style="text-align:center;margin-bottom:52px">Our <em>Philosophy</em></h2>
+  <div class="philosophy-grid">
+    <div class="phil-card fade-up"><div class="phil-icon">🌱</div><div class="phil-num">01</div><div class="phil-title">Transparency First</div><div class="phil-desc">We list every ingredient, its origin, and its purpose. No proprietary blends, no hidden chemicals. What you smell is what we've written down.</div></div>
+    <div class="phil-card fade-up stagger-1"><div class="phil-icon">🌸</div><div class="phil-num">02</div><div class="phil-title">Grown Not Made</div><div class="phil-desc">Every note in our fragrances comes from a botanical source. We travel to the growers, understand their practices, and build relationships, not just supply chains.</div></div>
+    <div class="phil-card fade-up stagger-2"><div class="phil-icon">✨</div><div class="phil-num">03</div><div class="phil-title">Made to Last</div><div class="phil-desc">Our bottles are designed to be refilled for a lifetime. Beautiful objects shouldn't be disposable. Neither should their contents.</div></div>
+  </div>
+</section>
+
+<div class="banner">
+  <img src="https://images.unsplash.com/photo-1547887538-e3a2f32cb1cc?w=1600&q=85" alt="">
+  <div class="banner-content fade-up">
+    <div class="banner-rule"></div>
+    <p class="banner-label">Bespoke Botanical</p>
+    <h2 class="banner-title">Your scent.<br><em>From the source.</em></h2>
+    <p class="banner-sub">Work with our botanical perfumer to create a fragrance built entirely from traceable, natural ingredients — and the story you want to carry.</p>
+    <a href="#" class="btn-sage">Begin Commission</a>
+  </div>
+</div>
+
+<div class="gift-split">
+  <div class="gs-img"><img src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=900&q=85" alt=""></div>
+  <div class="gs-content fade-up">
+    <p class="gc-label">Gifting</p>
+    <h2 class="gc-title">A gift that says<br>everything.</h2>
+    <p class="gc-desc">Beautifully packaged in recycled materials, accompanied by a handwritten note and a seed paper card that the recipient can plant. Fragrance that gives back to the earth.</p>
+    <a href="#" class="btn-cream">Shop Gift Sets</a>
+  </div>
+</div>
+
+<section class="section white">
+  <div class="s-label fade-up" style="text-align:center;margin-bottom:14px">Their Words</div>
+  <h2 class="s-title fade-up" style="text-align:center;margin-bottom:48px">Worn with <em>Intention</em></h2>
+  <div class="reviews-grid">
+    <div class="review-card fade-up"><div class="r-stars">★★★★★</div><div class="r-quote">"</div><p class="r-text">Garden Rose is the only fragrance I have found that doesn't give me a headache. Clean, real, and genuinely beautiful. I have converted my entire family.</p><div class="r-author">Hessa Al Mansoori</div><div class="r-frag">Garden Rose · Dubai</div></div>
+    <div class="review-card fade-up stagger-1"><div class="r-stars">★★★★★</div><div class="r-quote">"</div><p class="r-text">The refill service is a game changer. I have had the same bottle for two years and it looks as beautiful as the day I bought it. This is how fragrance should work.</p><div class="r-author">Priya Krishnan</div><div class="r-frag">Forest Cedar · Abu Dhabi</div></div>
+    <div class="review-card fade-up stagger-2"><div class="r-stars">★★★★★</div><div class="r-quote">"</div><p class="r-text">I appreciate that I can read every ingredient on the website before I buy. As someone with sensitive skin, this transparency is everything. Exceptional product.</p><div class="r-author">Nour Saad</div><div class="r-frag">White Tea & Neroli · Sharjah</div></div>
+  </div>
+</section>
+
+<div class="footer-nl">
+  <div class="fade-up"><p class="nl-label">Seasonal Drops</p><h3 class="nl-title">New botanicals.<br>First to know.</h3></div>
+  <div class="fade-up stagger-1">
+    <div class="nl-form"><input class="nl-input" type="email" placeholder="Your email address"><button class="nl-submit">Subscribe</button></div>
+    <p class="nl-note">Seasonal drops and refill reminders. Unsubscribe anytime.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">Your Brand</div>
+      <p class="footer-brand-desc">Natural fragrance rooted in transparency. Every ingredient traceable. Every bottle refillable.</p>
+      <div class="footer-badges">
+        <span class="fb">100% Natural</span>
+        <span class="fb">Cruelty Free</span>
+        <span class="fb">Refillable</span>
+        <span class="fb">Carbon Neutral</span>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Collections</div>
+      <ul class="footer-links-list"><li><a href="#">Floral</a></li><li><a href="#">Woody</a></li><li><a href="#">Citrus</a></li><li><a href="#">Oriental</a></li><li><a href="#">Unisex</a></li><li><a href="#">Gift Sets</a></li></ul>
+    </div>
+    <div>
+      <div class="footer-col-title">About</div>
+      <ul class="footer-links-list"><li><a href="#">Our Ingredients</a></li><li><a href="#">Sustainability</a></li><li><a href="#">Refill Programme</a></li><li><a href="#">Bespoke</a></li><li><a href="#">Corporate Gifting</a></li><li><a href="#">Our Story</a></li></ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Visit Us</div>
+      <ul class="footer-contact-list">
+        <li class="contact-item"><span class="contact-icon">📍</span><span class="contact-text">Alserkal Avenue<br>Al Quoz, Dubai, UAE</span></li>
+        <li class="contact-item"><span class="contact-icon">📞</span><span class="contact-text"><a href="tel:+97144000000">+971 4 400 0000</a></span></li>
+        <li class="contact-item"><span class="contact-icon">✉️</span><span class="contact-text"><a href="mailto:hello@yourbrand.com">hello@yourbrand.com</a></span></li>
+        <li class="contact-item"><span class="contact-icon">🕐</span><span class="contact-text">Mon–Sat: 10am–9pm<br>Sun: 12pm–7pm</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-legal">© 2026 Your Brand Botanicals. All rights reserved.</div>
+    <div class="footer-legal-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Sustainability Policy</a><a href="#">Accessibility</a></div>
+    <div class="footer-powered">Preview by MorningStar.ai</div>
+  </div>
+</footer>
+
+<div class="sticky-cta">
+  <div class="sticky-label">Like this redesign for your brand?</div>
+  <div class="sticky-buttons"><button class="s-book">Book a Call</button><button class="s-buy">Get This — AED 9,200</button></div>
+</div>
+
+<div class="switcher">
+  <div class="switcher-menu" id="sm">
+    <div class="sm-title">Fragrance Variants</div>
+    <a class="s-opt" href="perfume-oud.html"><div class="s-dot"></div> Oud — Arabian Dark</a>
+    <a class="s-opt" href="perfume-parisien.html"><div class="s-dot"></div> Parisien — French White</a>
+    <a class="s-opt active" href="perfume-botanique.html"><div class="s-dot filled"></div> Botanique — Natural Sage</a>
+  </div>
+  <button class="switcher-btn" onclick="document.getElementById('sm').classList.toggle('open')">🎨</button>
+</div>
+
+<script>
+const obs=new IntersectionObserver(e=>e.forEach(i=>{if(i.isIntersecting)i.target.classList.add('visible')}),{threshold:.1});
+document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+function tick(){const df=new Date(Date.now()+7*864e5)-Date.now();document.getElementById('countdown').textContent=`${Math.floor(df/864e5)}d ${Math.floor(df%864e5/36e5)}h ${Math.floor(df%36e5/6e4)}m`}
+tick();setInterval(tick,6e4);
+</script>
+</body>
+</html>

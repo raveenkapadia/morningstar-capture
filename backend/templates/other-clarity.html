@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clinic Redesign Preview — Clarity</title>
+<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@300;400;500;700;800&family=Newsreader:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #1A8C7A;
+    --teal-light: #2DB39E;
+    --teal-pale: #E8F5F3;
+    --teal-dim: rgba(26,140,122,.15);
+    --bg: #F8FAFB;
+    --white: #FFFFFF;
+    --ink: #0D1F1C;
+    --muted: rgba(13,31,28,.44);
+    --border: rgba(13,31,28,.08);
+    --border-strong: rgba(13,31,28,.14);
+    --surface: #EEF4F3;
+    --warm: #FBF8F5;
+    --red: #E53E3E;
+  }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box }
+  html { scroll-behavior: smooth }
+  body { background: var(--bg); font-family: 'DM Sans', sans-serif; color: var(--ink); overflow-x: hidden }
+
+  /* EXPIRY */
+  .expiry { background: var(--teal); color: rgba(248,250,251,.8); text-align: center; padding: 9px 20px; font-size: 10px; letter-spacing: .26em; text-transform: uppercase; font-weight: 300 }
+  .expiry strong { color: #fff; font-weight: 500 }
+
+  /* NAV — appointment CTA always visible */
+  nav { position: sticky; top: 0; z-index: 300; background: rgba(255,255,255,.98); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); padding: 0 52px; height: 64px; display: flex; align-items: center; justify-content: space-between }
+  .nav-brand { display: flex; align-items: center; gap: 10px }
+  .nav-logo { width: 36px; height: 36px; background: var(--teal); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 16px }
+  .nav-name { font-family: 'Instrument Serif', serif; font-size: 20px; font-weight: 400; color: var(--ink); letter-spacing: -.01em }
+  .nav-links { display: flex; gap: 28px; list-style: none }
+  .nav-links a { font-size: 13px; color: var(--muted); text-decoration: none; font-weight: 400; transition: color .2s }
+  .nav-links a:hover { color: var(--teal) }
+  .nav-actions { display: flex; gap: 12px; align-items: center }
+  .nav-tel { font-size: 13px; color: var(--ink); font-weight: 500; text-decoration: none; display: flex; align-items: center; gap: 5px }
+  .nav-tel::before { content: '📞'; font-size: 12px }
+  .nav-book { background: var(--teal); color: #fff; border: none; padding: 10px 22px; font-size: 13px; font-family: 'DM Sans', sans-serif; cursor: pointer; font-weight: 500; transition: background .2s; border-radius: 4px }
+  .nav-book:hover { background: #157a6a }
+
+  /* HERO — trust + appointment above fold */
+  .hero { background: var(--white); min-height: 100svh; display: grid; grid-template-columns: 1fr 1fr; position: relative; overflow: hidden }
+  .hero::before { content: ''; position: absolute; top: 0; right: 0; width: 50%; height: 100%; background: var(--surface); z-index: 0 }
+  .hero-left { display: flex; flex-direction: column; justify-content: center; padding: 80px 52px 80px 80px; position: relative; z-index: 2 }
+
+  /* Trust badge row */
+  .hero-trust-badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px }
+  .trust-badge { display: flex; align-items: center; gap: 6px; background: var(--teal-pale); border: 1px solid rgba(26,140,122,.2); padding: 6px 14px; font-size: 11px; color: var(--teal); font-weight: 500; border-radius: 100px }
+  .trust-badge-icon { font-size: 12px }
+
+  .hero-title { font-family: 'Instrument Serif', serif; font-size: clamp(38px, 4.5vw, 60px); font-weight: 400; line-height: 1.1; color: var(--ink); margin-bottom: 18px; letter-spacing: -.01em }
+  .hero-title em { font-style: italic; color: var(--teal) }
+  .hero-sub { font-size: 16px; font-weight: 300; color: var(--muted); margin-bottom: 40px; line-height: 1.8; max-width: 440px }
+
+  /* Appointment form embedded in hero */
+  .hero-book-bar { background: var(--white); border: 1px solid var(--border); padding: 20px; margin-bottom: 32px; box-shadow: 0 4px 24px rgba(13,31,28,.06) }
+  .hbb-label { font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--teal); margin-bottom: 14px; font-weight: 500 }
+  .hbb-fields { display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 10px; align-items: end }
+  .hbb-field { display: flex; flex-direction: column; gap: 5px }
+  .hbb-field label { font-size: 11px; color: var(--muted); font-weight: 400; letter-spacing: .04em }
+  .hbb-select, .hbb-input { padding: 10px 12px; border: 1px solid var(--border); background: var(--bg); font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--ink); outline: none; transition: border-color .2s; -webkit-appearance: none }
+  .hbb-select:focus, .hbb-input:focus { border-color: var(--teal) }
+  .hbb-btn { background: var(--teal); color: #fff; border: none; padding: 11px 20px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; white-space: nowrap; transition: background .2s; border-radius: 4px }
+  .hbb-btn:hover { background: #157a6a }
+
+  /* Proof row */
+  .hero-proof { display: flex; gap: 0; border-top: 1px solid var(--border); padding-top: 24px }
+  .hp { flex: 1 }
+  .hp:not(:last-child) { padding-right: 24px; border-right: 1px solid var(--border); margin-right: 24px }
+  .hp-num { font-family: 'Instrument Serif', serif; font-size: 28px; font-weight: 400; color: var(--ink); line-height: 1; margin-bottom: 4px }
+  .hp-label { font-size: 11px; color: var(--muted); font-weight: 300 }
+
+  /* Hero right */
+  .hero-right { position: relative; z-index: 2; display: flex; flex-direction: column; justify-content: center; padding: 60px 80px 60px 40px }
+  .hero-img-wrap { position: relative; margin-bottom: 24px }
+  .hero-img { width: 100%; aspect-ratio: 4/5; object-fit: cover; object-position: center top; filter: brightness(.9) saturate(.7) }
+  /* Floating availability card */
+  .avail-card { position: absolute; bottom: -16px; left: -20px; background: #fff; padding: 16px 20px; box-shadow: 0 8px 32px rgba(13,31,28,.1); min-width: 200px; border-left: 3px solid var(--teal) }
+  .ac-dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; display: inline-block; margin-right: 6px; animation: pulse 2s infinite }
+  @keyframes pulse { 0%,100%{opacity:1}50%{opacity:.4} }
+  .ac-status { font-size: 12px; font-weight: 500; color: var(--ink) }
+  .ac-slots { font-size: 11px; color: var(--muted); margin-top: 4px; font-weight: 300 }
+  /* Rating pill */
+  .rating-pill { position: absolute; top: 20px; right: -12px; background: var(--white); border: 1px solid var(--border); padding: 10px 16px; box-shadow: 0 4px 16px rgba(13,31,28,.08) }
+  .rp-num { font-family: 'Instrument Serif', serif; font-size: 22px; font-weight: 400; color: var(--ink); line-height: 1 }
+  .rp-stars { color: #F59E0B; font-size: 11px; letter-spacing: 1px }
+  .rp-count { font-size: 10px; color: var(--muted); font-weight: 300 }
+
+  /* TRUST STRIP */
+  .trust-strip { background: var(--teal); padding: 14px 52px; display: flex; align-items: center; justify-content: center; gap: 40px; flex-wrap: wrap }
+  .ts-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: rgba(255,255,255,.85); font-weight: 400 }
+  .ts-item::before { content: '✓'; color: #fff; font-weight: 700; font-size: 13px }
+
+  /* SECTIONS */
+  .section { padding: 96px 60px }
+  .section.alt { background: var(--surface) }
+  .section.warm { background: var(--warm) }
+  .s-eyebrow { font-size: 11px; letter-spacing: .28em; text-transform: uppercase; color: var(--teal); margin-bottom: 14px; font-weight: 500 }
+  .s-title { font-family: 'Instrument Serif', serif; font-size: clamp(30px, 3.8vw, 50px); font-weight: 400; color: var(--ink); line-height: 1.12; letter-spacing: -.01em }
+  .s-title em { font-style: italic; color: var(--teal) }
+  .s-sub { font-size: 15px; color: var(--muted); font-weight: 300; max-width: 520px; line-height: 1.85; margin-top: 14px }
+  .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 52px; flex-wrap: wrap; gap: 20px }
+
+  /* SERVICES / SPECIALITIES */
+  .specialities-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border) }
+  .spec-card { background: var(--white); padding: 44px 36px; position: relative; overflow: hidden; cursor: pointer; transition: background .3s }
+  .spec-card::after { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--teal); transform: scaleY(0); transition: transform .3s; transform-origin: bottom }
+  .spec-card:hover { background: var(--teal-pale) }
+  .spec-card:hover::after { transform: scaleY(1) }
+  .spec-icon { font-size: 28px; margin-bottom: 18px }
+  .spec-title { font-family: 'Instrument Serif', serif; font-size: 20px; font-weight: 400; color: var(--ink); margin-bottom: 10px }
+  .spec-desc { font-size: 13px; line-height: 1.9; color: var(--muted); font-weight: 300; margin-bottom: 18px }
+  .spec-link { font-size: 13px; color: var(--teal); font-weight: 500; text-decoration: none; display: flex; align-items: center; gap: 6px; transition: gap .2s }
+  .spec-link:hover { gap: 10px }
+
+  /* DOCTORS / TEAM */
+  .doctors-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px }
+  .doctor-card { background: var(--white); border: 1px solid var(--border); overflow: hidden; transition: box-shadow .3s, border-color .3s }
+  .doctor-card:hover { box-shadow: 0 12px 40px rgba(26,140,122,.1); border-color: rgba(26,140,122,.25) }
+  .doctor-img { aspect-ratio: 3/4; overflow: hidden; background: var(--surface) }
+  .doctor-img img { width: 100%; height: 100%; object-fit: cover; object-position: center top; filter: brightness(.9) saturate(.6); transition: transform .6s }
+  .doctor-card:hover .doctor-img img { transform: scale(1.04) }
+  .doctor-info { padding: 24px }
+  .doctor-spec { font-size: 10px; letter-spacing: .25em; text-transform: uppercase; color: var(--teal); margin-bottom: 6px; font-weight: 500 }
+  .doctor-name { font-family: 'Instrument Serif', serif; font-size: 20px; font-weight: 400; color: var(--ink); margin-bottom: 4px }
+  .doctor-quals { font-size: 12px; color: var(--muted); font-weight: 300; margin-bottom: 14px; line-height: 1.6 }
+  .doctor-availability { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #16a34a; font-weight: 500; margin-bottom: 14px }
+  .da-dot { width: 6px; height: 6px; border-radius: 50%; background: #22c55e }
+  .doctor-book { display: block; text-align: center; background: var(--teal-pale); color: var(--teal); border: 1px solid rgba(26,140,122,.2); padding: 10px; font-size: 12px; font-weight: 500; text-decoration: none; font-family: 'DM Sans', sans-serif; transition: all .2s }
+  .doctor-book:hover { background: var(--teal); color: #fff }
+
+  /* PROCESS — patient journey */
+  .journey-grid { display: grid; grid-template-columns: repeat(4, 1fr); position: relative }
+  .journey-grid::before { content: ''; position: absolute; top: 28px; left: 8%; right: 8%; height: 1px; background: linear-gradient(to right, var(--teal), var(--teal-light)); z-index: 0 }
+  .journey-step { text-align: center; padding: 0 20px; position: relative; z-index: 1 }
+  .js-circle { width: 56px; height: 56px; border-radius: 50%; background: var(--teal); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 20px; position: relative }
+  .js-circle::after { content: ''; position: absolute; inset: -4px; border-radius: 50%; border: 1px solid rgba(26,140,122,.25) }
+  .js-title { font-family: 'Instrument Serif', serif; font-size: 16px; font-weight: 400; color: var(--ink); margin-bottom: 8px }
+  .js-desc { font-size: 13px; color: var(--muted); font-weight: 300; line-height: 1.7 }
+
+  /* WHY US — clinical proof */
+  .why-split { display: grid; grid-template-columns: 1fr 1fr; min-height: 580px }
+  .why-img { overflow: hidden; position: relative }
+  .why-img img { width: 100%; height: 100%; object-fit: cover; filter: brightness(.85) saturate(.6); transition: transform 10s }
+  .why-img:hover img { transform: scale(1.03) }
+  .why-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(26,140,122,.08) 0%, transparent 60%) }
+  .why-content { display: flex; flex-direction: column; justify-content: center; padding: 80px; background: var(--white) }
+  .why-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin: 32px 0 36px }
+  .wstat { border-left: 2px solid var(--teal); padding-left: 16px }
+  .wstat-num { font-family: 'Instrument Serif', serif; font-size: 36px; font-weight: 400; color: var(--teal); line-height: 1; margin-bottom: 4px }
+  .wstat-label { font-size: 12px; color: var(--muted); font-weight: 300 }
+
+  /* ACCREDITATIONS */
+  .accred-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border) }
+  .accred-card { background: var(--white); padding: 36px 28px; text-align: center }
+  .accred-icon { font-size: 32px; margin-bottom: 14px }
+  .accred-title { font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--teal); margin-bottom: 8px; font-weight: 500 }
+  .accred-desc { font-size: 13px; color: var(--muted); font-weight: 300; line-height: 1.7 }
+
+  /* TESTIMONIALS */
+  .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px }
+  .tc { background: var(--white); border: 1px solid var(--border); padding: 36px 28px; transition: border-color .3s, box-shadow .3s }
+  .tc:hover { border-color: rgba(26,140,122,.25); box-shadow: 0 8px 32px rgba(26,140,122,.06) }
+  .tc-stars { color: #F59E0B; letter-spacing: 2px; font-size: 14px; margin-bottom: 16px }
+  .tc-text { font-family: 'Instrument Serif', serif; font-size: 15px; font-style: italic; line-height: 1.9; color: rgba(13,31,28,.72); margin-bottom: 20px; font-weight: 300 }
+  .tc-author { font-size: 13px; font-weight: 500; color: var(--ink) }
+  .tc-detail { font-size: 11px; color: var(--teal); font-weight: 300; margin-top: 3px }
+  .tc-verified { font-size: 10px; color: var(--teal); display: flex; align-items: center; gap: 4px; margin-bottom: 12px; font-weight: 500 }
+
+  /* BOOK APPOINTMENT — full CTA section */
+  .book-section { background: var(--teal); padding: 80px 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center }
+  .bs-left {}
+  .bs-eyebrow { font-size: 11px; letter-spacing: .28em; text-transform: uppercase; color: rgba(255,255,255,.6); margin-bottom: 16px }
+  .bs-title { font-family: 'Instrument Serif', serif; font-size: clamp(28px, 3.5vw, 48px); font-weight: 400; color: #fff; line-height: 1.1; margin-bottom: 16px }
+  .bs-sub { font-size: 15px; color: rgba(255,255,255,.65); font-weight: 300; line-height: 1.8; max-width: 400px }
+  .bs-guarantees { display: flex; flex-direction: column; gap: 10px; margin-top: 28px }
+  .bs-guarantee { display: flex; align-items: center; gap: 10px; font-size: 13px; color: rgba(255,255,255,.8); font-weight: 300 }
+  .bs-guarantee::before { content: '✓'; background: rgba(255,255,255,.15); color: #fff; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; flex-shrink: 0 }
+  .book-form { display: flex; flex-direction: column; gap: 12px }
+  .bf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px }
+  .bf-input, .bf-select { width: 100%; padding: 13px 16px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); color: #fff; font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none; transition: border-color .2s }
+  .bf-input::placeholder { color: rgba(255,255,255,.45) }
+  .bf-select { color: rgba(255,255,255,.7) }
+  .bf-select option { color: var(--ink); background: #fff }
+  .bf-input:focus, .bf-select:focus { border-color: rgba(255,255,255,.6) }
+  .bf-submit { background: #fff; color: var(--teal); border: none; padding: 15px; font-size: 14px; font-family: 'DM Sans', sans-serif; font-weight: 600; cursor: pointer; transition: all .25s }
+  .bf-submit:hover { background: var(--ink); color: #fff }
+  .bf-note { font-size: 11px; color: rgba(255,255,255,.42); display: flex; align-items: center; gap: 6px }
+  .bf-note::before { content: '🔒'; font-size: 12px }
+
+  /* FAQ */
+  .faq-list { display: flex; flex-direction: column; gap: 0; max-width: 780px; margin: 0 auto }
+  .faq-item { border-bottom: 1px solid var(--border); padding: 22px 0; cursor: pointer }
+  .faq-q { font-family: 'Instrument Serif', serif; font-size: 16px; font-weight: 400; color: var(--ink); display: flex; justify-content: space-between; gap: 16px }
+  .faq-q span { color: var(--teal); font-size: 20px; font-weight: 300 }
+  .faq-a { font-size: 13px; color: var(--muted); line-height: 1.85; font-weight: 300; margin-top: 12px }
+
+  /* NEWSLETTER */
+  .footer-nl { background: var(--ink); padding: 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center }
+  .nl-eyebrow { font-size: 11px; letter-spacing: .28em; text-transform: uppercase; color: var(--teal-light); margin-bottom: 14px }
+  .nl-title { font-family: 'Instrument Serif', serif; font-size: 34px; font-weight: 400; color: #fff; line-height: 1.2 }
+  .nl-title em { font-style: italic; color: rgba(255,255,255,.6) }
+  .nl-form { display: flex }
+  .nl-input { flex: 1; padding: 13px 16px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); color: #fff; font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none; border-right: none }
+  .nl-input::placeholder { color: rgba(255,255,255,.3); font-size: 13px }
+  .nl-submit { background: var(--teal); color: #fff; border: none; padding: 13px 24px; font-family: 'DM Sans', sans-serif; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; font-weight: 500; white-space: nowrap; transition: background .2s }
+  .nl-submit:hover { background: #157a6a }
+  .nl-note { font-size: 11px; color: rgba(255,255,255,.25); margin-top: 10px }
+
+  /* FOOTER */
+  footer { background: #050f0d; padding: 80px 60px 40px }
+  .footer-grid { display: grid; grid-template-columns: 1.8fr 1fr 1fr 1fr; gap: 56px; padding-bottom: 56px; border-bottom: 1px solid rgba(255,255,255,.06) }
+  .footer-brand { display: flex; align-items: center; gap: 10px; margin-bottom: 14px }
+  .footer-logo-mark { width: 32px; height: 32px; background: var(--teal); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px; flex-shrink: 0 }
+  .footer-name { font-family: 'Instrument Serif', serif; font-size: 20px; font-weight: 400; color: rgba(255,255,255,.9) }
+  .footer-desc { font-size: 13px; line-height: 1.9; color: rgba(255,255,255,.3); font-weight: 300; margin-bottom: 22px; max-width: 240px }
+  .footer-accreds { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px }
+  .f-accred { border: 1px solid rgba(255,255,255,.1); padding: 4px 10px; font-size: 9px; letter-spacing: .15em; text-transform: uppercase; color: rgba(255,255,255,.3) }
+  .footer-social { display: flex; gap: 10px }
+  .social-link { width: 34px; height: 34px; border: 1px solid rgba(255,255,255,.1); display: flex; align-items: center; justify-content: center; font-size: 12px; text-decoration: none; color: rgba(255,255,255,.32); transition: all .2s }
+  .social-link:hover { border-color: var(--teal-light); color: var(--teal-light) }
+  .footer-col-title { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.7); margin-bottom: 20px; font-weight: 500 }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 11px }
+  .footer-links a { font-size: 13px; color: rgba(255,255,255,.32); text-decoration: none; font-weight: 300; transition: color .2s }
+  .footer-links a:hover { color: rgba(255,255,255,.8) }
+  .footer-contact { list-style: none; display: flex; flex-direction: column; gap: 13px }
+  .contact-item { display: flex; gap: 10px }
+  .contact-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px }
+  .contact-text { font-size: 12px; color: rgba(255,255,255,.32); font-weight: 300; line-height: 1.65 }
+  .contact-text a { color: inherit; text-decoration: none; transition: color .2s }
+  .contact-text a:hover { color: var(--teal-light) }
+  .emergency-line { background: rgba(229,62,62,.15); border: 1px solid rgba(229,62,62,.3); padding: 10px 14px; margin-top: 12px; display: flex; align-items: center; gap: 8px }
+  .emergency-line span { font-size: 12px; color: rgba(255,255,255,.6); font-weight: 300 }
+  .emergency-line a { font-size: 12px; color: #f87171; font-weight: 500; text-decoration: none }
+  .footer-bottom { padding-top: 28px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px }
+  .footer-legal { font-size: 11px; color: rgba(255,255,255,.18) }
+  .footer-legal-links { display: flex; gap: 22px }
+  .footer-legal-links a { font-size: 11px; color: rgba(255,255,255,.18); text-decoration: none; transition: color .2s }
+  .footer-legal-links a:hover { color: rgba(255,255,255,.5) }
+  .footer-powered { font-size: 9px; letter-spacing: .2em; color: rgba(255,255,255,.12); text-transform: uppercase }
+
+  /* STICKY MOBILE CTA */
+  .sticky-cta { display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 400; background: #fff; border-top: 2px solid var(--teal); padding: 12px 16px; gap: 10px; flex-direction: column }
+  .sticky-label { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; text-align: center; color: var(--muted) }
+  .sticky-buttons { display: flex; gap: 8px }
+  .s-call { flex: 1; background: transparent; border: 1px solid var(--teal); color: var(--teal); padding: 12px; font-size: 12px; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif }
+  .s-book-btn { flex: 1.5; background: var(--teal); border: none; color: #fff; padding: 12px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif }
+
+  /* WHATSAPP FLOAT */
+  .wa-float { position: fixed; bottom: 90px; left: 20px; z-index: 400; display: none }
+  .wa-btn { background: #25D366; color: #fff; border: none; width: 52px; height: 52px; border-radius: 50%; font-size: 22px; cursor: pointer; box-shadow: 0 4px 20px rgba(37,211,102,.4); display: flex; align-items: center; justify-content: center }
+
+  /* SWITCHER */
+  .switcher { position: fixed; bottom: 30px; right: 30px; z-index: 500 }
+  .switcher-btn { background: var(--ink); color: #fff; border: none; width: 48px; height: 48px; border-radius: 50%; font-size: 18px; cursor: pointer; box-shadow: 0 6px 24px rgba(13,31,28,.2); display: flex; align-items: center; justify-content: center }
+  .switcher-menu { position: absolute; bottom: 60px; right: 0; background: #fff; border: 1px solid var(--border); padding: 14px 18px; min-width: 210px; display: none; box-shadow: 0 12px 40px rgba(13,31,28,.08) }
+  .switcher-menu.open { display: block }
+  .sm-title { font-size: 9px; letter-spacing: .28em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px }
+  .s-opt { display: flex; align-items: center; gap: 10px; padding: 8px 0; font-size: 12px; color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--border); transition: color .2s }
+  .s-opt:last-child { border-bottom: none }
+  .s-opt.active { color: var(--teal); font-weight: 500 }
+  .s-dot { width: 7px; height: 7px; border-radius: 50%; border: 1.5px solid var(--teal) }
+  .s-dot.filled { background: var(--teal) }
+
+  .fade-up { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s ease }
+  .fade-up.visible { opacity: 1; transform: translateY(0) }
+  .stagger-1 { transition-delay: .1s } .stagger-2 { transition-delay: .2s } .stagger-3 { transition-delay: .3s }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 16px }
+    .nav-links { display: none }
+    .hero { grid-template-columns: 1fr; min-height: auto }
+    .hero::before { display: none }
+    .hero-left { padding: 60px 24px 40px }
+    .hbb-fields { grid-template-columns: 1fr 1fr }
+    .hbb-btn { grid-column: 1 / -1 }
+    .hero-right { display: none }
+    .trust-strip { padding: 12px 20px; gap: 16px }
+    .section { padding: 60px 20px }
+    .specialities-grid { grid-template-columns: 1fr }
+    .doctors-grid { grid-template-columns: 1fr 1fr }
+    .journey-grid { grid-template-columns: 1fr 1fr }
+    .journey-grid::before { display: none }
+    .why-split { grid-template-columns: 1fr }
+    .why-img { height: 55vw }
+    .why-content { padding: 48px 24px }
+    .why-stats { grid-template-columns: 1fr 1fr }
+    .accred-grid { grid-template-columns: 1fr 1fr }
+    .testimonials-grid { grid-template-columns: 1fr }
+    .book-section { grid-template-columns: 1fr; padding: 56px 24px; gap: 36px }
+    .bf-row { grid-template-columns: 1fr }
+    .footer-nl { grid-template-columns: 1fr; padding: 48px 24px; gap: 28px }
+    .nl-form { flex-direction: column }
+    footer { padding: 56px 20px 32px }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px }
+    .footer-bottom { flex-direction: column; align-items: flex-start }
+    .sticky-cta { display: flex }
+    .wa-float { display: block }
+    .switcher { bottom: 100px; right: 12px }
+  }
+</style>
+</head>
+<body>
+
+<div class="expiry">⏰ Preview expires in: <strong id="countdown">6d 23h 41m</strong> &nbsp;·&nbsp; Exclusive redesign for your clinic</div>
+
+<nav>
+  <div class="nav-brand">
+    <div class="nav-logo">🏥</div>
+    <span class="nav-name">Your Clinic</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#">Specialities</a></li>
+    <li><a href="#">Our Doctors</a></li>
+    <li><a href="#">Packages</a></li>
+    <li><a href="#">About</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="tel:+97144000000" class="nav-tel">+971 4 400 0000</a>
+    <button class="nav-book">Book Appointment</button>
+  </div>
+</nav>
+
+<!-- HERO — trust + inline booking above fold -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-trust-badges">
+      <span class="trust-badge"><span class="trust-badge-icon">✓</span> DHA Licensed</span>
+      <span class="trust-badge"><span class="trust-badge-icon">⭐</span> 4.9 Google Rating</span>
+      <span class="trust-badge"><span class="trust-badge-icon">🏆</span> JCI Accredited</span>
+    </div>
+    <h1 class="hero-title">Healthcare that<br>puts <em>you first.</em></h1>
+    <p class="hero-sub">Expert consultants, same-day appointments, and a care experience built around your comfort. Modern medicine delivered with genuine warmth.</p>
+
+    <!-- INLINE BOOKING — highest UX conversion element -->
+    <div class="hero-book-bar fade-up">
+      <div class="hbb-label">Book an Appointment</div>
+      <div class="hbb-fields">
+        <div class="hbb-field">
+          <label>Speciality</label>
+          <select class="hbb-select">
+            <option>General Practice</option>
+            <option>Cardiology</option>
+            <option>Dermatology</option>
+            <option>Orthopaedics</option>
+            <option>Gynaecology</option>
+          </select>
+        </div>
+        <div class="hbb-field">
+          <label>Preferred Date</label>
+          <input class="hbb-input" type="date">
+        </div>
+        <div class="hbb-field">
+          <label>Your Number</label>
+          <input class="hbb-input" type="tel" placeholder="+971 5X XXX XXXX">
+        </div>
+        <button class="hbb-btn">Check Availability →</button>
+      </div>
+    </div>
+
+    <div class="hero-proof">
+      <div class="hp"><div class="hp-num">15+</div><div class="hp-label">Specialities</div></div>
+      <div class="hp"><div class="hp-num">30+</div><div class="hp-label">Expert Doctors</div></div>
+      <div class="hp"><div class="hp-num">98%</div><div class="hp-label">Patient Satisfaction</div></div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-img-wrap">
+      <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=700&q=85" alt="" class="hero-img">
+      <div class="avail-card">
+        <span class="ac-dot"></span>
+        <span class="ac-status">Accepting Patients Today</span>
+        <div class="ac-slots">6 appointment slots remaining</div>
+      </div>
+      <div class="rating-pill">
+        <div class="rp-num">4.9</div>
+        <div class="rp-stars">★★★★★</div>
+        <div class="rp-count">1,240 reviews</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST STRIP -->
+<div class="trust-strip">
+  <span class="ts-item">DHA Licensed</span>
+  <span class="ts-item">JCI Accredited</span>
+  <span class="ts-item">Insurance Accepted</span>
+  <span class="ts-item">Same-Day Appointments</span>
+  <span class="ts-item">Arabic & English Speaking Staff</span>
+  <span class="ts-item">Open 7 Days</span>
+</div>
+
+<!-- SPECIALITIES -->
+<section class="section alt">
+  <div class="section-header fade-up">
+    <div>
+      <div class="s-eyebrow">Our Specialities</div>
+      <h2 class="s-title">Expert care,<br>every department</h2>
+    </div>
+    <a href="#" style="background:var(--teal);color:#fff;border:none;padding:11px 24px;font-size:13px;font-weight:500;cursor:pointer;text-decoration:none;font-family:'DM Sans',sans-serif">All Specialities</a>
+  </div>
+  <div class="specialities-grid">
+    <div class="spec-card fade-up"><div class="spec-icon">❤️</div><div class="spec-title">Cardiology</div><div class="spec-desc">Comprehensive cardiac care including ECG, echocardiography, stress testing, and specialist consultations for all heart conditions.</div><a href="#" class="spec-link">Book Appointment →</a></div>
+    <div class="spec-card fade-up stagger-1"><div class="spec-icon">🦴</div><div class="spec-title">Orthopaedics</div><div class="spec-desc">Diagnosis and treatment of bone, joint, and muscle conditions. Sports injuries, joint replacements, and physiotherapy programmes.</div><a href="#" class="spec-link">Book Appointment →</a></div>
+    <div class="spec-card fade-up stagger-2"><div class="spec-icon">🧴</div><div class="spec-title">Dermatology</div><div class="spec-desc">Medical and aesthetic dermatology. Acne, eczema, psoriasis, skin cancer screening, and laser treatments under specialist care.</div><a href="#" class="spec-link">Book Appointment →</a></div>
+    <div class="spec-card fade-up"><div class="spec-icon">🧠</div><div class="spec-title">Neurology</div><div class="spec-desc">Diagnosis and management of neurological conditions including migraines, epilepsy, and movement disorders by board-certified neurologists.</div><a href="#" class="spec-link">Book Appointment →</a></div>
+    <div class="spec-card fade-up stagger-1"><div class="spec-icon">👶</div><div class="spec-title">Paediatrics</div><div class="spec-desc">Compassionate care for children from birth through adolescence. Vaccinations, development reviews, and illness management.</div><a href="#" class="spec-link">Book Appointment →</a></div>
+    <div class="spec-card fade-up stagger-2"><div class="spec-icon">🔬</div><div class="spec-title">Diagnostics</div><div class="spec-desc">On-site laboratory, radiology, and imaging. Results within 24 hours. No referral required for most standard investigations.</div><a href="#" class="spec-link">Book Appointment →</a></div>
+  </div>
+</section>
+
+<!-- DOCTORS -->
+<section class="section">
+  <div class="section-header fade-up">
+    <div>
+      <div class="s-eyebrow">Our Team</div>
+      <h2 class="s-title">Meet your<br><em>doctors</em></h2>
+    </div>
+    <a href="#" style="font-size:13px;color:var(--teal);text-decoration:none;font-weight:500">All Doctors →</a>
+  </div>
+  <div class="doctors-grid">
+    <div class="doctor-card fade-up">
+      <div class="doctor-img"><img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&q=85" alt=""></div>
+      <div class="doctor-info">
+        <div class="doctor-spec">Cardiology</div>
+        <div class="doctor-name">Dr. Sarah Al Rashidi</div>
+        <div class="doctor-quals">MBBS, MD (Cardiology) · 14 Years Experience · DHA Licensed</div>
+        <div class="doctor-availability"><span class="da-dot"></span> Available Today</div>
+        <a href="#" class="doctor-book">Book Appointment</a>
+      </div>
+    </div>
+    <div class="doctor-card fade-up stagger-1">
+      <div class="doctor-img"><img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=400&q=85" alt=""></div>
+      <div class="doctor-info">
+        <div class="doctor-spec">Orthopaedics</div>
+        <div class="doctor-name">Dr. Omar Al Zaabi</div>
+        <div class="doctor-quals">MBBS, FRCS (Ortho) · 18 Years Experience · DHA Licensed</div>
+        <div class="doctor-availability"><span class="da-dot"></span> Next slot: Tomorrow 9am</div>
+        <a href="#" class="doctor-book">Book Appointment</a>
+      </div>
+    </div>
+    <div class="doctor-card fade-up stagger-2">
+      <div class="doctor-img"><img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&q=85" alt=""></div>
+      <div class="doctor-info">
+        <div class="doctor-spec">Dermatology</div>
+        <div class="doctor-name">Dr. Priya Sharma</div>
+        <div class="doctor-quals">MBBS, DDV (London) · 11 Years Experience · DHA Licensed</div>
+        <div class="doctor-availability"><span class="da-dot"></span> Available Today</div>
+        <a href="#" class="doctor-book">Book Appointment</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PATIENT JOURNEY -->
+<section class="section alt">
+  <div class="s-eyebrow fade-up" style="text-align:center;margin-bottom:14px">How It Works</div>
+  <h2 class="s-title fade-up" style="text-align:center;margin-bottom:52px">Your care journey,<br>made <em>simple</em></h2>
+  <div class="journey-grid">
+    <div class="journey-step fade-up"><div class="js-circle">📅</div><div class="js-title">Book Online</div><div class="js-desc">Choose your speciality and preferred time. Confirmation in under 30 minutes.</div></div>
+    <div class="journey-step fade-up stagger-1"><div class="js-circle">📋</div><div class="js-title">Easy Check-In</div><div class="js-desc">Arrive 10 minutes early. Our team handles all paperwork. Arabic and English support.</div></div>
+    <div class="journey-step fade-up stagger-2"><div class="js-circle">👨‍⚕️</div><div class="js-title">Consultation</div><div class="js-desc">Unhurried time with your doctor. Every appointment is 30+ minutes minimum.</div></div>
+    <div class="journey-step fade-up stagger-3"><div class="js-circle">📱</div><div class="js-title">Follow-Up Care</div><div class="js-desc">Digital reports via WhatsApp. Follow-up consultations at no charge within 7 days.</div></div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<div class="why-split">
+  <div class="why-img"><img src="https://images.unsplash.com/photo-1586773860418-d37222d8fce3?w=900&q=85" alt=""></div>
+  <div class="why-content fade-up">
+    <div class="s-eyebrow">Why Choose Us</div>
+    <h2 class="s-title">A different kind<br>of clinic.</h2>
+    <p class="s-sub" style="margin-top:14px;margin-bottom:0">We built this clinic around one question: what would it look like if patients were genuinely the priority? The answer shapes everything — our team, our time, our technology.</p>
+    <div class="why-stats">
+      <div class="wstat"><div class="wstat-num">98%</div><div class="wstat-label">Patient Satisfaction</div></div>
+      <div class="wstat"><div class="wstat-num">&lt;20min</div><div class="wstat-label">Average Wait Time</div></div>
+      <div class="wstat"><div class="wstat-num">30+</div><div class="wstat-label">Expert Consultants</div></div>
+      <div class="wstat"><div class="wstat-num">7 days</div><div class="wstat-label">Free Follow-Up</div></div>
+    </div>
+    <a href="#" style="display:inline-block;background:var(--teal);color:#fff;padding:13px 32px;font-size:13px;font-weight:500;text-decoration:none;font-family:'DM Sans',sans-serif;transition:background .2s" onmouseover="this.style.background='#157a6a'" onmouseout="this.style.background='var(--teal)'">Book Your Consultation</a>
+  </div>
+</div>
+
+<!-- ACCREDITATIONS -->
+<section class="section">
+  <div class="s-eyebrow fade-up" style="text-align:center;margin-bottom:14px">Recognised Excellence</div>
+  <h2 class="s-title fade-up" style="text-align:center;margin-bottom:48px">Standards you<br>can trust</h2>
+  <div class="accred-grid">
+    <div class="accred-card fade-up"><div class="accred-icon">🏆</div><div class="accred-title">JCI Accredited</div><div class="accred-desc">Joint Commission International — the world's most recognised hospital quality standard.</div></div>
+    <div class="accred-card fade-up stagger-1"><div class="accred-icon">🏛️</div><div class="accred-title">DHA Licensed</div><div class="accred-desc">Licensed and regulated by the Dubai Health Authority. Every practitioner individually credentialed.</div></div>
+    <div class="accred-card fade-up stagger-2"><div class="accred-icon">💳</div><div class="accred-title">All Insurance</div><div class="accred-desc">We accept all major UAE health insurers including Daman, AXA, Allianz, and Metlife.</div></div>
+    <div class="accred-card fade-up stagger-3"><div class="accred-icon">🔒</div><div class="accred-title">Data Privacy</div><div class="accred-desc">HIPAA-compliant patient records. Your health information is fully secure and confidential.</div></div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section alt">
+  <div class="section-header fade-up">
+    <div>
+      <div class="s-eyebrow">Patient Stories</div>
+      <h2 class="s-title">In their own<br><em>words</em></h2>
+    </div>
+    <div style="font-size:13px;color:var(--muted)">4.9 ★ · 1,240 Google Reviews</div>
+  </div>
+  <div class="testimonials-grid">
+    <div class="tc fade-up">
+      <div class="tc-verified">✓ Verified Patient</div>
+      <div class="tc-stars">★★★★★</div>
+      <p class="tc-text">"Dr. Al Rashidi spent 40 minutes with me. Forty minutes. I have never had a doctor take that kind of time. She found what three previous doctors had missed."</p>
+      <div class="tc-author">Noora Al Mansoori</div>
+      <div class="tc-detail">Cardiology Patient · February 2026</div>
+    </div>
+    <div class="tc fade-up stagger-1">
+      <div class="tc-verified">✓ Verified Patient</div>
+      <div class="tc-stars">★★★★★</div>
+      <p class="tc-text">"The booking system is seamless, the wait time was under 15 minutes, and my results were on WhatsApp by 6pm the same day. This is what healthcare should feel like."</p>
+      <div class="tc-author">James Hartley</div>
+      <div class="tc-detail">General Practice Patient · January 2026</div>
+    </div>
+    <div class="tc fade-up stagger-2">
+      <div class="tc-verified">✓ Verified Patient</div>
+      <div class="tc-stars">★★★★★</div>
+      <p class="tc-text">"My insurance was handled without me lifting a finger. The staff called the insurer, got pre-approval, and told me what was covered before I even sat with the doctor."</p>
+      <div class="tc-author">Layla Ahmed</div>
+      <div class="tc-detail">Dermatology Patient · December 2025</div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOK APPOINTMENT — full section CTA -->
+<div class="book-section">
+  <div class="bs-left fade-up">
+    <div class="bs-eyebrow">Ready to be seen?</div>
+    <h2 class="bs-title">Book your<br>appointment today.</h2>
+    <p class="bs-sub">Same-day appointments available. Most insurance plans accepted. No referral needed for most specialities.</p>
+    <div class="bs-guarantees">
+      <span class="bs-guarantee">Confirmation within 30 minutes</span>
+      <span class="bs-guarantee">Free cancellation up to 2 hours before</span>
+      <span class="bs-guarantee">7-day free follow-up on every consultation</span>
+      <span class="bs-guarantee">All major UAE insurance accepted</span>
+    </div>
+  </div>
+  <div class="fade-up stagger-1">
+    <div class="book-form">
+      <div class="bf-row">
+        <input class="bf-input" type="text" placeholder="Your full name">
+        <input class="bf-input" type="tel" placeholder="WhatsApp number">
+      </div>
+      <select class="bf-select">
+        <option>Select Speciality</option>
+        <option>General Practice</option>
+        <option>Cardiology</option>
+        <option>Dermatology</option>
+        <option>Orthopaedics</option>
+        <option>Gynaecology</option>
+        <option>Paediatrics</option>
+        <option>Neurology</option>
+      </select>
+      <div class="bf-row">
+        <input class="bf-input" type="date">
+        <select class="bf-select">
+          <option>Morning (8am–12pm)</option>
+          <option>Afternoon (12pm–5pm)</option>
+          <option>Evening (5pm–9pm)</option>
+        </select>
+      </div>
+      <button class="bf-submit">Book My Appointment →</button>
+      <div class="bf-note">Your data is confidential. We never share patient information.</div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<section class="section">
+  <div class="s-eyebrow fade-up" style="text-align:center;margin-bottom:14px">Common Questions</div>
+  <h2 class="s-title fade-up" style="text-align:center;margin-bottom:44px">Before you visit</h2>
+  <div class="faq-list">
+    <div class="faq-item fade-up"><div class="faq-q">Do I need a referral? <span>+</span></div><div class="faq-a">No. You can book directly with any of our specialists without a GP referral. Simply select your speciality when booking.</div></div>
+    <div class="faq-item fade-up"><div class="faq-q">Is my insurance accepted? <span>+</span></div><div class="faq-a">We accept all major UAE health plans including Daman (enhanced and basic), AXA, Allianz, Metlife, Cigna, and most corporate insurance policies. Call us to verify your specific plan.</div></div>
+    <div class="faq-item fade-up"><div class="faq-q">How soon can I get an appointment? <span>+</span></div><div class="faq-a">Most patients can be seen same-day or next-day. Urgent medical concerns are prioritised — call us directly and we will accommodate you.</div></div>
+    <div class="faq-item fade-up"><div class="faq-q">Are consultations available in Arabic? <span>+</span></div><div class="faq-a">Yes. Many of our doctors and all of our patient services team are fully fluent in Arabic. Please request an Arabic-speaking doctor when booking.</div></div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<div class="footer-nl">
+  <div class="fade-up">
+    <p class="nl-eyebrow">Wellness Intelligence</p>
+    <h3 class="nl-title">Health insights.<br><em>Simply explained.</em></h3>
+  </div>
+  <div class="fade-up stagger-1">
+    <div class="nl-form">
+      <input class="nl-input" type="email" placeholder="Your email address">
+      <button class="nl-submit">Subscribe</button>
+    </div>
+    <p class="nl-note">Monthly health insights from our doctors. No marketing. Unsubscribe anytime.</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand">
+        <div class="footer-logo-mark">🏥</div>
+        <span class="footer-name">Your Clinic</span>
+      </div>
+      <p class="footer-desc">Expert healthcare delivered with genuine warmth. DHA licensed, JCI accredited. Serving Dubai since 2012.</p>
+      <div class="footer-accreds">
+        <span class="f-accred">DHA Licensed</span>
+        <span class="f-accred">JCI Accredited</span>
+        <span class="f-accred">HIPAA Compliant</span>
+      </div>
+      <div class="footer-social" style="margin-top:16px">
+        <a href="#" class="social-link">📷</a>
+        <a href="#" class="social-link">𝕏</a>
+        <a href="#" class="social-link">in</a>
+        <a href="#" class="social-link">▶</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Specialities</div>
+      <ul class="footer-links">
+        <li><a href="#">General Practice</a></li>
+        <li><a href="#">Cardiology</a></li>
+        <li><a href="#">Dermatology</a></li>
+        <li><a href="#">Orthopaedics</a></li>
+        <li><a href="#">Paediatrics</a></li>
+        <li><a href="#">All Specialities</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Patient Services</div>
+      <ul class="footer-links">
+        <li><a href="#">Book Appointment</a></li>
+        <li><a href="#">Insurance & Billing</a></li>
+        <li><a href="#">Patient Portal</a></li>
+        <li><a href="#">Lab Results</a></li>
+        <li><a href="#">Health Packages</a></li>
+        <li><a href="#">Corporate Health</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contact & Hours</div>
+      <ul class="footer-contact">
+        <li class="contact-item"><span class="contact-icon">📍</span><span class="contact-text">Dubai Healthcare City<br>Building 27, Clinic 204<br>Dubai, UAE</span></li>
+        <li class="contact-item"><span class="contact-icon">📞</span><span class="contact-text"><a href="tel:+97144000000">+971 4 400 0000</a></span></li>
+        <li class="contact-item"><span class="contact-icon">💬</span><span class="contact-text"><a href="#">WhatsApp Bookings</a></span></li>
+        <li class="contact-item"><span class="contact-icon">✉️</span><span class="contact-text"><a href="/cdn-cgi/l/email-protection#d9bab8abbc99a0b6acabbab5b0b7b0baf7b8bc"><span class="__cf_email__" data-cfemail="caa9abb8af8ab3a5bfb8a9a6a3a4a3a9e4abaf">[email&#160;protected]</span></a></span></li>
+        <li class="contact-item"><span class="contact-icon">🕐</span><span class="contact-text">Sat–Thu: 8am–9pm<br>Fri: 2pm–9pm</span></li>
+      </ul>
+      <div class="emergency-line">
+        <span>Medical emergency?</span>
+        <a href="tel:998">Call 998</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-legal">© 2026 Your Clinic. DHA Licence No. 00000. All rights reserved.</div>
+    <div class="footer-legal-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Patient Rights</a><a href="#">Accessibility</a></div>
+    <div class="footer-powered">Preview by MorningStar.ai</div>
+  </div>
+</footer>
+
+<div class="sticky-cta">
+  <div class="sticky-label">Same-day appointments available</div>
+  <div class="sticky-buttons">
+    <button class="s-call">📞 Call Now</button>
+    <button class="s-book-btn">Book Appointment →</button>
+  </div>
+</div>
+
+<div class="wa-float">
+  <button class="wa-btn" title="WhatsApp">💬</button>
+</div>
+
+<div class="switcher">
+  <div class="switcher-menu" id="sm">
+    <div class="sm-title">Other Category</div>
+    <a class="s-opt" href="other-elevate.html"><div class="s-dot"></div> Elevate — Professional</a>
+    <a class="s-opt" href="other-vivid.html"><div class="s-dot"></div> Vivid — F&B</a>
+    <a class="s-opt active" href="#"><div class="s-dot filled"></div> Clarity — Healthcare</a>
+  </div>
+  <button class="switcher-btn" onclick="document.getElementById('sm').classList.toggle('open')">🎨</button>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const obs = new IntersectionObserver(e => e.forEach(i => { if (i.isIntersecting) i.target.classList.add('visible') }), { threshold: .08 });
+document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+function tick() { const df = new Date(Dat

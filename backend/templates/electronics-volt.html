@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Electronics Redesign Preview — Volt</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Exo+2:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --volt:#00D4FF;--volt-dim:rgba(0,212,255,.12);--volt-glow:rgba(0,212,255,.25);
+    --neon:#39FF14;--neon-dim:rgba(57,255,20,.1);
+    --red:#FF2D2D;
+    --bg:#05080F;--surface:#080C15;--card:#0C1120;--panel:#101828;
+    --ink:#E8F4FF;--muted:rgba(232,244,255,.4);--border:rgba(0,212,255,.14);--border-soft:rgba(232,244,255,.06);
+  }
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);font-family:'Exo 2',sans-serif;color:var(--ink);overflow-x:hidden}
+
+  /* scanline effect */
+  body::before{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,212,255,.012) 2px,rgba(0,212,255,.012) 4px)}
+
+  .expiry{background:linear-gradient(90deg,var(--volt),#0099BB);color:#000;text-align:center;padding:9px 20px;font-size:10px;letter-spacing:.32em;text-transform:uppercase;font-weight:700;font-family:'Rajdhani',sans-serif}
+  .expiry strong{font-weight:900}
+
+  nav{position:sticky;top:0;z-index:300;background:rgba(5,8,15,.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 48px;height:60px;display:flex;align-items:center;justify-content:space-between}
+  .nav-brand{font-family:'Rajdhani',sans-serif;font-size:24px;font-weight:700;color:var(--ink);letter-spacing:.12em;text-transform:uppercase}
+  .nav-brand span{color:var(--volt)}
+  .nav-links{display:flex;gap:24px;list-style:none}
+  .nav-links a{font-family:'Rajdhani',sans-serif;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);text-decoration:none;font-weight:600;transition:color .15s}
+  .nav-links a:hover{color:var(--volt)}
+  .nav-actions{display:flex;gap:10px;align-items:center}
+  .nav-build{background:transparent;border:1px solid var(--border);color:var(--volt);padding:8px 16px;font-family:'Rajdhani',sans-serif;font-size:12px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;font-weight:700;transition:all .15s}
+  .nav-build:hover{background:var(--volt-dim)}
+  .nav-shop{background:var(--volt);color:#000;border:none;padding:9px 20px;font-family:'Rajdhani',sans-serif;font-size:12px;letter-spacing:.22em;text-transform:uppercase;cursor:pointer;font-weight:700;transition:all .2s}
+  .nav-shop:hover{background:#00eeff;box-shadow:0 0 20px var(--volt-glow)}
+
+  /* HERO — immersive dark gaming */
+  .hero{position:relative;min-height:100svh;overflow:hidden;display:grid;grid-template-columns:1fr 1fr}
+  /* hex grid background */
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(0,212,255,.08) 0%,transparent 55%),radial-gradient(ellipse at 20% 80%,rgba(57,255,20,.05) 0%,transparent 40%);z-index:0}
+  .hero-left{position:relative;z-index:2;display:flex;flex-direction:column;justify-content:center;padding:80px 52px 80px 80px}
+  /* Status bar */
+  .hero-status{display:flex;align-items:center;gap:10px;margin-bottom:28px}
+  .hs-dot{width:8px;height:8px;border-radius:50%;background:var(--neon);animation:pulse 2s infinite;box-shadow:0 0 8px var(--neon)}
+  @keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 8px var(--neon)}50%{opacity:.5;box-shadow:0 0 16px var(--neon)}}
+  .hs-text{font-family:'Rajdhani',sans-serif;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--neon);font-weight:700}
+  .hs-divider{width:1px;height:12px;background:var(--border-soft)}
+  .hs-stock{font-family:'Rajdhani',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-weight:600}
+  /* Title */
+  .hero-title{font-family:'Rajdhani',sans-serif;font-size:clamp(60px,9vw,128px);font-weight:700;line-height:.9;color:var(--ink);margin-bottom:16px;letter-spacing:.04em;text-transform:uppercase}
+  .hero-title .volt{color:var(--volt);text-shadow:0 0 30px var(--volt-glow)}
+  .hero-title .dim{color:rgba(232,244,255,.2)}
+  .hero-tagline{font-family:'Exo 2',sans-serif;font-size:15px;font-weight:300;color:var(--muted);margin-bottom:32px;max-width:440px;line-height:1.75;letter-spacing:.02em}
+  /* Inline spec chips */
+  .hero-specs{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:36px;max-width:440px}
+  .hs-spec{background:var(--card);border:1px solid var(--border);padding:10px 14px;display:flex;gap:10px;align-items:center}
+  .hss-icon{font-size:16px}
+  .hss-text{font-size:11px;color:var(--muted);font-family:'Rajdhani',sans-serif;letter-spacing:.08em}
+  .hss-val{font-size:14px;font-weight:700;color:var(--volt);font-family:'Rajdhani',sans-serif;letter-spacing:.04em}
+  .hero-cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+  .btn-volt{display:inline-block;background:var(--volt);color:#000;padding:14px 36px;font-family:'Rajdhani',sans-serif;font-size:13px;letter-spacing:.24em;text-transform:uppercase;font-weight:700;text-decoration:none;border:none;cursor:pointer;transition:all .2s;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,0 100%)}
+  .btn-volt:hover{background:#00eeff;box-shadow:0 0 24px var(--volt-glow);transform:translateY(-2px)}
+  .btn-outline-volt{display:inline-block;background:transparent;color:var(--volt);padding:13px 36px;font-family:'Rajdhani',sans-serif;font-size:13px;letter-spacing:.24em;text-transform:uppercase;font-weight:700;text-decoration:none;border:1px solid var(--border);cursor:pointer;transition:all .2s;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,0 100%)}
+  .btn-outline-volt:hover{background:var(--volt-dim);border-color:var(--volt)}
+  .hero-guarantee{font-family:'Rajdhani',sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:6px}
+  .hero-guarantee::before{content:'//';color:var(--volt);font-weight:700}
+  /* Proof */
+  .hero-proof{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--border-soft);margin-top:28px;padding-top:24px}
+  .hpr{border-right:1px solid var(--border-soft);padding-right:16px;margin-right:16px}
+  .hpr:last-child{border-right:none;padding-right:0;margin-right:0}
+  .hpr-num{font-family:'Rajdhani',sans-serif;font-size:26px;font-weight:700;color:var(--volt);line-height:1;margin-bottom:3px;letter-spacing:.04em}
+  .hpr-label{font-family:'Rajdhani',sans-serif;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-weight:600}
+
+  /* Hero right */
+  .hero-right{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;padding:60px;overflow:hidden}
+  .hero-right::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(0,212,255,.06) 0%,transparent 60%)}
+  .hero-product{position:relative;max-width:520px;width:100%}
+  .hero-product img{width:100%;filter:brightness(.85) saturate(.8);transition:transform .8s ease}
+  .hero-product:hover img{transform:scale(1.03)}
+  /* glow ring behind product */
+  .hero-product::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:80%;height:80%;border-radius:50%;background:radial-gradient(ellipse at center,var(--volt-dim) 0%,transparent 70%);z-index:-1}
+  /* fps counter floating */
+  .fps-badge{position:absolute;top:20px;right:0;background:var(--card);border:1px solid var(--border);padding:12px 18px;font-family:'Rajdhani',sans-serif}
+  .fps-num{font-size:28px;font-weight:700;color:var(--neon);line-height:1;letter-spacing:.04em;text-shadow:0 0 12px rgba(57,255,20,.4)}
+  .fps-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-weight:600}
+  /* temp badge */
+  .temp-badge{position:absolute;bottom:30px;left:0;background:var(--card);border:1px solid var(--border);padding:12px 18px;font-family:'Rajdhani',sans-serif}
+  .temp-num{font-size:24px;font-weight:700;color:var(--volt);letter-spacing:.04em;text-shadow:0 0 12px var(--volt-glow)}
+  .temp-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-weight:600}
+
+  /* VOLT STRIP */
+  .volt-strip{background:var(--volt);padding:10px 0;overflow:hidden}
+  .vs-inner{display:inline-block;white-space:nowrap;animation:slide 16s linear infinite;font-family:'Rajdhani',sans-serif;font-size:14px;letter-spacing:.22em;color:#000;font-weight:700;text-transform:uppercase}
+  .vs-inner span{margin:0 24px;opacity:.35;font-weight:400}
+  @keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* PROOF BAR */
+  .proof-bar{display:grid;grid-template-columns:repeat(4,1fr);background:var(--surface);border-bottom:1px solid var(--border)}
+  .pb{padding:26px 20px;text-align:center;border-right:1px solid var(--border-soft)}
+  .pb:last-child{border-right:none}
+  .pb-num{font-family:'Rajdhani',sans-serif;font-size:34px;font-weight:700;color:var(--volt);line-height:1;margin-bottom:5px;letter-spacing:.04em;text-shadow:0 0 16px var(--volt-glow)}
+  .pb-label{font-family:'Rajdhani',sans-serif;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);font-weight:600}
+
+  /* SECTIONS */
+  .section{padding:96px 48px}
+  .section.alt{background:var(--surface)}
+  .s-label{font-family:'Rajdhani',sans-serif;font-size:10px;letter-spacing:.42em;text-transform:uppercase;color:var(--volt);margin-bottom:12px;font-weight:700}
+  .s-title{font-family:'Rajdhani',sans-serif;font-size:clamp(38px,5vw,66px);font-weight:700;color:var(--ink);line-height:.95;letter-spacing:.04em;text-transform:uppercase}
+  .s-title .volt{color:var(--volt)}
+  .section-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:52px;flex-wrap:wrap;gap:20px}
+
+  /* PRODUCT GRID */
+  .product-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border)}
+  .product-card{background:var(--card);overflow:hidden;cursor:pointer;transition:background .3s;position:relative}
+  .product-card:hover{background:var(--panel)}
+  /* glowing top border on hover */
+  .product-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--volt);transform:scaleX(0);transition:transform .3s;transform-origin:left;box-shadow:0 0 8px var(--volt)}
+  .product-card:hover::after{transform:scaleX(1)}
+  .pc-img{overflow:hidden;aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;background:var(--surface);padding:20px;position:relative}
+  .pc-img img{max-width:100%;max-height:180px;object-fit:contain;filter:brightness(.85) saturate(.7);transition:transform .5s,filter .3s}
+  .product-card:hover .pc-img img{transform:scale(1.06);filter:brightness(.95) saturate(.9)}
+  .pc-badge{position:absolute;top:10px;right:10px;background:var(--volt);color:#000;padding:4px 10px;font-family:'Rajdhani',sans-serif;font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;clip-path:polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,0 100%)}
+  .pc-info{padding:22px}
+  .pc-cat{font-family:'Rajdhani',sans-serif;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--volt);margin-bottom:5px;font-weight:700}
+  .pc-name{font-family:'Rajdhani',sans-serif;font-size:20px;font-weight:700;color:var(--ink);margin-bottom:4px;letter-spacing:.04em;text-transform:uppercase}
+  .pc-tagline{font-size:12px;color:var(--muted);font-weight:300;margin-bottom:14px;letter-spacing:.02em}
+  .pc-specs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+  .pcs{background:var(--surface);border:1px solid var(--border-soft);padding:4px 10px;font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:600;color:rgba(232,244,255,.7);letter-spacing:.08em}
+  .pc-bottom{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border-soft);padding-top:14px}
+  .pc-price{font-family:'Rajdhani',sans-serif;font-size:22px;font-weight:700;color:var(--volt);letter-spacing:.04em}
+  .pc-buy{background:var(--volt);color:#000;border:none;padding:9px 18px;font-family:'Rajdhani',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;cursor:pointer;transition:all .2s;clip-path:polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,0 100%)}
+  .pc-buy:hover{background:#00eeff;box-shadow:0 0 16px var(--volt-glow)}
+
+  /* FEATURE — spec showcase */
+  .feature-split{display:grid;grid-template-columns:1fr 1fr;min-height:640px}
+  .fs-visual{background:var(--surface);display:flex;align-items:center;justify-content:center;padding:80px;position:relative;overflow:hidden}
+  .fs-visual::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:70%;height:70%;border-radius:50%;background:radial-gradient(ellipse at center,var(--volt-dim) 0%,transparent 70%);animation:breathe 4s ease infinite}
+  @keyframes breathe{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.1)}}
+  .fs-visual img{max-width:100%;position:relative;z-index:2;filter:brightness(.88) saturate(.7);transition:transform .8s}
+  .fs-visual:hover img{transform:scale(1.04)}
+  .fs-content{background:var(--bg);display:flex;flex-direction:column;justify-content:center;padding:80px;border-left:1px solid var(--border)}
+  .fs-label{font-family:'Rajdhani',sans-serif;font-size:10px;letter-spacing:.42em;text-transform:uppercase;color:var(--volt);margin-bottom:14px;font-weight:700}
+  .fs-title{font-family:'Rajdhani',sans-serif;font-size:clamp(44px,5vw,68px);font-weight:700;color:var(--ink);line-height:.95;text-transform:uppercase;letter-spacing:.04em;margin-bottom:18px}
+  .fs-title span{color:var(--volt);text-shadow:0 0 20px var(--volt-glow)}
+  .fs-desc{font-size:14px;color:var(--muted);font-weight:300;line-height:1.85;margin-bottom:28px;max-width:380px;letter-spacing:.02em}
+  /* spec grid */
+  .spec-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border);margin-bottom:32px}
+  .sg-item{background:var(--card);padding:16px 18px}
+  .sg-label{font-family:'Rajdhani',sans-serif;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;font-weight:600}
+  .sg-val{font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:700;color:var(--volt);letter-spacing:.04em}
+  .fs-perf-bar{margin-bottom:28px}
+  .fpb-label{font-family:'Rajdhani',sans-serif;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;font-weight:600}
+  .fpb-row{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+  .fpb-name{font-family:'Rajdhani',sans-serif;font-size:11px;color:rgba(232,244,255,.5);width:80px;flex-shrink:0;letter-spacing:.06em}
+  .fpb-track{flex:1;height:4px;background:rgba(232,244,255,.08);border-radius:2px;overflow:hidden}
+  .fpb-fill{height:100%;border-radius:2px;background:linear-gradient(to right,var(--volt),#00eeff);transition:width 1.2s ease}
+  .fpb-fill.visible{animation:fillBar 1.2s ease forwards}
+  .fpb-score{font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;color:var(--volt);width:36px;text-align:right;letter-spacing:.04em}
+  .fs-price-row{border-top:1px solid var(--border-soft);padding-top:24px;display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+  .fs-price{font-family:'Rajdhani',sans-serif;font-size:32px;font-weight:700;color:var(--volt);letter-spacing:.04em;text-shadow:0 0 16px var(--volt-glow)}
+  .fs-emi{font-size:13px;color:var(--muted);font-weight:300;letter-spacing:.04em}
+  .fs-emi span{color:var(--volt);font-weight:700}
+  .fs-cta-row{display:flex;gap:10px;flex-wrap:wrap}
+
+  /* COMPARISON */
+  .comp-wrap{overflow-x:auto}
+  .comp-table{width:100%;border-collapse:collapse}
+  .comp-table th{background:var(--card);color:var(--ink);padding:16px 20px;font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;text-align:left;letter-spacing:.12em;text-transform:uppercase;border-bottom:1px solid var(--border)}
+  .comp-table th.highlight{color:var(--volt);border-bottom-color:var(--volt)}
+  .comp-table td{padding:14px 20px;font-size:13px;color:var(--muted);font-weight:400;border-bottom:1px solid var(--border-soft);background:var(--surface)}
+  .comp-table td.highlight{background:var(--volt-dim);color:var(--ink);font-weight:600}
+  .comp-table tr:last-child td{border-bottom:none}
+  .check{color:var(--neon);font-weight:800}
+  .cross{color:rgba(232,244,255,.15);font-weight:800}
+
+  /* TESTIMONIALS */
+  .testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border)}
+  .testi-card{background:var(--card);padding:40px 32px;position:relative;overflow:hidden}
+  .testi-card::before{content:'';position:absolute;top:0;left:0;width:2px;height:100%;background:linear-gradient(to bottom,var(--volt),transparent)}
+  .tc-platform{font-family:'Rajdhani',sans-serif;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--volt);margin-bottom:12px;font-weight:700}
+  .tc-stars{color:var(--volt);letter-spacing:2px;font-size:13px;margin-bottom:14px;text-shadow:0 0 8px var(--volt-glow)}
+  .tc-text{font-size:14px;color:rgba(232,244,255,.65);font-weight:300;line-height:1.8;margin-bottom:20px;letter-spacing:.01em}
+  .tc-author{font-family:'Rajdhani',sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:rgba(232,244,255,.5);font-weight:600}
+  .tc-game{font-size:11px;color:var(--volt);margin-top:4px;letter-spacing:.08em}
+
+  /* FULL BANNER */
+  .banner{position:relative;min-height:500px;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;align-items:center}
+  .banner-bg{position:absolute;inset:0;background:linear-gradient(135deg,var(--surface) 0%,var(--bg) 100%)}
+  .banner-bg::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 50%,rgba(0,212,255,.08) 0%,transparent 55%)}
+  .banner-content{position:relative;z-index:2;padding:80px}
+  .b-label{font-family:'Rajdhani',sans-serif;font-size:10px;letter-spacing:.42em;text-transform:uppercase;color:var(--volt);margin-bottom:14px;font-weight:700}
+  .b-title{font-family:'Rajdhani',sans-serif;font-size:clamp(40px,5vw,64px);font-weight:700;color:var(--ink);line-height:.95;text-transform:uppercase;letter-spacing:.04em;margin-bottom:18px}
+  .b-title span{color:var(--volt)}
+  .b-desc{font-size:14px;color:var(--muted);font-weight:300;line-height:1.8;margin-bottom:32px;max-width:420px}
+  .banner-visual{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;padding:60px}
+  .banner-visual img{max-width:100%;filter:brightness(.8) saturate(.7);transition:transform .8s}
+  .banner:hover .banner-visual img{transform:scale(1.04)}
+
+  /* NEWSLETTER */
+  .footer-nl{background:var(--surface);padding:64px 48px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;border-top:1px solid var(--border)}
+  .nl-label{font-family:'Rajdhani',sans-serif;font-size:10px;letter-spacing:.42em;text-transform:uppercase;color:var(--volt);margin-bottom:12px;font-weight:700}
+  .nl-title{font-family:'Rajdhani',sans-serif;font-size:42px;font-weight:700;color:var(--ink);line-height:.95;text-transform:uppercase;letter-spacing:.04em}
+  .nl-form{display:flex}
+  .nl-input{flex:1;padding:14px 18px;background:var(--card);border:1px solid var(--border);color:var(--ink);font-family:'Exo 2',sans-serif;font-size:13px;outline:none;border-right:none;transition:border-color .2s}
+  .nl-input:focus{border-color:var(--volt)}
+  .nl-input::placeholder{color:var(--muted);font-size:12px}
+  .nl-submit{background:var(--volt);color:#000;border:none;padding:14px 24px;font-family:'Rajdhani',sans-serif;font-size:11px;letter-spacing:.24em;text-transform:uppercase;cursor:pointer;font-weight:700;white-space:nowrap;transition:all .2s}
+  .nl-submit:hover{background:#00eeff;box-shadow:0 0 20px var(--volt-glow)}
+  .nl-note{font-size:11px;color:var(--muted);margin-top:10px;font-weight:300}
+
+  footer{background:#030508;padding:80px 48px 40px;border-top:1px solid var(--border)}
+  .footer-grid{display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:56px;padding-bottom:56px;border-bottom:1px solid var(--border-soft)}
+  .footer-logo{font-family:'Rajdhani',sans-serif;font-size:26px;font-weight:700;color:var(--ink);margin-bottom:12px;letter-spacing:.12em;text-transform:uppercase}
+  .footer-logo span{color:var(--volt)}
+  .footer-desc{font-size:13px;line-height:1.9;color:var(--muted);font-weight:300;margin-bottom:22px;max-width:240px}
+  .footer-social{display:flex;gap:10px}
+  .social-link{width:34px;height:34px;border:1px solid var(--border-soft);display:flex;align-items:center;justify-content:center;font-size:12px;text-decoration:none;color:var(--muted);transition:all .2s}
+  .social-link:hover{border-color:var(--volt);color:var(--volt);box-shadow:0 0 10px var(--volt-glow)}
+  .footer-col-title{font-family:'Rajdhani',sans-serif;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:rgba(232,244,255,.65);margin-bottom:18px;font-weight:700}
+  .footer-links{list-style:none;display:flex;flex-direction:column;gap:11px}
+  .footer-links a{font-size:13px;color:var(--muted);text-decoration:none;font-weight:300;transition:color .2s}
+  .footer-links a:hover{color:var(--volt)}
+  .footer-contact{list-style:none;display:flex;flex-direction:column;gap:13px}
+  .contact-item{display:flex;gap:10px}
+  .ci-icon{font-size:13px;flex-shrink:0}
+  .ci-text{font-size:12px;color:var(--muted);font-weight:300;line-height:1.65}
+  .ci-text a{color:inherit;text-decoration:none;transition:color .2s}
+  .ci-text a:hover{color:var(--volt)}
+  .footer-bottom{padding-top:28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
+  .footer-legal{font-family:'Rajdhani',sans-serif;font-size:11px;letter-spacing:.12em;color:rgba(232,244,255,.18);text-transform:uppercase}
+  .footer-legal-links{display:flex;gap:20px}
+  .footer-legal-links a{font-family:'Rajdhani',sans-serif;font-size:11px;letter-spacing:.12em;color:rgba(232,244,255,.18);text-decoration:none;text-transform:uppercase;transition:color .2s}
+  .footer-legal-links a:hover{color:var(--volt)}
+  .footer-powered{font-family:'Rajdhani',sans-serif;font-size:9px;letter-spacing:.25em;color:rgba(232,244,255,.1);text-transform:uppercase}
+
+  .sticky-cta{display:none;position:fixed;bottom:0;left:0;right:0;z-index:400;background:rgba(5,8,15,.97);border-top:2px solid var(--volt);padding:12px 16px;gap:10px;flex-direction:column;backdrop-filter:blur(16px);box-shadow:0 -4px 20px rgba(0,212,255,.1)}
+  .sticky-label{font-family:'Rajdhani',sans-serif;font-size:10px;letter-spacing:.28em;text-transform:uppercase;text-align:center;color:var(--volt);font-weight:700}
+  .sticky-buttons{display:flex;gap:8px}
+  .s-specs{flex:1;background:transparent;border:1px solid var(--border);color:var(--volt);padding:12px;font-family:'Rajdhani',sans-serif;font-size:11px;letter-spacing:.22em;text-transform:uppercase;cursor:pointer;font-weight:700}
+  .s-shop{flex:1.5;background:var(--volt);border:none;color:#000;padding:12px;font-family:'Rajdhani',sans-serif;font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:700;cursor:pointer}
+
+  .switcher{position:fixed;bottom:30px;right:30px;z-index:500}
+  .switcher-btn{background:var(--card);color:var(--volt);border:1px solid var(--border);width:48px;height:48px;border-radius:50%;font-size:18px;cursor:pointer;box-shadow:0 0 20px rgba(0,212,255,.15);display:flex;align-items:center;justify-content:center}
+  .switcher-menu{position:absolute;bottom:60px;right:0;background:var(--panel);border:1px solid var(--border);padding:14px 18px;min-width:210px;display:none;box-shadow:0 12px 40px rgba(0,212,255,.1)}
+  .switcher-menu.open{display:block}
+  .sm-title{font-family:'Rajdhani',sans-serif;font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;font-weight:600}
+  .s-opt{display:flex;align-items:center;gap:10px;padding:8px 0;font-size:12px;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--border-soft);transition:color .2s;font-weight:500}
+  .s-opt:last-child{border-bottom:none}
+  .s-opt.active{color:var(--volt);font-weight:700}
+  .s-dot{width:7px;height:7px;border-radius:50%;border:1.5px solid var(--volt)}
+  .s-dot.filled{background:var(--volt);box-shadow:0 0 6px var(--volt)}
+
+  .fade-up{opacity:0;transform:translateY(20px);transition:opacity .8s ease,transform .8s ease}
+  .fade-up.visible{opacity:1;transform:translateY(0)}
+  .stagger-1{transition-delay:.1s}.stagger-2{transition-delay:.2s}.stagger-3{transition-delay:.3s}
+
+  @media(max-width:768px){
+    nav{padding:0 16px}
+    .nav-links{display:none}
+    .hero{grid-template-columns:1fr}
+    .hero-left{padding:60px 20px}
+    .hero-right{height:55vw;padding:24px}
+    .fps-badge,.temp-badge{display:none}
+    .hero-specs{grid-template-columns:1fr 1fr}
+    .proof-bar{grid-template-columns:repeat(2,1fr)}
+    .section{padding:60px 20px}
+    .product-grid{grid-template-columns:1fr 1fr}
+    .feature-split{grid-template-columns:1fr}
+    .fs-visual{padding:48px;height:60vw}
+    .fs-content{padding:48px 20px}
+    .spec-grid{grid-template-columns:1fr 1fr}
+    .banner{grid-template-columns:1fr}
+    .banner-content{padding:56px 24px}
+    .banner-visual{display:none}
+    .testi-grid{grid-template-columns:1fr}
+    .footer-nl{grid-template-columns:1fr;padding:48px 20px;gap:28px}
+    .nl-form{flex-direction:column}
+    footer{padding:56px 20px 32px}
+    .footer-grid{grid-template-columns:1fr 1fr;gap:32px}
+    .footer-bottom{flex-direction:column;align-items:flex-start}
+    .sticky-cta{display:flex}
+    .switcher{bottom:100px;right:12px}
+  }
+</style>
+</head>
+<body>
+
+<div class="expiry">⚡ Preview expires: <strong id="countdown">6d 23h 41m</strong> // Limited stock — No restock</div>
+
+<nav>
+  <div class="nav-brand">Your<span>VOLT</span></div>
+  <ul class="nav-links">
+    <li><a href="#">Laptops</a></li>
+    <li><a href="#">Peripherals</a></li>
+    <li><a href="#">Monitors</a></li>
+    <li><a href="#">PC Builds</a></li>
+    <li><a href="#">Deals</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="nav-build">Build PC</button>
+    <button class="nav-shop">Shop Now</button>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-status">
+      <span class="hs-dot"></span>
+      <span class="hs-text">In Stock — Ships 24hr</span>
+      <span class="hs-divider"></span>
+      <span class="hs-stock">23 units remaining</span>
+    </div>
+    <h1 class="hero-title">FRAME<br><span class="volt">RATE</span><br><span class="dim">GODS.</span></h1>
+    <p class="hero-tagline">The Apex X1 doesn't ask what you play. It asks what you haven't been able to play yet. 280Hz. RTX 5090. 7.6ms response. Built for one thing: winning.</p>
+    <div class="hero-specs">
+      <div class="hs-spec"><span class="hss-icon">🖥️</span><div><div class="hss-text">Display</div><div class="hss-val">280Hz OLED</div></div></div>
+      <div class="hs-spec"><span class="hss-icon">⚡</span><div><div class="hss-text">GPU</div><div class="hss-val">RTX 5090</div></div></div>
+      <div class="hs-spec"><span class="hss-icon">💾</span><div><div class="hss-text">RAM</div><div class="hss-val">64GB DDR5</div></div></div>
+      <div class="hs-spec"><span class="hss-icon">❄️</span><div><div class="hss-text">Cooling</div><div class="hss-val">Liquid + Vapor</div></div></div>
+    </div>
+    <div class="hero-cta-row">
+      <a href="#" class="btn-volt">Buy Now — AED 12,999 →</a>
+      <a href="#" class="btn-outline-volt">Full Specs</a>
+    </div>
+    <div class="hero-guarantee">// Free delivery · 2yr warranty · 0% EMI 24 months</div>
+    <div class="hero-proof">
+      <div class="hpr"><div class="hpr-num">280Hz</div><div class="hpr-label">Display</div></div>
+      <div class="hpr"><div class="hpr-num">4.9★</div><div class="hpr-label">Reviews</div></div>
+      <div class="hpr"><div class="hpr-num">24hr</div><div class="hpr-label">Delivery</div></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-product">
+      <img src="https://images.unsplash.com/photo-1593640408182-31c228b2a5fa?w=700&q=90" alt="">
+      <div class="fps-badge">
+        <div class="fps-num">280</div>
+        <div class="fps-label">// FPS Display</div>
+      </div>
+      <div class="temp-badge">
+        <div class="temp-num">28°C</div>
+        <div class="temp-label">// Core Temp</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="volt-strip">
+  <div class="vs-inner">
+    RTX 5090 GPU <span>//</span> 280Hz OLED <span>//</span> 64GB DDR5 <span>//</span> Liquid Cooling <span>//</span> Free UAE Delivery <span>//</span> 2yr Warranty <span>//</span> 0% EMI <span>//</span>
+    RTX 5090 GPU <span>//</span> 280Hz OLED <span>//</span> 64GB DDR5 <span>//</span> Liquid Cooling <span>//</span> Free UAE Delivery <span>//</span> 2yr Warranty <span>//</span> 0% EMI <span>//</span>
+  </div>
+</div>
+
+<div class="proof-bar">
+  <div class="pb fade-up"><div class="pb-num">280Hz</div><div class="pb-label">Display Refresh</div></div>
+  <div class="pb fade-up stagger-1"><div class="pb-num">4.9★</div><div class="pb-label">1,800 Reviews</div></div>
+  <div class="pb fade-up stagger-2"><div class="pb-num">24hr</div><div class="pb-label">UAE Delivery</div></div>
+  <div class="pb fade-up stagger-3"><div class="pb-num">0%</div><div class="pb-label">24-Month EMI</div></div>
+</div>
+
+<section class="section alt">
+  <div class="section-header fade-up">
+    <div><div class="s-label">The Arsenal</div><h2 class="s-title">CHOOSE YOUR<br><span class="volt">WEAPON.</span></h2></div>
+    <a href="#" class="btn-volt">All Products</a>
+  </div>
+  <div class="product-grid">
+    <div class="product-card fade-up"><div class="pc-img"><img src="https://images.unsplash.com/photo-1593640408182-31c228b2a5fa?w=600&q=85" alt=""><span class="pc-badge">New</span></div><div class="pc-info"><div class="pc-cat">// Gaming Laptop</div><div class="pc-name">APEX X1</div><div class="pc-tagline">The pro-tier gaming beast</div><div class="pc-specs"><span class="pcs">RTX 5090</span><span class="pcs">280Hz</span><span class="pcs">64GB</span><span class="pcs">4TB</span></div><div class="pc-bottom"><span class="pc-price">AED 12,999</span><button class="pc-buy">Buy Now</button></div></div></div>
+    <div class="product-card fade-up stagger-1"><div class="pc-img"><img src="https://images.unsplash.com/photo-1587202372616-b43abea06c2a?w=600&q=85" alt=""></div><div class="pc-info"><div class="pc-cat">// Gaming Chair</div><div class="pc-name">THRONE PRO</div><div class="pc-tagline">Built for 12-hour sessions</div><div class="pc-specs"><span class="pcs">4D Armrests</span><span class="pcs">Lumbar</span><span class="pcs">Recline 165°</span></div><div class="pc-bottom"><span class="pc-price">AED 2,299</span><button class="pc-buy">Buy Now</button></div></div></div>
+    <div class="product-card fade-up stagger-2"><div class="pc-img"><img src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=600&q=85" alt=""><span class="pc-badge">Hot</span></div><div class="pc-info"><div class="pc-cat">// Headset</div><div class="pc-name">SOUNDSTRIKE X</div><div class="pc-tagline">7.1 surround · 40hr battery</div><div class="pc-specs"><span class="pcs">7.1 Surround</span><span class="pcs">40hr</span><span class="pcs">ANC</span></div><div class="pc-bottom"><span class="pc-price">AED 899</span><button class="pc-buy">Buy Now</button></div></div></div>
+  </div>
+</section>
+
+<div class="feature-split">
+  <div class="fs-visual"><img src="https://images.unsplash.com/photo-1593640408182-31c228b2a5fa?w=700&q=85" alt=""></div>
+  <div class="fs-content fade-up">
+    <div class="fs-label">// Featured // Apex X1</div>
+    <h2 class="fs-title">THE APEX.<br><span>NOTHING</span><br>CLOSE.</h2>
+    <p class="fs-desc">Every component selected for one outcome: maximum competitive performance. The RTX 5090 paired with DDR5 memory delivers frame rates that make every other machine feel like it's standing still.</p>
+    <div class="spec-grid">
+      <div class="sg-item"><div class="sg-label">// GPU</div><div class="sg-val">RTX 5090</div></div>
+      <div class="sg-item"><div class="sg-label">// Display</div><div class="sg-val">280Hz OLED</div></div>
+      <div class="sg-item"><div class="sg-label">// RAM</div><div class="sg-val">64GB DDR5</div></div>
+      <div class="sg-item"><div class="sg-label">// Storage</div><div class="sg-val">4TB NVMe</div></div>
+      <div class="sg-item"><div class="sg-label">// CPU</div><div class="sg-val">Ryzen 9 9950X</div></div>
+      <div class="sg-item"><div class="sg-label">// Response</div><div class="sg-val">7.6ms</div></div>
+    </div>
+    <div class="fs-perf-bar">
+      <div class="fpb-label">// Benchmark Performance</div>
+      <div class="fpb-row"><span class="fpb-name">Cyberpunk</span><div class="fpb-track"><div class="fpb-fill" style="width:97%"></div></div><span class="fpb-score">97</span></div>
+      <div class="fpb-row"><span class="fpb-name">Valorant</span><div class="fpb-track"><div class="fpb-fill" style="width:99%"></div></div><span class="fpb-score">99</span></div>
+      <div class="fpb-row"><span class="fpb-name">DaVinci</span><div class="fpb-track"><div class="fpb-fill" style="width:94%"></div></div><span class="fpb-score">94</span></div>
+    </div>
+    <div class="fs-price-row">
+      <span class="fs-price">AED 12,999</span>
+      <span class="fs-emi">or <span>AED 541/mo</span> · 0% 24mo</span>
+    </div>
+    <div class="fs-cta-row">
+      <a href="#" class="btn-volt">Add to Cart →</a>
+      <a href="#" class="btn-outline-volt">Full Benchmarks</a>
+    </div>
+  </div>
+</div>
+
+<section class="section">
+  <div class="section-header fade-up">
+    <div><div class="s-label">Model Comparison</div><h2 class="s-title">PICK YOUR<br><span class="volt">TIER.</span></h2></div>
+  </div>
+  <div class="comp-wrap fade-up">
+    <table class="comp-table">
+      <thead><tr><th>Spec</th><th>Apex X1</th><th class="highlight">Apex X1 Pro</th><th>Apex Pro Max</th></tr></thead>
+      <tbody>
+        <tr><td>GPU</td><td>RTX 5080</td><td class="highlight">RTX 5090</td><td>RTX 5090 Ti</td></tr>
+        <tr><td>Display</td><td>165Hz IPS</td><td class="highlight">280Hz OLED</td><td>360Hz OLED</td></tr>
+        <tr><td>RAM</td><td>32GB DDR5</td><td class="highlight">64GB DDR5</td><td>96GB DDR5</td></tr>
+        <tr><td>Storage</td><td>2TB NVMe</td><td class="highlight">4TB NVMe</td><td>8TB NVMe</td></tr>
+        <tr><td>Cooling</td><td>Dual Fan</td><td class="highlight">Liquid + Vapor</td><td>Full Liquid</td></tr>
+        <tr><td>Per Diram Warranty</td><td><span class="check">✓</span> 2yr</td><td class="highlight"><span class="check">✓</span> 3yr</td><td><span class="check">✓</span> 3yr+</td></tr>
+        <tr><td>Price</td><td>AED 8,999</td><td class="highlight">AED 12,999</td><td>AED 18,999</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="banner">
+  <div class="banner-bg"></div>
+  <div class="banner-content fade-up">
+    <div class="b-label">// Limited Offer</div>
+    <h2 class="b-title">BUNDLE.<br><span>SAVE.</span><br>DOMINATE.</h2>
+    <p class="b-desc">Apex X1 Pro + Throne Chair + SoundStrike X headset. Full setup, AED 4,200 less than buying separately. Stock limited to 15 bundles.</p>
+    <a href="#" class="btn-volt">Shop the Bundle →</a>
+  </div>
+  <div class="banner-visual"><img src="https://images.unsplash.com/photo-1593640408182-31c228b2a5fa?w=600&q=85" alt=""></div>
+</div>
+
+<section class="section alt">
+  <div class="section-header fade-up">
+    <div><div class="s-label">Verified Reviews</div><h2 class="s-title">RATED BY<br><span class="volt">PLAYERS.</span></h2></div>
+    <span style="font-family:'Rajdhani',sans-serif;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--volt);font-weight:700">4.9★ // 1,800 Reviews</span>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card fade-up"><div class="tc-platform">// Steam · Verified</div><div class="tc-stars">★★★★★</div><p class="tc-text">"I have played on seven different rigs in the last four years. Nothing has come close to this. The 280Hz display alone makes everything else feel unplayable. This is the one."</p><div class="tc-author">Khaled A. · Dubai</div><div class="tc-game">Valorant · Radiant Rank</div></div>
+    <div class="testi-card fade-up stagger-1"><div class="tc-platform">// Amazon · Verified</div><div class="tc-stars">★★★★★</div><p class="tc-text">"The delivery was in 18 hours. The setup call sorted me in 20 minutes. The performance is exactly what the benchmarks promise. Every aspect of this purchase was excellent."</p><div class="tc-author">Rashid M. · Abu Dhabi</div><div class="tc-game">Apex Legends · Predator</div></div>
+    <div class="testi-card fade-up stagger-2"><div class="tc-platform">// Google · Verified</div><div class="tc-stars">★★★★★</div><p class="tc-text">"Running Cyberpunk 2077 on ultra at 240+ frames consistent. Zero thermal throttling in 6-hour sessions. The liquid cooling actually works. I have recommended this to my whole team."</p><div class="tc-author">Omar T. · Dubai</div><div class="tc-game">Cyberpunk 2077 · Content Creator</div></div>
+  </div>
+</section>
+
+<div class="footer-nl">
+  <div class="fade-up"><p class="nl-label">// Stay in the Loop</p><h3 class="nl-title">NEW DROPS.<br>FIRST INTEL.</h3></div>
+  <div class="fade-up stagger-1">
+    <div class="nl-form"><input class="nl-input" type="email" placeholder="Enter your email"><button class="nl-submit">Subscribe //</button></div>
+    <p class="nl-note">New launches, exclusive deals, benchmarks. Unsubscribe anytime.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">Your<span>VOLT</span></div>
+      <p class="footer-desc">UAE's specialist gaming hardware retailer. Authorised reseller. Free delivery. 2-year warranty on every build.</p>
+      <div class="footer-social"><a href="#" class="social-link">📷</a><a href="#" class="social-link">𝕏</a><a href="#" class="social-link">▶</a><a href="#" class="social-link">💬</a></div>
+    </div>
+    <div>
+      <div class="footer-col-title">// Shop</div>
+      <ul class="footer-links"><li><a href="#">Gaming Laptops</a></li><li><a href="#">PC Builds</a></li><li><a href="#">Monitors</a></li><li><a href="#">Peripherals</a></li><li><a href="#">Chairs</a></li><li><a href="#">Bundles</a></li></ul>
+    </div>
+    <div>
+      <div class="footer-col-title">// Support</div>
+      <ul class="footer-links"><li><a href="#">Benchmark Hub</a></li><li><a href="#">Warranty</a></li><li><a href="#">PC Builder</a></li><li><a href="#">Trade-In</a></li><li><a href="#">Pro Team</a></li><li><a href="#">Business</a></li></ul>
+    </div>
+    <div>
+      <div class="footer-col-title">// Find Us</div>
+      <ul class="footer-contact">
+        <li class="contact-item"><span class="ci-icon">📍</span><span class="ci-text">Dubai Silicon Oasis<br>Tech Hub, Dubai</span></li>
+        <li class="contact-item"><span class="ci-icon">📞</span><span class="ci-text"><a href="tel:+97144000000">+971 4 400 0000</a></span></li>
+        <li class="contact-item"><span class="ci-icon">💬</span><span class="ci-text"><a href="#">Discord & WhatsApp</a></span></li>
+        <li class="contact-item"><span class="ci-icon">🕐</span><span class="ci-text">Daily 10am–11pm<br>Online 24/7</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-legal">// © 2026 YOURVOLT · All specs verified · UAE authorised</div>
+    <div class="footer-legal-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Warranty</a><a href="#">Returns</a></div>
+    <div class="footer-powered">Preview by MorningStar.ai</div>
+  </div>
+</footer>
+
+<div class="sticky-cta">
+  <div class="sticky-label">// APEX X1 PRO — 23 units left // Delivering 24hrs</div>
+  <div class="sticky-buttons">
+    <button class="s-specs">Full Specs</button>
+    <button class="s-shop">Buy Now — AED 12,999 ⚡</button>
+  </div>
+</div>
+
+<div class="switcher">
+  <div class="switcher-menu" id="sm">
+    <div class="sm-title">// Electronics Variants</div>
+    <a class="s-opt" href="template-electronics-v2.html"><div class="s-dot"></div> Dark Tech — Black</a>
+    <a class="s-opt" href="electronics-studio.html"><div class="s-dot"></div> Studio — Creative</a>
+    <a class="s-opt active" href="#"><div class="s-dot filled"></div> Volt — Gaming</a>
+  </div>
+  <button class="switcher-btn" onclick="document.getElementById('sm').classList.toggle('open')">🎨</button>
+</div>
+
+<script>
+const obs=new IntersectionObserver(e=>e.forEach(i=>{if(i.isIntersecting)i.target.classList.add('visible')}),{threshold:.08});
+document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+function tick(){const df=new Date(Date.now()+7*864e5)-Date.now();document.getElementById('countdown').textContent=`${Math.floor(df/864e5)}d ${Math.floor(df%864e5/36e5)}h ${Math.floor(df%36e5/6e4)}m`}
+tick();setInterval(tick,6e4);
+</script>
+</body>
+</html>

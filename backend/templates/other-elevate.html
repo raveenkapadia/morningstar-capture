@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Business Redesign Preview — Elevate</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0F1C3F;
+    --navy-mid:#1A2E5A;
+    --blue:#2563EB;
+    --blue-light:#3B82F6;
+    --gold:#D4A847;
+    --bg:#F9FAFB;
+    --white:#FFFFFF;
+    --ink:#0A0F1E;
+    --muted:rgba(10,15,30,.48);
+    --border:rgba(10,15,30,.08);
+    --border-strong:rgba(10,15,30,.14);
+    --surface:#F0F4F8;
+  }
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--white);font-family:'DM Sans',sans-serif;color:var(--ink);overflow-x:hidden}
+
+  /* EXPIRY */
+  .expiry{background:var(--navy);color:rgba(249,250,251,.55);text-align:center;padding:9px 20px;font-size:10px;letter-spacing:.26em;text-transform:uppercase}
+  .expiry strong{color:var(--gold);font-weight:500}
+
+  /* NAV — sticky with always-visible CTA */
+  nav{position:sticky;top:0;z-index:300;background:rgba(255,255,255,.98);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 52px;height:64px;display:flex;align-items:center;justify-content:space-between}
+  .nav-brand{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;color:var(--navy);letter-spacing:-.02em}
+  .nav-links{display:flex;gap:28px;list-style:none}
+  .nav-links a{font-size:13px;color:var(--muted);text-decoration:none;font-weight:400;transition:color .2s}
+  .nav-links a:hover{color:var(--navy)}
+  .nav-actions{display:flex;gap:12px;align-items:center}
+  .nav-tel{font-size:13px;color:var(--navy);font-weight:500;text-decoration:none;display:flex;align-items:center;gap:6px}
+  .nav-tel::before{content:'📞';font-size:12px}
+  .nav-cta{background:var(--blue);color:#fff;border:none;padding:10px 22px;font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;font-weight:500;transition:background .2s;white-space:nowrap}
+  .nav-cta:hover{background:var(--navy)}
+
+  /* HERO — conversion-optimised: headline + sub + proof + CTA above fold */
+  .hero{background:var(--navy);min-height:100svh;display:grid;grid-template-columns:1fr 1fr;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(37,99,235,.15) 0%,transparent 60%)}
+  .hero-left{display:flex;flex-direction:column;justify-content:center;padding:80px 60px 80px 80px;position:relative;z-index:2}
+  .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(212,168,71,.12);border:1px solid rgba(212,168,71,.25);padding:7px 16px;margin-bottom:28px;align-self:flex-start}
+  .eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+  .eyebrow-text{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:500}
+  .hero-title{font-family:'Syne',sans-serif;font-size:clamp(40px,5vw,68px);font-weight:800;line-height:1.02;color:#fff;margin-bottom:20px;letter-spacing:-.03em}
+  .hero-title span{color:var(--gold)}
+  .hero-sub{font-size:17px;font-weight:300;color:rgba(255,255,255,.62);margin-bottom:40px;line-height:1.8;max-width:460px}
+  /* CTA group — primary + secondary + no-risk note */
+  .hero-cta-group{display:flex;flex-direction:column;gap:14px;margin-bottom:52px}
+  .hero-cta-row{display:flex;gap:12px;flex-wrap:wrap}
+  .btn-primary{display:inline-block;background:var(--blue);color:#fff;padding:15px 36px;font-size:14px;font-weight:500;text-decoration:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .25s}
+  .btn-primary:hover{background:#1d4ed8;transform:translateY(-1px);box-shadow:0 8px 24px rgba(37,99,235,.35)}
+  .btn-secondary{display:inline-block;background:transparent;color:rgba(255,255,255,.8);padding:14px 36px;font-size:14px;font-weight:400;text-decoration:none;border:1px solid rgba(255,255,255,.2);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .25s}
+  .btn-secondary:hover{border-color:rgba(255,255,255,.5);color:#fff}
+  .hero-no-risk{font-size:12px;color:rgba(255,255,255,.38);display:flex;align-items:center;gap:6px}
+  .hero-no-risk::before{content:'✓';color:var(--gold)}
+  /* Proof row — 3 quick numbers */
+  .hero-proof{display:flex;gap:0;border-top:1px solid rgba(255,255,255,.08)}
+  .hp{flex:1;padding:24px 0;border-right:1px solid rgba(255,255,255,.08)}
+  .hp:last-child{border-right:none}
+  .hp:first-child{padding-right:24px}
+  .hp:not(:first-child){padding-left:24px}
+  .hp-num{font-family:'Syne',sans-serif;font-size:30px;font-weight:700;color:#fff;line-height:1;margin-bottom:4px}
+  .hp-label{font-size:12px;color:rgba(255,255,255,.4);font-weight:300;letter-spacing:.04em}
+
+  /* Hero right — visual with floating cards */
+  .hero-right{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;padding:60px}
+  .hero-visual{position:relative;width:100%;max-width:480px}
+  .hero-img{width:100%;aspect-ratio:4/5;object-fit:cover;filter:brightness(.7) saturate(.5)}
+  .floating-card{position:absolute;background:#fff;padding:16px 20px;box-shadow:0 20px 60px rgba(0,0,0,.3);min-width:180px}
+  .fc-1{top:10%;right:-20px}
+  .fc-2{bottom:12%;left:-20px}
+  .fc-label{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .fc-value{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;color:var(--navy)}
+  .fc-sub{font-size:11px;color:var(--muted);font-weight:300}
+  .fc-trend{font-size:12px;color:#16a34a;font-weight:500;margin-top:4px}
+
+  /* TRUST STRIP */
+  .trust-strip{background:var(--surface);border-bottom:1px solid var(--border);padding:20px 52px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px}
+  .ts-label{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-weight:400;white-space:nowrap}
+  .ts-items{display:flex;gap:32px;align-items:center;flex-wrap:wrap}
+  .ts-item{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px;font-weight:400}
+  .ts-item::before{content:'✓';color:var(--blue);font-weight:700}
+
+  /* SERVICES */
+  .section{padding:96px 60px}
+  .section.alt{background:var(--surface)}
+  .section.navy{background:var(--navy)}
+  .section-eyebrow{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--blue);margin-bottom:14px;font-weight:500}
+  .section-title{font-family:'Syne',sans-serif;font-size:clamp(30px,3.8vw,50px);font-weight:700;color:var(--ink);line-height:1.08;letter-spacing:-.02em}
+  .section-title.white{color:#fff}
+  .section-sub{font-size:15px;color:var(--muted);font-weight:300;max-width:540px;line-height:1.8;margin-top:14px}
+  .section-header-row{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:52px;flex-wrap:wrap;gap:24px}
+
+  .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
+  .service-card{background:var(--white);padding:44px 36px;position:relative;overflow:hidden;transition:background .3s,transform .3s;cursor:pointer}
+  .service-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--blue);transform:scaleX(0);transition:transform .3s;transform-origin:left}
+  .service-card:hover{background:#f0f6ff;transform:translateY(-3px)}
+  .service-card:hover::after{transform:scaleX(1)}
+  .sc-icon{font-size:32px;margin-bottom:20px}
+  .sc-num{font-family:'Syne',sans-serif;font-size:48px;font-weight:800;color:rgba(37,99,235,.06);line-height:1;margin-bottom:-10px}
+  .sc-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:600;color:var(--navy);margin-bottom:12px}
+  .sc-desc{font-size:13px;line-height:1.9;color:var(--muted);font-weight:300;margin-bottom:20px}
+  .sc-link{font-size:13px;color:var(--blue);font-weight:500;text-decoration:none;display:flex;align-items:center;gap:6px;transition:gap .2s}
+  .sc-link:hover{gap:10px}
+
+  /* PROCESS */
+  .process-track{display:grid;grid-template-columns:repeat(4,1fr);position:relative;margin-top:20px}
+  .process-track::before{content:'';position:absolute;top:28px;left:10%;right:10%;height:1px;background:linear-gradient(to right,var(--blue),var(--blue-light));z-index:0}
+  .process-step{text-align:center;padding:0 20px;position:relative;z-index:1}
+  .ps-circle{width:56px;height:56px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:#fff;position:relative}
+  .ps-circle::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:1px solid rgba(37,99,235,.2)}
+  .ps-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:600;color:var(--navy);margin-bottom:8px}
+  .ps-desc{font-size:13px;color:var(--muted);font-weight:300;line-height:1.7}
+
+  /* RESULTS / CASE STUDY */
+  .results-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;min-height:560px}
+  .rg-content{background:var(--navy);display:flex;flex-direction:column;justify-content:center;padding:80px}
+  .rg-eyebrow{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;font-weight:500}
+  .rg-title{font-family:'Syne',sans-serif;font-size:clamp(28px,3vw,46px);font-weight:700;color:#fff;line-height:1.1;margin-bottom:20px;letter-spacing:-.02em}
+  .rg-desc{font-size:14px;line-height:1.9;color:rgba(255,255,255,.55);font-weight:300;margin-bottom:36px;max-width:380px}
+  .results-numbers{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:40px}
+  .rn{border-left:2px solid var(--blue);padding-left:16px}
+  .rn-num{font-family:'Syne',sans-serif;font-size:32px;font-weight:700;color:#fff;line-height:1;margin-bottom:4px}
+  .rn-label{font-size:12px;color:rgba(255,255,255,.45);font-weight:300}
+  .rg-img{overflow:hidden;position:relative}
+  .rg-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.65) saturate(.4)}
+
+  /* TESTIMONIALS — conversion critical */
+  .testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .testimonial-card{background:var(--white);border:1px solid var(--border);padding:40px 32px;position:relative;transition:border-color .3s,box-shadow .3s}
+  .testimonial-card:hover{border-color:rgba(37,99,235,.25);box-shadow:0 12px 40px rgba(37,99,235,.06)}
+  .tc-stars{color:#F59E0B;letter-spacing:2px;font-size:14px;margin-bottom:18px}
+  .tc-text{font-size:14px;line-height:1.85;color:rgba(10,15,30,.75);margin-bottom:24px;font-weight:300}
+  .tc-author{display:flex;align-items:center;gap:12px}
+  .tc-avatar{width:40px;height:40px;border-radius:50%;background:var(--surface);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:700;color:var(--navy);font-size:14px;flex-shrink:0}
+  .tc-name{font-size:13px;font-weight:500;color:var(--navy)}
+  .tc-role{font-size:12px;color:var(--muted);font-weight:300}
+  .tc-verified{position:absolute;top:16px;right:16px;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--blue);display:flex;align-items:center;gap:4px;font-weight:500}
+
+  /* CTA SECTION — high conversion */
+  .cta-section{background:var(--blue);padding:80px 60px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+  .cta-title{font-family:'Syne',sans-serif;font-size:clamp(28px,3.5vw,48px);font-weight:700;color:#fff;line-height:1.1;letter-spacing:-.02em;margin-bottom:16px}
+  .cta-sub{font-size:15px;color:rgba(255,255,255,.7);font-weight:300;line-height:1.8}
+  .cta-form-side{}
+  .cta-form{display:flex;flex-direction:column;gap:12px}
+  .cta-input{padding:14px 18px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color .2s}
+  .cta-input::placeholder{color:rgba(255,255,255,.45)}
+  .cta-input:focus{border-color:rgba(255,255,255,.5)}
+  .cta-submit{background:#fff;color:var(--blue);border:none;padding:15px;font-size:14px;font-family:'DM Sans',sans-serif;font-weight:600;cursor:pointer;transition:all .25s}
+  .cta-submit:hover{background:var(--navy);color:#fff}
+  .cta-guarantee{font-size:11px;color:rgba(255,255,255,.45);margin-top:8px;display:flex;align-items:center;gap:6px}
+  .cta-guarantee::before{content:'🔒';font-size:12px}
+
+  /* FAQ — reduces friction */
+  .faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;max-width:900px;margin:0 auto}
+  .faq-item{padding:28px 24px;border-bottom:1px solid var(--border);cursor:pointer}
+  .faq-item:nth-child(odd){border-right:1px solid var(--border)}
+  .faq-q{font-family:'Syne',sans-serif;font-size:14px;font-weight:600;color:var(--navy);margin-bottom:10px;display:flex;justify-content:space-between;gap:12px}
+  .faq-a{font-size:13px;color:var(--muted);line-height:1.8;font-weight:300}
+
+  /* NEWSLETTER + FOOTER */
+  .footer-nl{background:var(--navy);padding:60px 60px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;border-top:1px solid rgba(255,255,255,.06)}
+  .nl-eyebrow{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+  .nl-title{font-family:'Syne',sans-serif;font-size:34px;font-weight:700;color:#fff;line-height:1.15;letter-spacing:-.02em}
+  .nl-form{display:flex;gap:0}
+  .nl-input{flex:1;padding:14px 18px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:#fff;font-family:'DM Sans',sans-serif;font-size:14px;outline:none;border-right:none}
+  .nl-input::placeholder{color:rgba(255,255,255,.3);font-size:13px}
+  .nl-submit{background:var(--gold);color:var(--navy);border:none;padding:14px 26px;font-family:'DM Sans',sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;font-weight:600;white-space:nowrap;transition:background .2s}
+  .nl-submit:hover{background:#e8bc55}
+  .nl-note{font-size:11px;color:rgba(255,255,255,.25);margin-top:10px}
+
+  footer{background:#080d1e;padding:80px 60px 40px}
+  .footer-grid{display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:56px;padding-bottom:56px;border-bottom:1px solid rgba(255,255,255,.06)}
+  .footer-logo{font-family:'Syne',sans-serif;font-size:22px;font-weight:700;color:#fff;margin-bottom:14px;letter-spacing:-.02em}
+  .footer-desc{font-size:13px;line-height:1.9;color:rgba(255,255,255,.3);font-weight:300;margin-bottom:24px;max-width:240px}
+  .footer-social{display:flex;gap:10px;margin-bottom:20px}
+  .social-link{width:34px;height:34px;border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:12px;text-decoration:none;color:rgba(255,255,255,.35);transition:all .2s}
+  .social-link:hover{border-color:var(--blue);color:var(--blue)}
+  .footer-certifications{display:flex;flex-wrap:wrap;gap:8px}
+  .f-cert{border:1px solid rgba(255,255,255,.08);padding:4px 10px;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.3);font-weight:300}
+  .footer-col-title{font-family:'Syne',sans-serif;font-size:12px;font-weight:600;color:rgba(255,255,255,.85);margin-bottom:20px;letter-spacing:.02em}
+  .footer-links{list-style:none;display:flex;flex-direction:column;gap:11px}
+  .footer-links a{font-size:13px;color:rgba(255,255,255,.32);text-decoration:none;font-weight:300;transition:color .2s}
+  .footer-links a:hover{color:rgba(255,255,255,.8)}
+  .footer-contact{list-style:none;display:flex;flex-direction:column;gap:13px}
+  .contact-item{display:flex;gap:10px}
+  .contact-icon{font-size:14px;flex-shrink:0;margin-top:1px}
+  .contact-text{font-size:12px;color:rgba(255,255,255,.3);font-weight:300;line-height:1.65}
+  .contact-text a{color:inherit;text-decoration:none;transition:color .2s}
+  .contact-text a:hover{color:var(--blue-light)}
+  .footer-bottom{padding-top:28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
+  .footer-legal{font-size:11px;color:rgba(255,255,255,.18)}
+  .footer-legal-links{display:flex;gap:22px}
+  .footer-legal-links a{font-size:11px;color:rgba(255,255,255,.18);text-decoration:none;transition:color .2s}
+  .footer-legal-links a:hover{color:rgba(255,255,255,.5)}
+  .footer-powered{font-size:9px;letter-spacing:.2em;color:rgba(255,255,255,.12);text-transform:uppercase}
+
+  /* STICKY MOBILE CTA */
+  .sticky-cta{display:none;position:fixed;bottom:0;left:0;right:0;z-index:400;background:#fff;border-top:2px solid var(--blue);padding:12px 16px;gap:10px;flex-direction:column}
+  .sticky-label{font-size:11px;letter-spacing:.18em;text-transform:uppercase;text-align:center;color:var(--muted)}
+  .sticky-buttons{display:flex;gap:8px}
+  .s-book{flex:1;background:transparent;border:1px solid var(--border-strong);color:var(--navy);padding:12px;font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif}
+  .s-buy{flex:1.5;background:var(--blue);border:none;color:#fff;padding:12px;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif}
+
+  /* WHATSAPP FLOAT */
+  .wa-float{position:fixed;bottom:90px;left:20px;z-index:400;display:none}
+  .wa-btn{background:#25D366;color:#fff;border:none;width:52px;height:52px;border-radius:50%;font-size:22px;cursor:pointer;box-shadow:0 4px 20px rgba(37,211,102,.4);display:flex;align-items:center;justify-content:center}
+
+  .switcher{position:fixed;bottom:30px;right:30px;z-index:500}
+  .switcher-btn{background:var(--navy);color:#fff;border:none;width:48px;height:48px;border-radius:50%;font-size:18px;cursor:pointer;box-shadow:0 6px 24px rgba(15,28,63,.3);display:flex;align-items:center;justify-content:center}
+  .switcher-menu{position:absolute;bottom:60px;right:0;background:#fff;border:1px solid var(--border);padding:14px 18px;min-width:210px;display:none;box-shadow:0 12px 40px rgba(10,15,30,.1)}
+  .switcher-menu.open{display:block}
+  .sm-title{font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+  .s-opt{display:flex;align-items:center;gap:10px;padding:8px 0;font-size:12px;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--border);transition:color .2s;font-weight:400}
+  .s-opt:last-child{border-bottom:none}
+  .s-opt.active{color:var(--blue);font-weight:500}
+  .s-dot{width:7px;height:7px;border-radius:50%;border:1.5px solid var(--blue)}
+  .s-dot.filled{background:var(--blue)}
+
+  .fade-up{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease}
+  .fade-up.visible{opacity:1;transform:translateY(0)}
+  .stagger-1{transition-delay:.1s}.stagger-2{transition-delay:.2s}.stagger-3{transition-delay:.3s}
+
+  @media(max-width:768px){
+    nav{padding:0 16px}
+    .nav-links{display:none}
+    .hero{grid-template-columns:1fr;min-height:auto}
+    .hero-left{padding:60px 24px}
+    .hero-right{display:none}
+    .trust-strip{padding:16px 20px;flex-direction:column;align-items:flex-start}
+    .section{padding:60px 20px}
+    .services-grid{grid-template-columns:1fr}
+    .process-track{grid-template-columns:1fr 1fr}
+    .process-track::before{display:none}
+    .results-grid{grid-template-columns:1fr}
+    .rg-img{height:55vw}
+    .rg-content{padding:48px 24px}
+    .testimonials-grid{grid-template-columns:1fr}
+    .cta-section{grid-template-columns:1fr;padding:56px 24px;gap:36px}
+    .faq-grid{grid-template-columns:1fr}
+    .faq-item:nth-child(odd){border-right:none}
+    .footer-nl{grid-template-columns:1fr;padding:48px 24px;gap:28px}
+    .nl-form{flex-direction:column}
+    footer{padding:56px 20px 32px}
+    .footer-grid{grid-template-columns:1fr 1fr;gap:32px}
+    .footer-bottom{flex-direction:column;align-items:flex-start}
+    .sticky-cta{display:flex}
+    .wa-float{display:block}
+    .switcher{bottom:100px;right:12px}
+  }
+</style>
+</head>
+<body>
+
+<div class="expiry">⏰ Preview expires in: <strong id="countdown">6d 23h 41m</strong> &nbsp;·&nbsp; Exclusive redesign for your business</div>
+
+<nav>
+  <div class="nav-brand">Your Brand</div>
+  <ul class="nav-links">
+    <li><a href="#">Services</a></li>
+    <li><a href="#">Results</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="tel:+97144000000" class="nav-tel">+971 4 400 0000</a>
+    <button class="nav-cta">Get Free Consultation</button>
+  </div>
+</nav>
+
+<!-- HERO — everything above fold -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">
+      <span class="eyebrow-dot"></span>
+      <span class="eyebrow-text">Currently accepting new clients</span>
+    </div>
+    <h1 class="hero-title">Results you<br>can measure.<br><span>Growth you</span><br>can see.</h1>
+    <p class="hero-sub">Trusted by 200+ businesses across the UAE. We deliver strategies that work — backed by data, driven by outcomes.</p>
+    <div class="hero-cta-group">
+      <div class="hero-cta-row">
+        <a href="#" class="btn-primary">Get Free Consultation →</a>
+        <a href="#" class="btn-secondary">See Our Results</a>
+      </div>
+      <div class="hero-no-risk">No commitment. No jargon. Just honest advice about what will work for your business.</div>
+    </div>
+    <div class="hero-proof">
+      <div class="hp"><div class="hp-num">200+</div><div class="hp-label">Clients Served</div></div>
+      <div class="hp"><div class="hp-num">96%</div><div class="hp-label">Retention Rate</div></div>
+      <div class="hp"><div class="hp-num">12yr</div><div class="hp-label">Dubai Market</div></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-visual">
+      <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=700&q=85" alt="" class="hero-img">
+      <div class="floating-card fc-1">
+        <div class="fc-label">Client Growth</div>
+        <div class="fc-value">+340%</div>
+        <div class="fc-sub">Average ROI · Year 1</div>
+        <div class="fc-trend">↑ Above industry avg</div>
+      </div>
+      <div class="floating-card fc-2">
+        <div class="fc-label">Response Time</div>
+        <div class="fc-value">&lt; 4hrs</div>
+        <div class="fc-sub">Guaranteed same-day</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST STRIP -->
+<div class="trust-strip">
+  <span class="ts-label">Trusted by</span>
+  <div class="ts-items">
+    <span class="ts-item">ISO 9001 Certified</span>
+    <span class="ts-item">DIFC Registered</span>
+    <span class="ts-item">DED Licensed</span>
+    <span class="ts-item">200+ Active Clients</span>
+    <span class="ts-item">12 Years in UAE</span>
+    <span class="ts-item">GCC Award 2024</span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="section">
+  <div class="section-header-row fade-up">
+    <div>
+      <div class="section-eyebrow">What We Do</div>
+      <h2 class="section-title">Services built<br>for outcomes</h2>
+    </div>
+    <a href="#" class="btn-primary">View All Services</a>
+  </div>
+  <div class="services-grid">
+    <div class="service-card fade-up"><div class="sc-num">01</div><div class="sc-icon">📊</div><div class="sc-title">Strategy & Consulting</div><div class="sc-desc">Market entry, growth planning, and competitive positioning for businesses ready to scale in the UAE and wider GCC region.</div><a href="#" class="sc-link">Learn more →</a></div>
+    <div class="service-card fade-up stagger-1"><div class="sc-num">02</div><div class="sc-icon">⚡</div><div class="sc-title">Digital Transformation</div><div class="sc-desc">End-to-end digital solutions that modernise your operations and create measurable efficiency improvements across every department.</div><a href="#" class="sc-link">Learn more →</a></div>
+    <div class="service-card fade-up stagger-2"><div class="sc-num">03</div><div class="sc-icon">🎯</div><div class="sc-title">Growth Marketing</div><div class="sc-desc">Data-driven campaigns that generate qualified leads, build brand authority, and deliver trackable return on every dirham invested.</div><a href="#" class="sc-link">Learn more →</a></div>
+    <div class="service-card fade-up"><div class="sc-num">04</div><div class="sc-icon">💼</div><div class="sc-title">Financial Advisory</div><div class="sc-desc">Expert guidance on company formation, funding structures, and financial planning for sustainable long-term growth.</div><a href="#" class="sc-link">Learn more →</a></div>
+    <div class="service-card fade-up stagger-1"><div class="sc-num">05</div><div class="sc-icon">🌐</div><div class="sc-title">Market Expansion</div><div class="sc-desc">GCC market intelligence, partnership networks, and local expertise to accelerate your expansion across the region.</div><a href="#" class="sc-link">Learn more →</a></div>
+    <div class="service-card fade-up stagger-2"><div class="sc-num">06</div><div class="sc-icon">🛡️</div><div class="sc-title">Risk & Compliance</div><div class="sc-desc">Regulatory compliance, risk assessment, and governance frameworks that protect your business as it grows.</div><a href="#" class="sc-link">Learn more →</a></div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="section alt">
+  <div class="section-header-row fade-up">
+    <div>
+      <div class="section-eyebrow">How We Work</div>
+      <h2 class="section-title">From day one<br>to results</h2>
+    </div>
+  </div>
+  <div class="process-track">
+    <div class="process-step fade-up"><div class="ps-circle">1</div><div class="ps-title">Discovery Call</div><div class="ps-desc">30 minutes. We listen, ask the right questions, and understand your real goals — not just the stated ones.</div></div>
+    <div class="process-step fade-up stagger-1"><div class="ps-circle">2</div><div class="ps-title">Tailored Proposal</div><div class="ps-desc">A specific plan for your business, not a template. Delivered within 48 hours with full transparent pricing.</div></div>
+    <div class="process-step fade-up stagger-2"><div class="ps-circle">3</div><div class="ps-title">Execution</div><div class="ps-desc">We begin immediately. Weekly progress reports, dedicated account manager, and direct WhatsApp access.</div></div>
+    <div class="process-step fade-up stagger-3"><div class="ps-circle">4</div><div class="ps-title">Measure & Scale</div><div class="ps-desc">Monthly performance reviews with clear data. We only grow together when the numbers prove it.</div></div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<div class="results-grid">
+  <div class="rg-content fade-up">
+    <p class="rg-eyebrow">Client Success</p>
+    <h2 class="rg-title">How we grew<br>a UAE retailer<br>by 340%</h2>
+    <p class="rg-desc">A mid-size retail client engaged us for digital strategy and market expansion. Within 12 months, revenue had grown by 340% and they had successfully entered three new GCC markets.</p>
+    <div class="results-numbers">
+      <div class="rn"><div class="rn-num">340%</div><div class="rn-label">Revenue Growth</div></div>
+      <div class="rn"><div class="rn-num">3</div><div class="rn-label">New Markets</div></div>
+      <div class="rn"><div class="rn-num">12mo</div><div class="rn-label">Timeline</div></div>
+      <div class="rn"><div class="rn-num">4.8★</div><div class="rn-label">Client Rating</div></div>
+    </div>
+    <a href="#" class="btn-primary">Read Full Case Study</a>
+  </div>
+  <div class="rg-img"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=85" alt=""></div>
+</div>
+
+<!-- TESTIMONIALS -->
+<section class="section alt">
+  <div class="section-header-row fade-up">
+    <div>
+      <div class="section-eyebrow">Client Voices</div>
+      <h2 class="section-title">What our clients<br>actually say</h2>
+    </div>
+    <a href="#" style="font-size:13px;color:var(--blue);text-decoration:none;font-weight:500">All Reviews →</a>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial-card fade-up">
+      <span class="tc-verified">✓ Verified Client</span>
+      <div class="tc-stars">★★★★★</div>
+      <p class="tc-text">"In 8 months they transformed how we operate. Revenue is up 280%, our team has doubled, and we've entered Saudi Arabia. I wish we had engaged them 3 years earlier."</p>
+      <div class="tc-author"><div class="tc-avatar">KA</div><div><div class="tc-name">Khalid Al Ameri</div><div class="tc-role">CEO · Al Ameri Group, Dubai</div></div></div>
+    </div>
+    <div class="testimonial-card fade-up stagger-1">
+      <span class="tc-verified">✓ Verified Client</span>
+      <div class="tc-stars">★★★★★</div>
+      <p class="tc-text">"The strategy work was exceptional but the real value was the team's commitment. They treated our business like their own. Available on weekends, always thinking ahead."</p>
+      <div class="tc-author"><div class="tc-avatar">SR</div><div><div class="tc-name">Sara Rahman</div><div class="tc-role">Managing Director · Nexus Logistics</div></div></div>
+    </div>
+    <div class="testimonial-card fade-up stagger-2">
+      <span class="tc-verified">✓ Verified Client</span>
+      <div class="tc-stars">★★★★★</div>
+      <p class="tc-text">"We interviewed six consultancies. The difference here was that they came with data about our market before the first meeting. That level of preparation said everything."</p>
+      <div class="tc-author"><div class="tc-avatar">FM</div><div><div class="tc-name">Fatima Mustafa</div><div class="tc-role">Founder · Clarity Health UAE</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- HIGH CONVERSION CTA SECTION -->
+<div class="cta-section">
+  <div class="fade-up">
+    <h2 class="cta-title">Ready to grow?<br>Let's talk.</h2>
+    <p class="cta-sub">Book a free 30-minute consultation. No sales pitch — just an honest conversation about what's possible for your business.</p>
+  </div>
+  <div class="fade-up stagger-1">
+    <div class="cta-form">
+      <input class="cta-input" type="text" placeholder="Your name">
+      <input class="cta-input" type="text" placeholder="Company name">
+      <input class="cta-input" type="tel" placeholder="WhatsApp number">
+      <button class="cta-submit">Book My Free Consultation →</button>
+      <div class="cta-guarantee">Your information is private. We respond within 4 hours.</div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<section class="section">
+  <div class="section-eyebrow fade-up" style="text-align:center;margin-bottom:14px">Common Questions</div>
+  <h2 class="section-title fade-up" style="text-align:center;margin-bottom:52px">Answers before you ask</h2>
+  <div class="faq-grid">
+    <div class="faq-item fade-up"><div class="faq-q">How quickly do you start? <span>→</span></div><div class="faq-a">Most clients are fully onboarded within 5 working days. We don't believe in slow starts.</div></div>
+    <div class="faq-item fade-up stagger-1"><div class="faq-q">Do you work with startups? <span>→</span></div><div class="faq-a">Yes. We have specific programmes for early-stage companies with flexible fee structures.</div></div>
+    <div class="faq-item fade-up"><div class="faq-q">What does a typical engagement cost? <span>→</span></div><div class="faq-a">Projects start from AED 8,000 per month. We'll give you a specific quote after the discovery call.</div></div>
+    <div class="faq-item fade-up stagger-1"><div class="faq-q">How do you measure success? <span>→</span></div><div class="faq-a">We agree KPIs before we start. Every monthly report maps back to those agreed targets — transparently.</div></div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<div class="footer-nl">
+  <div class="fade-up">
+    <p class="nl-eyebrow">Business Intelligence</p>
+    <h3 class="nl-title">Market insights.<br>Every week.</h3>
+  </div>
+  <div class="fade-up stagger-1">
+    <div class="nl-form">
+      <input class="nl-input" type="email" placeholder="Your email address">
+      <button class="nl-submit">Subscribe</button>
+    </div>
+    <p class="nl-note">Actionable GCC market intelligence. Read by 4,000+ executives. Unsubscribe anytime.</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">Your Brand</div>
+      <p class="footer-desc">Business strategy and growth consulting for UAE and GCC companies. Results-driven, data-backed, and always accountable.</p>
+      <div class="footer-social">
+        <a href="#" class="social-link">in</a>
+        <a href="#" class="social-link">𝕏</a>
+        <a href="#" class="social-link">📷</a>
+      </div>
+      <div class="footer-certifications">
+        <span class="f-cert">ISO 9001</span>
+        <span class="f-cert">DIFC</span>
+        <span class="f-cert">DED</span>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Services</div>
+      <ul class="footer-links">
+        <li><a href="#">Strategy & Consulting</a></li>
+        <li><a href="#">Digital Transformation</a></li>
+        <li><a href="#">Growth Marketing</a></li>
+        <li><a href="#">Financial Advisory</a></li>
+        <li><a href="#">Market Expansion</a></li>
+        <li><a href="#">Risk & Compliance</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Company</div>
+      <ul class="footer-links">
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Case Studies</a></li>
+        <li><a href="#">Our Team</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Press</a></li>
+        <li><a href="#">Blog</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contact</div>
+      <ul class="footer-contact">
+        <li class="contact-item"><span class="contact-icon">📍</span><span class="contact-text">Office 2401, Vision Tower<br>Business Bay, Dubai, UAE</span></li>
+        <li class="contact-item"><span class="contact-icon">📞</span><span class="contact-text"><a href="tel:+97144000000">+971 4 400 0000</a></span></li>
+        <li class="contact-item"><span class="contact-icon">💬</span><span class="contact-text"><a href="#">WhatsApp Us</a></span></li>
+        <li class="contact-item"><span class="contact-icon">✉️</span><span class="contact-text"><a href="/cdn-cgi/l/email-protection#b2dad7dededdf2cbddc7c0d0c0d3dcd69cd1dddf"><span class="__cf_email__" data-cfemail="274f424b4b48675e48525545554649430944484a">[email&#160;protected]</span></a></span></li>
+        <li class="contact-item"><span class="contact-icon">🕐</span><span class="contact-text">Sun–Thu: 8am–7pm<br>Urgent: 24/7 WhatsApp</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-legal">© 2026 Your Brand Consulting. All rights reserved.</div>
+    <div class="footer-legal-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookie Policy</a><a href="#">Accessibility</a></div>
+    <div class="footer-powered">Preview by MorningStar.ai</div>
+  </div>
+</footer>
+
+<div class="sticky-cta">
+  <div class="sticky-label">Free consultation — no commitment</div>
+  <div class="sticky-buttons">
+    <button class="s-book">Call Now</button>
+    <button class="s-buy">Book Free Consultation</button>
+  </div>
+</div>
+
+<div class="wa-float">
+  <button class="wa-btn" title="WhatsApp">💬</button>
+</div>
+
+<div class="switcher">
+  <div class="switcher-menu" id="sm">
+    <div class="sm-title">Other Category</div>
+    <a class="s-opt active" href="#"><div class="s-dot filled"></div> Elevate — Professional</a>
+    <a class="s-opt" href="other-vivid.html"><div class="s-dot"></div> Vivid — F&B</a>
+    <a class="s-opt" href="other-clarity.html"><div class="s-dot"></div> Clarity — Healthcare</a>
+  </div>
+  <button class="switcher-btn" onclick="document.getElementById('sm').classList.toggle('open')">🎨</button>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const obs=new IntersectionObserver(e=>e.forEach(i=>{if(i.isIntersecting)i.target.classList.add('visible')}),{threshold:.08});
+document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+function tick

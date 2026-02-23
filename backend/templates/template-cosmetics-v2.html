@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brand Redesign Preview — Cosmetics</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Raleway:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #7D1B38;
+    --accent: #C0385A;
+    --bg: #F5F2EE;
+    --cream: #FAFAF8;
+    --ink: #1c1410;
+    --muted: rgba(28,20,16,0.45);
+    --border: rgba(28,20,16,0.09);
+    --pale: #FDE8EE;
+  }
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--cream); font-family: 'Raleway', sans-serif; color: var(--ink); overflow-x: hidden; }
+
+  .expiry { background: var(--primary); color: rgba(253,232,238,0.8); text-align: center; padding: 9px 20px; font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; font-weight: 300; }
+  .expiry strong { color: #fff; font-weight: 400; }
+
+  nav { position: sticky; top: 0; z-index: 200; background: rgba(250,250,248,0.97); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 60px; height: 68px; display: flex; align-items: center; justify-content: space-between; }
+  .nav-brand { font-family: 'Libre Baskerville', serif; font-size: 18px; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--primary); }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); text-decoration: none; font-weight: 300; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--primary); }
+  .nav-shop { background: transparent; color: var(--primary); border: 1px solid var(--primary); padding: 9px 22px; font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase; cursor: pointer; font-family: 'Raleway', sans-serif; transition: all 0.25s; }
+  .nav-shop:hover { background: var(--primary); color: #fff; }
+
+  /* ============================================
+     HERO — FULL SCREEN, SPLIT, INSTANT READ
+     ============================================ */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 100vh;
+  }
+  .hero-left {
+    position: relative;
+    overflow: hidden;
+    background: var(--primary);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 80px;
+  }
+  .hero-left::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=900&q=85') center/cover;
+    filter: brightness(0.25) saturate(0.4);
+    transition: transform 10s ease;
+  }
+  .hero:hover .hero-left::before { transform: scale(1.04); }
+  .hero-left > * { position: relative; z-index: 2; }
+  .hero-badge { display: inline-block; border: 1px solid rgba(253,232,238,0.25); color: rgba(253,232,238,0.6); padding: 7px 18px; font-size: 9px; letter-spacing: 0.35em; text-transform: uppercase; margin-bottom: 28px; font-weight: 300; align-self: flex-start; }
+  .hero-title { font-family: 'Libre Baskerville', serif; font-size: clamp(44px, 5.5vw, 76px); font-weight: 400; line-height: 1.05; color: #fff; margin-bottom: 20px; }
+  .hero-title em { font-style: italic; color: var(--pale); display: block; }
+  .hero-tagline { font-size: 14px; font-weight: 300; color: rgba(253,232,238,0.6); margin-bottom: 44px; line-height: 1.8; max-width: 380px; }
+  .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn-pale-hero { display: inline-block; background: var(--pale); color: var(--primary); padding: 14px 36px; font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; text-decoration: none; font-weight: 500; border: 1px solid var(--pale); transition: all 0.25s; }
+  .btn-pale-hero:hover { background: transparent; color: var(--pale); }
+  .btn-ghost-hero { display: inline-block; background: transparent; color: rgba(253,232,238,0.7); padding: 13px 36px; font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; text-decoration: none; font-weight: 300; border: 1px solid rgba(253,232,238,0.25); transition: all 0.25s; }
+  .btn-ghost-hero:hover { border-color: var(--pale); color: var(--pale); }
+
+  .hero-right {
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 60px;
+  }
+  .hero-proof-title { font-size: 9px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--muted); margin-bottom: 36px; }
+  .hero-stats { display: flex; flex-direction: column; gap: 0; margin-bottom: 48px; }
+  .hero-stat { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px solid var(--border); }
+  .hero-stat:first-child { border-top: 1px solid var(--border); }
+  .hs-num { font-family: 'Libre Baskerville', serif; font-size: 36px; font-weight: 400; color: var(--primary); }
+  .hs-label { font-size: 12px; color: var(--muted); font-weight: 300; text-align: right; max-width: 160px; line-height: 1.5; }
+  .hero-ingredients { margin-bottom: 40px; }
+  .hi-title { font-size: 9px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
+  .hi-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .hi-tag { background: var(--cream); border: 1px solid var(--border); padding: 6px 14px; font-size: 10px; letter-spacing: 0.12em; color: var(--ink); font-weight: 300; }
+
+  .btn-primary { background: var(--primary); color: #fff; padding: 14px 36px; font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; border: none; cursor: pointer; font-family: 'Raleway', sans-serif; text-decoration: none; display: inline-block; transition: background 0.25s; }
+  .btn-primary:hover { background: var(--accent); }
+  .btn-ghost { background: transparent; color: var(--primary); padding: 13px 36px; font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; border: 1px solid var(--primary); cursor: pointer; font-family: 'Raleway', sans-serif; text-decoration: none; display: inline-block; transition: all 0.25s; }
+  .btn-ghost:hover { background: var(--primary); color: #fff; }
+
+  .ing-ticker { background: var(--ink); padding: 13px 0; overflow: hidden; }
+  .ing-inner { display: inline-block; white-space: nowrap; animation: slide 30s linear infinite; font-size: 9px; letter-spacing: 0.4em; text-transform: uppercase; color: rgba(245,242,238,0.4); font-weight: 300; }
+  .ing-inner span { margin: 0 32px; color: var(--accent); }
+  @keyframes slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  .section { padding: 100px 80px; }
+  .section.bg-alt { background: var(--bg); }
+  .section-header { max-width: 600px; margin: 0 auto 70px; text-align: center; }
+  .section-label { font-size: 9px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
+  .section-title { font-family: 'Libre Baskerville', serif; font-size: clamp(30px, 4vw, 50px); font-weight: 400; color: var(--primary); line-height: 1.2; }
+  .section-title em { font-style: italic; }
+  .section-sub { font-size: 14px; line-height: 1.9; color: var(--muted); font-weight: 300; margin-top: 18px; }
+
+  .product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+  .product-card { cursor: pointer; }
+  .product-img { position: relative; overflow: hidden; background: var(--bg); margin-bottom: 20px; aspect-ratio: 3/4; }
+  .product-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+  .product-card:hover .product-img img { transform: scale(1.04); }
+  .product-overlay { position: absolute; inset: 0; background: rgba(125,27,56,0.82); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.35s; }
+  .product-card:hover .product-overlay { opacity: 1; }
+  .po-btn { background: #fff; color: var(--primary); border: none; padding: 12px 28px; font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase; cursor: pointer; font-family: 'Raleway', sans-serif; }
+  .product-name { font-family: 'Libre Baskerville', serif; font-size: 17px; font-weight: 400; color: var(--ink); margin-bottom: 6px; }
+  .product-type { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; font-weight: 300; }
+  .product-price { font-size: 13px; color: var(--accent); }
+
+  .steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 48px; }
+  .step { text-align: center; }
+  .step-num { font-family: 'Libre Baskerville', serif; font-size: 48px; font-weight: 400; color: rgba(125,27,56,0.1); margin-bottom: 16px; font-style: italic; }
+  .step-icon { font-size: 26px; margin-bottom: 14px; }
+  .step-title { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--primary); font-weight: 400; margin-bottom: 10px; }
+  .step-desc { font-size: 13px; line-height: 1.85; color: var(--muted); font-weight: 300; }
+
+  .feature-full { display: grid; grid-template-columns: 1fr 1fr; min-height: 560px; }
+  .ff-img { overflow: hidden; }
+  .ff-img img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.88) saturate(0.85); transition: transform 8s; }
+  .ff-img:hover img { transform: scale(1.03); }
+  .ff-content { background: var(--primary); display: flex; flex-direction: column; justify-content: center; padding: 80px; }
+  .ff-label { font-size: 9px; letter-spacing: 0.4em; text-transform: uppercase; color: rgba(253,232,238,0.5); margin-bottom: 20px; }
+  .ff-title { font-family: 'Libre Baskerville', serif; font-size: clamp(28px, 3.5vw, 48px); font-weight: 400; color: #fff; line-height: 1.2; margin-bottom: 20px; }
+  .ff-title em { font-style: italic; color: var(--pale); }
+  .ff-text { font-size: 14px; line-height: 1.95; color: rgba(253,232,238,0.65); font-weight: 300; margin-bottom: 36px; max-width: 360px; }
+  .btn-pale { background: var(--pale); color: var(--primary); padding: 14px 32px; font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; border: none; cursor: pointer; font-family: 'Raleway', sans-serif; display: inline-block; text-decoration: none; align-self: flex-start; transition: background 0.2s; }
+  .btn-pale:hover { background: #fff; }
+
+  .t-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  .t-card { background: var(--cream); padding: 44px 36px; }
+  .t-quote { font-family: 'Libre Baskerville', serif; font-size: 48px; color: var(--pale); line-height: 0.6; margin-bottom: 20px; }
+  .t-text { font-size: 14px; line-height: 1.9; color: var(--ink); font-weight: 300; margin-bottom: 20px; font-style: italic; font-family: 'Libre Baskerville', serif; }
+  .t-stars { color: var(--accent); letter-spacing: 3px; font-size: 11px; margin-bottom: 10px; }
+  .t-author { font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); }
+
+  /* NEWSLETTER + FOOTER */
+  .footer-newsletter { background: var(--primary); padding: 60px 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+  .nl-label { font-size: 9px; letter-spacing: 0.4em; text-transform: uppercase; color: rgba(253,232,238,0.5); margin-bottom: 14px; }
+  .nl-title { font-family: 'Libre Baskerville', serif; font-size: 34px; font-weight: 400; color: #fff; line-height: 1.2; }
+  .nl-title em { font-style: italic; }
+  .nl-form { display: flex; }
+  .nl-input { flex: 1; padding: 14px 20px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; font-family: 'Raleway', sans-serif; font-size: 13px; outline: none; border-right: none; }
+  .nl-input::placeholder { color: rgba(255,255,255,0.4); font-size: 12px; }
+  .nl-submit { background: var(--pale); color: var(--primary); border: none; padding: 14px 28px; font-family: 'Raleway', sans-serif; font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase; cursor: pointer; font-weight: 500; white-space: nowrap; transition: background 0.2s; }
+  .nl-submit:hover { background: #fff; }
+  .nl-note { font-size: 11px; color: rgba(253,232,238,0.35); margin-top: 12px; font-weight: 300; }
+
+  footer { background: var(--ink); padding: 80px 80px 40px; }
+  .footer-grid { display: grid; grid-template-columns: 1.8fr 1fr 1fr 1fr; gap: 60px; padding-bottom: 60px; border-bottom: 1px solid rgba(245,242,238,0.08); }
+  .footer-logo { font-family: 'Libre Baskerville', serif; font-size: 24px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(245,242,238,0.9); margin-bottom: 16px; }
+  .footer-brand-desc { font-size: 13px; line-height: 1.85; color: rgba(245,242,238,0.3); font-weight: 300; margin-bottom: 28px; max-width: 240px; }
+  .footer-certifications { display: flex; gap: 10px; flex-wrap: wrap; }
+  .cert-badge { border: 1px solid rgba(245,242,238,0.12); padding: 6px 12px; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(245,242,238,0.4); font-weight: 300; }
+  .footer-col-title { font-size: 9px; letter-spacing: 0.35em; text-transform: uppercase; color: rgba(245,242,238,0.9); margin-bottom: 24px; font-weight: 500; }
+  .footer-links-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .footer-links-list a { font-size: 13px; color: rgba(245,242,238,0.4); text-decoration: none; font-weight: 300; transition: color 0.2s; }
+  .footer-links-list a:hover { color: rgba(245,242,238,0.85); }
+  .footer-contact-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+  .contact-item { display: flex; gap: 12px; }
+  .contact-icon { font-size: 14px; flex-shrink: 0; }
+  .contact-text { font-size: 12px; color: rgba(245,242,238,0.4); font-weight: 300; line-height: 1.6; }
+  .contact-text a { color: inherit; text-decoration: none; transition: color 0.2s; }
+  .contact-text a:hover { color: var(--accent); }
+  .footer-bottom { padding-top: 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .footer-legal { font-size: 11px; color: rgba(245,242,238,0.2); }
+  .footer-legal-links { display: flex; gap: 24px; }
+  .footer-legal-links a { font-size: 11px; color: rgba(245,242,238,0.2); text-decoration: none; transition: color 0.2s; }
+  .footer-legal-links a:hover { color: rgba(245,242,238,0.5); }
+  .footer-powered { font-size: 9px; letter-spacing: 0.2em; color: rgba(245,242,238,0.15); text-transform: uppercase; }
+
+  .sticky-cta { display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 300; background: var(--cream); border-top: 1px solid var(--border); padding: 14px 20px; flex-direction: column; gap: 10px; }
+  .sticky-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; text-align: center; color: var(--muted); }
+  .sticky-buttons { display: flex; gap: 10px; }
+  .s-book { flex: 1; background: transparent; border: 1px solid var(--primary); color: var(--primary); padding: 13px; font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; cursor: pointer; font-family: 'Raleway', sans-serif; }
+  .s-buy { flex: 1.5; background: var(--primary); border: none; color: #fff; padding: 13px; font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; cursor: pointer; font-family: 'Raleway', sans-serif; }
+
+  .switcher { position: fixed; bottom: 30px; right: 30px; z-index: 400; }
+  .switcher-btn { background: var(--ink); color: #fff; border: none; width: 50px; height: 50px; border-radius: 50%; font-size: 18px; cursor: pointer; box-shadow: 0 6px 24px rgba(28,20,16,0.2); display: flex; align-items: center; justify-content: center; }
+  .switcher-menu { position: absolute; bottom: 62px; right: 0; background: var(--cream); border: 1px solid var(--border); padding: 16px 20px; min-width: 200px; display: none; box-shadow: 0 12px 40px rgba(28,20,16,0.08); }
+  .switcher-menu.open { display: block; }
+  .sm-title { font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+  .s-opt { display: flex; align-items: center; gap: 12px; padding: 9px 0; font-size: 13px; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--border); transition: color 0.2s; font-weight: 300; }
+  .s-opt:last-child { border-bottom: none; }
+  .s-opt.active { color: var(--primary); }
+  .s-dot { width: 7px; height: 7px; border-radius: 50%; border: 1.5px solid var(--primary); }
+  .s-dot.filled { background: var(--primary); }
+
+  .fade-up { opacity: 0; transform: translateY(28px); transition: opacity 0.9s ease, transform 0.9s ease; }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 48px 24px 56px; min-height: 80vw; }
+    .hero-right { padding: 48px 24px; }
+    .hero-stats { flex-direction: row; flex-wrap: wrap; }
+    .hero-stat { flex: 1 1 45%; }
+    .section { padding: 56px 24px; }
+    .product-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .steps-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+    .feature-full { grid-template-columns: 1fr; }
+    .ff-img { height: 60vw; }
+    .ff-content { padding: 48px 24px; }
+    .t-grid { grid-template-columns: 1fr; }
+    .footer-newsletter { grid-template-columns: 1fr; padding: 48px 24px; gap: 32px; }
+    .nl-form { flex-direction: column; }
+    footer { padding: 56px 24px 32px; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
+    .footer-bottom { flex-direction: column; align-items: flex-start; }
+    .sticky-cta { display: flex; }
+    .switcher { bottom: 100px; right: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="expiry">⏰ Preview expires in: <strong id="countdown">6d 23h 41m</strong> &nbsp;·&nbsp; Designed exclusively for your brand</div>
+
+<nav>
+  <div class="nav-brand">Your Brand</div>
+  <ul class="nav-links">
+    <li><a href="#">Skincare</a></li>
+    <li><a href="#">Body</a></li>
+    <li><a href="#">Fragrance</a></li>
+    <li><a href="#">Our Ethos</a></li>
+  </ul>
+  <button class="nav-shop">Shop Now</button>
+</nav>
+
+<!-- HERO — SPLIT WITH INSTANT PROOF -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-badge">Conscious Beauty · UAE</div>
+    <h1 class="hero-title">Skin That<br><em>Speaks.</em></h1>
+    <p class="hero-tagline">Science-led skincare rooted in nature. Formulated for every skin tone, every climate. No compromise.</p>
+    <div class="hero-actions">
+      <a href="#" class="btn-pale-hero">Shop the Ritual</a>
+      <a href="#" class="btn-ghost-hero">Our Ingredients</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <p class="hero-proof-title">Why customers choose us</p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hs-num">94%</div>
+        <div class="hs-label">saw visible improvement in 4 weeks</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hs-num">5k+</div>
+        <div class="hs-label">five-star reviews across UAE</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hs-num">0%</div>
+        <div class="hs-label">harsh chemicals or unnecessary fillers</div>
+      </div>
+    </div>
+    <div class="hero-ingredients">
+      <p class="hi-title">Key Ingredients</p>
+      <div class="hi-tags">
+        <span class="hi-tag">Hyaluronic Acid</span>
+        <span class="hi-tag">Retinol</span>
+        <span class="hi-tag">Vitamin C</span>
+        <span class="hi-tag">Niacinamide</span>
+        <span class="hi-tag">Squalane</span>
+        <span class="hi-tag">Peptides</span>
+      </div>
+    </div>
+    <a href="#" class="btn-primary">Find Your Routine</a>
+  </div>
+</section>
+
+<div class="ing-ticker">
+  <div class="ing-inner">Hyaluronic Acid <span>·</span> Rose Hip Oil <span>·</span> Retinol <span>·</span> Vitamin C Complex <span>·</span> Squalane <span>·</span> Niacinamide <span>·</span> Peptides <span>·</span> Hyaluronic Acid <span>·</span> Rose Hip Oil <span>·</span> Retinol <span>·</span> Vitamin C Complex <span>·</span> Squalane <span>·</span></div>
+</div>
+
+<!-- PRODUCTS -->
+<section class="section">
+  <div class="section-header fade-up">
+    <p class="section-label">The Collection</p>
+    <h2 class="section-title">Formulated for<br><em>Every Ritual</em></h2>
+    <p class="section-sub">Each product crafted to work in harmony with your skin's natural rhythm. No harsh chemicals. No unnecessary fillers.</p>
+  </div>
+  <div class="product-grid">
+    <div class="product-card fade-up">
+      <div class="product-img"><img src="https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=500&q=85" alt=""><div class="product-overlay"><button class="po-btn">Add to Bag</button></div></div>
+      <div class="product-name">Luminous Serum</div>
+      <div class="product-type">Vitamin C · 30ml</div>
+      <div class="product-price">AED 285</div>
+    </div>
+    <div class="product-card fade-up">
+      <div class="product-img"><img src="https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=500&q=85" alt=""><div class="product-overlay"><button class="po-btn">Add to Bag</button></div></div>
+      <div class="product-name">Hydra Barrier Cream</div>
+      <div class="product-type">Peptide Complex · 50ml</div>
+      <div class="product-price">AED 340</div>
+    </div>
+    <div class="product-card fade-up">
+      <div class="product-img"><img src="https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=500&q=85" alt=""><div class="product-overlay"><button class="po-btn">Add to Bag</button></div></div>
+      <div class="product-name">Renewal Night Oil</div>
+      <div class="product-type">Retinol Blend · 30ml</div>
+      <div class="product-price">AED 420</div>
+    </div>
+  </div>
+</section>
+
+<!-- RITUAL STEPS -->
+<section class="section bg-alt">
+  <div class="section-header fade-up">
+    <p class="section-label">Your Daily Ritual</p>
+    <h2 class="section-title">Four Steps to<br><em>Luminosity</em></h2>
+  </div>
+  <div class="steps-grid">
+    <div class="step fade-up"><div class="step-num">01</div><div class="step-icon">💧</div><div class="step-title">Cleanse</div><div class="step-desc">Gentle micellar water removes impurities without stripping moisture.</div></div>
+    <div class="step fade-up"><div class="step-num">02</div><div class="step-icon">✨</div><div class="step-title">Treat</div><div class="step-desc">Targeted serums deliver actives deep into the dermis.</div></div>
+    <div class="step fade-up"><div class="step-num">03</div><div class="step-icon">🌿</div><div class="step-title">Nourish</div><div class="step-desc">Barrier cream locks in moisture and protects all day.</div></div>
+    <div class="step fade-up"><div class="step-num">04</div><div class="step-icon">☀️</div><div class="step-title">Protect</div><div class="step-desc">SPF 50 in a weightless formula. No white cast.</div></div>
+  </div>
+</section>
+
+<!-- FEATURE -->
+<div class="feature-full">
+  <div class="ff-img"><img src="https://images.unsplash.com/photo-1596755389378-c31d21fd1273?w=800&q=85" alt=""></div>
+  <div class="ff-content fade-up">
+    <p class="ff-label">Our Philosophy</p>
+    <h2 class="ff-title">Science &<br><em>Nature.</em><br>Together.</h2>
+    <p class="ff-text">Every formula is dermatologist-tested, cruelty-free, and made with full ingredient transparency. We believe effective beauty doesn't require compromise.</p>
+    <a href="#" class="btn-pale">Read Our Story</a>
+  </div>
+</div>
+
+<!-- REVIEWS -->
+<section class="section">
+  <div class="section-header fade-up">
+    <p class="section-label">Client Experiences</p>
+    <h2 class="section-title">Real Results,<br><em>Real People</em></h2>
+  </div>
+  <div class="t-grid">
+    <div class="t-card fade-up"><div class="t-quote">"</div><p class="t-text">My skin has never felt so balanced. After two weeks I stopped wearing foundation entirely.</p><div class="t-stars">★★★★★</div><div class="t-author">Hessa A. · Dubai</div></div>
+    <div class="t-card fade-up"><div class="t-quote">"</div><p class="t-text">Finally a brand that understands skin in our climate. The barrier cream is extraordinary.</p><div class="t-stars">★★★★★</div><div class="t-author">Sarah M. · Abu Dhabi</div></div>
+    <div class="t-card fade-up"><div class="t-quote">"</div><p class="t-text">The packaging, the scent, the texture — every detail has been considered. I look forward to my routine.</p><div class="t-stars">★★★★★</div><div class="t-author">Priya R. · Sharjah</div></div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<div class="footer-newsletter">
+  <div class="fade-up">
+    <p class="nl-label">Beauty Intelligence</p>
+    <h3 class="nl-title">Skin tips.<br><em>First access.</em></h3>
+  </div>
+  <div class="fade-up">
+    <div class="nl-form"><input class="nl-input" type="email" placeholder="Your email address"><button class="nl-submit">Subscribe</button></div>
+    <p class="nl-note">Join 12,000+ subscribers. Unsubscribe anytime.</p>
+  </div>
+</div>
+
+<!-- DETAILED FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">Your Brand</div>
+      <p class="footer-brand-desc">Conscious beauty formulated for the modern woman. Science-led, nature-rooted. Proudly made in UAE.</p>
+      <div class="footer-certifications">
+        <span class="cert-badge">Cruelty Free</span>
+        <span class="cert-badge">Vegan</span>
+        <span class="cert-badge">Halal</span>
+        <span class="cert-badge">Dermatologist Tested</span>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Shop</div>
+      <ul class="footer-links-list">
+        <li><a href="#">Serums</a></li>
+        <li><a href="#">Moisturisers</a></li>
+        <li><a href="#">Cleansers</a></li>
+        <li><a href="#">Eye Care</a></li>
+        <li><a href="#">Body</a></li>
+        <li><a href="#">Gift Sets</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Help</div>
+      <ul class="footer-links-list">
+        <li><a href="#">Skin Quiz</a></li>
+        <li><a href="#">Ingredients Guide</a></li>
+        <li><a href="#">Shipping & Returns</a></li>
+        <li><a href="#">Order Tracking</a></li>
+        <li><a href="#">Virtual Consultation</a></li>
+        <li><a href="#">FAQs</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contact</div>
+      <ul class="footer-contact-list">
+        <li class="contact-item"><span class="contact-icon">📍</span><span class="contact-text">Level 1, Dubai Design District<br>Dubai, UAE</span></li>
+        <li class="contact-item"><span class="contact-icon">📞</span><span class="contact-text"><a href="tel:+97144000000">+971 4 400 0000</a></span></li>
+        <li class="contact-item"><span class="contact-icon">✉️</span><span class="contact-text"><a href="/cdn-cgi/l/email-protection#91f9f4fdfdfed1e8fee4e3f3e3f0fff5bff2fefc"><span class="__cf_email__" data-cfemail="2149444d4d4e61584e54534353404f450f424e4c">[email&#160;protected]</span></a></span></li>
+        <li class="contact-item"><span class="contact-icon">🕐</span><span class="contact-text">Mon–Sat: 9am–9pm<br>Sun: 12pm–6pm</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-legal">© 2026 Your Brand. All rights reserved.</div>
+    <div class="footer-legal-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a><a href="#">Accessibility</a></div>
+    <div class="footer-powered">Preview by MorningStar.ai</div>
+  </div>
+</footer>
+
+<div class="sticky-cta">
+  <div class="sticky-label">Like this redesign for your brand?</div>
+  <div class="sticky-buttons">
+    <button class="s-book">Book a Call</button>
+    <button class="s-buy">Get This — AED 9,200</button>
+  </div>
+</div>
+
+<div class="switcher">
+  <div class="switcher-menu" id="sm">
+    <div class="sm-title">Switch Template</div>
+    <a class="s-opt" href="template-apparel-v2.html"><div class="s-dot"></div> Apparel</a>
+    <a class="s-opt active" href="template-cosmetics-v2.html"><div class="s-dot filled"></div> Cosmetics</a>
+    <a class="s-opt" href="template-electronics-v2.html"><div class="s-dot"></div> Electronics</a>
+  </div>
+  <button class="switcher-btn" onclick="document.getElementById('sm').classList.toggle('open')">🎨</button>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const obs = new IntersectionObserver(e => e.forEach(i => { if(i.isIntersecting) i.target.classList.add('visible'); }), { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+function tick() {
+  const df = n

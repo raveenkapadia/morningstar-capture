@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{CLINIC_NAME}} — Eye Clinic & Ophthalmology</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--cyan:#0ABFBF;--cyan-lt:#E6FAFA;--dark:#0D1117;--slate:#1C2333;--mid-grey:#4B5563;--light-grey:#8D99AE;--white:#fff;--off:#F7FAFA;--border:#E0ECEC;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--white);font-family:'Space Grotesk',sans-serif;color:var(--dark);}
+button{cursor:pointer;border:none;font-family:'Space Grotesk',sans-serif;}
+a{text-decoration:none;color:inherit;}
+
+/* NAV */
+nav{height:68px;padding:0 60px;display:flex;align-items:center;justify-content:space-between;background:var(--dark);position:sticky;top:0;z-index:100;}
+.logo{display:flex;align-items:center;gap:12px;}
+.logo-icon{width:36px;height:36px;border:1.5px solid var(--cyan);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;}
+.logo-name{font-size:17px;font-weight:600;color:#fff;letter-spacing:.5px;}
+.logo-tag{font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);opacity:.7;margin-top:1px;}
+.nav-links{display:flex;gap:28px;}
+.nav-links a{font-size:12px;font-weight:500;letter-spacing:.5px;color:rgba(255,255,255,.4);transition:color .2s;}
+.nav-links a:hover{color:var(--cyan);}
+.nav-cta{background:var(--cyan);color:var(--dark);padding:10px 22px;font-size:11px;font-weight:700;letter-spacing:.5px;border-radius:6px;transition:all .2s;}
+.nav-cta:hover{background:#08a8a8;}
+
+/* HERO */
+.hero{background:var(--dark);min-height:88vh;display:grid;grid-template-columns:1fr 1fr;overflow:hidden;}
+.hero-left{padding:88px 72px;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:1;}
+.hero-left::after{content:'';position:absolute;top:50%;left:80%;width:300px;height:300px;background:radial-gradient(circle,rgba(10,191,191,.12) 0%,transparent 70%);transform:translateY(-50%);pointer-events:none;}
+.hero-code{font-family:'Space Mono',monospace;font-size:10px;color:var(--cyan);letter-spacing:2px;margin-bottom:22px;opacity:.7;}
+.hero-h1{font-size:clamp(38px,5vw,64px);font-weight:700;color:#fff;line-height:1.05;letter-spacing:-1px;margin-bottom:18px;}
+.hero-h1 .accent{color:var(--cyan);}
+.hero-p{font-size:14px;color:rgba(255,255,255,.45);line-height:1.8;max-width:420px;font-weight:300;margin-bottom:36px;}
+.hero-btns{display:flex;gap:12px;}
+.btn-cyan{background:var(--cyan);color:var(--dark);padding:12px 28px;border-radius:6px;font-size:12px;font-weight:700;transition:all .2s;}
+.btn-cyan:hover{background:#08a8a8;}
+.btn-ghost{border:1.5px solid rgba(255,255,255,.15);color:rgba(255,255,255,.6);background:none;padding:12px 22px;border-radius:6px;font-size:12px;font-weight:600;transition:all .2s;}
+.btn-ghost:hover{border-color:var(--cyan);color:var(--cyan);}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.05);margin-top:48px;}
+.h-stat{padding:18px;text-align:center;}
+.h-stat strong{font-family:'Space Mono',monospace;font-size:26px;color:var(--cyan);display:block;}
+.h-stat span{font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.25);}
+.hero-right{background:var(--slate);position:relative;display:flex;align-items:stretch;overflow:hidden;}
+.hero-right-bg{position:absolute;inset:0;background:url('{{HERO_IMAGE}}') center/cover;opacity:.15;}
+.hero-right-grid{position:relative;z-index:1;display:grid;grid-template-rows:1fr 1fr;width:100%;}
+.hero-top-card{padding:44px 40px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;flex-direction:column;justify-content:center;}
+.hc-label{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:10px;}
+.hc-value{font-size:18px;font-weight:600;color:#fff;margin-bottom:4px;}
+.hc-sub{font-size:12px;color:rgba(255,255,255,.35);}
+.hero-bottom-card{padding:44px 40px;display:flex;flex-direction:column;justify-content:center;}
+
+/* TRUST */
+.trust{background:var(--cyan);padding:14px 60px;display:flex;align-items:center;justify-content:center;gap:40px;}
+.trust-item{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(13,17,23,.7);display:flex;align-items:center;gap:7px;}
+
+/* SERVICES */
+.services{padding:80px 60px;background:var(--white);}
+.sec-label{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--cyan);margin-bottom:6px;}
+h2{font-size:40px;font-weight:700;color:var(--dark);letter-spacing:-1px;}
+.services-intro{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:44px;}
+.services-intro p{font-size:14px;color:var(--mid-grey);max-width:380px;line-height:1.75;}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.svc{background:var(--off);padding:28px;border:1.5px solid transparent;border-radius:8px;transition:all .3s;cursor:pointer;}
+.svc:hover{border-color:var(--cyan);background:var(--cyan-lt);}
+.svc-icon{font-size:26px;margin-bottom:14px;}
+.svc-name{font-size:17px;font-weight:600;color:var(--dark);margin-bottom:7px;}
+.svc-desc{font-size:12px;color:var(--mid-grey);line-height:1.7;}
+.svc-from{font-size:11px;font-weight:600;color:var(--cyan);margin-top:12px;}
+
+/* TECHNOLOGY */
+.tech{background:var(--dark);padding:80px 60px;}
+.tech-inner{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;}
+.tech-copy .sec-label{color:rgba(255,255,255,.3);}
+.tech-copy h2{color:#fff;margin-bottom:14px;}
+.tech-copy p{font-size:14px;color:rgba(255,255,255,.4);line-height:1.8;font-weight:300;margin-bottom:28px;}
+.tech-items{display:flex;flex-direction:column;gap:12px;}
+.tech-item{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:18px 20px;display:flex;align-items:center;gap:16px;transition:border-color .3s;}
+.tech-item:hover{border-color:rgba(10,191,191,.3);}
+.ti-icon{font-size:22px;flex-shrink:0;}
+.ti-label{font-size:13px;font-weight:600;color:rgba(255,255,255,.7);margin-bottom:2px;}
+.ti-desc{font-size:11px;color:rgba(255,255,255,.3);}
+.tech-stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.tech-stat{background:rgba(10,191,191,.06);border:1px solid rgba(10,191,191,.12);border-radius:8px;padding:24px;text-align:center;}
+.tech-stat strong{font-family:'Space Mono',monospace;font-size:32px;color:var(--cyan);display:block;margin-bottom:6px;}
+.tech-stat span{font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.3);}
+
+/* DOCTOR */
+.doctor{background:var(--off);padding:80px 60px;}
+.doctor-inner{display:grid;grid-template-columns:1fr 1.3fr;gap:64px;align-items:center;}
+.doc-photo{background:var(--slate);border-radius:12px;aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;font-size:64px;overflow:hidden;}
+.doc-photo img{width:100%;height:100%;object-fit:cover;border-radius:12px;}
+.doc-copy .sec-label{color:var(--cyan);}
+.doc-name{font-size:40px;font-weight:700;letter-spacing:-1px;color:var(--dark);margin-bottom:4px;}
+.doc-spec{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:14px;}
+.doc-bio{font-size:13px;color:var(--mid-grey);line-height:1.8;margin-bottom:22px;}
+.doc-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:26px;}
+.doc-tag{background:var(--dark);color:#fff;font-size:9px;font-weight:700;letter-spacing:1px;padding:5px 12px;border-radius:4px;}
+
+/* BOOKING */
+.booking{background:var(--white);padding:80px 60px;}
+.booking-inner{display:grid;grid-template-columns:1fr 1fr;gap:64px;}
+.booking-copy .sec-label{color:var(--cyan);}
+.booking-copy h2{color:var(--dark);margin-bottom:14px;}
+.booking-copy p{font-size:14px;color:var(--mid-grey);line-height:1.8;margin-bottom:24px;}
+.contact-list{display:flex;flex-direction:column;gap:12px;margin-bottom:24px;}
+.citem{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--mid-grey);}
+.citem span{font-size:18px;}
+.wa{background:#25D366;color:#fff;padding:12px 24px;border-radius:6px;font-size:11px;font-weight:700;letter-spacing:.5px;display:inline-flex;align-items:center;gap:8px;}
+.booking-form{background:var(--off);border-radius:12px;padding:36px;border:1.5px solid var(--border);}
+.bf-h{font-size:24px;font-weight:700;letter-spacing:-1px;color:var(--dark);margin-bottom:4px;}
+.bf-sub{font-size:12px;color:var(--mid-grey);margin-bottom:22px;}
+.f{margin-bottom:14px;}
+.f label{display:block;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--mid-grey);margin-bottom:4px;}
+.f input,.f select{width:100%;border:1.5px solid var(--border);border-radius:6px;background:var(--white);padding:10px 13px;font-family:'Space Grotesk',sans-serif;font-size:13px;color:var(--dark);outline:none;transition:border-color .2s;}
+.f input:focus,.f select:focus{border-color:var(--cyan);}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.submit{background:var(--dark);color:#fff;width:100%;padding:12px;border-radius:6px;font-size:12px;font-weight:700;margin-top:8px;transition:background .2s;}
+.submit:hover{background:var(--cyan);color:var(--dark);}
+
+/* FOOTER */
+footer{background:var(--dark);padding:52px 60px;}
+.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:52px;margin-bottom:32px;}
+.foot-name{font-size:18px;font-weight:600;color:#fff;letter-spacing:.5px;margin-bottom:4px;}
+.foot-tag{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);opacity:.6;margin-bottom:14px;}
+.foot-p{font-size:12px;color:rgba(255,255,255,.25);line-height:1.75;}
+.foot-h{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.2);margin-bottom:14px;}
+.foot-ul{list-style:none;}
+.foot-ul li{font-size:12px;color:rgba(255,255,255,.25);margin-bottom:9px;cursor:pointer;transition:color .2s;}
+.foot-ul li:hover{color:var(--cyan);}
+.foot-bar{padding-top:24px;border-top:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;}
+.foot-bar p{font-size:10px;color:rgba(255,255,255,.18);}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">
+    <div class="logo-icon">👁️</div>
+    <div><div class="logo-name">{{CLINIC_NAME}}</div><div class="logo-tag">Eye Clinic & Ophthalmology</div></div>
+  </div>
+  <div class="nav-links"><a href="#">Services</a><a href="#">LASIK</a><a href="#">Cataract</a><a href="#">Our Surgeon</a><a href="#">Contact</a></div>
+  <button class="nav-cta">Book Eye Test</button>
+</nav>
+
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-code">// Advanced Eye Care · Dubai</div>
+    <h1 class="hero-h1">See the world<br>in <span class="accent">perfect</span><br>clarity.</h1>
+    <p class="hero-p">From precision LASIK eye surgery to cataract removal and medical ophthalmology — expert eye care for every vision need.</p>
+    <div class="hero-btns">
+      <button class="btn-cyan">Book Eye Consultation</button>
+      <button class="btn-ghost">View Services</button>
+    </div>
+    <div class="hero-stats">
+      <div class="h-stat"><strong>20+</strong><span>Years Expert</span></div>
+      <div class="h-stat"><strong>8,000+</strong><span>Patients</span></div>
+      <div class="h-stat"><strong>4.9★</strong><span>Rated</span></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-right-bg"></div>
+    <div class="hero-right-grid">
+      <div class="hero-top-card">
+        <div class="hc-label">Our Speciality</div>
+        <div class="hc-value">LASIK & Refractive Surgery</div>
+        <div class="hc-sub">Latest Wavefront-guided LASIK technology for glasses-free vision</div>
+      </div>
+      <div class="hero-bottom-card">
+        <div class="hc-label">Our Promise</div>
+        <div class="hc-value">Same-Day Diagnosis</div>
+        <div class="hc-sub">Comprehensive eye exam and same-day report with digital imaging</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="trust">
+  <div class="trust-item">👁️ DHA Licensed</div>
+  <div class="trust-item">✓ FDA-Approved LASIK Technology</div>
+  <div class="trust-item">✓ All Insurance Accepted</div>
+  <div class="trust-item">✓ Arabic & English</div>
+  <div class="trust-item">✓ Free Initial Eye Screening</div>
+</div>
+
+<section class="services">
+  <div class="services-intro">
+    <div><p class="sec-label">Eye Care Services</p><h2>Complete Eye Care</h2></div>
+    <p>Advanced diagnostics and treatments for every eye condition — all under one specialist roof.</p>
+  </div>
+  <div class="svc-grid">
+    <div class="svc"><div class="svc-icon">⚡</div><div class="svc-name">LASIK Eye Surgery</div><p class="svc-desc">Wavefront-guided LASIK for glasses and contact-lens freedom. Life-changing results in 15 minutes per eye.</p><div class="svc-from">From AED 3,500 / eye</div></div>
+    <div class="svc"><div class="svc-icon">🔬</div><div class="svc-name">Cataract Surgery</div><p class="svc-desc">Premium lens cataract surgery with monofocal, multifocal and toric intraocular lens options.</p><div class="svc-from">Covered by most insurance</div></div>
+    <div class="svc"><div class="svc-icon">📊</div><div class="svc-name">Comprehensive Eye Exam</div><p class="svc-desc">Full vision assessment, intraocular pressure, retinal imaging and prescription update.</p><div class="svc-from">From AED 150</div></div>
+    <div class="svc"><div class="svc-icon">🩺</div><div class="svc-name">Glaucoma Treatment</div><p class="svc-desc">Early detection, monitoring and management of all types of glaucoma with latest diagnostic tools.</p><div class="svc-from">Insurance covered</div></div>
+    <div class="svc"><div class="svc-icon">💧</div><div class="svc-name">Dry Eye Management</div><p class="svc-desc">Comprehensive dry eye assessment with IPL therapy, LipiFlow and customised tear management protocols.</p><div class="svc-from">From AED 250</div></div>
+    <div class="svc"><div class="svc-icon">👁️</div><div class="svc-name">Retina & Diabetic Eye</div><p class="svc-desc">OCT retinal imaging, diabetic retinopathy screening, macular degeneration and retinal injections.</p><div class="svc-from">Insurance covered</div></div>
+  </div>
+</section>
+
+<section class="tech">
+  <div class="tech-inner">
+    <div class="tech-copy">
+      <p class="sec-label">Technology</p>
+      <h2>Precision Tech<br>for Perfect Vision</h2>
+      <p>We invest in the most advanced ophthalmic equipment available — because better tools mean better outcomes for your eyes.</p>
+      <div class="tech-items">
+        <div class="tech-item"><div class="ti-icon">⚡</div><div><div class="ti-label">Wavefront-Guided LASIK</div><div class="ti-desc">Custom LASIK mapped to your unique eye fingerprint for exceptional visual quality</div></div></div>
+        <div class="tech-item"><div class="ti-icon">📡</div><div><div class="ti-label">OCT Retinal Imaging</div><div class="ti-desc">High-resolution cross-sectional scans of the retina for early disease detection</div></div></div>
+        <div class="tech-item"><div class="ti-icon">🔬</div><div><div class="ti-label">Zeiss Slit Lamp</div><div class="ti-desc">Premium biomicroscopy for detailed anterior and posterior segment examination</div></div></div>
+        <div class="tech-item"><div class="ti-icon">📊</div><div><div class="ti-label">Corneal Topography</div><div class="ti-desc">3D mapping of corneal curvature for LASIK screening and contact lens fitting</div></div></div>
+      </div>
+    </div>
+    <div class="tech-stat-grid">
+      <div class="tech-stat"><strong>99%</strong><span>LASIK Success</span></div>
+      <div class="tech-stat"><strong>8K+</strong><span>Patients Treated</span></div>
+      <div class="tech-stat"><strong>20+</strong><span>Years Expert</span></div>
+      <div class="tech-stat"><strong>4.9★</strong><span>Google Rating</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="doctor">
+  <div class="doctor-inner">
+    <div class="doc-photo"><img src="{{DOCTOR_IMAGE}}" alt="">👁️</div>
+    <div class="doc-copy">
+      <p class="sec-label">Your Eye Surgeon</p>
+      <div class="doc-name">{{DOCTOR_NAME}}</div>
+      <div class="doc-spec">FRCOphth · Consultant Ophthalmologist & Refractive Surgeon</div>
+      <p class="doc-bio">Fellowship-trained ophthalmologist with subspecialty expertise in refractive surgery, cataract and medical retina. Performed over 4,000 LASIK procedures with industry-leading outcomes. Trusted by Dubai's most demanding patients for his precision and exceptional results.</p>
+      <div class="doc-tags">
+        <span class="doc-tag">FRCOphth</span><span class="doc-tag">LASIK Expert</span>
+        <span class="doc-tag">DHA Licensed</span><span class="doc-tag">Cataract Surgery</span>
+      </div>
+      <button class="btn-cyan">Book with {{DOCTOR_FIRSTNAME}}</button>
+    </div>
+  </div>
+</section>
+
+<section class="booking">
+  <div class="booking-inner">
+    <div class="booking-copy">
+      <p class="sec-label">Book Appointment</p>
+      <h2>Free Eye Screening<br>for New Patients</h2>
+      <p>Book a comprehensive eye check or LASIK suitability assessment. Free initial screening included for all new patients.</p>
+      <div class="contact-list">
+        <div class="citem"><span>📞</span> {{CLINIC_PHONE}}</div>
+        <div class="citem"><span>📍</span> {{CLINIC_ADDRESS}}</div>
+        <div class="citem"><span>🕐</span> Sat–Thu 9am–8pm · Fri 12–6pm</div>
+      </div>
+      <button class="wa">💬 WhatsApp Us</button>
+    </div>
+    <div class="booking-form">
+      <div class="bf-h">Book Eye Appointment</div>
+      <div class="bf-sub">Free screening for new patients. We confirm within 2 hours.</div>
+      <div class="f-row">
+        <div class="f"><label>Full Name</label><input type="text" placeholder="Your name"></div>
+        <div class="f"><label>Phone</label><input type="text" placeholder="+971 xx xxx xxxx"></div>
+      </div>
+      <div class="f"><label>Reason for Visit</label>
+        <select><option>Routine Eye Exam</option><option>LASIK Consultation</option><option>Cataract Assessment</option><option>Glaucoma Check</option><option>Dry Eyes</option><option>Diabetic Eye Check</option><option>Other</option></select>
+      </div>
+      <div class="f"><label>Do you wear glasses/contacts?</label>
+        <select><option>Yes — glasses</option><option>Yes — contact lenses</option><option>Both</option><option>No correction needed</option></select>
+      </div>
+      <button class="submit">Book Eye Appointment</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-grid">
+    <div><div class="foot-name">{{CLINIC_NAME}}</div><div class="foot-tag">Eye Clinic · Dubai</div><p class="foot-p">Advanced ophthalmology and LASIK eye surgery in Dubai. DHA licensed. All insurance accepted.</p></div>
+    <div><div class="foot-h">Services</div><ul class="foot-ul"><li>LASIK Surgery</li><li>Cataract</li><li>Eye Exams</li><li>Glaucoma</li><li>Dry Eye</li></ul></div>
+    <div><div class="foot-h">Clinic</div><ul class="foot-ul"><li>Our Surgeon</li><li>Technology</li><li>Insurance</li><li>LASIK Guide</li></ul></div>
+    <div><div class="foot-h">Contact</div><ul class="foot-ul"><li>{{CLINIC_PHONE}}</li><li>{{CLINIC_ADDRESS}}</li></ul></div>
+  </div>
+  <div class="foot-bar"><p>© 2026 {{CLINIC_NAME}} · Dubai · DHA Licensed Ophthalmology</p><p>Privacy Policy</p></div>
+</footer>
+</body>
+</html>

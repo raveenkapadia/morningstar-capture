@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cosmetics Redesign Preview — Luxe</title>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,500;1,400;1,500&family=Raleway:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --plum:#2D1B2E;--plum-mid:#3D2540;--plum-light:#5A3860;
+    --gold:#C9A84C;--gold-light:#E0C47A;--gold-pale:rgba(201,168,76,.12);
+    --bg:#1A0F1B;--surface:#221426;--card:#2A1A2D;
+    --ink:#F5EFE6;--muted:rgba(245,239,230,.42);--border:rgba(201,168,76,.14);--border-soft:rgba(245,239,230,.07);
+    --rose:#D4546A;
+  }
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);font-family:'Raleway',sans-serif;color:var(--ink);overflow-x:hidden}
+
+  /* subtle gold shimmer on body */
+  body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;background:radial-gradient(ellipse at 50% 0%,rgba(201,168,76,.04) 0%,transparent 60%)}
+
+  .expiry{background:var(--gold);color:rgba(26,15,27,.7);text-align:center;padding:9px 20px;font-size:10px;letter-spacing:.3em;text-transform:uppercase;font-weight:500}
+  .expiry strong{color:var(--bg);font-weight:700}
+
+  nav{position:sticky;top:0;z-index:300;background:rgba(26,15,27,.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 52px;height:64px;display:flex;align-items:center;justify-content:space-between}
+  .nav-brand{font-family:'Bodoni Moda',serif;font-size:24px;font-weight:400;color:var(--gold);letter-spacing:.1em;font-style:italic}
+  .nav-links{display:flex;gap:28px;list-style:none}
+  .nav-links a{font-size:11px;letter-spacing:.22em;color:var(--muted);text-decoration:none;font-weight:300;text-transform:uppercase;transition:color .2s}
+  .nav-links a:hover{color:var(--gold)}
+  .nav-actions{display:flex;gap:12px;align-items:center}
+  .nav-gift{font-size:11px;color:var(--gold);font-weight:400;cursor:pointer;background:none;border:none;font-family:'Raleway',sans-serif;letter-spacing:.16em;text-transform:uppercase;transition:color .2s}
+  .nav-shop{background:var(--gold);color:var(--bg);border:none;padding:10px 24px;font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-family:'Raleway',sans-serif;cursor:pointer;font-weight:500;transition:background .2s}
+  .nav-shop:hover{background:var(--gold-light)}
+
+  /* HERO */
+  .hero{display:grid;grid-template-columns:1fr 1fr;min-height:100svh;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 60%,rgba(90,56,96,.2) 0%,transparent 55%);z-index:1;pointer-events:none}
+  .hero-img{position:relative;overflow:hidden}
+  .hero-img img{width:100%;height:100%;object-fit:cover;object-position:center top;filter:brightness(.65) saturate(.8);transition:transform 14s ease}
+  .hero:hover .hero-img img{transform:scale(1.04)}
+  .hero-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,transparent 40%,rgba(26,15,27,.9) 100%)}
+  /* floating product badge */
+  .hero-product-float{position:absolute;bottom:40px;left:32px;z-index:3;background:rgba(26,15,27,.88);backdrop-filter:blur(12px);border:1px solid var(--border);padding:16px 20px;min-width:200px}
+  .hpf-label{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;font-weight:400}
+  .hpf-name{font-family:'Bodoni Moda',serif;font-size:16px;color:var(--ink);margin-bottom:4px;font-style:italic}
+  .hpf-price{font-size:13px;color:var(--muted);font-weight:300}
+  .hpf-add{display:block;background:var(--gold);color:var(--bg);border:none;padding:9px;font-family:'Raleway',sans-serif;font-size:10px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;text-align:center;margin-top:10px;font-weight:500;transition:background .2s;text-decoration:none}
+  .hpf-add:hover{background:var(--gold-light)}
+
+  .hero-content{display:flex;flex-direction:column;justify-content:center;padding:80px 80px 80px 60px;position:relative;z-index:2}
+  .hero-eyebrow{font-size:10px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:28px;font-weight:300}
+  .hero-title{font-family:'Bodoni Moda',serif;font-size:clamp(48px,6vw,82px);font-weight:400;line-height:1.02;color:var(--ink);margin-bottom:20px;font-style:italic;letter-spacing:.02em}
+  .hero-title em{color:var(--gold)}
+  .hero-rule{width:40px;height:1px;background:var(--gold);margin-bottom:22px}
+  .hero-sub{font-size:15px;color:var(--muted);font-weight:300;line-height:1.9;max-width:380px;margin-bottom:16px;letter-spacing:.02em}
+  .hero-sensory{font-size:13px;color:rgba(245,239,230,.6);font-style:italic;margin-bottom:40px;letter-spacing:.06em;font-family:'Bodoni Moda',serif}
+  .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:48px}
+  .btn-gold{display:inline-block;background:var(--gold);color:var(--bg);padding:14px 40px;font-size:11px;letter-spacing:.24em;text-transform:uppercase;text-decoration:none;font-weight:500;border:none;cursor:pointer;font-family:'Raleway',sans-serif;transition:all .25s}
+  .btn-gold:hover{background:var(--gold-light);transform:translateY(-1px);box-shadow:0 8px 24px rgba(201,168,76,.25)}
+  .btn-border-gold{display:inline-block;background:transparent;color:var(--gold);padding:13px 40px;font-size:11px;letter-spacing:.24em;text-transform:uppercase;text-decoration:none;font-weight:300;border:1px solid rgba(201,168,76,.35);cursor:pointer;font-family:'Raleway',sans-serif;transition:all .25s}
+  .btn-border-gold:hover{border-color:var(--gold);background:var(--gold-pale)}
+  /* urgency */
+  .hero-urgency{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--rose);font-weight:400;letter-spacing:.1em;margin-bottom:0}
+  .hu-dot{width:6px;height:6px;border-radius:50%;background:var(--rose);animation:blink 1.5s infinite flex-shrink:0}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+  /* proof */
+  .hero-proof{display:flex;gap:0;border-top:1px solid var(--border-soft);padding-top:28px;margin-top:28px}
+  .hp{flex:1}
+  .hp:not(:last-child){padding-right:20px;border-right:1px solid var(--border-soft);margin-right:20px}
+  .hp-num{font-family:'Bodoni Moda',serif;font-size:24px;font-weight:400;color:var(--gold);line-height:1;margin-bottom:4px;font-style:italic}
+  .hp-label{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:200}
+
+  /* GOLD STRIP */
+  .gold-strip{background:var(--gold);padding:12px 0;overflow:hidden}
+  .gs-inner{display:inline-block;white-space:nowrap;animation:slide 20s linear infinite;font-family:'Bodoni Moda',serif;font-size:14px;color:var(--bg);font-style:italic;letter-spacing:.12em}
+  .gs-inner span{margin:0 30px;opacity:.4;font-style:normal}
+  @keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* PROOF BAR */
+  .proof-bar{display:grid;grid-template-columns:repeat(4,1fr);background:var(--surface);border-bottom:1px solid var(--border)}
+  .pb{padding:26px 20px;text-align:center;border-right:1px solid var(--border)}
+  .pb:last-child{border-right:none}
+  .pb-num{font-family:'Bodoni Moda',serif;font-size:32px;font-weight:400;color:var(--gold);line-height:1;margin-bottom:5px;font-style:italic}
+  .pb-label{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);font-weight:200}
+
+  /* SECTIONS */
+  .section{padding:96px 52px}
+  .section.alt{background:var(--surface)}
+  .section.plum{background:var(--plum)}
+  .s-eyebrow{font-size:10px;letter-spacing:.38em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;font-weight:300}
+  .s-title{font-family:'Bodoni Moda',serif;font-size:clamp(34px,4.5vw,58px);font-weight:400;color:var(--ink);line-height:1.08;font-style:italic}
+  .section-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px;flex-wrap:wrap;gap:20px}
+
+  /* PRODUCT GRID */
+  .product-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
+  .product-card{background:var(--card);overflow:hidden;cursor:pointer;transition:background .3s}
+  .product-card:hover{background:var(--plum-mid)}
+  .pc-img{overflow:hidden;aspect-ratio:3/4;position:relative;background:var(--plum)}
+  .pc-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.75) saturate(.8);transition:transform .6s,filter .4s}
+  .product-card:hover .pc-img img{transform:scale(1.06);filter:brightness(.55) saturate(.6)}
+  /* reveal add on hover */
+  .pc-reveal{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:24px;opacity:0;transition:opacity .3s;background:linear-gradient(to top,rgba(26,15,27,.88) 0%,transparent 50%)}
+  .product-card:hover .pc-reveal{opacity:1}
+  .pc-add{background:var(--gold);color:var(--bg);border:none;padding:11px 28px;font-family:'Raleway',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;font-weight:500;transition:background .2s}
+  .pc-add:hover{background:var(--gold-light)}
+  .pc-shade-row{display:flex;gap:6px;margin-top:10px}
+  .pc-shade{width:16px;height:16px;border-radius:50%;border:1px solid rgba(245,239,230,.2)}
+  .pc-info{padding:22px 24px}
+  .pc-cat{font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);margin-bottom:5px;font-weight:300}
+  .pc-name{font-family:'Bodoni Moda',serif;font-size:18px;color:var(--ink);margin-bottom:5px;font-style:italic}
+  .pc-tagline{font-size:12px;color:var(--muted);font-weight:200;margin-bottom:12px;letter-spacing:.04em}
+  .pc-price-row{display:flex;align-items:center;justify-content:space-between}
+  .pc-price{font-size:15px;color:var(--gold);font-weight:400}
+  .pc-shades{font-size:11px;color:var(--muted);font-weight:200;letter-spacing:.06em}
+
+  /* HERO PRODUCT FEATURE */
+  .feature-split{display:grid;grid-template-columns:1fr 1fr;min-height:640px}
+  .fs-img{overflow:hidden;position:relative;background:var(--plum)}
+  .fs-img img{width:100%;height:100%;object-fit:cover;object-position:center top;filter:brightness(.6) saturate(.8);transition:transform 12s}
+  .fs-img:hover img{transform:scale(1.04)}
+  .fs-img::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(201,168,76,.05) 0%,transparent 50%)}
+  .fs-gold-label{position:absolute;top:32px;left:32px;z-index:2;background:var(--gold);color:var(--bg);padding:6px 16px;font-size:10px;letter-spacing:.24em;text-transform:uppercase;font-weight:600}
+  .fs-content{background:var(--bg);display:flex;flex-direction:column;justify-content:center;padding:80px;border-left:1px solid var(--border)}
+  .fs-category{font-size:10px;letter-spacing:.38em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;font-weight:300}
+  .fs-title{font-family:'Bodoni Moda',serif;font-size:clamp(38px,4.5vw,60px);font-weight:400;color:var(--ink);line-height:1.05;font-style:italic;margin-bottom:18px}
+  .fs-rule{width:32px;height:1px;background:var(--gold);margin-bottom:22px}
+  .fs-desc{font-size:14px;color:var(--muted);font-weight:300;line-height:1.95;margin-bottom:28px;max-width:380px;letter-spacing:.02em}
+  .fs-claim{background:var(--gold-pale);border:1px solid var(--border);padding:16px 20px;margin-bottom:28px}
+  .fs-claim-text{font-family:'Bodoni Moda',serif;font-size:15px;color:var(--gold);font-style:italic;font-weight:400}
+  .fs-claim-sub{font-size:11px;color:var(--muted);margin-top:4px;font-weight:200;letter-spacing:.06em}
+  .fs-shades{display:flex;gap:8px;align-items:center;margin-bottom:32px}
+  .fs-shade-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-weight:200;margin-right:4px}
+  .fs-swatch{width:22px;height:22px;border-radius:50%;border:1px solid var(--border-soft);cursor:pointer;transition:transform .2s}
+  .fs-swatch:hover{transform:scale(1.2)}
+  .fs-price-row{display:flex;align-items:center;justify-content:space-between;padding-top:24px;border-top:1px solid var(--border);margin-bottom:24px}
+  .fs-price{font-family:'Bodoni Moda',serif;font-size:28px;color:var(--gold);font-style:italic}
+  .fs-stock{font-size:11px;color:var(--rose);display:flex;align-items:center;gap:6px;font-weight:400}
+
+  /* RITUALS */
+  .rituals-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
+  .ritual-card{background:var(--card);padding:52px 40px;text-align:center}
+  .rc-icon{font-size:30px;margin-bottom:20px}
+  .rc-title{font-family:'Bodoni Moda',serif;font-size:22px;color:var(--ink);margin-bottom:10px;font-style:italic}
+  .rc-desc{font-size:13px;color:var(--muted);font-weight:200;line-height:1.9;letter-spacing:.02em}
+  .rc-link{display:inline-block;font-size:11px;color:var(--gold);font-weight:400;letter-spacing:.2em;text-transform:uppercase;margin-top:16px;text-decoration:none;transition:letter-spacing .2s}
+  .rc-link:hover{letter-spacing:.28em}
+
+  /* FULL BANNER */
+  .banner{position:relative;height:60vh;min-height:400px;overflow:hidden;display:flex;align-items:center;justify-content:center;text-align:center}
+  .banner img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.22) saturate(.5)}
+  .banner::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(201,168,76,.1) 0%,transparent 65%)}
+  .banner-content{position:relative;z-index:2;padding:40px;max-width:680px}
+  .banner-eyebrow{font-size:10px;letter-spacing:.42em;text-transform:uppercase;color:rgba(201,168,76,.6);margin-bottom:20px;font-weight:300}
+  .banner-rule{width:44px;height:1px;background:var(--gold);margin:0 auto 24px;opacity:.5}
+  .banner-title{font-family:'Bodoni Moda',serif;font-size:clamp(38px,5.5vw,72px);font-weight:400;color:var(--ink);line-height:1.05;font-style:italic;margin-bottom:20px}
+  .banner-sub{font-size:14px;color:var(--muted);font-weight:300;margin-bottom:36px;line-height:1.85;letter-spacing:.02em}
+
+  /* GIFT SPLIT */
+  .gift-split{display:grid;grid-template-columns:1fr 1fr;min-height:480px}
+  .gs-content{background:var(--plum-mid);display:flex;flex-direction:column;justify-content:center;padding:80px}
+  .gc-eyebrow{font-size:10px;letter-spacing:.38em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;font-weight:300}
+  .gc-title{font-family:'Bodoni Moda',serif;font-size:clamp(30px,3.8vw,52px);font-weight:400;color:var(--ink);line-height:1.1;font-style:italic;margin-bottom:18px}
+  .gc-rule{width:32px;height:1px;background:var(--gold);margin-bottom:20px}
+  .gc-desc{font-size:14px;color:var(--muted);font-weight:300;line-height:1.9;margin-bottom:32px;max-width:360px;letter-spacing:.02em}
+  .gs-img{overflow:hidden;position:relative}
+  .gs-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.7) saturate(.8);transition:transform 12s}
+  .gs-img:hover img{transform:scale(1.04)}
+
+  /* REVIEWS */
+  .reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
+  .review-card{background:var(--card);padding:40px 32px}
+  .rc-stars{color:var(--gold);letter-spacing:2px;font-size:13px;margin-bottom:14px}
+  .rc-product-tag{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;font-weight:300;opacity:.7}
+  .rc-text{font-family:'Bodoni Moda',serif;font-size:15px;font-style:italic;line-height:1.85;color:rgba(245,239,230,.65);margin-bottom:18px;font-weight:400}
+  .rc-author{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:200}
+
+  /* NEWSLETTER */
+  .footer-nl{background:var(--plum);padding:64px 52px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;border-top:1px solid var(--border)}
+  .nl-eyebrow{font-size:10px;letter-spacing:.38em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;font-weight:300}
+  .nl-title{font-family:'Bodoni Moda',serif;font-size:42px;font-weight:400;color:var(--ink);line-height:1.15;font-style:italic}
+  .nl-form{display:flex}
+  .nl-input{flex:1;padding:14px 18px;background:rgba(245,239,230,.05);border:1px solid var(--border);color:var(--ink);font-family:'Raleway',sans-serif;font-size:13px;outline:none;border-right:none;transition:border-color .2s}
+  .nl-input::placeholder{color:var(--muted);font-size:13px}
+  .nl-input:focus{border-color:var(--gold)}
+  .nl-submit{background:var(--gold);color:var(--bg);border:none;padding:14px 26px;font-family:'Raleway',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;font-weight:500;white-space:nowrap;transition:background .2s}
+  .nl-submit:hover{background:var(--gold-light)}
+  .nl-note{font-size:11px;color:var(--muted);margin-top:10px;font-weight:200}
+
+  footer{background:#0E0810;padding:80px 52px 40px}
+  .footer-grid{display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:56px;padding-bottom:56px;border-bottom:1px solid var(--border-soft)}
+  .footer-logo{font-family:'Bodoni Moda',serif;font-size:26px;font-weight:400;color:var(--gold);margin-bottom:14px;letter-spacing:.08em;font-style:italic}
+  .footer-desc{font-size:13px;line-height:1.9;color:var(--muted);font-weight:200;margin-bottom:22px;max-width:240px;letter-spacing:.02em}
+  .footer-social{display:flex;gap:10px}
+  .social-link{width:34px;height:34px;border:1px solid var(--border-soft);display:flex;align-items:center;justify-content:center;font-size:12px;text-decoration:none;color:var(--muted);transition:all .2s}
+  .social-link:hover{border-color:var(--gold);color:var(--gold)}
+  .footer-col-title{font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:rgba(245,239,230,.65);margin-bottom:20px;font-weight:300}
+  .footer-links{list-style:none;display:flex;flex-direction:column;gap:11px}
+  .footer-links a{font-size:13px;color:var(--muted);text-decoration:none;font-weight:200;transition:color .2s;letter-spacing:.02em}
+  .footer-links a:hover{color:var(--gold)}
+  .footer-contact{list-style:none;display:flex;flex-direction:column;gap:13px}
+  .contact-item{display:flex;gap:10px}
+  .ci-icon{font-size:13px;flex-shrink:0}
+  .ci-text{font-size:12px;color:var(--muted);font-weight:200;line-height:1.65;letter-spacing:.02em}
+  .ci-text a{color:inherit;text-decoration:none;transition:color .2s}
+  .ci-text a:hover{color:var(--gold)}
+  .footer-bottom{padding-top:28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
+  .footer-legal{font-size:11px;color:rgba(245,239,230,.18);font-weight:200}
+  .footer-legal-links{display:flex;gap:22px}
+  .footer-legal-links a{font-size:11px;color:rgba(245,239,230,.18);text-decoration:none;transition:color .2s}
+  .footer-legal-links a:hover{color:rgba(245,239,230,.5)}
+  .footer-powered{font-size:9px;letter-spacing:.22em;color:rgba(245,239,230,.1);text-transform:uppercase}
+
+  .sticky-cta{display:none;position:fixed;bottom:0;left:0;right:0;z-index:400;background:rgba(26,15,27,.97);border-top:1px solid var(--border);padding:12px 16px;gap:10px;flex-direction:column;backdrop-filter:blur(16px)}
+  .sticky-label{font-size:10px;letter-spacing:.26em;text-transform:uppercase;text-align:center;color:var(--gold);font-weight:300}
+  .sticky-buttons{display:flex;gap:8px}
+  .s-gift{flex:1;background:transparent;border:1px solid var(--border);color:var(--gold);padding:12px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-family:'Raleway',sans-serif;cursor:pointer;font-weight:300}
+  .s-shop{flex:1.5;background:var(--gold);border:none;color:var(--bg);padding:12px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-family:'Raleway',sans-serif;cursor:pointer;font-weight:500}
+
+  .switcher{position:fixed;bottom:30px;right:30px;z-index:500}
+  .switcher-btn{background:var(--plum-mid);color:var(--gold);border:1px solid var(--border);width:48px;height:48px;border-radius:50%;font-size:18px;cursor:pointer;box-shadow:0 6px 24px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center}
+  .switcher-menu{position:absolute;bottom:60px;right:0;background:var(--card);border:1px solid var(--border);padding:14px 18px;min-width:220px;display:none;box-shadow:0 12px 40px rgba(0,0,0,.7)}
+  .switcher-menu.open{display:block}
+  .sm-title{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+  .s-opt{display:flex;align-items:center;gap:10px;padding:8px 0;font-size:12px;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--border-soft);transition:color .2s;font-weight:200}
+  .s-opt:last-child{border-bottom:none}
+  .s-opt.active{color:var(--gold);font-weight:400}
+  .s-dot{width:7px;height:7px;border-radius:50%;border:1.5px solid var(--gold)}
+  .s-dot.filled{background:var(--gold)}
+
+  .fade-up{opacity:0;transform:translateY(22px);transition:opacity .9s ease,transform .9s ease}
+  .fade-up.visible{opacity:1;transform:translateY(0)}
+  .stagger-1{transition-delay:.1s}.stagger-2{transition-delay:.2s}.stagger-3{transition-delay:.3s}
+
+  @media(max-width:768px){
+    nav{padding:0 16px}
+    .nav-links{display:none}
+    .hero{grid-template-columns:1fr}
+    .hero-img{height:70vw}
+    .hero-img img{position:relative;height:100%}
+    .hero-img::after{display:none}
+    .hero-product-float{display:none}
+    .hero-content{padding:48px 24px}
+    .proof-bar{grid-template-columns:repeat(2,1fr)}
+    .section{padding:60px 20px}
+    .product-grid{grid-template-columns:1fr 1fr}
+    .feature-split{grid-template-columns:1fr}
+    .fs-img{height:65vw}
+    .fs-content{padding:48px 24px}
+    .rituals-grid{grid-template-columns:1fr}
+    .banner{height:auto;padding:60px 0}
+    .banner-content{padding:48px 24px}
+    .gift-split{grid-template-columns:1fr}
+    .gs-img{height:55vw}
+    .gs-content{padding:48px 24px}
+    .reviews-grid{grid-template-columns:1fr}
+    .footer-nl{grid-template-columns:1fr;padding:48px 20px;gap:28px}
+    .nl-form{flex-direction:column}
+    footer{padding:56px 20px 32px}
+    .footer-grid{grid-template-columns:1fr 1fr;gap:32px}
+    .footer-bottom{flex-direction:column;align-items:flex-start}
+    .sticky-cta{display:flex}
+    .switcher{bottom:100px;right:12px}
+  }
+</style>
+</head>
+<body>
+
+<div class="expiry">✦ Preview expires: <strong id="countdown">6d 23h 41m</strong> — Designed for your brand only</div>
+
+<nav>
+  <div class="nav-brand">Your Brand</div>
+  <ul class="nav-links">
+    <li><a href="#">Face</a></li>
+    <li><a href="#">Lips</a></li>
+    <li><a href="#">Eyes</a></li>
+    <li><a href="#">Skin</a></li>
+    <li><a href="#">Gifting</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="nav-gift">Gift Sets</button>
+    <button class="nav-shop">Shop Now</button>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-img">
+    <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=900&q=90" alt="">
+    <div class="hero-product-float">
+      <div class="hpf-label">Hero Product</div>
+      <div class="hpf-name">Velvet Noir Lipstick</div>
+      <div class="hpf-price">AED 185 · 36 Shades</div>
+      <a href="#" class="hpf-add">Add to Bag →</a>
+    </div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Luxury Colour Collection</div>
+    <h1 class="hero-title">Wear what<br>the room<br><em>remembers.</em></h1>
+    <div class="hero-rule"></div>
+    <p class="hero-sub">Pigments so precise they never apologise. Formulas that stay as long as the occasion demands. A colour range that understands that beauty is not subtle — it is intentional.</p>
+    <p class="hero-sensory">"Like wearing confidence you can see from across the room."</p>
+    <div class="hero-actions">
+      <a href="#" class="btn-gold">Shop Collection →</a>
+      <a href="#" class="btn-border-gold">Find Your Shade</a>
+    </div>
+    <div class="hero-urgency"><span class="hu-dot"></span> Limited-edition shades — selling fast</div>
+    <div class="hero-proof">
+      <div class="hp"><div class="hp-num">36</div><div class="hp-label">Shades</div></div>
+      <div class="hp"><div class="hp-num">4.9★</div><div class="hp-label">Reviews</div></div>
+      <div class="hp"><div class="hp-num">16H</div><div class="hp-label">Wear Time</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="gold-strip">
+  <div class="gs-inner">
+    Velvet Noir Collection <span>✦</span> 36 Shades <span>✦</span> 16-Hour Wear <span>✦</span> Cruelty Free <span>✦</span> Free Delivery UAE <span>✦</span>
+    Velvet Noir Collection <span>✦</span> 36 Shades <span>✦</span> 16-Hour Wear <span>✦</span> Cruelty Free <span>✦</span> Free Delivery UAE <span>✦</span>
+  </div>
+</div>
+
+<div class="proof-bar">
+  <div class="pb fade-up"><div class="pb-num">36</div><div class="pb-label">Lipstick Shades</div></div>
+  <div class="pb fade-up stagger-1"><div class="pb-num">16H</div><div class="pb-label">Wear Formula</div></div>
+  <div class="pb fade-up stagger-2"><div class="pb-num">4.9★</div><div class="pb-label">4,100 Reviews</div></div>
+  <div class="pb fade-up stagger-3"><div class="pb-num">GCC</div><div class="pb-label">Award Winner</div></div>
+</div>
+
+<section class="section alt">
+  <div class="section-header fade-up">
+    <div><div class="s-eyebrow">The Collection</div><h2 class="s-title">Colour that<br>commands.</h2></div>
+    <a href="#" class="btn-gold">All Products</a>
+  </div>
+  <div class="product-grid">
+    <div class="product-card fade-up"><div class="pc-img"><img src="https://images.unsplash.com/photo-1625093742435-6d63e3a1c9b5?w=500&q=85" alt=""><div class="pc-reveal"><button class="pc-add">Add to Bag</button><div class="pc-shade-row"><div class="pc-shade" style="background:#8B1A1A"></div><div class="pc-shade" style="background:#C4546A"></div><div class="pc-shade" style="background:#B07030"></div><div class="pc-shade" style="background:#3D1A2E"></div></div></div></div><div class="pc-info"><div class="pc-cat">Lips</div><div class="pc-name">Velvet Noir Lipstick</div><div class="pc-tagline">16-hour satin matte · 36 shades</div><div class="pc-price-row"><span class="pc-price">AED 185</span><span class="pc-shades">36 shades</span></div></div></div>
+    <div class="product-card fade-up stagger-1"><div class="pc-img"><img src="https://images.unsplash.com/photo-1599305445671-ac291c6acfea?w=500&q=85" alt=""><div class="pc-reveal"><button class="pc-add">Add to Bag</button></div></div><div class="pc-info"><div class="pc-cat">Eyes</div><div class="pc-name">Midnight Palette</div><div class="pc-tagline">12 buildable shades · Smoky to editorial</div><div class="pc-price-row"><span class="pc-price">AED 320</span><span class="pc-shades">12 shades</span></div></div></div>
+    <div class="product-card fade-up stagger-2"><div class="pc-img"><img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=500&q=85" alt=""><div class="pc-reveal"><button class="pc-add">Add to Bag</button></div></div><div class="pc-info"><div class="pc-cat">Face</div><div class="pc-name">Sérum Éclat Foundation</div><div class="pc-tagline">Skincare-infused · 40 shades · 24H</div><div class="pc-price-row"><span class="pc-price">AED 265</span><span class="pc-shades">40 shades</span></div></div></div>
+  </div>
+</section>
+
+<div class="feature-split">
+  <div class="fs-img">
+    <img src="https://images.unsplash.com/photo-1619451334792-150fd785ee74?w=900&q=85" alt="">
+    <div class="fs-gold-label">Hero · Lips</div>
+  </div>
+  <div class="fs-content fade-up">
+    <div class="fs-category">The Signature Shade</div>
+    <h2 class="fs-title">Velvet<br>Noir.</h2>
+    <div class="fs-rule"></div>
+    <p class="fs-desc">Developed over two years. Worn by women who do not repeat themselves. The formula combines micro-pigments with a hyaluronic acid base that keeps lips hydrated for the full 16 hours of wear.</p>
+    <div class="fs-claim">
+      <div class="fs-claim-text">"92% said their colour lasted all evening without touch-up."</div>
+      <div class="fs-claim-sub">Independent consumer study · 340 participants · 16 hours</div>
+    </div>
+    <div class="fs-shades">
+      <span class="fs-shade-label">Shades</span>
+      <div class="fs-swatch" style="background:#8B0000"></div>
+      <div class="fs-swatch" style="background:#C4546A"></div>
+      <div class="fs-swatch" style="background:#D4876A"></div>
+      <div class="fs-swatch" style="background:#3D1A2E"></div>
+      <div class="fs-swatch" style="background:#1A0A0E"></div>
+      <div class="fs-swatch" style="background:#B07030"></div>
+    </div>
+    <div class="fs-price-row">
+      <span class="fs-price">AED 185</span>
+      <span class="fs-stock"><span style="width:6px;height:6px;border-radius:50%;background:var(--rose);display:inline-block;animation:blink 1.5s infinite"></span> 3 shades low stock</span>
+    </div>
+    <a href="#" class="btn-gold">Find Your Shade →</a>
+  </div>
+</div>
+
+<section class="section plum">
+  <div class="s-eyebrow fade-up" style="text-align:center;margin-bottom:14px">The Ritual</div>
+  <h2 class="s-title fade-up" style="text-align:center;margin-bottom:52px">Beauty<br>with intention.</h2>
+  <div class="rituals-grid">
+    <div class="ritual-card fade-up"><div class="rc-icon">🌙</div><div class="rc-title">Evening Ritual</div><div class="rc-desc">Begin with a clean canvas. Our Micellar Sérum removes everything — then gives back. Prime, colour, set. Three steps that demand an audience.</div><a href="#" class="rc-link">Explore →</a></div>
+    <div class="ritual-card fade-up stagger-1"><div class="rc-icon">✨</div><div class="rc-title">Signature Look</div><div class="rc-desc">Our makeup artists have developed 12 signature looks, each optimised for Middle Eastern features and complexions. Start with one. Make it yours.</div><a href="#" class="rc-link">View Looks →</a></div>
+    <div class="ritual-card fade-up stagger-2"><div class="rc-icon">🎁</div><div class="rc-title">The Gift Edit</div><div class="rc-desc">Curated gift sets built around skin tone and occasion. Beautifully packaged, personally chosen. The gift that says you actually thought about it.</div><a href="#" class="rc-link">Shop Gifts →</a></div>
+  </div>
+</section>
+
+<div class="banner">
+  <img src="https://images.unsplash.com/photo-1487412947147-5cebf100d2ea?w=1600&q=85" alt="">
+  <div class="banner-content fade-up">
+    <div class="banner-eyebrow">Campaign · SS26</div>
+    <div class="banner-rule"></div>
+    <h2 class="banner-title">The shade<br>that stays.</h2>
+    <p class="banner-sub">The SS26 colour story is built around one question: what does a woman wear when she intends to be remembered? Thirty-six answers. All correct.</p>
+    <a href="#" class="btn-gold">Shop the Campaign</a>
+  </div>
+</div>
+
+<div class="gift-split">
+  <div class="gs-content fade-up">
+    <div class="gc-eyebrow">The Gift Edit</div>
+    <h2 class="gc-title">A gift<br>she will open<br>first.</h2>
+    <div class="gc-rule"></div>
+    <p class="gc-desc">Beautifully boxed, ribbon-wrapped, and accompanied by a handwritten message. Gift sets from AED 260 — with complimentary engraving on select products.</p>
+    <a href="#" class="btn-gold">Shop Gift Sets</a>
+  </div>
+  <div class="gs-img"><img src="https://images.unsplash.com/photo-1512207846876-bb54ef5056fe?w=900&q=85" alt=""></div>
+</div>
+
+<section class="section alt">
+  <div class="section-header fade-up">
+    <div><div class="s-eyebrow">Voices</div><h2 class="s-title">Worn and<br>worshipped.</h2></div>
+    <span style="font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:300">4.9★ · 4,100 Reviews</span>
+  </div>
+  <div class="reviews-grid">
+    <div class="review-card fade-up"><div class="rc-stars">★★★★★</div><div class="rc-product-tag">Velvet Noir · Shade: Midnight</div><p class="rc-text">"I wore this for a 12-hour event. Did not touch it up once. Still on when I got home. The formula is unlike anything I have tried at this price point. Or any price point, honestly."</p><div class="rc-author">Hessa A. · Dubai</div></div>
+    <div class="review-card fade-up stagger-1"><div class="rc-stars">★★★★★</div><div class="rc-product-tag">Midnight Palette</div><p class="rc-text">"The pigmentation is extraordinary. One sweep. Full colour. These are the shades I have been trying to find for three years in every high-street brand. Found them here."</p><div class="rc-author">Amira K. · Abu Dhabi</div></div>
+    <div class="review-card fade-up stagger-2"><div class="rc-stars">★★★★★</div><div class="rc-product-tag">Sérum Éclat Foundation · Shade 42</div><p class="rc-text">"Finally a foundation that matches my skin tone. 40 shades means 40 actual options, not 40 variations of beige. My skin has never looked this good in photos."</p><div class="rc-author">Fatima R. · Sharjah</div></div>
+  </div>
+</section>
+
+<div class="footer-nl">
+  <div class="fade-up"><p class="nl-eyebrow">The Colour Edit</p><h3 class="nl-title">New drops.<br>First to wear.</h3></div>
+  <div class="fade-up stagger-1">
+    <div class="nl-form"><input class="nl-input" type="email" placeholder="Your email address"><button class="nl-submit">Subscribe</button></div>
+    <p class="nl-note">New shades, limited editions, and exclusive access. Unsubscribe anytime.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">Your Brand</div>
+      <p class="footer-desc">Luxury colour cosmetics for women who dress with intention. GCC Award Winner. Cruelty Free. Free delivery across the UAE.</p>
+      <div class="footer-social"><a href="#" class="social-link">📷</a><a href="#" class="social-link">𝕏</a><a href="#" class="social-link">▶</a></div>
+    </div>
+    <div>
+      <div class="footer-col-title">Shop</div>
+      <ul class="footer-links"><li><a href="#">Lips</a></li><li><a href="#">Eyes</a></li><li><a href="#">Face</a></li><li><a href="#">Skin</a></li><li><a href="#">Gift Sets</a></li><li><a href="#">New In</a></li></ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Services</div>
+      <ul class="footer-links"><li><a href="#">Shade Finder</a></li><li><a href="#">Virtual Try-On</a></li><li><a href="#">Personal Stylist</a></li><li><a href="#">Gifting</a></li><li><a href="#">Corporate</a></li><li><a href="#">Press</a></li></ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contact</div>
+      <ul class="footer-contact">
+        <li class="contact-item"><span class="ci-icon">📍</span><span class="ci-text">Dubai Mall, Level 2<br>Downtown Dubai</span></li>
+        <li class="contact-item"><span class="ci-icon">📞</span><span class="ci-text"><a href="tel:+97144000000">+971 4 400 0000</a></span></li>
+        <li class="contact-item"><span class="ci-icon">💬</span><span class="ci-text"><a href="#">WhatsApp</a></span></li>
+        <li class="contact-item"><span class="ci-icon">🕐</span><span class="ci-text">Daily 10am–10pm</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-legal">© 2026 Your Brand. Cruelty Free · GCC Award Winner.</div>
+    <div class="footer-legal-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Returns</a><a href="#">Accessibility</a></div>
+    <div class="footer-powered">Preview by MorningStar.ai</div>
+  </div>
+</footer>
+
+<div class="sticky-cta">
+  <div class="sticky-label">✦ New collection · 36 shades · Free UAE delivery</div>
+  <div class="sticky-buttons">
+    <button class="s-gift">Gift Sets</button>
+    <button class="s-shop">Shop Collection →</button>
+  </div>
+</div>
+
+<div class="switcher">
+  <div class="switcher-menu" id="sm">
+    <div class="sm-title">Cosmetics Variants</div>
+    <a class="s-opt" href="template-cosmetics-v2.html"><div class="s-dot"></div> Clinical — Clean White</a>
+    <a class="s-opt" href="cosmetics-botanica.html"><div class="s-dot"></div> Botanica — Natural</a>
+    <a class="s-opt active" href="#"><div class="s-dot filled"></div> Luxe — Dark Glamour</a>
+  </div>
+  <button class="switcher-btn" onclick="document.getElementById('sm').classList.toggle('open')">🎨</button>
+</div>
+
+<script>
+const obs=new IntersectionObserver(e=>e.forEach(i=>{if(i.isIntersecting)i.target.classList.add('visible')}),{threshold:.08});
+document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+function tick(){const df=new Date(Date.now()+7*864e5)-Date.now();document.getElementById('countdown').textContent=`${Math.floor(df/864e5)}d ${Math.floor(df%864e5/36e5)}h ${Math.floor(df%36e5/6e4)}m`}
+tick();setInterval(tick,6e4);
+</script>
+</body>
+</html>

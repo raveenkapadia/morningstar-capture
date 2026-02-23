@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Electronics Redesign Preview — Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --orange:#FF5C28;--orange-light:#FF7A4D;--orange-pale:rgba(255,92,40,.09);
+    --bg:#FFFFFF;--surface:#F7F7F5;--card:#F2F2F0;--dark:#0F0F0F;
+    --ink:#111111;--muted:rgba(17,17,17,.44);--border:rgba(17,17,17,.08);--border-mid:rgba(17,17,17,.13);
+    --blue:#0066FF;--green:#00C853;
+  }
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);font-family:'Plus Jakarta Sans',sans-serif;color:var(--ink);overflow-x:hidden}
+
+  .expiry{background:var(--orange);color:#fff;text-align:center;padding:9px 20px;font-size:10px;letter-spacing:.26em;text-transform:uppercase;font-weight:600}
+  .expiry strong{font-weight:800}
+
+  nav{position:sticky;top:0;z-index:300;background:rgba(255,255,255,.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 52px;height:60px;display:flex;align-items:center;justify-content:space-between}
+  .nav-brand{font-family:'Plus Jakarta Sans',sans-serif;font-size:18px;font-weight:800;color:var(--ink);letter-spacing:-.03em}
+  .nav-brand span{color:var(--orange)}
+  .nav-links{display:flex;gap:24px;list-style:none}
+  .nav-links a{font-size:13px;color:var(--muted);text-decoration:none;font-weight:400;transition:color .2s}
+  .nav-links a:hover{color:var(--ink)}
+  .nav-actions{display:flex;gap:10px;align-items:center}
+  .nav-compare{background:none;border:1px solid var(--border-mid);color:var(--muted);padding:8px 16px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;font-weight:500;transition:all .2s}
+  .nav-compare:hover{border-color:var(--ink);color:var(--ink)}
+  .nav-shop{background:var(--orange);color:#fff;border:none;padding:9px 20px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;font-weight:600;transition:background .2s;border-radius:6px}
+  .nav-shop:hover{background:var(--orange-light)}
+
+  /* HERO — split product showcase */
+  .hero{display:grid;grid-template-columns:1fr 1fr;min-height:100svh;background:var(--bg);overflow:hidden}
+  .hero-left{display:flex;flex-direction:column;justify-content:center;padding:80px 56px 80px 80px;position:relative}
+  /* Background circle decoration */
+  .hero-left::before{content:'';position:absolute;top:-20%;right:-10%;width:500px;height:500px;border-radius:50%;background:var(--orange-pale);z-index:0}
+  .hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--orange-pale);border:1px solid rgba(255,92,40,.2);padding:7px 16px;border-radius:100px;margin-bottom:28px;position:relative;z-index:1;align-self:flex-start}
+  .hb-dot{width:7px;height:7px;border-radius:50%;background:var(--orange)}
+  .hb-text{font-size:12px;font-weight:600;color:var(--orange);letter-spacing:.04em}
+  .hero-title{font-size:clamp(44px,5.5vw,72px);font-weight:800;line-height:1.0;color:var(--ink);margin-bottom:20px;letter-spacing:-.04em;position:relative;z-index:1}
+  .hero-title span{color:var(--orange)}
+  .hero-sub{font-size:16px;font-weight:400;color:var(--muted);margin-bottom:40px;line-height:1.75;max-width:460px;position:relative;z-index:1}
+  /* Inline spec chips */
+  .hero-chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:36px;position:relative;z-index:1}
+  .chip{background:var(--card);border:1px solid var(--border);padding:6px 14px;font-size:12px;font-weight:600;color:var(--ink);border-radius:100px}
+  .chip.highlight{background:var(--dark);color:#fff;border-color:var(--dark)}
+  .hero-cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px;position:relative;z-index:1}
+  .btn-orange{display:inline-block;background:var(--orange);color:#fff;padding:14px 36px;font-size:14px;font-weight:700;text-decoration:none;border:none;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;border-radius:8px;transition:all .25s}
+  .btn-orange:hover{background:var(--orange-light);transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,92,40,.3)}
+  .btn-outline{display:inline-block;background:transparent;color:var(--ink);padding:13px 36px;font-size:14px;font-weight:600;text-decoration:none;border:1px solid var(--border-mid);cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;border-radius:8px;transition:all .25s}
+  .btn-outline:hover{border-color:var(--ink)}
+  .hero-trust{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:6px;position:relative;z-index:1}
+  .hero-trust::before{content:'✓';color:var(--green);font-weight:700}
+  /* Proof row */
+  .hero-proof{display:flex;gap:0;border-top:1px solid var(--border);padding-top:28px;margin-top:28px;position:relative;z-index:1}
+  .hp{flex:1}
+  .hp:not(:last-child){padding-right:20px;border-right:1px solid var(--border);margin-right:20px}
+  .hp-num{font-size:26px;font-weight:800;color:var(--ink);line-height:1;margin-bottom:3px;letter-spacing:-.03em}
+  .hp-label{font-size:11px;color:var(--muted);font-weight:400}
+
+  /* Hero right — product visual with floating specs */
+  .hero-right{background:var(--surface);display:flex;align-items:center;justify-content:center;padding:60px;position:relative;overflow:hidden}
+  .hero-right::before{content:'';position:absolute;bottom:-10%;left:-10%;width:400px;height:400px;border-radius:50%;background:rgba(255,92,40,.05)}
+  .hr-product{position:relative;max-width:400px;width:100%}
+  .hr-product img{width:100%;filter:brightness(.92);transition:transform .6s ease}
+  .hr-product:hover img{transform:scale(1.03)}
+  /* floating spec cards */
+  .spec-float{position:absolute;background:#fff;border-radius:12px;padding:12px 16px;box-shadow:0 8px 32px rgba(0,0,0,.1);min-width:140px}
+  .sf-1{top:8%;left:-30px}
+  .sf-2{bottom:12%;right:-20px}
+  .sf-label{font-size:10px;color:var(--muted);font-weight:500;margin-bottom:3px;letter-spacing:.04em}
+  .sf-value{font-size:16px;font-weight:800;color:var(--ink);letter-spacing:-.02em}
+  .sf-sub{font-size:11px;color:var(--orange);font-weight:600}
+  /* rating */
+  .hr-rating{position:absolute;top:20px;right:20px;background:#fff;border-radius:10px;padding:10px 14px;box-shadow:0 4px 16px rgba(0,0,0,.08);text-align:center}
+  .hr-rat-num{font-size:20px;font-weight:800;color:var(--ink)}
+  .hr-rat-stars{font-size:11px;color:#F59E0B;letter-spacing:1px}
+  .hr-rat-count{font-size:10px;color:var(--muted);font-weight:400}
+
+  /* TRUST STRIP */
+  .trust-strip{background:var(--dark);padding:14px 52px;display:flex;align-items:center;justify-content:center;gap:40px;flex-wrap:wrap}
+  .ts-item{font-size:12px;color:rgba(255,255,255,.55);display:flex;align-items:center;gap:7px;font-weight:500}
+  .ts-item::before{content:'✓';color:var(--orange);font-weight:800}
+
+  /* TICKER */
+  .ticker{background:var(--surface);border-bottom:1px solid var(--border);padding:11px 0;overflow:hidden}
+  .ticker-inner{display:inline-block;white-space:nowrap;animation:slide 20s linear infinite;font-size:12px;font-weight:600;color:var(--muted);letter-spacing:.08em}
+  .ticker-inner span{margin:0 24px;color:var(--orange)}
+  @keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* PROOF BAR */
+  .proof-bar{display:grid;grid-template-columns:repeat(4,1fr);background:var(--bg);border-bottom:1px solid var(--border)}
+  .pb{padding:26px 20px;text-align:center;border-right:1px solid var(--border)}
+  .pb:last-child{border-right:none}
+  .pb-num{font-size:34px;font-weight:800;color:var(--orange);line-height:1;margin-bottom:5px;letter-spacing:-.03em}
+  .pb-label{font-size:11px;color:var(--muted);font-weight:500}
+
+  /* SECTIONS */
+  .section{padding:96px 52px}
+  .section.alt{background:var(--surface)}
+  .section.dark{background:var(--dark)}
+  .s-eyebrow{font-size:12px;font-weight:700;color:var(--orange);margin-bottom:12px;letter-spacing:.06em;text-transform:uppercase}
+  .s-title{font-size:clamp(32px,4vw,52px);font-weight:800;color:var(--ink);line-height:1.05;letter-spacing:-.03em}
+  .s-title.white{color:#fff}
+  .s-sub{font-size:15px;color:var(--muted);font-weight:400;max-width:520px;line-height:1.8;margin-top:14px}
+  .section-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px;flex-wrap:wrap;gap:20px}
+
+  /* PRODUCTS */
+  .product-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .product-card{background:var(--card);border-radius:16px;overflow:hidden;transition:box-shadow .3s,transform .3s;cursor:pointer;border:1px solid var(--border)}
+  .product-card:hover{box-shadow:0 20px 60px rgba(0,0,0,.1);transform:translateY(-4px)}
+  .pc-img{background:var(--surface);aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;padding:20px}
+  .pc-img img{max-width:100%;max-height:100%;object-fit:contain;filter:brightness(.95);transition:transform .5s}
+  .product-card:hover .pc-img img{transform:scale(1.05)}
+  .pc-badge{position:absolute;top:12px;left:12px;background:var(--orange);color:#fff;padding:4px 12px;border-radius:100px;font-size:11px;font-weight:700}
+  .pc-info{padding:20px}
+  .pc-cat{font-size:11px;font-weight:700;color:var(--orange);margin-bottom:5px;letter-spacing:.06em;text-transform:uppercase}
+  .pc-name{font-size:17px;font-weight:700;color:var(--ink);margin-bottom:4px;letter-spacing:-.02em}
+  .pc-tagline{font-size:13px;color:var(--muted);font-weight:400;margin-bottom:14px}
+  .pc-specs-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .pc-spec{background:var(--bg);border:1px solid var(--border);padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;color:var(--ink)}
+  .pc-bottom{display:flex;align-items:center;justify-content:space-between}
+  .pc-price{font-size:18px;font-weight:800;color:var(--ink);letter-spacing:-.02em}
+  .pc-add{background:var(--orange);color:#fff;border:none;padding:9px 18px;border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:background .2s}
+  .pc-add:hover{background:var(--orange-light)}
+
+  /* FEATURE — hero product deep dive */
+  .feature-split{display:grid;grid-template-columns:1fr 1fr;min-height:620px}
+  .fs-visual{background:var(--dark);display:flex;align-items:center;justify-content:center;padding:80px;position:relative;overflow:hidden}
+  .fs-visual::before{content:'';position:absolute;top:-20%;left:-20%;width:80%;height:80%;border-radius:50%;background:rgba(255,92,40,.06)}
+  .fs-visual img{max-width:100%;filter:brightness(.95);position:relative;z-index:2;transition:transform .6s}
+  .fs-visual:hover img{transform:scale(1.04)}
+  .fs-content{display:flex;flex-direction:column;justify-content:center;padding:80px;background:var(--bg)}
+  .fs-eyebrow{font-size:12px;font-weight:700;color:var(--orange);margin-bottom:14px;letter-spacing:.06em;text-transform:uppercase}
+  .fs-title{font-size:clamp(38px,4.5vw,60px);font-weight:800;color:var(--ink);line-height:1.0;margin-bottom:18px;letter-spacing:-.04em}
+  .fs-desc{font-size:15px;color:var(--muted);font-weight:400;line-height:1.8;margin-bottom:28px;max-width:400px}
+  /* spec table */
+  .spec-table{display:flex;flex-direction:column;gap:0;margin-bottom:36px;border:1px solid var(--border);border-radius:12px;overflow:hidden}
+  .spec-row{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--border)}
+  .spec-row:last-child{border-bottom:none}
+  .spec-key{padding:14px 18px;font-size:13px;font-weight:600;color:var(--muted);background:var(--surface)}
+  .spec-val{padding:14px 18px;font-size:13px;font-weight:700;color:var(--ink);background:var(--bg)}
+  .fs-price-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+  .fs-price{font-size:32px;font-weight:800;color:var(--ink);letter-spacing:-.04em}
+  .fs-emi{font-size:13px;color:var(--muted);font-weight:400}
+  .fs-emi span{color:var(--orange);font-weight:700}
+  .fs-cta-row{display:flex;gap:10px}
+
+  /* USE CASES */
+  .usecases{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .uc-card{background:var(--card);border-radius:14px;padding:32px 28px;border:1px solid var(--border);transition:border-color .3s,transform .3s}
+  .uc-card:hover{border-color:rgba(255,92,40,.3);transform:translateY(-2px)}
+  .uc-icon{font-size:28px;margin-bottom:16px}
+  .uc-title{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:8px;letter-spacing:-.01em}
+  .uc-desc{font-size:13px;color:var(--muted);font-weight:400;line-height:1.75}
+
+  /* COMPARISON TABLE */
+  .comparison{overflow-x:auto}
+  .comp-table{width:100%;border-collapse:collapse;border:1px solid var(--border);border-radius:12px;overflow:hidden}
+  .comp-table th{background:var(--dark);color:#fff;padding:16px 20px;font-size:13px;font-weight:700;text-align:left;letter-spacing:.02em}
+  .comp-table th:first-child{background:var(--surface);color:var(--muted);font-weight:500}
+  .comp-table td{padding:14px 20px;font-size:13px;color:var(--ink);font-weight:500;border-bottom:1px solid var(--border);background:var(--bg)}
+  .comp-table td:first-child{background:var(--surface);color:var(--muted);font-weight:400;font-size:12px}
+  .comp-table tr:last-child td{border-bottom:none}
+  .comp-check{color:var(--green);font-weight:800;font-size:16px}
+  .comp-cross{color:rgba(17,17,17,.2);font-size:16px}
+  .comp-highlight td{background:var(--orange-pale)!important}
+  .comp-highlight td:first-child{background:#fff4f0!important}
+
+  /* BANNER */
+  .banner{background:var(--orange);padding:72px 80px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;overflow:hidden;position:relative}
+  .banner::after{content:'';position:absolute;right:-5%;top:-30%;width:50%;height:160%;background:rgba(255,255,255,.06);border-radius:50%}
+  .b-eyebrow{font-size:12px;font-weight:700;color:rgba(255,255,255,.7);margin-bottom:14px;letter-spacing:.06em;text-transform:uppercase}
+  .b-title{font-size:clamp(36px,4.5vw,58px);font-weight:800;color:#fff;line-height:1.05;letter-spacing:-.04em;margin-bottom:16px}
+  .b-sub{font-size:15px;color:rgba(255,255,255,.75);font-weight:400;line-height:1.75;margin-bottom:32px;max-width:440px}
+  .btn-white{display:inline-block;background:#fff;color:var(--orange);padding:14px 36px;font-size:14px;font-weight:700;text-decoration:none;border:none;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;border-radius:8px;transition:all .25s}
+  .btn-white:hover{background:rgba(255,255,255,.9);transform:translateY(-2px)}
+  .b-visual{position:relative;z-index:2;display:flex;align-items:center;justify-content:center}
+  .b-visual img{max-width:100%;filter:brightness(1.05);transition:transform .6s}
+  .banner:hover .b-visual img{transform:scale(1.04)}
+
+  /* REVIEWS */
+  .reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .review-card{background:var(--card);border-radius:14px;padding:32px 26px;border:1px solid var(--border);transition:border-color .3s,transform .3s}
+  .review-card:hover{border-color:rgba(255,92,40,.25);transform:translateY(-2px)}
+  .rc-verified{font-size:11px;color:var(--orange);font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:5px}
+  .rc-stars{color:#F59E0B;letter-spacing:2px;font-size:13px;margin-bottom:12px}
+  .rc-text{font-size:14px;line-height:1.8;color:rgba(17,17,17,.72);font-weight:400;margin-bottom:18px}
+  .rc-author{font-size:13px;font-weight:700;color:var(--ink)}
+  .rc-product{font-size:12px;color:var(--orange);font-weight:500}
+
+  /* NEWSLETTER */
+  .footer-nl{background:var(--dark);padding:64px 52px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+  .nl-eyebrow{font-size:12px;font-weight:700;color:var(--orange);margin-bottom:12px;letter-spacing:.06em;text-transform:uppercase}
+  .nl-title{font-size:40px;font-weight:800;color:#fff;line-height:1.05;letter-spacing:-.03em}
+  .nl-form{display:flex;gap:0}
+  .nl-input{flex:1;padding:14px 18px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;outline:none;border-right:none;border-radius:8px 0 0 8px}
+  .nl-input::placeholder{color:rgba(255,255,255,.3);font-size:13px}
+  .nl-submit{background:var(--orange);color:#fff;border:none;padding:14px 24px;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;transition:background .2s;border-radius:0 8px 8px 0}
+  .nl-submit:hover{background:var(--orange-light)}
+  .nl-note{font-size:11px;color:rgba(255,255,255,.3);margin-top:10px;font-weight:400}
+
+  footer{background:#0A0A0A;padding:80px 52px 40px}
+  .footer-grid{display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:56px;padding-bottom:56px;border-bottom:1px solid rgba(255,255,255,.06)}
+  .footer-logo{font-size:22px;font-weight:800;color:#fff;margin-bottom:14px;letter-spacing:-.03em}
+  .footer-logo span{color:var(--orange)}
+  .footer-desc{font-size:13px;line-height:1.9;color:rgba(255,255,255,.3);font-weight:400;margin-bottom:22px;max-width:240px}
+  .footer-social{display:flex;gap:10px}
+  .social-link{width:34px;height:34px;border:1px solid rgba(255,255,255,.1);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;text-decoration:none;color:rgba(255,255,255,.32);transition:all .2s}
+  .social-link:hover{border-color:var(--orange);color:var(--orange)}
+  .footer-col-title{font-size:11px;font-weight:700;color:rgba(255,255,255,.7);margin-bottom:20px;letter-spacing:.04em;text-transform:uppercase}
+  .footer-links{list-style:none;display:flex;flex-direction:column;gap:11px}
+  .footer-links a{font-size:13px;color:rgba(255,255,255,.32);text-decoration:none;font-weight:400;transition:color .2s}
+  .footer-links a:hover{color:var(--orange)}
+  .footer-contact{list-style:none;display:flex;flex-direction:column;gap:13px}
+  .contact-item{display:flex;gap:10px}
+  .ci-icon{font-size:14px;flex-shrink:0}
+  .ci-text{font-size:12px;color:rgba(255,255,255,.32);font-weight:400;line-height:1.65}
+  .ci-text a{color:inherit;text-decoration:none;transition:color .2s}
+  .ci-text a:hover{color:var(--orange)}
+  .footer-bottom{padding-top:28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
+  .footer-legal{font-size:11px;color:rgba(255,255,255,.18)}
+  .footer-legal-links{display:flex;gap:22px}
+  .footer-legal-links a{font-size:11px;color:rgba(255,255,255,.18);text-decoration:none;transition:color .2s}
+  .footer-legal-links a:hover{color:rgba(255,255,255,.5)}
+  .footer-powered{font-size:9px;letter-spacing:.2em;color:rgba(255,255,255,.1);text-transform:uppercase}
+
+  .sticky-cta{display:none;position:fixed;bottom:0;left:0;right:0;z-index:400;background:rgba(255,255,255,.97);border-top:2px solid var(--orange);padding:12px 16px;gap:10px;flex-direction:column;backdrop-filter:blur(14px)}
+  .sticky-label{font-size:11px;font-weight:600;text-align:center;color:var(--muted)}
+  .sticky-buttons{display:flex;gap:8px}
+  .s-compare{flex:1;background:transparent;border:1px solid var(--border-mid);color:var(--ink);padding:12px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;border-radius:8px}
+  .s-shop{flex:1.5;background:var(--orange);border:none;color:#fff;padding:12px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;border-radius:8px}
+
+  .switcher{position:fixed;bottom:30px;right:30px;z-index:500}
+  .switcher-btn{background:var(--ink);color:#fff;border:none;width:48px;height:48px;border-radius:50%;font-size:18px;cursor:pointer;box-shadow:0 6px 24px rgba(0,0,0,.2);display:flex;align-items:center;justify-content:center}
+  .switcher-menu{position:absolute;bottom:60px;right:0;background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px 18px;min-width:210px;display:none;box-shadow:0 12px 40px rgba(0,0,0,.1)}
+  .switcher-menu.open{display:block}
+  .sm-title{font-size:9px;font-weight:700;text-transform:uppercase;color:var(--muted);margin-bottom:12px;letter-spacing:.1em}
+  .s-opt{display:flex;align-items:center;gap:10px;padding:8px 0;font-size:12px;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--border);transition:color .2s;font-weight:500}
+  .s-opt:last-child{border-bottom:none}
+  .s-opt.active{color:var(--orange);font-weight:700}
+  .s-dot{width:7px;height:7px;border-radius:50%;border:1.5px solid var(--orange)}
+  .s-dot.filled{background:var(--orange)}
+
+  .fade-up{opacity:0;transform:translateY(22px);transition:opacity .8s ease,transform .8s ease}
+  .fade-up.visible{opacity:1;transform:translateY(0)}
+  .stagger-1{transition-delay:.1s}.stagger-2{transition-delay:.2s}.stagger-3{transition-delay:.3s}
+
+  @media(max-width:768px){
+    nav{padding:0 16px}
+    .nav-links{display:none}
+    .hero{grid-template-columns:1fr}
+    .hero-left{padding:60px 24px}
+    .hero-right{height:60vw;padding:32px}
+    .trust-strip{padding:12px 20px;gap:16px}
+    .proof-bar{grid-template-columns:repeat(2,1fr)}
+    .section{padding:60px 20px}
+    .product-grid{grid-template-columns:1fr 1fr}
+    .feature-split{grid-template-columns:1fr}
+    .fs-visual{padding:48px;height:60vw}
+    .fs-content{padding:48px 24px}
+    .usecases{grid-template-columns:1fr}
+    .banner{grid-template-columns:1fr;padding:56px 24px}
+    .b-visual{display:none}
+    .reviews-grid{grid-template-columns:1fr}
+    .footer-nl{grid-template-columns:1fr;padding:48px 20px;gap:28px}
+    .nl-form{flex-direction:column}
+    footer{padding:56px 20px 32px}
+    .footer-grid{grid-template-columns:1fr 1fr;gap:32px}
+    .footer-bottom{flex-direction:column;align-items:flex-start}
+    .sticky-cta{display:flex}
+    .switcher{bottom:100px;right:12px}
+  }
+</style>
+</head>
+<body>
+
+<div class="expiry">🎨 Preview expires: <strong id="countdown">6d 23h 41m</strong> — Built for your store</div>
+
+<nav>
+  <div class="nav-brand">Your<span>Brand</span></div>
+  <ul class="nav-links">
+    <li><a href="#">Laptops</a></li>
+    <li><a href="#">Tablets</a></li>
+    <li><a href="#">Audio</a></li>
+    <li><a href="#">Accessories</a></li>
+    <li><a href="#">Bundles</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="nav-compare">Compare</button>
+    <button class="nav-shop">Shop Now</button>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-badge"><span class="hb-dot"></span><span class="hb-text">New Arrival — Creator Pro M3</span></div>
+    <h1 class="hero-title">Built for<br>people who<br><span>make</span> things.</h1>
+    <p class="hero-sub">Professional-grade performance in a chassis that disappears into your workflow. The laptop that gets out of the way and lets the work speak.</p>
+    <div class="hero-chips">
+      <span class="chip highlight">M3 Max Chip</span>
+      <span class="chip">48GB RAM</span>
+      <span class="chip">22hr Battery</span>
+      <span class="chip">ProRes Display</span>
+    </div>
+    <div class="hero-cta-row">
+      <a href="#" class="btn-orange">Shop Now — AED 7,499 →</a>
+      <a href="#" class="btn-outline">View All Specs</a>
+    </div>
+    <div class="hero-trust">Free delivery · 2-year warranty · 30-day returns</div>
+    <div class="hero-proof">
+      <div class="hp"><div class="hp-num">22hr</div><div class="hp-label">Battery Life</div></div>
+      <div class="hp"><div class="hp-num">4.9★</div><div class="hp-label">Reviews</div></div>
+      <div class="hp"><div class="hp-num">2yr</div><div class="hp-label">Warranty</div></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hr-product">
+      <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=700&q=90" alt="">
+      <div class="spec-float sf-1">
+        <div class="sf-label">Processor</div>
+        <div class="sf-value">M3 Max</div>
+        <div class="sf-sub">14-core CPU</div>
+      </div>
+      <div class="spec-float sf-2">
+        <div class="sf-label">Battery</div>
+        <div class="sf-value">22 Hrs</div>
+        <div class="sf-sub">Real-world tested</div>
+      </div>
+      <div class="hr-rating">
+        <div class="hr-rat-num">4.9</div>
+        <div class="hr-rat-stars">★★★★★</div>
+        <div class="hr-rat-count">2,100 reviews</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="trust-strip">
+  <span class="ts-item">Free UAE Delivery</span>
+  <span class="ts-item">2-Year Warranty</span>
+  <span class="ts-item">30-Day Returns</span>
+  <span class="ts-item">Authorised Reseller</span>
+  <span class="ts-item">0% Installments</span>
+</div>
+
+<div class="ticker">
+  <div class="ticker-inner">
+    Creator Pro M3 <span>·</span> 22hr Battery <span>·</span> ProRes Display <span>·</span> M3 Max Chip <span>·</span> Free Delivery <span>·</span> 2-Year Warranty <span>·</span>
+    Creator Pro M3 <span>·</span> 22hr Battery <span>·</span> ProRes Display <span>·</span> M3 Max Chip <span>·</span> Free Delivery <span>·</span> 2-Year Warranty <span>·</span>
+  </div>
+</div>
+
+<div class="proof-bar">
+  <div class="pb fade-up"><div class="pb-num">2,100+</div><div class="pb-label">5-Star Reviews</div></div>
+  <div class="pb fade-up stagger-1"><div class="pb-num">48hr</div><div class="pb-label">Delivery UAE</div></div>
+  <div class="pb fade-up stagger-2"><div class="pb-num">0%</div><div class="pb-label">Installments</div></div>
+  <div class="pb fade-up stagger-3"><div class="pb-num">2yr</div><div class="pb-label">Full Warranty</div></div>
+</div>
+
+<section class="section alt">
+  <div class="section-header fade-up">
+    <div><div class="s-eyebrow">The Range</div><h2 class="s-title">Gear for every<br>creative workflow.</h2></div>
+    <a href="#" class="btn-orange">All Products</a>
+  </div>
+  <div class="product-grid">
+    <div class="product-card fade-up"><div class="pc-img"><img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600&q=85" alt=""><span class="pc-badge">New</span></div><div class="pc-info"><div class="pc-cat">Laptop</div><div class="pc-name">Creator Pro M3</div><div class="pc-tagline">The studio workhorse</div><div class="pc-specs-row"><span class="pc-spec">M3 Max</span><span class="pc-spec">48GB</span><span class="pc-spec">2TB</span><span class="pc-spec">22hr</span></div><div class="pc-bottom"><span class="pc-price">AED 7,499</span><button class="pc-add">Add to Cart</button></div></div></div>
+    <div class="product-card fade-up stagger-1"><div class="pc-img"><img src="https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=600&q=85" alt=""></div><div class="pc-info"><div class="pc-cat">Tablet</div><div class="pc-name">Studio Tab Pro</div><div class="pc-tagline">Draw, edit, present</div><div class="pc-specs-row"><span class="pc-spec">M2 Chip</span><span class="pc-spec">OLED</span><span class="pc-spec">16GB</span></div><div class="pc-bottom"><span class="pc-price">AED 3,299</span><button class="pc-add">Add to Cart</button></div></div></div>
+    <div class="product-card fade-up stagger-2"><div class="pc-img"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&q=85" alt=""><span class="pc-badge">Best Seller</span></div><div class="pc-info"><div class="pc-cat">Audio</div><div class="pc-name">StudioPods Pro</div><div class="pc-tagline">Spatial audio · ANC</div><div class="pc-specs-row"><span class="pc-spec">40hr</span><span class="pc-spec">ANC</span><span class="pc-spec">Hi-Fi</span></div><div class="pc-bottom"><span class="pc-price">AED 1,199</span><button class="pc-add">Add to Cart</button></div></div></div>
+  </div>
+</section>
+
+<div class="feature-split">
+  <div class="fs-visual"><img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=700&q=85" alt=""></div>
+  <div class="fs-content fade-up">
+    <div class="fs-eyebrow">Featured · Creator Pro M3</div>
+    <h2 class="fs-title">Every spec<br>earns its<br>place.</h2>
+    <p class="fs-desc">We did not add features to fill a spec sheet. Every component was chosen because it makes the creative process faster, smoother, or more accurate. Nothing decorative, everything intentional.</p>
+    <div class="spec-table">
+      <div class="spec-row"><span class="spec-key">Processor</span><span class="spec-val">Apple M3 Max · 14-core CPU</span></div>
+      <div class="spec-row"><span class="spec-key">Memory</span><span class="spec-val">48GB Unified RAM</span></div>
+      <div class="spec-row"><span class="spec-key">Storage</span><span class="spec-val">2TB SSD · 7.4 GB/s</span></div>
+      <div class="spec-row"><span class="spec-key">Display</span><span class="spec-val">16.2" Liquid Retina XDR</span></div>
+      <div class="spec-row"><span class="spec-key">Battery</span><span class="spec-val">22hr · MagSafe fast charge</span></div>
+      <div class="spec-row"><span class="spec-key">Ports</span><span class="spec-val">3× Thunderbolt 5 · HDMI · SD</span></div>
+    </div>
+    <div class="fs-price-row">
+      <span class="fs-price">AED 7,499</span>
+      <span class="fs-emi">or <span>AED 625/mo</span> · 0% 12 months</span>
+    </div>
+    <div class="fs-cta-row">
+      <a href="#" class="btn-orange">Buy Now →</a>
+      <a href="#" class="btn-outline">Full Specs</a>
+    </div>
+  </div>
+</div>
+
+<section class="section">
+  <div class="section-header fade-up">
+    <div><div class="s-eyebrow">Made For</div><h2 class="s-title">Whatever you<br>create.</h2></div>
+  </div>
+  <div class="usecases">
+    <div class="uc-card fade-up"><div class="uc-icon">🎬</div><div class="uc-title">Video & Film</div><div class="uc-desc">4K ProRes editing without a render queue. The M3 Max handles timelines that would bring other machines to their knees.</div></div>
+    <div class="uc-card fade-up stagger-1"><div class="uc-icon">🎨</div><div class="uc-title">Graphic Design</div><div class="uc-desc">A display accurate enough to trust. Colour-calibrated for Adobe RGB. What you see is precisely what prints.</div></div>
+    <div class="uc-card fade-up stagger-2"><div class="uc-icon">🎵</div><div class="uc-title">Music Production</div><div class="uc-desc">Run 200+ tracks without latency. The M3 architecture processes audio in a way that makes your DAW feel like a different application.</div></div>
+  </div>
+</section>
+
+<div class="banner">
+  <div>
+    <div class="b-eyebrow">Creator Bundle</div>
+    <h2 class="b-title">Pro setup.<br>Better price.</h2>
+    <p class="b-sub">Creator Pro M3 + Studio Tab Pro + StudioPods. Everything you need to ship your best work, bundled at AED 1,200 less than buying separately.</p>
+    <a href="#" class="btn-white">Shop the Bundle →</a>
+  </div>
+  <div class="b-visual"><img src="https://images.unsplash.com/photo-1484788984921-03950022c9ef?w=600&q=85" alt=""></div>
+</div>
+
+<section class="section alt">
+  <div class="section-header fade-up">
+    <div><div class="s-eyebrow">Real Reviews</div><h2 class="s-title">Trusted by<br>creators.</h2></div>
+    <span style="font-size:13px;color:var(--muted);font-weight:500">4.9★ · 2,100+ Reviews</span>
+  </div>
+  <div class="reviews-grid">
+    <div class="review-card fade-up"><div class="rc-verified">✓ Verified Purchase</div><div class="rc-stars">★★★★★</div><p class="rc-text">"I edit 4K cinema footage daily. This handled a 45-minute ProRes timeline without breaking a sweat. No spinning beach balls, no fans, no lag. It changed how I work."</p><div class="rc-author">Omar Al Rashidi</div><div class="rc-product">Creator Pro M3 · Dubai</div></div>
+    <div class="review-card fade-up stagger-1"><div class="rc-verified">✓ Verified Purchase</div><div class="rc-stars">★★★★★</div><p class="rc-text">"The display is everything for a graphic designer. Accurate colours, no eye strain, and it stays perfectly calibrated. I trust what I see on this screen, and that trust is rare."</p><div class="rc-author">Priya Sharma</div><div class="rc-product">Creator Pro M3 · Abu Dhabi</div></div>
+    <div class="review-card fade-up stagger-2"><div class="rc-verified">✓ Verified Purchase</div><div class="rc-stars">★★★★★</div><p class="rc-text">"Delivery in 24 hours. Setup call included. A question answered in 20 minutes. The product is excellent but the service is what made me tell everyone I know."</p><div class="rc-author">James Thornton</div><div class="rc-product">Studio Tab Pro · Dubai</div></div>
+  </div>
+</section>
+
+<div class="footer-nl">
+  <div class="fade-up"><p class="nl-eyebrow">Stay Updated</p><h3 class="nl-title">New drops.<br>First to know.</h3></div>
+  <div class="fade-up stagger-1">
+    <div class="nl-form"><input class="nl-input" type="email" placeholder="Your email address"><button class="nl-submit">Subscribe</button></div>
+    <p class="nl-note">Product launches, exclusive deals, and tech insights. Unsubscribe anytime.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">Your<span>Brand</span></div>
+      <p class="footer-desc">Authorised reseller of professional creative technology. Free UAE delivery · 2-year warranty · Expert support.</p>
+      <div class="footer-social"><a href="#" class="social-link">📷</a><a href="#" class="social-link">𝕏</a><a href="#" class="social-link">▶</a><a href="#" class="social-link">💬</a></div>
+    </div>
+    <div>
+      <div class="footer-col-title">Shop</div>
+      <ul class="footer-links"><li><a href="#">Laptops</a></li><li><a href="#">Tablets</a></li><li><a href="#">Audio</a></li><li><a href="#">Monitors</a></li><li><a href="#">Accessories</a></li><li><a href="#">Bundles</a></li></ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Support</div>
+      <ul class="footer-links"><li><a href="#">Setup Guides</a></li><li><a href="#">Warranty</a></li><li><a href="#">Repairs</a></li><li><a href="#">Trade-In</a></li><li><a href="#">Business</a></li><li><a href="#">Education</a></li></ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contact</div>
+      <ul class="footer-contact">
+        <li class="contact-item"><span class="ci-icon">📍</span><span class="ci-text">Dubai Design District<br>Building 7, Dubai</span></li>
+        <li class="contact-item"><span class="ci-icon">📞</span><span class="ci-text"><a href="tel:+97144000000">+971 4 400 0000</a></span></li>
+        <li class="contact-item"><span class="ci-icon">💬</span><span class="ci-text"><a href="#">WhatsApp Support</a></span></li>
+        <li class="contact-item"><span class="ci-icon">🕐</span><span class="ci-text">Daily 9am–9pm<br>24hr online support</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-legal">© 2026 Your Brand. Authorised reseller. All rights reserved.</div>
+    <div class="footer-legal-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Warranty</a><a href="#">Accessibility</a></div>
+    <div class="footer-powered">Preview by MorningStar.ai</div>
+  </div>
+</footer>
+
+<div class="sticky-cta">
+  <div class="sticky-label">Creator Pro M3 — Free delivery · 2yr warranty · 0% installments</div>
+  <div class="sticky-buttons">
+    <button class="s-compare">Compare Models</button>
+    <button class="s-shop">Buy Now — AED 7,499</button>
+  </div>
+</div>
+
+<div class="switcher">
+  <div class="switcher-menu" id="sm">
+    <div class="sm-title">Electronics Variants</div>
+    <a class="s-opt" href="template-electronics-v2.html"><div class="s-dot"></div> Dark Tech — Black</a>
+    <a class="s-opt active" href="#"><div class="s-dot filled"></div> Studio — Creative Pro</a>
+    <a class="s-opt" href="electronics-volt.html"><div class="s-dot"></div> Volt — Gaming</a>
+  </div>
+  <button class="switcher-btn" onclick="document.getElementById('sm').classList.toggle('open')">🎨</button>
+</div>
+
+<script>
+const obs=new IntersectionObserver(e=>e.forEach(i=>{if(i.isIntersecting)i.target.classList.add('visible')}),{threshold:.08});
+document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+function tick(){const df=new Date(Date.now()+7*864e5)-Date.now();document.getElementById('countdown').textContent=`${Math.floor(df/864e5)}d ${Math.floor(df%864e5/36e5)}h ${Math.floor(df%36e5/6e4)}m`}
+tick();setInterval(tick,6e4);
+</script>
+</body>
+</html>

@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jewellery Redesign Preview — Noir</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,200;0,300;0,400;1,200;1,300;1,400&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A96E;
+    --gold-light: #E8D5A3;
+    --gold-dim: rgba(201,169,110,0.5);
+    --bg: #080608;
+    --surface: #0f0c0f;
+    --card: #140f14;
+    --ink: #F2EDE8;
+    --muted: rgba(242,237,232,0.45);
+    --border: rgba(201,169,110,0.15);
+    --border-soft: rgba(242,237,232,0.07);
+  }
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);font-family:'Montserrat',sans-serif;color:var(--ink);overflow-x:hidden}
+
+  /* EXPIRY */
+  .expiry{background:linear-gradient(90deg,#1a1020,#0f0c0f);border-bottom:1px solid var(--border);text-align:center;padding:10px 20px;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:rgba(242,237,232,.45)}
+  .expiry strong{color:var(--gold);font-weight:400}
+
+  /* NAV */
+  nav{position:sticky;top:0;z-index:200;background:rgba(8,6,8,.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 48px;height:64px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center}
+  .nav-left,.nav-right{display:flex;gap:28px;list-style:none}
+  .nav-right{justify-content:flex-end;align-items:center}
+  .nav-left a,.nav-right a{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s}
+  .nav-left a:hover,.nav-right a:hover{color:var(--gold)}
+  .nav-brand{font-family:'Cormorant',serif;font-size:24px;font-weight:200;letter-spacing:.18em;color:var(--gold);text-align:center;text-transform:uppercase}
+  .nav-cta{background:transparent;color:var(--gold);border:1px solid var(--border);padding:8px 20px;font-size:9px;letter-spacing:.28em;text-transform:uppercase;cursor:pointer;font-family:'Montserrat',sans-serif;transition:all .25s}
+  .nav-cta:hover{background:var(--gold);color:var(--bg)}
+
+  /* HERO */
+  .hero{position:relative;height:100svh;min-height:600px;overflow:hidden;display:flex;align-items:flex-end}
+  .hero-bg{position:absolute;inset:0}
+  .hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center;filter:brightness(.3) saturate(.6);transition:transform 14s ease}
+  .hero:hover .hero-bg img{transform:scale(1.04)}
+  .hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(8,6,8,.95) 0%,rgba(8,6,8,.5) 40%,transparent 80%)}
+  .hero-bg::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 100%,rgba(201,169,110,.12) 0%,transparent 60%)}
+  .hero-content{position:relative;z-index:10;padding:0 60px 80px;max-width:800px}
+  .hero-season{font-size:9px;letter-spacing:.5em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:20px;font-weight:300}
+  .hero-title{font-family:'Cormorant',serif;font-size:clamp(56px,9vw,120px);font-weight:200;line-height:.92;color:var(--ink);margin-bottom:24px;letter-spacing:-.01em}
+  .hero-title em{font-style:italic;color:var(--gold);display:block}
+  .hero-tagline{font-size:14px;font-weight:300;color:var(--muted);margin-bottom:44px;line-height:1.8;max-width:400px;letter-spacing:.03em}
+  .hero-actions{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+  .btn-gold{display:inline-block;background:var(--gold);color:var(--bg);padding:14px 40px;font-size:9px;letter-spacing:.32em;text-transform:uppercase;text-decoration:none;font-weight:500;border:1px solid var(--gold);transition:all .25s}
+  .btn-gold:hover{background:transparent;color:var(--gold)}
+  .btn-ghost{display:inline-block;background:transparent;color:rgba(242,237,232,.65);padding:13px 40px;font-size:9px;letter-spacing:.32em;text-transform:uppercase;text-decoration:none;font-weight:300;border:1px solid rgba(242,237,232,.18);transition:all .25s}
+  .btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+  .hero-scroll{position:absolute;bottom:36px;right:56px;z-index:10;display:flex;flex-direction:column;align-items:center;gap:10px}
+  .hero-scroll span{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:rgba(242,237,232,.3);writing-mode:vertical-rl;transform:rotate(180deg)}
+  .scroll-line{width:1px;height:48px;background:linear-gradient(to bottom,transparent,var(--gold-dim))}
+
+  /* TICKER */
+  .ticker{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 0;overflow:hidden}
+  .ticker-inner{display:inline-block;white-space:nowrap;animation:slide 28s linear infinite;font-size:9px;letter-spacing:.38em;text-transform:uppercase;color:rgba(242,237,232,.3);font-weight:300}
+  .ticker-inner span{margin:0 36px;color:var(--gold)}
+  @keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* STATS BAR */
+  .stats-bar{display:grid;grid-template-columns:repeat(4,1fr);background:var(--surface);border-bottom:1px solid var(--border)}
+  .stat{padding:36px 20px;text-align:center;border-right:1px solid var(--border)}
+  .stat:last-child{border-right:none}
+  .stat-num{font-family:'Cormorant',serif;font-size:44px;font-weight:200;color:var(--gold);line-height:1;margin-bottom:8px;letter-spacing:-.01em}
+  .stat-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-weight:300}
+
+  /* SECTIONS */
+  .section{padding:100px 60px}
+  .section.alt{background:var(--surface)}
+  .section-label{font-size:9px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;font-weight:300}
+  .section-title{font-family:'Cormorant',serif;font-size:clamp(36px,4.5vw,60px);font-weight:200;color:var(--ink);line-height:1.1}
+  .section-title em{font-style:italic;color:var(--gold)}
+
+  /* COLLECTION SPLIT */
+  .collection-intro{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:end;padding:100px 60px}
+  .ci-right{padding-left:0}
+  .ci-desc{font-size:14px;line-height:2;color:var(--muted);font-weight:300;margin-bottom:36px;max-width:400px}
+
+  /* PRODUCT GRID */
+  .product-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border-soft)}
+  .product-card{background:var(--card);cursor:pointer;overflow:hidden;position:relative;transition:background .3s}
+  .product-card:hover{background:#1a1220}
+  .product-img{position:relative;overflow:hidden;aspect-ratio:3/4;background:#0d090d}
+  .product-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.85) saturate(.7);transition:transform .7s ease,filter .4s}
+  .product-card:hover .product-img img{transform:scale(1.06);filter:brightness(.6) saturate(.5)}
+  .product-overlay{position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center;padding-bottom:32px;opacity:0;transition:opacity .35s;background:linear-gradient(to top,rgba(8,6,8,.8) 0%,transparent 50%)}
+  .product-card:hover .product-overlay{opacity:1}
+  .po-btn{background:var(--gold);color:var(--bg);border:none;padding:11px 28px;font-size:9px;letter-spacing:.28em;text-transform:uppercase;cursor:pointer;font-family:'Montserrat',sans-serif;font-weight:500}
+  .product-info{padding:24px 28px}
+  .product-tag{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;font-weight:300}
+  .product-name{font-family:'Cormorant',serif;font-size:20px;font-weight:300;color:var(--ink);margin-bottom:6px}
+  .product-material{font-size:11px;color:var(--muted);margin-bottom:12px;letter-spacing:.08em;font-weight:300}
+  .product-price{font-size:14px;color:var(--gold-light);letter-spacing:.05em}
+
+  /* FEATURE SPLIT */
+  .feature-split{display:grid;grid-template-columns:1fr 1fr;min-height:620px}
+  .fs-img{overflow:hidden;position:relative}
+  .fs-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.7) saturate(.6);transition:transform 10s}
+  .fs-img:hover img{transform:scale(1.03)}
+  .fs-img::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(201,169,110,.06) 0%,transparent 60%)}
+  .fs-content{background:var(--surface);display:flex;flex-direction:column;justify-content:center;padding:80px;border-left:1px solid var(--border)}
+  .fs-num{font-family:'Cormorant',serif;font-size:120px;font-weight:200;color:rgba(201,169,110,.06);line-height:1;margin-bottom:-30px}
+  .fs-label{font-size:9px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:20px}
+  .fs-title{font-family:'Cormorant',serif;font-size:clamp(32px,3.5vw,52px);font-weight:200;color:var(--ink);line-height:1.1;margin-bottom:20px}
+  .fs-title em{font-style:italic;color:var(--gold)}
+  .fs-desc{font-size:13px;line-height:2.1;color:var(--muted);font-weight:300;margin-bottom:16px;max-width:360px}
+  .fs-details{display:flex;flex-direction:column;gap:10px;margin-bottom:36px}
+  .fs-detail{display:flex;gap:12px;align-items:center;font-size:12px;color:var(--muted);font-weight:300}
+  .fs-detail::before{content:'';width:20px;height:1px;background:var(--gold);flex-shrink:0}
+
+  /* CRAFTSMANSHIP */
+  .craft-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border-soft)}
+  .craft-card{background:var(--card);padding:52px 40px;text-align:center}
+  .craft-icon{font-size:28px;margin-bottom:20px}
+  .craft-title{font-family:'Cormorant',serif;font-size:22px;font-weight:300;color:var(--ink);margin-bottom:12px;font-style:italic}
+  .craft-desc{font-size:13px;line-height:1.9;color:var(--muted);font-weight:300}
+
+  /* FULL WIDTH BANNER */
+  .banner{position:relative;height:60vh;min-height:400px;overflow:hidden;display:flex;align-items:center;justify-content:center;text-align:center}
+  .banner img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.25) saturate(.4)}
+  .banner::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(201,169,110,.1) 0%,transparent 70%)}
+  .banner-content{position:relative;z-index:2;max-width:700px;padding:40px}
+  .banner-title{font-family:'Cormorant',serif;font-size:clamp(36px,5vw,70px);font-weight:200;color:#fff;line-height:1.05;margin-bottom:20px}
+  .banner-title em{font-style:italic;color:var(--gold)}
+  .banner-sub{font-size:13px;color:rgba(255,255,255,.55);font-weight:300;margin-bottom:36px;letter-spacing:.05em}
+  .banner-divider{width:60px;height:1px;background:var(--gold);margin:0 auto 28px}
+
+  /* BESPOKE */
+  .bespoke{display:grid;grid-template-columns:1fr 1fr;min-height:500px}
+  .bespoke-content{background:var(--gold);display:flex;flex-direction:column;justify-content:center;padding:80px}
+  .bc-label{font-size:9px;letter-spacing:.42em;text-transform:uppercase;color:rgba(8,6,8,.5);margin-bottom:20px}
+  .bc-title{font-family:'Cormorant',serif;font-size:clamp(32px,4vw,54px);font-weight:300;color:var(--bg);line-height:1.1;margin-bottom:20px}
+  .bc-title em{font-style:italic}
+  .bc-desc{font-size:13px;line-height:2;color:rgba(8,6,8,.65);font-weight:300;margin-bottom:36px;max-width:360px}
+  .btn-dark{display:inline-block;background:var(--bg);color:var(--gold);padding:13px 36px;font-size:9px;letter-spacing:.32em;text-transform:uppercase;text-decoration:none;font-weight:500;border:1px solid var(--bg);transition:all .25s;align-self:flex-start}
+  .btn-dark:hover{background:transparent;color:var(--bg);border-color:var(--bg)}
+  .bespoke-img{overflow:hidden}
+  .bespoke-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.75) saturate(.5);transition:transform 10s}
+  .bespoke-img:hover img{transform:scale(1.03)}
+
+  /* REVIEWS */
+  .reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border-soft)}
+  .review-card{background:var(--card);padding:44px 36px}
+  .review-stars{letter-spacing:3px;color:var(--gold);font-size:12px;margin-bottom:20px}
+  .review-quote{font-size:28px;font-family:'Cormorant',serif;color:rgba(201,169,110,.25);line-height:.6;margin-bottom:16px}
+  .review-text{font-family:'Cormorant',serif;font-size:17px;font-style:italic;line-height:1.9;color:rgba(242,237,232,.75);margin-bottom:24px;font-weight:300}
+  .review-author{font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--muted)}
+  .review-piece{font-size:10px;color:var(--gold);margin-top:4px;letter-spacing:.12em}
+
+  /* NEWSLETTER + FOOTER */
+  .footer-newsletter{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:64px 60px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+  .nl-label{font-size:9px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+  .nl-title{font-family:'Cormorant',serif;font-size:38px;font-weight:200;color:var(--ink);line-height:1.2}
+  .nl-title em{font-style:italic;color:var(--gold)}
+  .nl-form{display:flex}
+  .nl-input{flex:1;padding:14px 20px;background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--ink);font-family:'Montserrat',sans-serif;font-size:13px;outline:none;border-right:none}
+  .nl-input::placeholder{color:var(--muted);font-size:12px}
+  .nl-input:focus{border-color:var(--gold-dim)}
+  .nl-submit{background:var(--gold);color:var(--bg);border:none;padding:14px 28px;font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:.28em;text-transform:uppercase;cursor:pointer;white-space:nowrap;font-weight:500}
+  .nl-note{font-size:11px;color:rgba(242,237,232,.25);margin-top:12px;font-weight:300}
+
+  footer{background:#040204;padding:80px 60px 40px}
+  .footer-grid{display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:56px;padding-bottom:56px;border-bottom:1px solid rgba(201,169,110,.08)}
+  .footer-logo{font-family:'Cormorant',serif;font-size:28px;font-weight:200;color:rgba(242,237,232,.9);letter-spacing:.16em;text-transform:uppercase;margin-bottom:16px}
+  .footer-brand-desc{font-size:13px;line-height:1.9;color:rgba(242,237,232,.28);font-weight:300;margin-bottom:28px;max-width:240px}
+  .footer-social{display:flex;gap:12px;margin-bottom:24px}
+  .social-link{width:36px;height:36px;border:1px solid rgba(201,169,110,.15);display:flex;align-items:center;justify-content:center;font-size:13px;text-decoration:none;color:rgba(242,237,232,.35);transition:all .2s}
+  .social-link:hover{border-color:var(--gold);color:var(--gold)}
+  .footer-col-title{font-size:9px;letter-spacing:.35em;text-transform:uppercase;color:rgba(242,237,232,.8);margin-bottom:24px;font-weight:400}
+  .footer-links-list{list-style:none;display:flex;flex-direction:column;gap:12px}
+  .footer-links-list a{font-size:13px;color:rgba(242,237,232,.32);text-decoration:none;font-weight:300;transition:color .2s;letter-spacing:.03em}
+  .footer-links-list a:hover{color:var(--gold)}
+  .footer-contact-list{list-style:none;display:flex;flex-direction:column;gap:14px}
+  .contact-item{display:flex;gap:12px}
+  .contact-icon{font-size:14px;flex-shrink:0}
+  .contact-text{font-size:12px;color:rgba(242,237,232,.32);font-weight:300;line-height:1.7}
+  .contact-text a{color:inherit;text-decoration:none;transition:color .2s}
+  .contact-text a:hover{color:var(--gold)}
+  .footer-bottom{padding-top:32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+  .footer-legal{font-size:11px;color:rgba(242,237,232,.18)}
+  .footer-legal-links{display:flex;gap:24px}
+  .footer-legal-links a{font-size:11px;color:rgba(242,237,232,.18);text-decoration:none;transition:color .2s}
+  .footer-legal-links a:hover{color:rgba(242,237,232,.5)}
+  .footer-powered{font-size:9px;letter-spacing:.22em;color:rgba(242,237,232,.12);text-transform:uppercase}
+
+  /* STICKY CTA */
+  .sticky-cta{display:none;position:fixed;bottom:0;left:0;right:0;z-index:300;background:rgba(8,6,8,.97);border-top:1px solid var(--border);padding:14px 20px;flex-direction:column;gap:10px;backdrop-filter:blur(12px)}
+  .sticky-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;text-align:center;color:var(--muted)}
+  .sticky-buttons{display:flex;gap:10px}
+  .s-book{flex:1;background:transparent;border:1px solid var(--border);color:var(--gold);padding:13px;font-size:9px;letter-spacing:.25em;text-transform:uppercase;cursor:pointer;font-family:'Montserrat',sans-serif}
+  .s-buy{flex:1.5;background:var(--gold);border:none;color:var(--bg);padding:13px;font-size:9px;letter-spacing:.25em;text-transform:uppercase;cursor:pointer;font-family:'Montserrat',sans-serif;font-weight:500}
+
+  /* SWITCHER */
+  .switcher{position:fixed;bottom:30px;right:30px;z-index:400}
+  .switcher-btn{background:var(--surface);color:var(--gold);border:1px solid var(--border);width:50px;height:50px;border-radius:50%;font-size:18px;cursor:pointer;box-shadow:0 6px 28px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center}
+  .switcher-menu{position:absolute;bottom:62px;right:0;background:var(--card);border:1px solid var(--border);padding:16px 20px;min-width:220px;display:none;box-shadow:0 12px 40px rgba(0,0,0,.6)}
+  .switcher-menu.open{display:block}
+  .sm-title{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+  .s-opt{display:flex;align-items:center;gap:12px;padding:9px 0;font-size:12px;color:rgba(242,237,232,.5);text-decoration:none;border-bottom:1px solid var(--border-soft);transition:color .2s;font-weight:300}
+  .s-opt:last-child{border-bottom:none}
+  .s-opt.active{color:var(--gold)}
+  .s-dot{width:7px;height:7px;border-radius:50%;border:1.5px solid var(--gold)}
+  .s-dot.filled{background:var(--gold)}
+
+  .fade-up{opacity:0;transform:translateY(32px);transition:opacity .9s ease,transform .9s ease}
+  .fade-up.visible{opacity:1;transform:translateY(0)}
+  .stagger-1{transition-delay:.1s}
+  .stagger-2{transition-delay:.2s}
+  .stagger-3{transition-delay:.3s}
+
+  @media(max-width:768px){
+    nav{grid-template-columns:1fr;height:auto;padding:16px 20px;justify-items:center}
+    .nav-left,.nav-right{display:none}
+    .hero-content{padding:0 24px 64px}
+    .hero-title{font-size:52px}
+    .hero-scroll{display:none}
+    .stats-bar{grid-template-columns:repeat(2,1fr)}
+    .collection-intro{grid-template-columns:1fr;padding:56px 24px;gap:36px}
+    .section{padding:60px 24px}
+    .product-grid{grid-template-columns:repeat(2,1fr)}
+    .feature-split{grid-template-columns:1fr}
+    .fs-img{height:65vw}
+    .fs-content{padding:44px 24px;border-left:none;border-top:1px solid var(--border)}
+    .craft-grid{grid-template-columns:1fr}
+    .banner{height:80vw}
+    .bespoke{grid-template-columns:1fr}
+    .bespoke-img{height:60vw}
+    .bespoke-content{padding:48px 24px}
+    .reviews-grid{grid-template-columns:1fr}
+    .footer-newsletter{grid-template-columns:1fr;padding:48px 24px;gap:36px}
+    .nl-form{flex-direction:column}
+    footer{padding:56px 24px 32px}
+    .footer-grid{grid-template-columns:1fr 1fr;gap:36px}
+    .footer-bottom{flex-direction:column;align-items:flex-start}
+    .sticky-cta{display:flex}
+    .switcher{bottom:100px;right:16px}
+  }
+</style>
+</head>
+<body>
+
+<div class="expiry">⏰ Preview expires in: <strong id="countdown">6d 23h 41m</strong> &nbsp;·&nbsp; Crafted exclusively for your brand</div>
+
+<nav>
+  <ul class="nav-left">
+    <li><a href="#">Collections</a></li>
+    <li><a href="#">Bespoke</a></li>
+    <li><a href="#">Watches</a></li>
+  </ul>
+  <div class="nav-brand">Your Brand</div>
+  <ul class="nav-right">
+    <li><a href="#">Heritage</a></li>
+    <li><a href="#">Stores</a></li>
+    <li><button class="nav-cta">Private View</button></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=1600&q=90" alt="">
+  </div>
+  <div class="hero-content">
+    <p class="hero-season">Fine Jewellery · Handcrafted Since 1998</p>
+    <h1 class="hero-title">Worn<br>by the<br><em>Fearless.</em></h1>
+    <p class="hero-tagline">Each piece carries a story. Handcrafted in 18-karat gold, set with ethically sourced stones. For those who choose significance over trend.</p>
+    <div class="hero-actions">
+      <a href="#" class="btn-gold">Explore Collections</a>
+      <a href="#" class="btn-ghost">Book Private View</a>
+    </div>
+  </div>
+  <div class="hero-scroll"><span>Scroll</span><div class="scroll-line"></div></div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">Handcrafted in 18K Gold <span>·</span> Ethically Sourced Diamonds <span>·</span> GIA Certified <span>·</span> Bespoke Service Available <span>·</span> Free Delivery UAE <span>·</span> Handcrafted in 18K Gold <span>·</span> Ethically Sourced Diamonds <span>·</span> GIA Certified <span>·</span> Bespoke Service Available <span>·</span></div>
+</div>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat fade-up"><div class="stat-num">18K</div><div class="stat-label">Gold Standard</div></div>
+  <div class="stat fade-up stagger-1"><div class="stat-num">25+</div><div class="stat-label">Years of Craft</div></div>
+  <div class="stat fade-up stagger-2"><div class="stat-num">4K+</div><div class="stat-label">Pieces Created</div></div>
+  <div class="stat fade-up stagger-3"><div class="stat-num">GIA</div><div class="stat-label">Certified Stones</div></div>
+</div>
+
+<!-- COLLECTION INTRO -->
+<div class="collection-intro">
+  <div class="fade-up">
+    <p class="section-label">New Collection</p>
+    <h2 class="section-title">The <em>Noir</em><br>Edit 2026</h2>
+  </div>
+  <div class="ci-right fade-up stagger-1">
+    <p class="ci-desc">This season we return to darkness — to the beauty found in shadow, in negative space, in what is left unsaid. Black diamonds. Oxidised gold. Pieces that do not ask for attention. They demand it.</p>
+    <a href="#" class="btn-gold">View Collection</a>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<section class="section alt">
+  <div class="section-label fade-up">The Collection</div>
+  <h2 class="section-title fade-up" style="margin-bottom:52px">Signature <em>Pieces</em></h2>
+  <div class="product-grid">
+    <div class="product-card fade-up">
+      <div class="product-img"><img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">View Piece</button></div></div>
+      <div class="product-info"><div class="product-tag">Necklace</div><div class="product-name">Noir Solitaire</div><div class="product-material">18K White Gold · Black Diamond</div><div class="product-price">AED 18,500</div></div>
+    </div>
+    <div class="product-card fade-up stagger-1">
+      <div class="product-img"><img src="https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">View Piece</button></div></div>
+      <div class="product-info"><div class="product-tag">Ring</div><div class="product-name">Eternal Arc</div><div class="product-material">18K Yellow Gold · Sapphire</div><div class="product-price">AED 12,200</div></div>
+    </div>
+    <div class="product-card fade-up stagger-2">
+      <div class="product-img"><img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">View Piece</button></div></div>
+      <div class="product-info"><div class="product-tag">Earrings</div><div class="product-name">Shadow Drop</div><div class="product-material">18K Rose Gold · Onyx</div><div class="product-price">AED 8,900</div></div>
+    </div>
+    <div class="product-card fade-up">
+      <div class="product-img"><img src="https://images.unsplash.com/photo-1603974372039-adc49044b6bd?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">View Piece</button></div></div>
+      <div class="product-info"><div class="product-tag">Bracelet</div><div class="product-name">Pavé Noir</div><div class="product-material">18K Gold · Black Diamonds</div><div class="product-price">AED 24,000</div></div>
+    </div>
+    <div class="product-card fade-up stagger-1">
+      <div class="product-img"><img src="https://images.unsplash.com/photo-1576022162533-4e38d14c4b5c?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">View Piece</button></div></div>
+      <div class="product-info"><div class="product-tag">Pendant</div><div class="product-name">Crescent Moon</div><div class="product-material">18K Gold · White Diamond</div><div class="product-price">AED 6,800</div></div>
+    </div>
+    <div class="product-card fade-up stagger-2">
+      <div class="product-img"><img src="https://images.unsplash.com/photo-1508057198894-247b23fe5ade?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">View Piece</button></div></div>
+      <div class="product-info"><div class="product-tag">Watch</div><div class="product-name">Obsidian Tourbillon</div><div class="product-material">Titanium · Sapphire Crystal</div><div class="product-price">AED 145,000</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURE SPLIT -->
+<div class="feature-split">
+  <div class="fs-img"><img src="https://images.unsplash.com/photo-1613063022498-c90db543d7f6?w=900&q=85" alt=""></div>
+  <div class="fs-content fade-up">
+    <div class="fs-num">01</div>
+    <p class="fs-label">Signature Piece</p>
+    <h2 class="fs-title">The <em>Noir</em><br>Solitaire</h2>
+    <p class="fs-desc">A 2.4 carat black diamond suspended in 18-karat white gold. The tension setting appears to defy gravity — the stone held only by precision, not prongs.</p>
+    <div class="fs-details">
+      <div class="fs-detail">2.4ct Natural Black Diamond · GIA Certified</div>
+      <div class="fs-detail">18K White Gold · Handcrafted in Dubai</div>
+      <div class="fs-detail">Includes Certificate of Authenticity</div>
+      <div class="fs-detail">Lifetime complimentary polishing</div>
+    </div>
+    <a href="#" class="btn-gold">Enquire Now</a>
+  </div>
+</div>
+
+<!-- CRAFTSMANSHIP -->
+<section class="section">
+  <div class="section-label fade-up" style="text-align:center;margin-bottom:14px">Our Promise</div>
+  <h2 class="section-title fade-up" style="text-align:center;margin-bottom:60px">The Art of <em>Fine Craft</em></h2>
+  <div class="craft-grid">
+    <div class="craft-card fade-up"><div class="craft-icon">💎</div><div class="craft-title">Ethically Sourced</div><div class="craft-desc">Every stone is responsibly sourced and carries full provenance documentation. We know where each gem comes from and the hands that found it.</div></div>
+    <div class="craft-card fade-up stagger-1"><div class="craft-icon">⚒️</div><div class="craft-title">Master Craftsmen</div><div class="craft-desc">Our atelier is home to goldsmiths with over 20 years of experience. Each piece takes between 40 and 200 hours to complete by hand.</div></div>
+    <div class="craft-card fade-up stagger-2"><div class="craft-icon">📜</div><div class="craft-title">Certified Excellence</div><div class="craft-desc">Every diamond above 0.5ct is independently certified by GIA or IGI. You receive a full report with every significant purchase.</div></div>
+  </div>
+</section>
+
+<!-- FULL WIDTH BANNER -->
+<div class="banner">
+  <img src="https://images.unsplash.com/photo-1573408301185-9519f94f4e12?w=1600&q=85" alt="">
+  <div class="banner-content fade-up">
+    <div class="banner-divider"></div>
+    <h2 class="banner-title">Bespoke.<br><em>Only Yours.</em></h2>
+    <p class="banner-sub">Commission a piece created entirely for you. From first sketch to finished jewel — your story, in gold and stone.</p>
+    <a href="#" class="btn-gold">Begin Your Commission</a>
+  </div>
+</div>
+
+<!-- BESPOKE SERVICE -->
+<div class="bespoke">
+  <div class="bespoke-content fade-up">
+    <p class="bc-label">Private Service</p>
+    <h2 class="bc-title">A Private<br><em>Appointment</em><br>Awaits</h2>
+    <p class="bc-desc">Our private showroom is available by appointment only. Champagne, complete privacy, and undivided attention from our senior jeweller. For those who prefer their luxury undisturbed.</p>
+    <a href="#" class="btn-dark">Request Appointment</a>
+  </div>
+  <div class="bespoke-img"><img src="https://images.unsplash.com/photo-1454391304352-2bf4678b1a7a?w=900&q=85" alt=""></div>
+</div>
+
+<!-- REVIEWS -->
+<section class="section alt">
+  <div class="section-label fade-up" style="text-align:center;margin-bottom:14px">Client Stories</div>
+  <h2 class="section-title fade-up" style="text-align:center;margin-bottom:52px">Words of <em>Trust</em></h2>
+  <div class="reviews-grid">
+    <div class="review-card fade-up"><div class="review-stars">★★★★★</div><div class="review-quote">"</div><p class="review-text">The Noir Solitaire stopped the room. Three months later, people still ask where I found it. The answer is always: nowhere else exists like this.</p><div class="review-author">Mariam Al Hassan</div><div class="review-piece">Noir Solitaire · Dubai</div></div>
+    <div class="review-card fade-up stagger-1"><div class="review-stars">★★★★★</div><div class="review-quote">"</div><p class="review-text">The bespoke experience was unlike anything I expected. They listened in a way no other jeweller had. The ring made my wife cry. Beautifully.</p><div class="review-author">Faisal Al Rashid</div><div class="review-piece">Bespoke Engagement Ring · Abu Dhabi</div></div>
+    <div class="review-card fade-up stagger-2"><div class="review-stars">★★★★★</div><div class="review-quote">"</div><p class="review-text">I have bought jewellery on three continents. Nothing compares to the craftsmanship here. The detail at this price point is extraordinary.</p><div class="review-author">Sana Mirza</div><div class="review-piece">Pavé Noir Bracelet · Riyadh</div></div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<div class="footer-newsletter">
+  <div class="fade-up">
+    <p class="nl-label">Private Access</p>
+    <h3 class="nl-title">New pieces.<br><em>First to know.</em></h3>
+  </div>
+  <div class="fade-up stagger-1">
+    <div class="nl-form"><input class="nl-input" type="email" placeholder="Your email address"><button class="nl-submit">Subscribe</button></div>
+    <p class="nl-note">Exclusive previews for subscribers. No sharing. Unsubscribe anytime.</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">Your Brand</div>
+      <p class="footer-brand-desc">Fine jewellery and timepieces handcrafted in Dubai since 1998. Each piece made to last a lifetime — and longer.</p>
+      <div class="footer-social">
+        <a href="#" class="social-link">𝕏</a>
+        <a href="#" class="social-link">in</a>
+        <a href="#" class="social-link">📷</a>
+        <a href="#" class="social-link">▶</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Collections</div>
+      <ul class="footer-links-list">
+        <li><a href="#">Necklaces</a></li>
+        <li><a href="#">Rings</a></li>
+        <li><a href="#">Earrings</a></li>
+        <li><a href="#">Bracelets</a></li>
+        <li><a href="#">Watches</a></li>
+        <li><a href="#">Bespoke</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Services</div>
+      <ul class="footer-links-list">
+        <li><a href="#">Private Appointments</a></li>
+        <li><a href="#">Bespoke Commissions</a></li>
+        <li><a href="#">Ring Resizing</a></li>
+        <li><a href="#">Cleaning & Repair</a></li>
+        <li><a href="#">Certification</a></li>
+        <li><a href="#">Gift Wrapping</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Visit Us</div>
+      <ul class="footer-contact-list">
+        <li class="contact-item"><span class="contact-icon">📍</span><span class="contact-text">Dubai Mall, Gold Souk Level<br>Dubai, UAE</span></li>
+        <li class="contact-item"><span class="contact-icon">📞</span><span class="contact-text"><a href="tel:+97144000000">+971 4 400 0000</a></span></li>
+        <li class="contact-item"><span class="contact-icon">✉️</span><span class="contact-text"><a href="/cdn-cgi/l/email-protection#3747455e41564352774e58424555455659531954585a"><span class="__cf_email__" data-cfemail="2252504b54435647625b4d57504050434c460c414d4f">[email&#160;protected]</span></a></span></li>
+        <li class="contact-item"><span class="contact-icon">🕐</span><span class="contact-text">By Appointment: Daily<br>Walk-In: 10am–10pm</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-legal">© 2026 Your Brand Jewellery. All rights reserved.</div>
+    <div class="footer-legal-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Authentication Policy</a><a href="#">Accessibility</a></div>
+    <div class="footer-powered">Preview by MorningStar.ai</div>
+  </div>
+</footer>
+
+<div class="sticky-cta">
+  <div class="sticky-label">Like this redesign for your brand?</div>
+  <div class="sticky-buttons">
+    <button class="s-book">Book a Call</button>
+    <button class="s-buy">Get This — AED 9,200</button>
+  </div>
+</div>
+
+<div class="switcher">
+  <div class="switcher-menu" id="sm">
+    <div class="sm-title">Jewellery Variants</div>
+    <a class="s-opt active" href="jewellery-noir.html"><div class="s-dot filled"></div> Noir — Black Gold</a>
+    <a class="s-opt" href="jewellery-blanc.html"><div class="s-dot"></div> Blanc — White Silver</a>
+    <a class="s-opt" href="jewellery-terre.html"><div class="s-dot"></div> Terre — Rose Gold</a>
+  </div>
+  <button class="switcher-btn" onclick="document.getElementById('sm').classList.toggle('open')">🎨</button>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const obs=new IntersectionObserver(e=>e.forEach(i=>{if(i.isIntersecting)i.target.classList.add('visible')}),{threshold:.1});
+document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+function 

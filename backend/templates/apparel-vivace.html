@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apparel Redesign Preview — Vivace</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;500;600;700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --lime: #C8FF00;
+    --lime-dim: rgba(200,255,0,.55);
+    --lime-glow: rgba(200,255,0,.12);
+    --bg: #0A0A0A;
+    --surface: #111111;
+    --card: #161616;
+    --ink: #F0F0F0;
+    --muted: rgba(240,240,240,.4);
+    --border: rgba(200,255,0,.1);
+    --border-soft: rgba(240,240,240,.06);
+    --red: #FF3B30;
+  }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box }
+  html { scroll-behavior: smooth }
+  body { background: var(--bg); font-family: 'Barlow', sans-serif; color: var(--ink); overflow-x: hidden; cursor: crosshair }
+
+  /* GRAIN OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: .025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  }
+
+  /* EXPIRY */
+  .expiry { background: var(--lime); color: #000; text-align: center; padding: 9px 20px; font-family: 'Barlow Condensed', sans-serif; font-size: 11px; letter-spacing: .32em; text-transform: uppercase; font-weight: 700 }
+  .expiry strong { font-weight: 900 }
+
+  /* NAV */
+  nav { position: sticky; top: 0; z-index: 200; background: rgba(10,10,10,.96); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); padding: 0 40px; height: 60px; display: flex; align-items: center; justify-content: space-between }
+  .nav-brand { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: .12em; color: var(--ink) }
+  .nav-links { display: flex; gap: 24px; list-style: none }
+  .nav-links a { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; letter-spacing: .28em; text-transform: uppercase; color: var(--muted); text-decoration: none; font-weight: 500; transition: color .15s }
+  .nav-links a:hover { color: var(--lime) }
+  .nav-actions { display: flex; gap: 10px; align-items: center }
+  .nav-cart { background: none; border: 1px solid var(--border-soft); color: var(--muted); padding: 7px 14px; font-family: 'Barlow Condensed', sans-serif; font-size: 11px; letter-spacing: .22em; text-transform: uppercase; cursor: pointer; transition: all .15s }
+  .nav-cart:hover { border-color: var(--lime); color: var(--lime) }
+  .nav-shop { background: var(--lime); color: #000; border: none; padding: 8px 18px; font-family: 'Barlow Condensed', sans-serif; font-size: 11px; letter-spacing: .28em; text-transform: uppercase; cursor: pointer; font-weight: 700; transition: background .15s }
+  .nav-shop:hover { background: #d4ff1a }
+
+  /* HERO — full brutalist takeover */
+  .hero { position: relative; min-height: 100svh; overflow: hidden; display: grid; grid-template-columns: 1fr 1fr }
+  .hero-left { position: relative; z-index: 2; display: flex; flex-direction: column; justify-content: flex-end; padding: 60px 40px; background: var(--bg) }
+  /* Big drop indicator */
+  .drop-badge { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; align-self: flex-start }
+  .drop-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--red); animation: blink 1.2s infinite }
+  @keyframes blink { 0%,100%{opacity:1}50%{opacity:.2} }
+  .drop-text { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; letter-spacing: .35em; text-transform: uppercase; color: var(--red); font-weight: 600 }
+  /* Massive headline */
+  .hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(88px, 14vw, 192px); line-height: .88; color: var(--ink); margin-bottom: 0; letter-spacing: -.01em; overflow: hidden }
+  .hero-title .line { display: block; transform: translateY(100%); animation: slideUp .7s cubic-bezier(.16,1,.3,1) forwards }
+  .hero-title .line:nth-child(1) { animation-delay: .1s }
+  .hero-title .line:nth-child(2) { animation-delay: .18s; color: var(--lime) }
+  .hero-title .line:nth-child(3) { animation-delay: .26s }
+  @keyframes slideUp { to { transform: translateY(0) } }
+  .hero-sub { font-size: 14px; color: var(--muted); font-weight: 300; margin: 24px 0 36px; max-width: 380px; line-height: 1.75; letter-spacing: .02em }
+  .hero-cta-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap }
+  .btn-lime { display: inline-block; background: var(--lime); color: #000; padding: 14px 36px; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; letter-spacing: .28em; text-transform: uppercase; font-weight: 700; text-decoration: none; border: none; cursor: pointer; transition: all .2s }
+  .btn-lime:hover { background: #d4ff1a; transform: translateY(-2px) }
+  .btn-outline-lime { display: inline-block; background: transparent; color: var(--lime); padding: 13px 36px; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; letter-spacing: .28em; text-transform: uppercase; font-weight: 600; text-decoration: none; border: 1px solid var(--lime-dim); cursor: pointer; transition: all .2s }
+  .btn-outline-lime:hover { background: var(--lime-glow) }
+  /* Drop countdown */
+  .hero-countdown { margin-top: 40px; padding-top: 28px; border-top: 1px solid var(--border-soft) }
+  .hc-label { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; letter-spacing: .42em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px }
+  .hc-timer { display: flex; gap: 16px }
+  .hct { text-align: center }
+  .hct-num { font-family: 'Bebas Neue', sans-serif; font-size: 42px; color: var(--lime); line-height: 1; display: block }
+  .hct-label { font-family: 'Barlow Condensed', sans-serif; font-size: 9px; letter-spacing: .28em; text-transform: uppercase; color: var(--muted) }
+  .hct-sep { font-family: 'Bebas Neue', sans-serif; font-size: 42px; color: var(--border); line-height: 1; padding-top: 0 }
+
+  /* Hero right — stacked images */
+  .hero-right { position: relative; overflow: hidden; background: var(--surface) }
+  .hero-img-main { width: 100%; height: 100%; object-fit: cover; object-position: center top; filter: saturate(.7) brightness(.85); transition: transform 12s ease }
+  .hero:hover .hero-img-main { transform: scale(1.04) }
+  /* Overlaid number */
+  .hero-right::before { content: 'SS26'; position: absolute; bottom: 20px; right: 20px; font-family: 'Bebas Neue', sans-serif; font-size: 100px; color: rgba(200,255,0,.08); line-height: 1; z-index: 2; letter-spacing: .05em }
+  /* Floating stock badge */
+  .stock-badge { position: absolute; top: 24px; left: 24px; z-index: 3; background: var(--red); color: #fff; padding: 8px 16px; font-family: 'Barlow Condensed', sans-serif; font-size: 11px; letter-spacing: .28em; text-transform: uppercase; font-weight: 700 }
+
+  /* TICKER */
+  .ticker { background: var(--lime); padding: 10px 0; overflow: hidden }
+  .ticker-inner { display: inline-block; white-space: nowrap; animation: slide 18s linear infinite; font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: .22em; color: #000 }
+  .ticker-inner span { margin: 0 28px; opacity: .35 }
+  @keyframes slide { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+  /* PROOF BAR */
+  .proof-bar { display: grid; grid-template-columns: repeat(4,1fr); background: var(--surface); border-bottom: 1px solid var(--border-soft) }
+  .pb-item { padding: 28px 20px; text-align: center; border-right: 1px solid var(--border-soft) }
+  .pb-item:last-child { border-right: none }
+  .pb-num { font-family: 'Bebas Neue', sans-serif; font-size: 40px; color: var(--lime); line-height: 1; margin-bottom: 4px; letter-spacing: .04em }
+  .pb-label { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; letter-spacing: .28em; text-transform: uppercase; color: var(--muted); font-weight: 400 }
+
+  /* SECTIONS */
+  .section { padding: 96px 60px }
+  .section.alt { background: var(--surface) }
+  .s-label { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; letter-spacing: .42em; text-transform: uppercase; color: var(--lime); margin-bottom: 12px; font-weight: 600 }
+  .s-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(44px, 6vw, 80px); color: var(--ink); line-height: .95; letter-spacing: .02em }
+  .s-title .accent { color: var(--lime) }
+  .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 52px }
+
+  /* COLLECTION GRID — asymmetric */
+  .collection-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; grid-template-rows: auto auto; gap: 2px; background: var(--border-soft) }
+  .cg-hero { grid-row: 1 / 3 }
+  .product-tile { position: relative; overflow: hidden; cursor: pointer; background: var(--card) }
+  .product-tile .pt-img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.6) brightness(.85); transition: transform .6s ease, filter .4s }
+  .cg-hero .pt-img { aspect-ratio: 2/3; height: 100%; width: 100%; object-fit: cover; object-position: center top }
+  .cg-small .pt-img { aspect-ratio: 3/4 }
+  .product-tile:hover .pt-img { transform: scale(1.06); filter: saturate(.4) brightness(.65) }
+  /* Hover reveal */
+  .pt-hover { position: absolute; inset: 0; background: rgba(10,10,10,.82); display: flex; flex-direction: column; justify-content: flex-end; padding: 28px; opacity: 0; transition: opacity .3s }
+  .product-tile:hover .pt-hover { opacity: 1 }
+  .pt-tag { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; letter-spacing: .32em; text-transform: uppercase; color: var(--lime); margin-bottom: 6px; font-weight: 600 }
+  .pt-name { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: #fff; margin-bottom: 6px; letter-spacing: .04em }
+  .pt-price { font-size: 14px; color: rgba(255,255,255,.7); font-weight: 300; margin-bottom: 16px }
+  .pt-add { background: var(--lime); color: #000; border: none; padding: 11px 24px; font-family: 'Barlow Condensed', sans-serif; font-size: 11px; letter-spacing: .28em; text-transform: uppercase; font-weight: 700; cursor: pointer; display: inline-block; text-decoration: none; transition: background .15s }
+  .pt-add:hover { background: #d4ff1a }
+  /* Always-visible label on tile */
+  .pt-label { position: absolute; top: 0; left: 0; right: 0; padding: 16px 20px; background: linear-gradient(to bottom, rgba(10,10,10,.7), transparent); display: flex; justify-content: space-between; align-items: center }
+  .pt-cat { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; letter-spacing: .3em; text-transform: uppercase; color: rgba(240,240,240,.6); font-weight: 500 }
+  .pt-pill { background: var(--lime); color: #000; padding: 3px 10px; font-family: 'Barlow Condensed', sans-serif; font-size: 9px; letter-spacing: .22em; text-transform: uppercase; font-weight: 700 }
+
+  /* MARQUEE SPLIT — bold statement row */
+  .marquee-row { background: var(--surface); border-top: 1px solid var(--border-soft); border-bottom: 1px solid var(--border-soft); padding: 20px 0; overflow: hidden }
+  .marquee-inner { display: inline-block; white-space: nowrap; animation: slide 22s linear infinite; font-family: 'Bebas Neue', sans-serif; font-size: 48px; color: transparent; -webkit-text-stroke: 1px rgba(240,240,240,.12); letter-spacing: .06em }
+  .marquee-inner .fill { -webkit-text-stroke: 0; color: var(--ink) }
+  .marquee-inner span { margin: 0 28px; color: var(--lime); -webkit-text-stroke: 0 }
+
+  /* DROP FEATURE */
+  .drop-feature { display: grid; grid-template-columns: 1fr 1fr; min-height: 620px }
+  .df-img { overflow: hidden; position: relative }
+  .df-img img { width: 100%; height: 100%; object-fit: cover; object-position: center top; filter: saturate(.6) brightness(.75); transition: transform 10s }
+  .df-img:hover img { transform: scale(1.03) }
+  .df-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(200,255,0,.05) 0%, transparent 50%) }
+  .df-content { background: var(--bg); display: flex; flex-direction: column; justify-content: center; padding: 80px; border-left: 1px solid var(--border-soft) }
+  .df-edition { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; letter-spacing: .42em; text-transform: uppercase; color: var(--lime); margin-bottom: 12px; font-weight: 600 }
+  .df-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(48px, 6vw, 80px); color: var(--ink); line-height: .95; margin-bottom: 20px; letter-spacing: .02em }
+  .df-title .hl { color: var(--lime) }
+  .df-desc { font-size: 14px; color: var(--muted); font-weight: 300; line-height: 1.9; margin-bottom: 14px; max-width: 380px }
+  .df-specs { display: flex; flex-direction: column; gap: 8px; margin-bottom: 36px }
+  .df-spec { display: flex; gap: 12px; font-size: 12px; color: var(--muted); font-weight: 300; font-family: 'Barlow Condensed', sans-serif; letter-spacing: .06em }
+  .df-spec::before { content: '—'; color: var(--lime); flex-shrink: 0 }
+  .df-limited { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 24px; background: rgba(255,59,48,.1); border: 1px solid rgba(255,59,48,.25); padding: 8px 16px }
+  .dfl-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--red); animation: blink 1.2s infinite }
+  .dfl-text { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; letter-spacing: .28em; text-transform: uppercase; color: var(--red); font-weight: 600 }
+
+  /* CATEGORIES */
+  .cat-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; background: var(--border-soft) }
+  .cat-card { position: relative; overflow: hidden; cursor: pointer; aspect-ratio: 3/4; background: var(--card) }
+  .cat-card img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.5) brightness(.7); transition: transform .6s, filter .4s }
+  .cat-card:hover img { transform: scale(1.08); filter: saturate(.3) brightness(.5) }
+  .cat-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,10,10,.9) 0%, transparent 50%) }
+  .cat-info { position: absolute; bottom: 0; left: 0; right: 0; padding: 24px }
+  .cat-name { font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: #fff; letter-spacing: .05em; margin-bottom: 4px }
+  .cat-count { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; letter-spacing: .25em; text-transform: uppercase; color: rgba(255,255,255,.45) }
+  .cat-arrow { position: absolute; top: 20px; right: 20px; width: 36px; height: 36px; border: 1px solid rgba(200,255,0,.3); display: flex; align-items: center; justify-content: center; color: var(--lime); font-size: 16px; opacity: 0; transition: opacity .3s }
+  .cat-card:hover .cat-arrow { opacity: 1 }
+
+  /* TESTIMONIALS */
+  .testi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border-soft) }
+  .testi-card { background: var(--card); padding: 40px 32px }
+  .tc-stars { color: var(--lime); letter-spacing: 2px; font-size: 12px; margin-bottom: 16px }
+  .tc-text { font-size: 14px; line-height: 1.85; color: rgba(240,240,240,.68); font-weight: 300; margin-bottom: 20px; font-style: italic }
+  .tc-author { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--muted) }
+  .tc-item { font-size: 11px; color: var(--lime); margin-top: 4px; letter-spacing: .1em }
+
+  /* FULL BANNER */
+  .banner { position: relative; height: 65vh; min-height: 400px; overflow: hidden; display: flex; align-items: center }
+  .banner img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(.25) saturate(.5) }
+  .banner::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(10,10,10,.88) 0%, transparent 60%) }
+  .banner-content { position: relative; z-index: 2; padding: 80px; max-width: 680px }
+  .banner-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(56px, 8vw, 110px); color: #fff; line-height: .9; margin-bottom: 20px; letter-spacing: .02em }
+  .banner-title .hl { color: var(--lime) }
+  .banner-sub { font-size: 14px; color: rgba(255,255,255,.5); font-weight: 300; margin-bottom: 36px; line-height: 1.75; max-width: 440px }
+  .banner-ctas { display: flex; gap: 12px; flex-wrap: wrap }
+
+  /* NEWSLETTER */
+  .footer-nl { background: var(--lime); padding: 64px 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center }
+  .nl-title { font-family: 'Bebas Neue', sans-serif; font-size: 52px; color: #000; line-height: .95; letter-spacing: .02em }
+  .nl-sub { font-family: 'Barlow Condensed', sans-serif; font-size: 13px; letter-spacing: .12em; color: rgba(0,0,0,.55); margin-top: 8px; text-transform: uppercase }
+  .nl-form { display: flex }
+  .nl-input { flex: 1; padding: 15px 18px; background: #000; border: none; color: #fff; font-family: 'Barlow', sans-serif; font-size: 14px; outline: none }
+  .nl-input::placeholder { color: rgba(255,255,255,.3); font-size: 13px }
+  .nl-btn { background: var(--surface); color: var(--lime); border: none; padding: 15px 24px; font-family: 'Barlow Condensed', sans-serif; font-size: 11px; letter-spacing: .28em; text-transform: uppercase; font-weight: 700; cursor: pointer; white-space: nowrap; transition: background .2s }
+  .nl-btn:hover { background: #222 }
+  .nl-note { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; letter-spacing: .14em; color: rgba(0,0,0,.4); margin-top: 10px; text-transform: uppercase }
+
+  /* FOOTER */
+  footer { background: var(--surface); border-top: 1px solid var(--border-soft); padding: 80px 60px 40px }
+  .footer-grid { display: grid; grid-template-columns: 1.8fr 1fr 1fr 1fr; gap: 56px; padding-bottom: 56px; border-bottom: 1px solid var(--border-soft) }
+  .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 30px; color: var(--ink); letter-spacing: .1em; margin-bottom: 14px }
+  .footer-desc { font-size: 13px; line-height: 1.9; color: var(--muted); font-weight: 300; margin-bottom: 24px; max-width: 240px }
+  .footer-social { display: flex; gap: 10px; margin-bottom: 20px }
+  .social-link { width: 36px; height: 36px; border: 1px solid var(--border-soft); display: flex; align-items: center; justify-content: center; font-size: 14px; text-decoration: none; color: var(--muted); transition: all .2s }
+  .social-link:hover { border-color: var(--lime); color: var(--lime) }
+  .footer-col-title { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; letter-spacing: .32em; text-transform: uppercase; color: var(--ink); margin-bottom: 20px; font-weight: 600 }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 11px }
+  .footer-links a { font-size: 13px; color: var(--muted); text-decoration: none; font-weight: 300; transition: color .2s }
+  .footer-links a:hover { color: var(--lime) }
+  .footer-contact-list { list-style: none; display: flex; flex-direction: column; gap: 13px }
+  .contact-item { display: flex; gap: 10px }
+  .ci-icon { font-size: 14px; flex-shrink: 0 }
+  .ci-text { font-size: 12px; color: var(--muted); font-weight: 300; line-height: 1.65 }
+  .ci-text a { color: inherit; text-decoration: none; transition: color .2s }
+  .ci-text a:hover { color: var(--lime) }
+  .footer-bottom { padding-top: 28px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px }
+  .footer-legal { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; letter-spacing: .12em; color: rgba(240,240,240,.2); text-transform: uppercase }
+  .footer-legal-links { display: flex; gap: 20px }
+  .footer-legal-links a { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; letter-spacing: .12em; color: rgba(240,240,240,.2); text-decoration: none; text-transform: uppercase; transition: color .2s }
+  .footer-legal-links a:hover { color: var(--lime) }
+  .footer-powered { font-family: 'Barlow Condensed', sans-serif; font-size: 9px; letter-spacing: .25em; color: rgba(240,240,240,.1); text-transform: uppercase }
+
+  /* STICKY */
+  .sticky-cta { display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 400; background: rgba(10,10,10,.97); border-top: 2px solid var(--lime); padding: 12px 16px; gap: 10px; flex-direction: column; backdrop-filter: blur(12px) }
+  .sticky-label { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; letter-spacing: .28em; text-transform: uppercase; text-align: center; color: var(--lime) }
+  .sticky-buttons { display: flex; gap: 8px }
+  .s-cart { flex: 1; background: transparent; border: 1px solid var(--border); color: var(--muted); padding: 12px; font-size: 11px; font-family: 'Barlow Condensed', sans-serif; letter-spacing: .22em; text-transform: uppercase; cursor: pointer }
+  .s-shop { flex: 1.5; background: var(--lime); border: none; color: #000; padding: 12px; font-size: 11px; font-family: 'Barlow Condensed', sans-serif; letter-spacing: .22em; text-transform: uppercase; font-weight: 700; cursor: pointer }
+
+  /* SWITCHER */
+  .switcher { position: fixed; bottom: 30px; right: 30px; z-index: 500 }
+  .switcher-btn { background: var(--surface); color: var(--lime); border: 1px solid var(--border); width: 50px; height: 50px; border-radius: 50%; font-size: 18px; cursor: pointer; box-shadow: 0 6px 24px rgba(0,0,0,.5); display: flex; align-items: center; justify-content: center }
+  .switcher-menu { position: absolute; bottom: 62px; right: 0; background: var(--card); border: 1px solid var(--border); padding: 14px 18px; min-width: 220px; display: none; box-shadow: 0 12px 40px rgba(0,0,0,.7) }
+  .switcher-menu.open { display: block }
+  .sm-title { font-family: 'Barlow Condensed', sans-serif; font-size: 9px; letter-spacing: .32em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px }
+  .s-opt { display: flex; align-items: center; gap: 10px; padding: 8px 0; font-size: 12px; color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--border-soft); transition: color .2s }
+  .s-opt:last-child { border-bottom: none }
+  .s-opt.active { color: var(--lime) }
+  .s-dot { width: 7px; height: 7px; border-radius: 50%; border: 1.5px solid var(--lime) }
+  .s-dot.filled { background: var(--lime) }
+
+  .fade-up { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s ease }
+  .fade-up.visible { opacity: 1; transform: translateY(0) }
+  .stagger-1 { transition-delay: .1s } .stagger-2 { transition-delay: .2s } .stagger-3 { transition-delay: .3s }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 16px }
+    .nav-links { display: none }
+    .hero { grid-template-columns: 1fr; min-height: 100svh }
+    .hero-left { padding: 60px 24px; justify-content: flex-end }
+    .hero-right { height: 70vw; position: absolute; inset: 0; z-index: 0; opacity: .35 }
+    .hero-right::before { display: none }
+    .proof-bar { grid-template-columns: repeat(2,1fr) }
+    .section { padding: 60px 20px }
+    .collection-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto }
+    .cg-hero { grid-row: auto }
+    .cg-hero .pt-img { aspect-ratio: 3/4 }
+    .drop-feature { grid-template-columns: 1fr }
+    .df-img { height: 65vw }
+    .df-content { padding: 48px 24px }
+    .cat-grid { grid-template-columns: 1fr 1fr }
+    .testi-grid { grid-template-columns: 1fr }
+    .banner { height: auto; padding: 60px 0 }
+    .banner-content { padding: 48px 24px }
+    .footer-nl { grid-template-columns: 1fr; padding: 48px 24px; gap: 28px }
+    .nl-form { flex-direction: column }
+    footer { padding: 56px 20px 32px }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px }
+    .footer-bottom { flex-direction: column; align-items: flex-start }
+    .sticky-cta { display: flex }
+    .switcher { bottom: 100px; right: 12px }
+  }
+</style>
+</head>
+<body>
+
+<div class="expiry">🔥 Drop preview expires in: <strong id="countdown">6d 23h 41m</strong> — Limited stock. No restocks.</div>
+
+<nav>
+  <div class="nav-brand">Your Brand</div>
+  <ul class="nav-links">
+    <li><a href="#">New Drop</a></li>
+    <li><a href="#">Tops</a></li>
+    <li><a href="#">Bottoms</a></li>
+    <li><a href="#">Outerwear</a></li>
+    <li><a href="#">Collab</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="nav-cart">Cart (0)</button>
+    <button class="nav-shop">Shop Now</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="drop-badge">
+      <span class="drop-dot"></span>
+      <span class="drop-text">Live Now — SS26 Drop</span>
+    </div>
+    <h1 class="hero-title">
+      <span class="line">WEAR</span>
+      <span class="line">LOUDER.</span>
+      <span class="line">EXIST</span>
+    </h1>
+    <p class="hero-sub">The SS26 collection arrives with zero apology. Oversized silhouettes, technical fabrics, and colourways that don't ask for permission.</p>
+    <div class="hero-cta-row">
+      <a href="#" class="btn-lime">Shop the Drop →</a>
+      <a href="#" class="btn-outline-lime">See Lookbook</a>
+    </div>
+    <div class="hero-countdown">
+      <div class="hc-label">Drop closes in</div>
+      <div class="hc-timer">
+        <div class="hct"><span class="hct-num" id="h-days">06</span><span class="hct-label">Days</span></div>
+        <span class="hct-sep">:</span>
+        <div class="hct"><span class="hct-num" id="h-hrs">23</span><span class="hct-label">Hrs</span></div>
+        <span class="hct-sep">:</span>
+        <div class="hct"><span class="hct-num" id="h-min">41</span><span class="hct-label">Min</span></div>
+        <span class="hct-sep">:</span>
+        <div class="hct"><span class="hct-num" id="h-sec">00</span><span class="hct-label">Sec</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=900&q=90" alt="" class="hero-img-main">
+    <div class="stock-badge">🔥 Only 47 left</div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    WEAR LOUDER <span>✦</span> SS26 DROP <span>✦</span> LIMITED PIECES <span>✦</span> NO RESTOCK <span>✦</span> FREE DELIVERY UAE <span>✦</span> RETURNS 14 DAYS <span>✦</span>
+    WEAR LOUDER <span>✦</span> SS26 DROP <span>✦</span> LIMITED PIECES <span>✦</span> NO RESTOCK <span>✦</span> FREE DELIVERY UAE <span>✦</span> RETURNS 14 DAYS <span>✦</span>
+  </div>
+</div>
+
+<!-- PROOF BAR -->
+<div class="proof-bar">
+  <div class="pb-item fade-up"><div class="pb-num">12K+</div><div class="pb-label">Pieces Dropped</div></div>
+  <div class="pb-item fade-up stagger-1"><div class="pb-num">48H</div><div class="pb-label">UAE Delivery</div></div>
+  <div class="pb-item fade-up stagger-2"><div class="pb-num">4.9★</div><div class="pb-label">Verified Reviews</div></div>
+  <div class="pb-item fade-up stagger-3"><div class="pb-num">0%</div><div class="pb-label">Restock Policy</div></div>
+</div>
+
+<!-- COLLECTION GRID -->
+<section class="section alt">
+  <div class="section-header fade-up">
+    <div><div class="s-label">SS26 Collection</div><h2 class="s-title">THE DROP.<br><span class="accent">NOW.</span></h2></div>
+    <a href="#" class="btn-lime">All Pieces</a>
+  </div>
+  <div class="collection-grid">
+    <div class="product-tile cg-hero">
+      <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=700&q=85" alt="" class="pt-img">
+      <div class="pt-label"><span class="pt-cat">Hero Piece</span><span class="pt-pill">Last 12</span></div>
+      <div class="pt-hover"><div class="pt-tag">Outerwear</div><div class="pt-name">OVERSIZED CARGO JACKET</div><div class="pt-price">AED 890</div><a href="#" class="pt-add">Add to Cart</a></div>
+    </div>
+    <div class="product-tile cg-small">
+      <img src="https://images.unsplash.com/photo-1529139574466-a303027614b9?w=600&q=85" alt="" class="pt-img" style="aspect-ratio:3/4;height:100%;object-fit:cover">
+      <div class="pt-label"><span class="pt-cat">Tops</span><span class="pt-pill">New</span></div>
+      <div class="pt-hover"><div class="pt-tag">Essential</div><div class="pt-name">LOGO HEAVY TEE</div><div class="pt-price">AED 320</div><a href="#" class="pt-add">Add to Cart</a></div>
+    </div>
+    <div class="product-tile cg-small">
+      <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600&q=85" alt="" class="pt-img" style="aspect-ratio:3/4;height:100%;object-fit:cover">
+      <div class="pt-label"><span class="pt-cat">Bottoms</span><span class="pt-pill">7 Left</span></div>
+      <div class="pt-hover"><div class="pt-tag">Statement</div><div class="pt-name">WIDE LEG TROUSER</div><div class="pt-price">AED 560</div><a href="#" class="pt-add">Add to Cart</a></div>
+    </div>
+    <div class="product-tile cg-small">
+      <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=600&q=85" alt="" class="pt-img" style="aspect-ratio:3/4;height:100%;object-fit:cover">
+      <div class="pt-label"><span class="pt-cat">Collab</span><span class="pt-pill">Exclusive</span></div>
+      <div class="pt-hover"><div class="pt-tag">Limited</div><div class="pt-name">COLLAB HOODIE</div><div class="pt-price">AED 740</div><a href="#" class="pt-add">Add to Cart</a></div>
+    </div>
+    <div class="product-tile cg-small">
+      <img src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=600&q=85" alt="" class="pt-img" style="aspect-ratio:3/4;height:100%;object-fit:cover">
+      <div class="pt-label"><span class="pt-cat">Dress</span></div>
+      <div class="pt-hover"><div class="pt-tag">Signature</div><div class="pt-name">SATIN SLIP DRESS</div><div class="pt-price">AED 680</div><a href="#" class="pt-add">Add to Cart</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-row">
+  <div class="marquee-inner">
+    <span class="fill">WEAR THE</span> DIFFERENCE <span>✦</span> <span class="fill">DROP CULTURE</span> DONE RIGHT <span>✦</span> <span class="fill">EVERY PIECE</span> NUMBERED <span>✦</span> <span class="fill">NO FAKES</span> NO REPROS <span>✦</span>&nbsp;
+    <span class="fill">WEAR THE</span> DIFFERENCE <span>✦</span> <span class="fill">DROP CULTURE</span> DONE RIGHT <span>✦</span> <span class="fill">EVERY PIECE</span> NUMBERED <span>✦</span> <span class="fill">NO FAKES</span> NO REPROS <span>✦</span>&nbsp;
+  </div>
+</div>
+
+<!-- FEATURE DROP -->
+<div class="drop-feature">
+  <div class="df-img"><img src="https://images.unsplash.com/photo-1551232864-3f0890e580d9?w=900&q=85" alt=""></div>
+  <div class="df-content fade-up">
+    <p class="df-edition">Drop 01 · SS26</p>
+    <h2 class="df-title">OVERSIZED<br>CARGO<br><span class="hl">JACKET.</span></h2>
+    <p class="df-desc">14 pockets. Zero compromise. The jacket built for people who carry more than they say. Heavyweight ripstop, matte gunmetal hardware, and a silhouette designed to be noticed.</p>
+    <div class="df-specs">
+      <div class="df-spec">Heavyweight ripstop — 380gsm</div>
+      <div class="df-spec">14 functional pockets</div>
+      <div class="df-spec">Matte gunmetal YKK hardware</div>
+      <div class="df-spec">Numbered — only 200 produced</div>
+    </div>
+    <div class="df-limited"><span class="dfl-dot"></span><span class="dfl-text">Only 47 remaining — No restock</span></div>
+    <a href="#" class="btn-lime">Add to Cart — AED 890</a>
+  </div>
+</div>
+
+<!-- CATEGORIES -->
+<section class="section">
+  <div class="section-header fade-up">
+    <div><div class="s-label">Shop by Category</div><h2 class="s-title">FIND YOUR<br><span class="accent">LANE.</span></h2></div>
+  </div>
+  <div class="cat-grid">
+    <div class="cat-card fade-up"><img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=500&q=85" alt=""><div class="cat-overlay"></div><div class="cat-info"><div class="cat-name">Outerwear</div><div class="cat-count">24 pieces</div></div><div class="cat-arrow">→</div></div>
+    <div class="cat-card fade-up stagger-1"><img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=500&q=85" alt=""><div class="cat-overlay"></div><div class="cat-info"><div class="cat-name">Tops</div><div class="cat-count">38 pieces</div></div><div class="cat-arrow">→</div></div>
+    <div class="cat-card fade-up stagger-2"><img src="https://images.unsplash.com/photo-1516762689617-e1cffcef479d?w=500&q=85" alt=""><div class="cat-overlay"></div><div class="cat-info"><div class="cat-name">Dresses</div><div class="cat-count">19 pieces</div></div><div class="cat-arrow">→</div></div>
+    <div class="cat-card fade-up stagger-3"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=85" alt=""><div class="cat-overlay"></div><div class="cat-info"><div class="cat-name">Footwear</div><div class="cat-count">12 pieces</div></div><div class="cat-arrow">→</div></div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="section alt">
+  <div class="section-header fade-up">
+    <div><div class="s-label">Verified Wearers</div><h2 class="s-title">WORN &<br><span class="accent">LOVED.</span></h2></div>
+    <span style="font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--lime)">4.9★ · 2,400 Reviews</span>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card fade-up"><div class="tc-stars">★★★★★</div><p class="tc-text">"The cargo jacket has been the most-asked-about piece I have ever worn in my life. Every single day someone stops me. Absolute fire."</p><div class="tc-author">Khaled M.</div><div class="tc-item">Cargo Jacket · Dubai</div></div>
+    <div class="testi-card fade-up stagger-1"><div class="tc-stars">★★★★★</div><p class="tc-text">"The fabric quality is genuinely on another level. I have spent more at bigger brands for less. This is what fashion should feel like to touch."</p><div class="tc-author">Sara A.</div><div class="tc-item">Satin Slip Dress · Abu Dhabi</div></div>
+    <div class="testi-card fade-up stagger-2"><div class="tc-stars">★★★★★</div><p class="tc-text">"Bought the collab hoodie on drop day. Wore it once. Got offered double what I paid for it. Keeping it forever. These drops are the real thing."</p><div class="tc-author">Yusuf T.</div><div class="tc-item">Collab Hoodie · Dubai</div></div>
+  </div>
+</section>
+
+<!-- BANNER -->
+<div class="banner">
+  <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=1600&q=85" alt="">
+  <div class="banner-content fade-up">
+    <h1 class="banner-title">NEXT<br>DROP.<br><span class="hl">NOTIFY.</span></h1>
+    <p class="banner-sub">Register before midnight to get first access to the SS26 second drop. 500 pieces. No restock. No second chances.</p>
+    <div class="banner-ctas">
+      <a href="#" class="btn-lime">Register for Early Access</a>
+      <a href="#" class="btn-outline-lime">Current Collection</a>
+    </div>
+  </div>
+</div>
+
+<!-- NEWSLETTER -->
+<div class="footer-nl">
+  <div class="fade-up"><h3 class="nl-title">IN THE LOOP.<br>FIRST.</h3><p class="nl-sub">Drop alerts, exclusive access, no spam</p></div>
+  <div class="fade-up stagger-1">
+    <div class="nl-form"><input class="nl-input" type="email" placeholder="Drop your email"><button class="nl-btn">Subscribe</button></div>
+    <p class="nl-note">First access to every drop. Unsubscribe anytime.</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">Your Brand</div>
+      <p class="footer-desc">Drop-based fashion for those who move differently. Limited runs. No restocks. Built to last.</p>
+      <div class="footer-social">
+        <a href="#" class="social-link">📷</a>
+        <a href="#" class="social-link">𝕏</a>
+        <a href="#" class="social-link">▶</a>
+        <a href="#" class="social-link">💬</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Shop</div>
+      <ul class="footer-links"><li><a href="#">New Drop</a></li><li><a href="#">Outerwear</a></li><li><a href="#">Tops</a></li><li><a href="#">Bottoms</a></li><li><a href="#">Dresses</a></li><li><a href="#">Collabs</a></li></ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Info</div>
+      <ul class="footer-links"><li><a href="#">About</a></li><li><a href="#">Drop Calendar</a></li><li><a href="#">Size Guide</a></li><li><a href="#">Authenticity</a></li><li><a href="#">Sustainability</a></li><li><a href="#">Press</a></li></ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Support</div>
+      <ul class="footer-contact-list">
+        <li class="contact-item"><span class="ci-icon">📍</span><span class="ci-text">Alserkal Avenue, Al Quoz<br>Dubai, UAE</span></li>
+        <li class="contact-item"><span class="ci-icon">💬</span><span class="ci-text"><a href="#">WhatsApp Support</a></span></li>
+        <li class="contact-item"><span class="ci-icon">✉️</span><span class="ci-text"><a href="#"><span class="__cf_email__" data-cfemail="f397819c8380b38a9c86819181929d97dd9296">[email&#160;protected]</span></a></span></li>
+        <li class="contact-item"><span class="ci-icon">🕐</span><span class="ci-text">Support: Daily 9am–11pm<br>Delivery: 48hrs UAE</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-legal">© 2026 Your Brand. All pieces numbered. No restocks.</div>
+    <div class="footer-legal-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Returns</a><a href="#">Authenticity</a></div>
+    <div class="footer-powered">Preview by MorningStar.ai</div>
+  </div>
+</footer>
+
+<div class="sticky-cta">
+  <div class="sticky-label">SS26 Drop — 47 pieces remaining</div>
+  <div class="sticky-buttons">
+    <button class="s-cart">View Cart</button>
+    <button class="s-shop">Shop the Drop →</button>
+  </div>
+</div>
+
+<div class="switcher">
+  <div class="switcher-menu" id="sm">
+    <div class="sm-title">Apparel Variants</div>
+    <a class="s-opt" href="apparel-editorial.html"><div class="s-dot"></div> Editorial — Dark Luxury</a>
+    <a class="s-opt active" href="#"><div class="s-dot filled"></div> Vivace — Streetwear</a>
+    <a class="s-opt" href="apparel-lumiere.html"><div class="s-dot"></div> Lumière — Quiet Luxury</a>
+  </div>
+  <button class="switcher-btn" onclick="document.getElementById('sm').classList.toggle('open')">🎨</button>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const obs = new IntersectionObserver(e => e.forEach(i => { if(i.isIntersecting) i.target.classList.add('visible') }), { threshold: .08 });
+document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+// Countdown
+function updateCountdown() {
+  const end = new Date(Date.now() + 7*864e5);
+  const diff = end - Date.now();
+  const d = Math.floor(diff/864e5), h = Math.floor(diff%864e5/36e5), m = Math.floor(diff%36e5/6e4), s = Math.floor(diff%6e4/1e3);
+  document.getElementById('countdown').textContent = `${d}d ${h}h ${m}m`;
+  ['h-days','h-hrs','h-min','h-sec'].forEach((id,i) => {
+  

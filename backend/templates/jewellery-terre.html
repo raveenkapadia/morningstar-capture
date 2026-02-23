@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jewellery Redesign Preview — Terre</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,200;0,300;0,400;1,200;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --rose:#C9836E;
+    --rose-light:#E8C4B8;
+    --rose-pale:#F7EDE8;
+    --cream:#FBF8F5;
+    --white:#FFFFFF;
+    --ink:#2C1810;
+    --muted:rgba(44,24,16,.45);
+    --border:rgba(44,24,16,.09);
+    --surface:#F3EDE8;
+    --gold:#B8956A;
+  }
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--cream);font-family:'Jost',sans-serif;color:var(--ink);overflow-x:hidden}
+
+  .expiry{background:var(--rose);color:rgba(251,248,245,.85);text-align:center;padding:9px 20px;font-size:10px;letter-spacing:.28em;text-transform:uppercase;font-weight:300}
+  .expiry strong{color:#fff;font-weight:400}
+
+  nav{position:sticky;top:0;z-index:200;background:rgba(251,248,245,.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:0 52px;height:64px;display:flex;align-items:center;justify-content:space-between}
+  .nav-brand{font-family:'Fraunces',serif;font-size:22px;font-weight:200;letter-spacing:.14em;color:var(--rose);text-transform:uppercase;font-style:italic}
+  .nav-links{display:flex;gap:32px;list-style:none}
+  .nav-links a{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);text-decoration:none;font-weight:300;transition:color .2s}
+  .nav-links a:hover{color:var(--rose)}
+  .nav-cta{background:var(--rose);color:#fff;border:none;padding:9px 22px;font-size:9px;letter-spacing:.28em;text-transform:uppercase;cursor:pointer;font-family:'Jost',sans-serif;transition:background .2s}
+  .nav-cta:hover{background:#b06f5e}
+
+  /* HERO — FULL SCREEN WARM */
+  .hero{position:relative;height:100svh;min-height:600px;overflow:hidden;display:flex;align-items:center}
+  .hero-bg{position:absolute;inset:0}
+  .hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center top;filter:brightness(.45) saturate(.7);transition:transform 14s ease}
+  .hero:hover .hero-bg img{transform:scale(1.04)}
+  .hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,rgba(44,24,16,.85) 0%,rgba(44,24,16,.4) 50%,transparent 80%)}
+  .hero-bg::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 60%,rgba(201,131,110,.15) 0%,transparent 50%)}
+  .hero-content{position:relative;z-index:10;padding:0 80px;max-width:680px}
+  .hero-season{font-size:9px;letter-spacing:.5em;text-transform:uppercase;color:rgba(232,196,184,.55);margin-bottom:20px;font-weight:300}
+  .hero-title{font-family:'Fraunces',serif;font-size:clamp(50px,8vw,108px);font-weight:200;line-height:.95;color:#fff;margin-bottom:24px;letter-spacing:-.01em}
+  .hero-title em{font-style:italic;color:var(--rose-light);display:block}
+  .hero-tagline{font-size:14px;font-weight:300;color:rgba(255,255,255,.6);margin-bottom:48px;line-height:1.85;max-width:420px}
+  .hero-actions{display:flex;gap:16px;flex-wrap:wrap}
+  .btn-rose{display:inline-block;background:var(--rose);color:#fff;padding:14px 40px;font-size:9px;letter-spacing:.32em;text-transform:uppercase;text-decoration:none;font-weight:400;border:1px solid var(--rose);transition:all .25s}
+  .btn-rose:hover{background:transparent;color:var(--rose-light);border-color:var(--rose-light)}
+  .btn-ghost{display:inline-block;background:transparent;color:rgba(255,255,255,.65);padding:13px 40px;font-size:9px;letter-spacing:.32em;text-transform:uppercase;text-decoration:none;font-weight:300;border:1px solid rgba(255,255,255,.25);transition:all .25s}
+  .btn-ghost:hover{border-color:var(--rose-light);color:var(--rose-light)}
+  .hero-scroll{position:absolute;bottom:36px;right:52px;z-index:10;display:flex;flex-direction:column;align-items:center;gap:10px}
+  .hero-scroll span{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.3);writing-mode:vertical-rl;transform:rotate(180deg)}
+  .scroll-line{width:1px;height:48px;background:linear-gradient(to bottom,transparent,rgba(201,131,110,.5))}
+
+  /* TICKER */
+  .ticker{background:var(--ink);padding:12px 0;overflow:hidden}
+  .ticker-inner{display:inline-block;white-space:nowrap;animation:slide 28s linear infinite;font-size:9px;letter-spacing:.38em;text-transform:uppercase;color:rgba(251,248,245,.3);font-weight:300}
+  .ticker-inner span{margin:0 36px;color:var(--rose)}
+  @keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* PROOF */
+  .proof-bar{display:grid;grid-template-columns:repeat(4,1fr);background:var(--surface);border-bottom:1px solid var(--border)}
+  .proof-item{padding:32px 20px;text-align:center;border-right:1px solid var(--border)}
+  .proof-item:last-child{border-right:none}
+  .pi-num{font-family:'Fraunces',serif;font-size:40px;font-weight:200;color:var(--rose);line-height:1;margin-bottom:8px;font-style:italic}
+  .pi-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-weight:300}
+
+  .section{padding:100px 60px}
+  .section.alt{background:var(--surface)}
+  .section.white{background:var(--white)}
+  .section-label{font-size:9px;letter-spacing:.42em;text-transform:uppercase;color:var(--rose);margin-bottom:14px;font-weight:300}
+  .section-title{font-family:'Fraunces',serif;font-size:clamp(34px,4.5vw,58px);font-weight:200;color:var(--ink);line-height:1.1}
+  .section-title em{font-style:italic;color:var(--rose)}
+
+  /* INTRO */
+  .intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:end}
+  .intro-desc{font-size:14px;line-height:2.1;color:var(--muted);font-weight:300;margin-bottom:32px;max-width:420px}
+
+  /* PRODUCTS */
+  .product-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+  .product-card{cursor:pointer}
+  .product-img{position:relative;overflow:hidden;background:var(--surface);margin-bottom:18px;aspect-ratio:3/4}
+  .product-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.88) saturate(.65);transition:transform .7s,filter .4s}
+  .product-card:hover .product-img img{transform:scale(1.05);filter:brightness(.7) saturate(.5)}
+  .product-overlay{position:absolute;inset:0;background:rgba(44,24,16,.7);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .35s}
+  .product-card:hover .product-overlay{opacity:1}
+  .po-btn{background:var(--rose-pale);color:var(--rose);border:none;padding:11px 28px;font-size:9px;letter-spacing:.28em;text-transform:uppercase;cursor:pointer;font-family:'Jost',sans-serif}
+  .product-tag{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--rose);margin-bottom:6px;font-weight:300}
+  .product-name{font-family:'Fraunces',serif;font-size:19px;font-weight:300;color:var(--ink);margin-bottom:6px;font-style:italic}
+  .product-material{font-size:11px;color:var(--muted);margin-bottom:10px;font-weight:300}
+  .product-price{font-size:13px;color:var(--rose)}
+
+  /* SPLIT FEATURE */
+  .feature-split{display:grid;grid-template-columns:1fr 1fr;min-height:600px}
+  .split-img{overflow:hidden}
+  .split-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.82) saturate(.6);transition:transform 10s}
+  .split-img:hover img{transform:scale(1.03)}
+  .split-content{display:flex;flex-direction:column;justify-content:center;padding:80px;background:var(--cream)}
+  .sc-num{font-family:'Fraunces',serif;font-size:120px;font-weight:200;color:rgba(201,131,110,.07);line-height:1;margin-bottom:-28px;font-style:italic}
+  .sc-label{font-size:9px;letter-spacing:.42em;text-transform:uppercase;color:var(--rose);margin-bottom:20px}
+  .sc-title{font-family:'Fraunces',serif;font-size:clamp(28px,3.5vw,50px);font-weight:200;color:var(--ink);line-height:1.1;margin-bottom:20px}
+  .sc-title em{font-style:italic;color:var(--rose)}
+  .sc-desc{font-size:13px;line-height:2.1;color:var(--muted);font-weight:300;margin-bottom:16px;max-width:360px}
+  .sc-points{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:36px}
+  .sc-points li{display:flex;gap:12px;font-size:12px;color:var(--muted);font-weight:300}
+  .sc-points li::before{content:'✦';color:var(--rose);font-size:10px;margin-top:1px;flex-shrink:0}
+
+  /* CRAFT CARDS */
+  .craft-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
+  .craft-card{background:var(--white);padding:48px 36px;text-align:center}
+  .craft-icon{font-size:28px;margin-bottom:18px}
+  .craft-num{font-family:'Fraunces',serif;font-size:44px;font-weight:200;color:rgba(201,131,110,.15);margin-bottom:8px;font-style:italic}
+  .craft-title{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--rose);margin-bottom:12px;font-weight:400}
+  .craft-desc{font-size:13px;line-height:1.9;color:var(--muted);font-weight:300}
+
+  /* FULL WIDTH BANNER */
+  .banner{position:relative;height:60vh;min-height:400px;overflow:hidden;display:flex;align-items:center;justify-content:flex-end}
+  .banner img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.3) saturate(.5)}
+  .banner::after{content:'';position:absolute;inset:0;background:linear-gradient(to left,rgba(44,24,16,.88) 0%,transparent 60%)}
+  .banner-content{position:relative;z-index:2;padding:80px;max-width:580px;text-align:right}
+  .banner-rule{width:48px;height:1px;background:var(--rose);margin:0 0 28px auto}
+  .banner-label{font-size:9px;letter-spacing:.42em;text-transform:uppercase;color:rgba(232,196,184,.55);margin-bottom:18px}
+  .banner-title{font-family:'Fraunces',serif;font-size:clamp(36px,5vw,66px);font-weight:200;color:#fff;line-height:1.05;margin-bottom:24px;font-style:italic}
+  .banner-sub{font-size:14px;color:rgba(255,255,255,.5);font-weight:300;margin-bottom:36px;line-height:1.8}
+  .banner-actions{display:flex;gap:14px;justify-content:flex-end}
+
+  /* LOVE STORY */
+  .love-story{display:grid;grid-template-columns:1fr 1fr;min-height:520px}
+  .ls-img{overflow:hidden}
+  .ls-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.78) saturate(.6);transition:transform 10s}
+  .ls-img:hover img{transform:scale(1.03)}
+  .ls-content{background:var(--rose);display:flex;flex-direction:column;justify-content:center;padding:80px}
+  .ls-label{font-size:9px;letter-spacing:.42em;text-transform:uppercase;color:rgba(251,248,245,.5);margin-bottom:20px}
+  .ls-title{font-family:'Fraunces',serif;font-size:clamp(30px,3.5vw,50px);font-weight:200;color:#fff;line-height:1.1;margin-bottom:20px;font-style:italic}
+  .ls-desc{font-size:13px;line-height:2;color:rgba(251,248,245,.65);font-weight:300;margin-bottom:36px;max-width:360px}
+  .btn-cream{display:inline-block;background:var(--cream);color:var(--rose);padding:13px 36px;font-size:9px;letter-spacing:.32em;text-transform:uppercase;text-decoration:none;font-weight:400;align-self:flex-start;transition:background .2s}
+  .btn-cream:hover{background:#fff}
+
+  /* REVIEWS */
+  .reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .review-card{border:1px solid var(--border);padding:40px 32px;background:var(--white)}
+  .r-stars{letter-spacing:3px;color:var(--rose);font-size:12px;margin-bottom:16px}
+  .r-quote{font-family:'Fraunces',serif;font-size:44px;color:rgba(201,131,110,.2);line-height:.6;margin-bottom:14px;font-style:italic}
+  .r-text{font-family:'Fraunces',serif;font-size:16px;font-style:italic;line-height:1.9;color:rgba(44,24,16,.7);margin-bottom:20px;font-weight:300}
+  .r-author{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+  .r-piece{font-size:10px;color:var(--rose);margin-top:4px}
+
+  /* NEWSLETTER */
+  .footer-nl{background:var(--ink);padding:64px 60px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+  .nl-label{font-size:9px;letter-spacing:.42em;text-transform:uppercase;color:rgba(251,248,245,.4);margin-bottom:14px}
+  .nl-title{font-family:'Fraunces',serif;font-size:38px;font-weight:200;color:#fff;line-height:1.2;font-style:italic}
+  .nl-form{display:flex}
+  .nl-input{flex:1;padding:14px 20px;background:rgba(255,255,255,.06);border:1px solid rgba(201,131,110,.25);color:#fff;font-family:'Jost',sans-serif;font-size:13px;outline:none;border-right:none}
+  .nl-input::placeholder{color:rgba(255,255,255,.3);font-size:12px}
+  .nl-submit{background:var(--rose);color:#fff;border:none;padding:14px 28px;font-family:'Jost',sans-serif;font-size:9px;letter-spacing:.28em;text-transform:uppercase;cursor:pointer;white-space:nowrap;transition:background .2s}
+  .nl-submit:hover{background:#b06f5e}
+  .nl-note{font-size:11px;color:rgba(251,248,245,.25);margin-top:12px;font-weight:300}
+
+  footer{background:#1e0f0a;padding:80px 60px 40px}
+  .footer-grid{display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:56px;padding-bottom:56px;border-bottom:1px solid rgba(201,131,110,.1)}
+  .footer-logo{font-family:'Fraunces',serif;font-size:26px;font-weight:200;color:rgba(251,248,245,.9);letter-spacing:.12em;text-transform:uppercase;margin-bottom:16px;font-style:italic}
+  .footer-brand-desc{font-size:13px;line-height:1.9;color:rgba(251,248,245,.3);font-weight:300;margin-bottom:28px;max-width:240px}
+  .footer-social{display:flex;gap:12px}
+  .social-link{width:36px;height:36px;border:1px solid rgba(201,131,110,.2);display:flex;align-items:center;justify-content:center;font-size:13px;text-decoration:none;color:rgba(251,248,245,.35);transition:all .2s}
+  .social-link:hover{border-color:var(--rose);color:var(--rose)}
+  .footer-col-title{font-size:9px;letter-spacing:.35em;text-transform:uppercase;color:rgba(251,248,245,.8);margin-bottom:24px;font-weight:400}
+  .footer-links-list{list-style:none;display:flex;flex-direction:column;gap:12px}
+  .footer-links-list a{font-size:13px;color:rgba(251,248,245,.32);text-decoration:none;font-weight:300;transition:color .2s}
+  .footer-links-list a:hover{color:var(--rose-light)}
+  .footer-contact-list{list-style:none;display:flex;flex-direction:column;gap:14px}
+  .contact-item{display:flex;gap:12px}
+  .contact-icon{font-size:14px;flex-shrink:0}
+  .contact-text{font-size:12px;color:rgba(251,248,245,.32);font-weight:300;line-height:1.7}
+  .contact-text a{color:inherit;text-decoration:none;transition:color .2s}
+  .contact-text a:hover{color:var(--rose)}
+  .footer-bottom{padding-top:32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+  .footer-legal{font-size:11px;color:rgba(251,248,245,.18)}
+  .footer-legal-links{display:flex;gap:24px}
+  .footer-legal-links a{font-size:11px;color:rgba(251,248,245,.18);text-decoration:none;transition:color .2s}
+  .footer-legal-links a:hover{color:rgba(251,248,245,.5)}
+  .footer-powered{font-size:9px;letter-spacing:.22em;color:rgba(251,248,245,.12);text-transform:uppercase}
+
+  .sticky-cta{display:none;position:fixed;bottom:0;left:0;right:0;z-index:300;background:rgba(251,248,245,.97);border-top:1px solid var(--border);padding:14px 20px;flex-direction:column;gap:10px;backdrop-filter:blur(12px)}
+  .sticky-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;text-align:center;color:var(--muted)}
+  .sticky-buttons{display:flex;gap:10px}
+  .s-book{flex:1;background:transparent;border:1px solid var(--border);color:var(--rose);padding:13px;font-size:9px;letter-spacing:.25em;text-transform:uppercase;cursor:pointer;font-family:'Jost',sans-serif}
+  .s-buy{flex:1.5;background:var(--rose);border:none;color:#fff;padding:13px;font-size:9px;letter-spacing:.25em;text-transform:uppercase;cursor:pointer;font-family:'Jost',sans-serif}
+
+  .switcher{position:fixed;bottom:30px;right:30px;z-index:400}
+  .switcher-btn{background:var(--ink);color:var(--rose-light);border:1px solid rgba(201,131,110,.2);width:50px;height:50px;border-radius:50%;font-size:18px;cursor:pointer;box-shadow:0 6px 28px rgba(44,24,16,.3);display:flex;align-items:center;justify-content:center}
+  .switcher-menu{position:absolute;bottom:62px;right:0;background:var(--cream);border:1px solid var(--border);padding:16px 20px;min-width:220px;display:none;box-shadow:0 12px 40px rgba(44,24,16,.1)}
+  .switcher-menu.open{display:block}
+  .sm-title{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+  .s-opt{display:flex;align-items:center;gap:12px;padding:9px 0;font-size:12px;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--border);transition:color .2s;font-weight:300}
+  .s-opt:last-child{border-bottom:none}
+  .s-opt.active{color:var(--rose)}
+  .s-dot{width:7px;height:7px;border-radius:50%;border:1.5px solid var(--rose)}
+  .s-dot.filled{background:var(--rose)}
+
+  .fade-up{opacity:0;transform:translateY(28px);transition:opacity .9s ease,transform .9s ease}
+  .fade-up.visible{opacity:1;transform:translateY(0)}
+  .stagger-1{transition-delay:.1s}.stagger-2{transition-delay:.2s}.stagger-3{transition-delay:.3s}
+
+  @media(max-width:768px){
+    nav{padding:16px 20px}
+    .nav-links{display:none}
+    .hero-content{padding:0 24px}
+    .hero-title{font-size:52px}
+    .hero-scroll{display:none}
+    .proof-bar{grid-template-columns:repeat(2,1fr)}
+    .section{padding:60px 24px}
+    .intro-grid{grid-template-columns:1fr}
+    .product-grid{grid-template-columns:repeat(2,1fr);gap:20px}
+    .feature-split{grid-template-columns:1fr}
+    .split-img{height:65vw}
+    .split-content{padding:44px 24px}
+    .craft-grid{grid-template-columns:1fr}
+    .banner{height:auto;padding:60px 0}
+    .banner-content{padding:48px 24px;text-align:left}
+    .banner-rule{margin:0 0 28px 0}
+    .banner-actions{justify-content:flex-start}
+    .love-story{grid-template-columns:1fr}
+    .ls-img{height:60vw}
+    .ls-content{padding:48px 24px}
+    .reviews-grid{grid-template-columns:1fr}
+    .footer-nl{grid-template-columns:1fr;padding:48px 24px;gap:32px}
+    .nl-form{flex-direction:column}
+    footer{padding:56px 24px 32px}
+    .footer-grid{grid-template-columns:1fr 1fr;gap:36px}
+    .footer-bottom{flex-direction:column;align-items:flex-start}
+    .sticky-cta{display:flex}
+    .switcher{bottom:100px;right:16px}
+  }
+</style>
+</head>
+<body>
+
+<div class="expiry">⏰ Preview expires in: <strong id="countdown">6d 23h 41m</strong> &nbsp;·&nbsp; Crafted exclusively for your brand</div>
+
+<nav>
+  <div class="nav-brand">Your Brand</div>
+  <ul class="nav-links">
+    <li><a href="#">Collections</a></li>
+    <li><a href="#">Bespoke</a></li>
+    <li><a href="#">Bridal</a></li>
+    <li><a href="#">Heritage</a></li>
+  </ul>
+  <button class="nav-cta">Book Appointment</button>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"><img src="https://images.unsplash.com/photo-1573408301185-9519f94f4e12?w=1600&q=90" alt=""></div>
+  <div class="hero-content">
+    <p class="hero-season">Bridal & Fine Jewellery · Handcrafted in Rose Gold</p>
+    <h1 class="hero-title">Jewellery<br>that tells<br><em>your story.</em></h1>
+    <p class="hero-tagline">Rose gold and warm stones. Pieces made with warmth, worn with meaning. Designed for life's most luminous moments.</p>
+    <div class="hero-actions">
+      <a href="#" class="btn-rose">Explore Bridal</a>
+      <a href="#" class="btn-ghost">Our Collections</a>
+    </div>
+  </div>
+  <div class="hero-scroll"><span>Scroll</span><div class="scroll-line"></div></div>
+</section>
+
+<div class="ticker">
+  <div class="ticker-inner">18K Rose Gold · Ethically Sourced · Bridal Specialists · Bespoke Commissions · Free Delivery UAE · 30-Day Returns · 18K Rose Gold · Ethically Sourced · Bridal Specialists · Bespoke Commissions ·</div>
+</div>
+
+<div class="proof-bar">
+  <div class="proof-item fade-up"><div class="pi-num">18K</div><div class="pi-label">Rose Gold</div></div>
+  <div class="proof-item fade-up stagger-1"><div class="pi-num">800+</div><div class="pi-label">Bridal Commissions</div></div>
+  <div class="proof-item fade-up stagger-2"><div class="pi-num">25yr</div><div class="pi-label">Of Craftsmanship</div></div>
+  <div class="proof-item fade-up stagger-3"><div class="pi-num">GIA</div><div class="pi-label">Certified Diamonds</div></div>
+</div>
+
+<section class="section white">
+  <div class="intro-grid fade-up">
+    <div><div class="section-label">Our Collection</div><h2 class="section-title">Made for<br><em>Moments</em></h2></div>
+    <div><p class="intro-desc">Warm metals and glowing stones. We believe jewellery should feel like something — like a homecoming, like a first glance, like a promise made and kept. Each piece begins as a conversation and ends as an heirloom.</p><a href="#" class="btn-rose">View All Collections</a></div>
+  </div>
+</section>
+
+<section class="section alt">
+  <div class="product-grid">
+    <div class="product-card fade-up"><div class="product-img"><img src="https://images.unsplash.com/photo-1603974372039-adc49044b6bd?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">View Piece</button></div></div><div class="product-tag">Engagement</div><div class="product-name">Rosé Solitaire</div><div class="product-material">18K Rose Gold · Round Brilliant</div><div class="product-price">AED 22,000</div></div>
+    <div class="product-card fade-up stagger-1"><div class="product-img"><img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">View Piece</button></div></div><div class="product-tag">Necklace</div><div class="product-name">Blush Pendant</div><div class="product-material">18K Rose Gold · Pink Tourmaline</div><div class="product-price">AED 9,800</div></div>
+    <div class="product-card fade-up stagger-2"><div class="product-img"><img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">View Piece</button></div></div><div class="product-tag">Earrings</div><div class="product-name">Petal Drop</div><div class="product-material">18K Rose Gold · Morganite</div><div class="product-price">AED 7,400</div></div>
+    <div class="product-card fade-up"><div class="product-img"><img src="https://images.unsplash.com/photo-1576022162533-4e38d14c4b5c?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">View Piece</button></div></div><div class="product-tag">Bracelet</div><div class="product-name">Warm Pavé</div><div class="product-material">18K Rose Gold · Champagne Diamonds</div><div class="product-price">AED 18,500</div></div>
+    <div class="product-card fade-up stagger-1"><div class="product-img"><img src="https://images.unsplash.com/photo-1508057198894-247b23fe5ade?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">View Piece</button></div></div><div class="product-tag">Watch</div><div class="product-name">La Belle</div><div class="product-material">Rose Gold · Diamond Dial</div><div class="product-price">AED 96,000</div></div>
+    <div class="product-card fade-up stagger-2"><div class="product-img"><img src="https://images.unsplash.com/photo-1613063022498-c90db543d7f6?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">View Piece</button></div></div><div class="product-tag">Ring</div><div class="product-name">Floral Halo</div><div class="product-material">18K Rose Gold · Ruby Centre</div><div class="product-price">AED 14,200</div></div>
+  </div>
+</section>
+
+<div class="feature-split">
+  <div class="split-img"><img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=900&q=85" alt=""></div>
+  <div class="split-content fade-up">
+    <div class="sc-num">01</div>
+    <p class="sc-label">Feature Piece</p>
+    <h2 class="sc-title">The <em>Rosé</em><br>Solitaire</h2>
+    <p class="sc-desc">A 2-carat round brilliant nestled in an 18-karat rose gold cathedral setting. The warm metal transforms the diamond — giving it blush, giving it life.</p>
+    <ul class="sc-points">
+      <li>2.0ct Round Brilliant Diamond · GIA Certified</li>
+      <li>18K Rose Gold Cathedral Setting</li>
+      <li>Complimentary engraving included</li>
+      <li>Presented in our signature hatbox</li>
+    </ul>
+    <a href="#" class="btn-rose">Enquire Now</a>
+  </div>
+</div>
+
+<section class="section white">
+  <div class="section-label fade-up" style="text-align:center;margin-bottom:14px">Our Craft</div>
+  <h2 class="section-title fade-up" style="text-align:center;margin-bottom:52px">Why Pieces <em>Last Forever</em></h2>
+  <div class="craft-grid">
+    <div class="craft-card fade-up"><div class="craft-icon">🌹</div><div class="craft-num">01</div><div class="craft-title">Rose Gold Excellence</div><div class="craft-desc">We use 18-karat rose gold exclusively — the perfect alloy of gold, copper and silver that gives our pieces their signature warmth and durability.</div></div>
+    <div class="craft-card fade-up stagger-1"><div class="craft-icon">💒</div><div class="craft-num">02</div><div class="craft-title">Bridal Specialists</div><div class="craft-desc">Over 800 engagement rings and bridal sets crafted. We understand the weight of the moment and the importance of getting it perfectly right.</div></div>
+    <div class="craft-card fade-up stagger-2"><div class="craft-icon">📦</div><div class="craft-num">03</div><div class="craft-title">The Experience</div><div class="craft-desc">Every piece arrives in our signature hatbox with a handwritten note, certificate of authenticity, and complimentary lifetime cleaning service.</div></div>
+  </div>
+</section>
+
+<div class="banner">
+  <img src="https://images.unsplash.com/photo-1454391304352-2bf4678b1a7a?w=1600&q=85" alt="">
+  <div class="banner-content fade-up">
+    <div class="banner-rule"></div>
+    <p class="banner-label">Bespoke Bridal</p>
+    <h2 class="banner-title">Your ring.<br><em>Entirely yours.</em></h2>
+    <p class="banner-sub">Commission your engagement ring from first sketch. We guide you through stone selection, setting design, and crafting — until it is everything you imagined.</p>
+    <div class="banner-actions"><a href="#" class="btn-rose">Begin Commission</a></div>
+  </div>
+</div>
+
+<div class="love-story">
+  <div class="ls-img"><img src="https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?w=900&q=85" alt=""></div>
+  <div class="ls-content fade-up">
+    <p class="ls-label">Private Appointments</p>
+    <h2 class="ls-title">Come as You Are.<br>Leave as You Wish.</h2>
+    <p class="ls-desc">Our private salon is yours for as long as you need it. No rush, no pressure. Champagne, complete privacy, and jewellery that will become part of your story.</p>
+    <a href="#" class="btn-cream">Book Your Appointment</a>
+  </div>
+</div>
+
+<section class="section alt">
+  <div class="section-label fade-up" style="text-align:center;margin-bottom:14px">Their Words</div>
+  <h2 class="section-title fade-up" style="text-align:center;margin-bottom:48px">Stories of <em>Joy</em></h2>
+  <div class="reviews-grid">
+    <div class="review-card fade-up"><div class="r-stars">★★★★★</div><div class="r-quote">"</div><p class="r-text">She cried when she saw it. I cried when I saw her cry. The team understood exactly what this ring needed to be — and it exceeded everything I imagined.</p><div class="r-author">Omar Al Mansoori</div><div class="r-piece">Bespoke Engagement Ring · Dubai</div></div>
+    <div class="review-card fade-up stagger-1"><div class="r-stars">★★★★★</div><div class="r-quote">"</div><p class="r-text">The Blush Pendant was a 30th birthday gift to myself. Every time I wear it, at least three people ask where it's from. Nothing has made me feel more seen.</p><div class="r-author">Lara Khoury</div><div class="r-piece">Blush Pendant · Beirut</div></div>
+    <div class="review-card fade-up stagger-2"><div class="r-stars">★★★★★</div><div class="r-quote">"</div><p class="r-text">Two years after our wedding and the Rosé Solitaire looks identical to the day it was placed on my finger. The quality is extraordinary. Worth every dirham.</p><div class="r-author">Noor Al Hassan</div><div class="r-piece">Rosé Solitaire · Abu Dhabi</div></div>
+  </div>
+</section>
+
+<div class="footer-nl">
+  <div class="fade-up"><p class="nl-label">Private Access</p><h3 class="nl-title">New pieces.<br>New moments.</h3></div>
+  <div class="fade-up stagger-1">
+    <div class="nl-form"><input class="nl-input" type="email" placeholder="Your email address"><button class="nl-submit">Subscribe</button></div>
+    <p class="nl-note">Early access to new collections and private events. Unsubscribe anytime.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">Your Brand</div>
+      <p class="footer-brand-desc">Fine jewellery in rose gold and warm stones. For life's most luminous moments.</p>
+      <div class="footer-social">
+        <a href="#" class="social-link">𝕏</a>
+        <a href="#" class="social-link">in</a>
+        <a href="#" class="social-link">📷</a>
+        <a href="#" class="social-link">▶</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Collections</div>
+      <ul class="footer-links-list"><li><a href="#">Engagement</a></li><li><a href="#">Bridal Sets</a></li><li><a href="#">Necklaces</a></li><li><a href="#">Earrings</a></li><li><a href="#">Bracelets</a></li><li><a href="#">Watches</a></li></ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Services</div>
+      <ul class="footer-links-list"><li><a href="#">Bespoke Design</a></li><li><a href="#">Bridal Consultations</a></li><li><a href="#">Ring Resizing</a></li><li><a href="#">Cleaning & Care</a></li><li><a href="#">Engraving</a></li><li><a href="#">Gift Packaging</a></li></ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Visit Us</div>
+      <ul class="footer-contact-list">
+        <li class="contact-item"><span class="contact-icon">📍</span><span class="contact-text">Jumeirah Road, Dubai<br>UAE</span></li>
+        <li class="contact-item"><span class="contact-icon">📞</span><span class="contact-text"><a href="tel:+97144000000">+971 4 400 0000</a></span></li>
+        <li class="contact-item"><span class="contact-icon">✉️</span><span class="contact-text"><a href="/cdn-cgi/l/email-protection#2149444d4d4e61584e54534353404f450f424e4c"><span class="__cf_email__" data-cfemail="6008050c0c0f20190f15120212010e044e030f0d">[email&#160;protected]</span></a></span></li>
+        <li class="contact-item"><span class="contact-icon">🕐</span><span class="contact-text">Sat–Thu: 10am–9pm<br>Fri: 2pm–9pm</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-legal">© 2026 Your Brand Jewellery. All rights reserved.</div>
+    <div class="footer-legal-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Returns Policy</a><a href="#">Accessibility</a></div>
+    <div class="footer-powered">Preview by MorningStar.ai</div>
+  </div>
+</footer>
+
+<div class="sticky-cta">
+  <div class="sticky-label">Like this redesign for your brand?</div>
+  <div class="sticky-buttons"><button class="s-book">Book a Call</button><button class="s-buy">Get This — AED 9,200</button></div>
+</div>
+
+<div class="switcher">
+  <div class="switcher-menu" id="sm">
+    <div class="sm-title">Jewellery Variants</div>
+    <a class="s-opt" href="jewellery-noir.html"><div class="s-dot"></div> Noir — Black Gold</a>
+    <a class="s-opt" href="jewellery-blanc.html"><div class="s-dot"></div> Blanc — White Silver</a>
+    <a class="s-opt active" href="jewellery-terre.html"><div class="s-dot filled"></div> Terre — Rose Gold</a>
+  </div>
+  <button class="switcher-btn" onclick="document.getElementById('sm').classList.toggle('open')">🎨</button>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const obs=new IntersectionObserver(e=>e.forEach(i=>{if(i.isIntersecting)i.target.classList.add('visible')}),{threshold:.1});
+document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+function tick

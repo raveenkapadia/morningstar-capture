@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jewellery — Elegant Redesign Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Raleway:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8D5A3;
+    --navy: #0D1B2A;
+    --navy-mid: #1a2d42;
+    --champagne: #F5E6C8;
+    --cream: #FAF7F2;
+    --white: #ffffff;
+    --ink: #0D1B2A;
+    --muted: rgba(13,27,42,0.45);
+    --border: rgba(13,27,42,0.1);
+    --border-gold: rgba(201,168,76,0.3);
+  }
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--cream); font-family:'Raleway',sans-serif; color:var(--ink); overflow-x:hidden; }
+
+  /* 1. EXPIRY */
+  .expiry { background:var(--navy); color:rgba(245,230,200,0.7); text-align:center; padding:10px 20px; font-size:10px; letter-spacing:0.28em; text-transform:uppercase; }
+  .expiry strong { color:var(--gold-light); font-weight:400; }
+
+  /* 2. NAV */
+  nav { position:sticky; top:0; z-index:200; background:rgba(250,247,242,0.97); backdrop-filter:blur(16px); border-bottom:1px solid var(--border-gold); display:grid; grid-template-columns:1fr auto 1fr; align-items:center; padding:0 48px; height:68px; }
+  .nav-left { display:flex; gap:32px; list-style:none; }
+  .nav-left a,.nav-right a { font-size:9px; letter-spacing:0.28em; text-transform:uppercase; color:var(--muted); text-decoration:none; font-weight:400; transition:color .2s; }
+  .nav-left a:hover,.nav-right a:hover { color:var(--gold); }
+  .nav-brand { font-family:'Playfair Display',serif; font-size:22px; font-weight:300; letter-spacing:0.18em; color:var(--navy); text-align:center; text-transform:uppercase; }
+  .nav-right { display:flex; gap:28px; list-style:none; justify-content:flex-end; align-items:center; }
+  .nav-btn { background:var(--navy); color:var(--champagne); border:none; padding:9px 22px; font-size:9px; letter-spacing:0.28em; text-transform:uppercase; cursor:pointer; font-family:'Raleway',sans-serif; transition:background .2s; }
+  .nav-btn:hover { background:var(--gold); color:var(--navy); }
+
+  /* 3. HERO */
+  .hero { position:relative; height:100vh; min-height:640px; overflow:hidden; display:flex; align-items:flex-end; }
+  .hero-bg { position:absolute; inset:0; }
+  .hero-bg img { width:100%; height:100%; object-fit:cover; object-position:center; filter:brightness(0.55); transition:transform 14s ease; }
+  .hero:hover .hero-bg img { transform:scale(1.04); }
+  .hero-bg::after { content:''; position:absolute; inset:0; background:linear-gradient(to top, rgba(13,27,42,0.88) 0%, rgba(13,27,42,0.3) 50%, transparent 100%); }
+  /* Gold decorative line */
+  .hero-bg::before { content:''; position:absolute; left:0; right:0; bottom:0; height:2px; background:linear-gradient(90deg, transparent, var(--gold), transparent); z-index:2; }
+  .hero-content { position:relative; z-index:10; padding:0 80px 90px; display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:flex-end; width:100%; }
+  .hero-left {}
+  .hero-season { font-size:9px; letter-spacing:0.45em; text-transform:uppercase; color:rgba(201,168,76,0.7); margin-bottom:20px; }
+  .hero-title { font-family:'Playfair Display',serif; font-size:clamp(52px,7vw,96px); font-weight:300; line-height:.95; color:#fff; margin-bottom:24px; }
+  .hero-title em { font-style:italic; display:block; color:var(--gold-light); }
+  .hero-tagline { font-size:14px; font-weight:300; color:rgba(255,255,255,0.6); margin-bottom:44px; line-height:1.85; max-width:400px; }
+  .hero-actions { display:flex; gap:16px; flex-wrap:wrap; }
+  .btn-gold { display:inline-block; background:var(--gold); color:var(--navy); padding:15px 40px; font-size:9px; letter-spacing:0.3em; text-transform:uppercase; text-decoration:none; font-weight:500; border:1px solid var(--gold); transition:all .25s; }
+  .btn-gold:hover { background:transparent; color:var(--gold); }
+  .btn-ghost-gold { display:inline-block; background:transparent; color:rgba(255,255,255,0.75); padding:14px 40px; font-size:9px; letter-spacing:0.3em; text-transform:uppercase; text-decoration:none; font-weight:300; border:1px solid rgba(201,168,76,0.4); transition:all .25s; }
+  .btn-ghost-gold:hover { border-color:var(--gold); color:var(--gold-light); }
+  .hero-right { text-align:right; }
+  .hero-feature-label { font-size:9px; letter-spacing:0.4em; text-transform:uppercase; color:rgba(201,168,76,0.6); margin-bottom:12px; }
+  .hero-feature-text { font-family:'Playfair Display',serif; font-size:22px; font-weight:300; font-style:italic; color:rgba(255,255,255,0.85); line-height:1.5; margin-bottom:20px; }
+  .hero-scroll { display:flex; align-items:center; gap:12px; justify-content:flex-end; color:rgba(255,255,255,0.3); font-size:9px; letter-spacing:0.3em; text-transform:uppercase; }
+  .hero-scroll::after { content:''; display:block; width:40px; height:1px; background:rgba(201,168,76,0.4); }
+
+  /* 4. TRUST TICKER */
+  .ticker { background:var(--navy); padding:14px 0; overflow:hidden; }
+  .ticker-inner { display:inline-block; white-space:nowrap; animation:slide 28s linear infinite; font-size:9px; letter-spacing:0.38em; text-transform:uppercase; color:rgba(245,230,200,0.45); font-weight:300; }
+  .ticker-inner span { margin:0 36px; color:var(--gold); }
+  @keyframes slide { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+  /* 5. STATS BAR */
+  .stats-bar { display:grid; grid-template-columns:repeat(4,1fr); border-bottom:1px solid var(--border-gold); background:var(--white); }
+  .stat { padding:32px 20px; text-align:center; border-right:1px solid var(--border-gold); }
+  .stat:last-child { border-right:none; }
+  .stat-num { font-family:'Playfair Display',serif; font-size:40px; font-weight:300; color:var(--gold); line-height:1; margin-bottom:8px; }
+  .stat-label { font-size:9px; letter-spacing:0.22em; text-transform:uppercase; color:var(--muted); font-weight:300; }
+
+  /* 6. COLLECTION INTRO */
+  .collection-intro { display:grid; grid-template-columns:1fr 1fr; padding:100px 80px; align-items:end; gap:80px; }
+  .ci-ornament { display:flex; align-items:center; gap:16px; margin-bottom:24px; }
+  .ci-ornament::before,.ci-ornament::after { content:''; flex:1; height:1px; background:linear-gradient(to right, var(--gold), transparent); }
+  .ci-ornament::before { background:linear-gradient(to left, var(--gold), transparent); }
+  .ci-diamond { width:8px; height:8px; background:var(--gold); transform:rotate(45deg); flex-shrink:0; }
+  .ci-label { font-size:9px; letter-spacing:0.4em; text-transform:uppercase; color:var(--gold); margin-bottom:16px; }
+  .ci-title { font-family:'Playfair Display',serif; font-size:clamp(38px,4.5vw,62px); font-weight:300; line-height:1.05; color:var(--navy); }
+  .ci-title em { font-style:italic; }
+  .ci-right { padding-left:60px; border-left:1px solid var(--border-gold); }
+  .ci-desc { font-size:14px; line-height:2; color:var(--muted); font-weight:300; margin-bottom:36px; }
+  .btn-navy { display:inline-block; background:transparent; color:var(--navy); padding:13px 32px; font-size:9px; letter-spacing:0.3em; text-transform:uppercase; text-decoration:none; border:1px solid var(--navy); transition:all .25s; }
+  .btn-navy:hover { background:var(--navy); color:var(--champagne); }
+
+  /* 7. PRODUCTS GRID */
+  .products-section { padding:0 80px 100px; }
+  .section-header { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:56px; }
+  .section-label { font-size:9px; letter-spacing:0.4em; text-transform:uppercase; color:var(--gold); margin-bottom:14px; }
+  .section-title { font-family:'Playfair Display',serif; font-size:clamp(32px,4vw,52px); font-weight:300; color:var(--navy); }
+  .section-title em { font-style:italic; }
+  .view-all { font-size:9px; letter-spacing:0.3em; text-transform:uppercase; color:var(--navy); text-decoration:none; border-bottom:1px solid var(--gold); padding-bottom:2px; }
+  .products-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:32px; }
+  .product-card { cursor:pointer; }
+  .product-img { aspect-ratio:3/4; overflow:hidden; background:var(--champagne); position:relative; margin-bottom:20px; }
+  .product-img img { width:100%; height:100%; object-fit:cover; transition:transform .7s ease; }
+  .product-card:hover .product-img img { transform:scale(1.06); }
+  .product-img-overlay { position:absolute; inset:0; background:rgba(13,27,42,0.75); display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity .3s; }
+  .product-card:hover .product-img-overlay { opacity:1; }
+  .pio-btn { background:var(--gold); color:var(--navy); border:none; padding:12px 28px; font-size:9px; letter-spacing:0.28em; text-transform:uppercase; cursor:pointer; font-family:'Raleway',sans-serif; font-weight:500; }
+  .product-name { font-family:'Playfair Display',serif; font-size:18px; font-weight:300; color:var(--navy); margin-bottom:6px; }
+  .product-material { font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); margin-bottom:8px; }
+  .product-price { font-size:14px; color:var(--muted); }
+
+  /* 8. FEATURE SPLIT */
+  .feature-split { display:grid; grid-template-columns:1fr 1fr; min-height:580px; }
+  .fs-img { overflow:hidden; }
+  .fs-img img { width:100%; height:100%; object-fit:cover; transition:transform 8s; }
+  .fs-img:hover img { transform:scale(1.03); }
+  .fs-content { background:var(--navy); display:flex; flex-direction:column; justify-content:center; padding:80px; position:relative; overflow:hidden; }
+  .fs-content::before { content:''; position:absolute; top:-60px; right:-60px; width:240px; height:240px; border:1px solid rgba(201,168,76,0.1); border-radius:50%; }
+  .fs-content::after { content:''; position:absolute; bottom:-80px; right:-80px; width:320px; height:320px; border:1px solid rgba(201,168,76,0.06); border-radius:50%; }
+  .fs-label { font-size:9px; letter-spacing:0.4em; text-transform:uppercase; color:rgba(201,168,76,0.5); margin-bottom:20px; }
+  .fs-title { font-family:'Playfair Display',serif; font-size:clamp(30px,3.5vw,50px); font-weight:300; color:#fff; line-height:1.15; margin-bottom:24px; }
+  .fs-title em { font-style:italic; color:var(--gold-light); }
+  .fs-text { font-size:14px; line-height:2; color:rgba(245,230,200,0.6); font-weight:300; margin-bottom:40px; max-width:360px; }
+  .btn-gold-outline { display:inline-block; background:transparent; color:var(--gold); padding:14px 36px; font-size:9px; letter-spacing:0.3em; text-transform:uppercase; text-decoration:none; border:1px solid var(--gold); transition:all .25s; align-self:flex-start; }
+  .btn-gold-outline:hover { background:var(--gold); color:var(--navy); }
+
+  /* 9. HOW IT WORKS */
+  .process-section { padding:100px 80px; background:var(--white); }
+  .process-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:48px; margin-top:64px; }
+  .process-step { text-align:center; }
+  .step-num { font-family:'Playfair Display',serif; font-size:56px; font-weight:300; color:rgba(201,168,76,0.15); line-height:1; margin-bottom:16px; font-style:italic; }
+  .step-icon { font-size:26px; margin-bottom:14px; }
+  .step-title { font-size:10px; letter-spacing:0.25em; text-transform:uppercase; color:var(--navy); margin-bottom:12px; font-weight:500; }
+  .step-desc { font-size:13px; line-height:1.9; color:var(--muted); font-weight:300; }
+
+  /* 10. FULL BANNER */
+  .full-banner { position:relative; height:480px; overflow:hidden; }
+  .full-banner img { width:100%; height:100%; object-fit:cover; filter:brightness(0.45); }
+  .full-banner-content { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:40px; }
+  .fb-ornament { width:80px; height:1px; background:var(--gold); margin:0 auto 28px; }
+  .fb-title { font-family:'Playfair Display',serif; font-size:clamp(32px,5vw,64px); font-weight:300; font-style:italic; color:#fff; margin-bottom:16px; }
+  .fb-sub { font-size:14px; color:rgba(255,255,255,0.6); font-weight:300; margin-bottom:36px; letter-spacing:0.05em; }
+
+  /* 11. REVIEWS */
+  .reviews-section { padding:100px 80px; background:var(--cream); }
+  .reviews-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:32px; margin-top:60px; }
+  .review-card { background:var(--white); padding:44px 36px; border-bottom:2px solid var(--gold); }
+  .review-stars { color:var(--gold); letter-spacing:4px; font-size:12px; margin-bottom:20px; }
+  .review-text { font-family:'Playfair Display',serif; font-size:16px; font-style:italic; line-height:1.85; color:var(--ink); margin-bottom:24px; font-weight:300; }
+  .review-author { font-size:9px; letter-spacing:0.28em; text-transform:uppercase; color:var(--gold); }
+  .review-location { font-size:11px; color:var(--muted); margin-top:4px; }
+
+  /* 12. NEWSLETTER */
+  .newsletter { background:var(--champagne); padding:80px; display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+  .nl-label { font-size:9px; letter-spacing:0.4em; text-transform:uppercase; color:var(--gold); margin-bottom:14px; }
+  .nl-title { font-family:'Playfair Display',serif; font-size:36px; font-weight:300; color:var(--navy); }
+  .nl-title em { font-style:italic; }
+  .nl-desc { font-size:13px; color:var(--muted); margin-top:12px; font-weight:300; line-height:1.7; }
+  .nl-form { display:flex; }
+  .nl-input { flex:1; padding:15px 20px; background:#fff; border:1px solid var(--border-gold); color:var(--ink); font-family:'Raleway',sans-serif; font-size:13px; outline:none; border-right:none; }
+  .nl-input::placeholder { color:var(--muted); font-size:12px; }
+  .nl-input:focus { border-color:var(--gold); }
+  .nl-submit { background:var(--navy); color:var(--champagne); border:none; padding:15px 28px; font-family:'Raleway',sans-serif; font-size:9px; letter-spacing:0.28em; text-transform:uppercase; cursor:pointer; white-space:nowrap; font-weight:400; transition:background .2s; }
+  .nl-submit:hover { background:var(--gold); color:var(--navy); }
+  .nl-note { font-size:11px; color:var(--muted); margin-top:12px; }
+
+  /* 13. FOOTER */
+  footer { background:var(--navy); padding:80px 80px 40px; }
+  .footer-grid { display:grid; grid-template-columns:1.8fr 1fr 1fr 1fr; gap:60px; padding-bottom:60px; border-bottom:1px solid rgba(201,168,76,0.15); }
+  .footer-logo { font-family:'Playfair Display',serif; font-size:26px; font-weight:300; letter-spacing:0.18em; color:rgba(245,230,200,0.9); text-transform:uppercase; margin-bottom:8px; }
+  .footer-tagline { font-size:10px; letter-spacing:0.22em; text-transform:uppercase; color:var(--gold); margin-bottom:18px; }
+  .footer-desc { font-size:13px; line-height:1.85; color:rgba(245,230,200,0.3); font-weight:300; margin-bottom:28px; max-width:240px; }
+  .footer-social { display:flex; gap:12px; margin-bottom:24px; }
+  .social-link { width:36px; height:36px; border:1px solid rgba(201,168,76,0.2); display:flex; align-items:center; justify-content:center; font-size:13px; text-decoration:none; color:rgba(245,230,200,0.4); transition:all .2s; }
+  .social-link:hover { border-color:var(--gold); color:var(--gold); }
+  .footer-cert { display:flex; gap:8px; flex-wrap:wrap; }
+  .cert-item { border:1px solid rgba(201,168,76,0.2); padding:5px 10px; font-size:9px; letter-spacing:0.18em; text-transform:uppercase; color:rgba(201,168,76,0.5); }
+  .footer-col-title { font-size:9px; letter-spacing:0.35em; text-transform:uppercase; color:var(--gold); margin-bottom:24px; font-weight:400; }
+  .footer-links { list-style:none; display:flex; flex-direction:column; gap:12px; }
+  .footer-links a { font-size:13px; color:rgba(245,230,200,0.35); text-decoration:none; font-weight:300; transition:color .2s; }
+  .footer-links a:hover { color:rgba(245,230,200,0.8); }
+  .footer-contact { list-style:none; display:flex; flex-direction:column; gap:14px; }
+  .fc-item { display:flex; gap:12px; }
+  .fc-icon { font-size:13px; flex-shrink:0; margin-top:1px; }
+  .fc-text { font-size:12px; color:rgba(245,230,200,0.35); font-weight:300; line-height:1.6; }
+  .fc-text a { color:inherit; text-decoration:none; transition:color .2s; }
+  .fc-text a:hover { color:var(--gold); }
+  .footer-bottom { padding-top:32px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; }
+  .footer-legal { font-size:11px; color:rgba(245,230,200,0.2); }
+  .footer-legal-links { display:flex; gap:24px; }
+  .footer-legal-links a { font-size:11px; color:rgba(245,230,200,0.2); text-decoration:none; transition:color .2s; }
+  .footer-legal-links a:hover { color:rgba(245,230,200,0.5); }
+  .footer-powered { font-size:9px; letter-spacing:0.2em; color:rgba(245,230,200,0.15); text-transform:uppercase; }
+
+  /* STICKY CTA */
+  .sticky-cta { display:none; position:fixed; bottom:0; left:0; right:0; z-index:300; background:rgba(250,247,242,0.98); border-top:1px solid var(--border-gold); padding:14px 20px; flex-direction:column; gap:10px; }
+  .sticky-label { font-size:9px; letter-spacing:0.25em; text-transform:uppercase; text-align:center; color:var(--muted); }
+  .sticky-buttons { display:flex; gap:10px; }
+  .s-book { flex:1; background:transparent; border:1px solid var(--navy); color:var(--navy); padding:13px; font-size:9px; letter-spacing:0.22em; text-transform:uppercase; cursor:pointer; font-family:'Raleway',sans-serif; }
+  .s-buy { flex:1.5; background:var(--navy); border:none; color:var(--champagne); padding:13px; font-size:9px; letter-spacing:0.22em; text-transform:uppercase; cursor:pointer; font-family:'Raleway',sans-serif; }
+
+  .switcher { position:fixed; bottom:30px; right:30px; z-index:400; }
+  .switcher-btn { background:var(--navy); color:var(--champagne); border:none; width:50px; height:50px; border-radius:50%; font-size:18px; cursor:pointer; box-shadow:0 6px 24px rgba(13,27,42,0.3); display:flex; align-items:center; justify-content:center; }
+  .switcher-menu { position:absolute; bottom:62px; right:0; background:var(--cream); border:1px solid var(--border-gold); padding:16px 20px; min-width:200px; display:none; box-shadow:0 12px 40px rgba(13,27,42,0.12); }
+  .switcher-menu.open { display:block; }
+  .sm-title { font-size:9px; letter-spacing:0.3em; text-transform:uppercase; color:var(--muted); margin-bottom:14px; }
+  .s-opt { display:flex; align-items:center; gap:12px; padding:9px 0; font-size:13px; color:var(--ink); text-decoration:none; border-bottom:1px solid var(--border); font-weight:300; transition:color .2s; }
+  .s-opt:last-child { border-bottom:none; }
+  .s-opt.active { color:var(--gold); }
+  .s-dot { width:7px; height:7px; border-radius:50%; border:1.5px solid var(--gold); }
+  .s-dot.filled { background:var(--gold); }
+
+  .fade-up { opacity:0; transform:translateY(28px); transition:opacity .8s ease,transform .8s ease; }
+  .fade-up.visible { opacity:1; transform:translateY(0); }
+
+  @media(max-width:768px){
+    nav{grid-template-columns:1fr;height:auto;padding:16px 20px;justify-items:center;}
+    .nav-left,.nav-right{display:none;}
+    .hero{height:100svh;}
+    .hero-content{grid-template-columns:1fr;padding:0 24px 60px;gap:32px;}
+    .hero-right{display:none;}
+    .hero-title{font-size:52px;}
+    .stats-bar{grid-template-columns:repeat(2,1fr);}
+    .collection-intro{grid-template-columns:1fr;padding:60px 24px;gap:32px;}
+    .ci-right{padding-left:0;border-left:none;border-top:1px solid var(--border-gold);padding-top:32px;}
+    .products-section{padding:0 24px 80px;}
+    .section-header{flex-direction:column;align-items:flex-start;gap:12px;}
+    .products-grid{grid-template-columns:1fr 1fr;gap:20px;}
+    .feature-split{grid-template-columns:1fr;}
+    .fs-img{height:60vw;}
+    .fs-content{padding:48px 24px;}
+    .process-section{padding:60px 24px;}
+    .process-grid{grid-template-columns:repeat(2,1fr);gap:32px;}
+    .full-banner{height:320px;}
+    .reviews-section{padding:60px 24px;}
+    .reviews-grid{grid-template-columns:1fr;gap:24px;}
+    .newsletter{grid-template-columns:1fr;padding:48px 24px;gap:32px;}
+    .nl-form{flex-direction:column;}
+    footer{padding:60px 24px 36px;}
+    .footer-grid{grid-template-columns:1fr 1fr;gap:36px;}
+    .footer-bottom{flex-direction:column;align-items:flex-start;}
+    .sticky-cta{display:flex;}
+    .switcher{bottom:100px;right:16px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- 1. EXPIRY -->
+<div class="expiry">⏰ Preview expires in <strong id="cd">6d 23h 41m</strong> &nbsp;·&nbsp; Exclusive redesign for your brand</div>
+
+<!-- 2. NAV -->
+<nav>
+  <ul class="nav-left"><li><a href="#">Collections</a></li><li><a href="#">Fine Jewellery</a></li><li><a href="#">Watches</a></li></ul>
+  <div class="nav-brand">Your Brand</div>
+  <ul class="nav-right"><li><a href="#">About</a></li><li><a href="#">Boutiques</a></li><li><button class="nav-btn">Boutique Book</button></li></ul>
+</nav>
+
+<!-- 3. HERO -->
+<section class="hero">
+  <div class="hero-bg"><img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=1400&q=90" alt=""></div>
+  <div class="hero-content">
+    <div class="hero-left">
+      <p class="hero-season">High Jewellery · 2026 Collection</p>
+      <h1 class="hero-title">Crafted<br>for the<br><em>Eternal.</em></h1>
+      <p class="hero-tagline">Each piece a testament to master craftsmanship. Designed to be worn for generations and admired forever.</p>
+      <div class="hero-actions">
+        <a href="#" class="btn-gold">Explore Collection</a>
+        <a href="#" class="btn-ghost-gold">Book Private Viewing</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <p class="hero-feature-label">Featured Piece</p>
+      <p class="hero-feature-text">"The Étoile Diamond Necklace — 4.2ct VS1 D-colour set in 18k white gold"</p>
+      <div class="hero-scroll"><span>Scroll to discover</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. TICKER -->
+<div class="ticker"><div class="ticker-inner">18k Gold & Platinum Settings <span>·</span> GIA Certified Diamonds <span>·</span> Complimentary Engraving <span>·</span> Lifetime Service Guarantee <span>·</span> Bespoke Commissions <span>·</span> 18k Gold & Platinum Settings <span>·</span> GIA Certified Diamonds <span>·</span> Complimentary Engraving <span>·</span> Lifetime Service Guarantee <span>·</span></div></div>
+
+<!-- 5. STATS -->
+<div class="stats-bar">
+  <div class="stat fade-up"><div class="stat-num">1987</div><div class="stat-label">Year Established</div></div>
+  <div class="stat fade-up"><div class="stat-num">GIA</div><div class="stat-label">Certified Stones</div></div>
+  <div class="stat fade-up"><div class="stat-num">18k</div><div class="stat-label">Gold & Platinum</div></div>
+  <div class="stat fade-up"><div class="stat-num">∞</div><div class="stat-label">Lifetime Service</div></div>
+</div>
+
+<!-- 6. COLLECTION INTRO -->
+<div class="collection-intro">
+  <div class="fade-up">
+    <div class="ci-ornament"><div class="ci-diamond"></div></div>
+    <p class="ci-label">The 2026 Edit</p>
+    <h2 class="ci-title">Where Art<br>Meets<br><em>Eternity</em></h2>
+  </div>
+  <div class="ci-right fade-up">
+    <p class="ci-desc">Each jewel in our 2026 collection begins with a single vision — to create something worthy of the most significant moments of your life. Sourced from the world's finest mines, set by master craftsmen in our Dubai atelier.</p>
+    <a href="#" class="btn-navy">View Full Collection</a>
+  </div>
+</div>
+
+<!-- 7. PRODUCTS -->
+<section class="products-section">
+  <div class="section-header fade-up">
+    <div><p class="section-label">The Collection</p><h2 class="section-title">Most Coveted<br><em>Pieces</em></h2></div>
+    <a href="#" class="view-all">View All</a>
+  </div>
+  <div class="products-grid">
+    <div class="product-card fade-up"><div class="product-img"><img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=500&q=85" alt=""><div class="product-img-overlay"><button class="pio-btn">View Details</button></div></div><div class="product-name">Étoile Diamond Ring</div><div class="product-material">18k White Gold · 2.1ct</div><div class="product-price">AED 42,000</div></div>
+    <div class="product-card fade-up"><div class="product-img"><img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=500&q=85" alt=""><div class="product-img-overlay"><button class="pio-btn">View Details</button></div></div><div class="product-name">Lumière Necklace</div><div class="product-material">18k Yellow Gold · Emerald</div><div class="product-price">AED 68,500</div></div>
+    <div class="product-card fade-up"><div class="product-img"><img src="https://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=500&q=85" alt=""><div class="product-img-overlay"><button class="pio-btn">View Details</button></div></div><div class="product-name">Soleil Bracelet</div><div class="product-material">Platinum · Diamond Pavé</div><div class="product-price">AED 54,000</div></div>
+  </div>
+</section>
+
+<!-- 8. FEATURE SPLIT -->
+<div class="feature-split">
+  <div class="fs-img"><img src="https://images.unsplash.com/photo-1506630448388-4e683c67ddb0?w=800&q=85" alt=""></div>
+  <div class="fs-content fade-up">
+    <p class="fs-label">Master Craft</p>
+    <h2 class="fs-title">The Art of<br><em>Fine Setting</em></h2>
+    <p class="fs-text">Every stone is selected by hand and set under magnification by craftsmen with decades of expertise. Our Dubai atelier produces fewer than 400 pieces annually. Each one carries a certificate of provenance and a lifetime service guarantee.</p>
+    <a href="#" class="btn-gold-outline">Our Atelier</a>
+  </div>
+</div>
+
+<!-- 9. PROCESS -->
+<section class="process-section">
+  <div class="section-header fade-up" style="margin-bottom:0">
+    <div><p class="section-label">The Experience</p><h2 class="section-title">From Mine<br><em>to Masterpiece</em></h2></div>
+  </div>
+  <div class="process-grid">
+    <div class="process-step fade-up"><div class="step-num">01</div><div class="step-icon">💎</div><div class="step-title">Stone Selection</div><div class="step-desc">Every gem is hand-selected from certified ethical sources. We accept fewer than 3% of stones presented to us.</div></div>
+    <div class="process-step fade-up"><div class="step-num">02</div><div class="step-icon">✏️</div><div class="step-title">Master Design</div><div class="step-desc">Our in-house designers render each piece by hand before a single tool is lifted. Your approval guides every decision.</div></div>
+    <div class="process-step fade-up"><div class="step-num">03</div><div class="step-icon">🔧</div><div class="step-title">Atelier Setting</div><div class="step-desc">Set under 10x magnification by craftsmen with 20+ years of experience. Each piece takes 40–200 hours to complete.</div></div>
+    <div class="process-step fade-up"><div class="step-num">04</div><div class="step-icon">📜</div><div class="step-title">Certification</div><div class="step-desc">Every piece leaves with a GIA certificate, hallmark assay, and provenance document. Authenticity guaranteed for life.</div></div>
+  </div>
+</section>
+
+<!-- 10. BANNER -->
+<div class="full-banner">
+  <img src="https://images.unsplash.com/photo-1458538977777-0549b2370168?w=1400&q=85" alt="">
+  <div class="full-banner-content">
+    <div class="fb-ornament"></div>
+    <h2 class="fb-title">Bespoke Commissions</h2>
+    <p class="fb-sub">Your vision. Our craft. A piece that exists nowhere else on earth.</p>
+    <a href="#" class="btn-gold">Begin Your Piece</a>
+  </div>
+</div>
+
+<!-- 11. REVIEWS -->
+<section class="reviews-section">
+  <div class="section-header fade-up"><div><p class="section-label">Client Stories</p><h2 class="section-title">Worn with<br><em>Pride</em></h2></div></div>
+  <div class="reviews-grid">
+    <div class="review-card fade-up"><div class="review-stars">★★★★★</div><p class="review-text">"The engagement ring they created for us was beyond anything we could have imagined. Every guest at our wedding asked about it. Worth every dirham."</p><div class="review-author">Layla & Ahmed</div><div class="review-location">Dubai, UAE</div></div>
+    <div class="review-card fade-up"><div class="review-stars">★★★★★</div><p class="review-text">"I commissioned a necklace to mark my mother's 70th birthday. The craftsmen understood exactly what I wanted and delivered something extraordinary."</p><div class="review-author">Nour K.</div><div class="review-location">Abu Dhabi</div></div>
+    <div class="review-card fade-up"><div class="review-stars">★★★★★</div><p class="review-text">"The GIA certification, the packaging, the service — every element is luxury. I have bought from Cartier and Tiffany. This surpasses both."</p><div class="review-author">Priya R.</div><div class="review-location">Riyadh</div></div>
+  </div>
+</section>
+
+<!-- 12. NEWSLETTER -->
+<div class="newsletter">
+  <div class="fade-up">
+    <p class="nl-label">Private Access</p>
+    <h3 class="nl-title">New pieces.<br><em>First to know.</em></h3>
+    <p class="nl-desc">Join our private list for exclusive previews, limited edition releases, and invitations to our salon events.</p>
+  </div>
+  <div class="fade-up">
+    <div class="nl-form"><input class="nl-input" type="email" placeholder="Your email address"><button class="nl-submit">Subscribe</button></div>
+    <p class="nl-note">By subscribing you agree to our Privacy Policy. Unsubscribe anytime.</p>
+  </div>
+</div>
+
+<!-- 13. FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">Your Brand</div>
+      <div class="footer-tagline">High Jewellery · Est. 1987</div>
+      <p class="footer-desc">Masters of fine jewellery and haute horlogerie. Crafted in our Dubai atelier with stones sourced from the world's finest mines.</p>
+      <div class="footer-social"><a href="#" class="social-link">𝕏</a><a href="#" class="social-link">in</a><a href="#" class="social-link">📷</a><a href="#" class="social-link">▶</a></div>
+      <div class="footer-cert"><span class="cert-item">GIA Certified</span><span class="cert-item">RJC Member</span><span class="cert-item">Kimberley Process</span></div>
+    </div>
+    <div>
+      <div class="footer-col-title">Collections</div>
+      <ul class="footer-links"><li><a href="#">Engagement Rings</a></li><li><a href="#">Fine Necklaces</a></li><li><a href="#">Bracelets</a></li><li><a href="#">Earrings</a></li><li><a href="#">Watches</a></li><li><a href="#">Bespoke</a></li></ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Services</div>
+      <ul class="footer-links"><li><a href="#">Private Viewing</a></li><li><a href="#">Bespoke Design</a></li><li><a href="#">Ring Sizing</a></li><li><a href="#">Jewellery Service</a></li><li><a href="#">Valuations</a></li><li><a href="#">Gift Wrapping</a></li></ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Visit Us</div>
+      <ul class="footer-contact">
+        <li class="fc-item"><span class="fc-icon">📍</span><span class="fc-text">Dubai Mall, Level 1<br>Fashion Avenue, Dubai, UAE</span></li>
+        <li class="fc-item"><span class="fc-icon">📞</span><span class="fc-text"><a href="tel:+97144000000">+971 4 400 0000</a></span></li>
+        <li class="fc-item"><span class="fc-icon">✉️</span><span class="fc-text"><a href="#"><span class="__cf_email__" data-cfemail="abc3cec7c7c4ebd2c4ded9c9d9cac5cf85c8c4c6">[email&#160;protected]</span></a></span></li>
+        <li class="fc-item"><span class="fc-icon">🕐</span><span class="fc-text">Daily: 10am–10pm<br>Private viewings by appt.</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-legal">© 2026 Your Brand. All rights reserved.</div>
+    <div class="footer-legal-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookie Policy</a><a href="#">Accessibility</a></div>
+    <div class="footer-powered">Preview by MorningStar.ai</div>
+  </div>
+</footer>
+
+<div class="sticky-cta">
+  <div class="sticky-label">Like this redesign for your brand?</div>
+  <div class="sticky-buttons"><button class="s-book">Book a Call</button><button class="s-buy">Get This — AED 9,200</button></div>
+</div>
+
+<div class="switcher">
+  <div class="switcher-menu" id="sm">
+    <div class="sm-title">Jewellery Templates</div>
+    <a class="s-opt active" href="jewellery-elegant.html"><div class="s-dot filled"></div> Elegant</a>
+    <a class="s-opt" href="jewellery-bold.html"><div class="s-dot"></div> Bold</a>
+    <a class="s-opt" href="jewellery-minimal.html"><div class="s-dot"></div> Minimal</a>
+  </div>
+  <button class="switcher-btn" onclick="document.getElementById('sm').classList.toggle('open')">🎨</button>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const obs=new IntersectionObserver(e=>e.forEach(i=>{if(i.isIntersecting)i.target.classList.add('visible')}),{threshold:.1});
+document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+function tick(){const df=new Date(Date.now()+7*86

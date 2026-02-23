@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cosmetics Redesign Preview — Botanica</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Karla:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sage:#6B8F71;--sage-light:#8AAF90;--sage-pale:#EEF3EE;--sage-dim:rgba(107,143,113,.14);
+    --clay:#B87333;--clay-pale:#F5EDE3;
+    --cream:#F9F6F0;--white:#FEFEFE;--ink:#1F2B1F;--muted:rgba(31,43,31,.42);
+    --border:rgba(31,43,31,.08);--border-mid:rgba(31,43,31,.13);--surface:#F0EAE0;
+  }
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--cream);font-family:'Karla',sans-serif;color:var(--ink);overflow-x:hidden}
+
+  .expiry{background:var(--ink);color:rgba(249,246,240,.5);text-align:center;padding:9px 20px;font-size:10px;letter-spacing:.28em;text-transform:uppercase;font-weight:300}
+  .expiry strong{color:var(--clay);font-weight:500}
+
+  nav{position:sticky;top:0;z-index:300;background:rgba(249,246,240,.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 56px;height:64px;display:flex;align-items:center;justify-content:space-between}
+  .nav-brand{font-family:'Playfair Display',serif;font-size:22px;font-weight:400;color:var(--ink);font-style:italic;letter-spacing:.04em}
+  .nav-links{display:flex;gap:28px;list-style:none}
+  .nav-links a{font-size:12px;letter-spacing:.16em;color:var(--muted);text-decoration:none;font-weight:400;text-transform:uppercase;transition:color .2s}
+  .nav-links a:hover{color:var(--sage)}
+  .nav-actions{display:flex;gap:12px;align-items:center}
+  .nav-quiz{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--sage);font-weight:500;cursor:pointer;background:none;border:none;font-family:'Karla',sans-serif;text-decoration:underline;text-underline-offset:3px}
+  .nav-shop{background:var(--sage);color:#fff;border:none;padding:10px 22px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-family:'Karla',sans-serif;cursor:pointer;font-weight:500;transition:background .2s}
+  .nav-shop:hover{background:#5a7d60}
+
+  /* HERO — botanical split */
+  .hero{display:grid;grid-template-columns:1fr 1fr;min-height:100svh;background:var(--white)}
+  .hero-img-side{position:relative;overflow:hidden;background:var(--surface)}
+  .hero-img-side img{width:100%;height:100%;object-fit:cover;object-position:center;filter:brightness(.88) saturate(.75);transition:transform 14s ease}
+  .hero:hover .hero-img-side img{transform:scale(1.04)}
+  /* Botanical watermark */
+  .hero-img-side::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(107,143,113,.08) 0%,transparent 60%);z-index:1}
+  /* Ingredient tags floating on image */
+  .hero-tags{position:absolute;bottom:36px;left:28px;z-index:3;display:flex;flex-wrap:wrap;gap:8px;max-width:280px}
+  .hero-tag{background:rgba(249,246,240,.88);backdrop-filter:blur(8px);border:1px solid rgba(107,143,113,.2);padding:6px 14px;font-size:11px;color:var(--ink);font-weight:400;letter-spacing:.06em}
+
+  .hero-content{display:flex;flex-direction:column;justify-content:center;padding:80px 72px 80px 60px;position:relative}
+  .hero-leaf{position:absolute;top:40px;right:40px;font-size:48px;opacity:.08}
+  .hero-eyebrow{font-size:10px;letter-spacing:.38em;text-transform:uppercase;color:var(--sage);margin-bottom:22px;font-weight:500}
+  .hero-title{font-family:'Playfair Display',serif;font-size:clamp(42px,5.5vw,72px);font-weight:400;line-height:1.08;color:var(--ink);margin-bottom:20px;font-style:italic}
+  .hero-rule{width:36px;height:1px;background:var(--clay);margin-bottom:22px}
+  .hero-sub{font-size:15px;color:var(--muted);font-weight:300;line-height:1.95;max-width:380px;margin-bottom:14px;letter-spacing:.01em}
+  .hero-promise{font-size:13px;color:var(--sage);font-weight:400;margin-bottom:36px;display:flex;align-items:center;gap:8px}
+  .hero-promise::before{content:'✓';font-weight:700}
+  .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:48px}
+  .btn-sage{display:inline-block;background:var(--sage);color:#fff;padding:13px 36px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;font-weight:500;border:none;cursor:pointer;font-family:'Karla',sans-serif;transition:all .25s}
+  .btn-sage:hover{background:#5a7d60;transform:translateY(-1px)}
+  .btn-outline{display:inline-block;background:transparent;color:var(--ink);padding:12px 36px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;font-weight:400;border:1px solid var(--border-mid);font-family:'Karla',sans-serif;transition:all .25s}
+  .btn-outline:hover{border-color:var(--sage);color:var(--sage)}
+  /* Skin quiz CTA — high conversion for cosmetics */
+  .hero-quiz-bar{background:var(--sage-pale);border:1px solid rgba(107,143,113,.2);padding:18px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .hqb-text{font-size:14px;color:var(--ink);font-weight:400}
+  .hqb-text span{font-weight:500;color:var(--sage)}
+  .hqb-btn{background:var(--sage);color:#fff;border:none;padding:10px 22px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;font-family:'Karla',sans-serif;font-weight:500;white-space:nowrap;transition:background .2s}
+  .hqb-btn:hover{background:#5a7d60}
+  /* Social proof micro */
+  .hero-micro{display:flex;gap:28px;padding-top:28px;border-top:1px solid var(--border);margin-top:28px}
+  .hm-item{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px;font-weight:300}
+  .hm-item strong{color:var(--ink);font-weight:500}
+
+  /* TRUST */
+  .trust-strip{background:var(--surface);border-bottom:1px solid var(--border);padding:16px 56px;display:flex;align-items:center;justify-content:center;gap:44px;flex-wrap:wrap}
+  .ts-item{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:7px;font-weight:300}
+  .ts-item::before{content:'✓';color:var(--sage);font-weight:700}
+
+  /* INGREDIENT TICKER */
+  .ticker{background:var(--sage);padding:11px 0;overflow:hidden}
+  .ticker-inner{display:inline-block;white-space:nowrap;animation:slide 22s linear infinite;font-family:'Playfair Display',serif;font-size:14px;color:rgba(255,255,255,.6);font-style:italic;letter-spacing:.1em}
+  .ticker-inner span{margin:0 32px;color:rgba(255,255,255,.3);font-style:normal}
+  @keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* PROOF BAR */
+  .proof-bar{display:grid;grid-template-columns:repeat(4,1fr);background:var(--white);border-bottom:1px solid var(--border)}
+  .pb{padding:28px 20px;text-align:center;border-right:1px solid var(--border)}
+  .pb:last-child{border-right:none}
+  .pb-num{font-family:'Playfair Display',serif;font-size:34px;font-weight:400;color:var(--sage);line-height:1;margin-bottom:5px;font-style:italic}
+  .pb-label{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);font-weight:300}
+
+  /* SECTIONS */
+  .section{padding:96px 56px}
+  .section.alt{background:var(--surface)}
+  .section.cream{background:var(--cream)}
+  .s-eyebrow{font-size:10px;letter-spacing:.36em;text-transform:uppercase;color:var(--sage);margin-bottom:14px;font-weight:500}
+  .s-title{font-family:'Playfair Display',serif;font-size:clamp(32px,4vw,54px);font-weight:400;color:var(--ink);line-height:1.1;font-style:italic}
+  .s-sub{font-size:14px;color:var(--muted);font-weight:300;max-width:520px;line-height:1.95;margin-top:14px;letter-spacing:.01em}
+  .section-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px;flex-wrap:wrap;gap:20px}
+
+  /* PRODUCT GRID */
+  .product-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .product-card{background:var(--white);border:1px solid var(--border);overflow:hidden;transition:border-color .3s,box-shadow .3s}
+  .product-card:hover{border-color:rgba(107,143,113,.3);box-shadow:0 12px 40px rgba(107,143,113,.08)}
+  .pc-img{overflow:hidden;aspect-ratio:4/5;background:var(--sage-pale);position:relative}
+  .pc-img img{width:100%;height:100%;object-fit:cover;filter:saturate(.7) brightness(.9);transition:transform .6s}
+  .product-card:hover .pc-img img{transform:scale(1.05)}
+  /* Quick add on hover */
+  .pc-quick{position:absolute;bottom:0;left:0;right:0;background:rgba(31,43,31,.85);padding:14px;text-align:center;transform:translateY(100%);transition:transform .3s}
+  .product-card:hover .pc-quick{transform:translateY(0)}
+  .pc-quick-btn{background:var(--sage);color:#fff;border:none;padding:10px 24px;font-family:'Karla',sans-serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;width:100%;transition:background .2s}
+  .pc-quick-btn:hover{background:#5a7d60}
+  .pc-badge{position:absolute;top:14px;left:14px;background:var(--sage);color:#fff;padding:4px 12px;font-size:9px;letter-spacing:.2em;text-transform:uppercase;font-weight:500}
+  .pc-info{padding:22px}
+  .pc-concern{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--sage);margin-bottom:5px;font-weight:500}
+  .pc-name{font-family:'Playfair Display',serif;font-size:18px;font-weight:400;color:var(--ink);margin-bottom:4px;font-style:italic}
+  .pc-desc{font-size:12px;color:var(--muted);font-weight:300;margin-bottom:12px;line-height:1.65}
+  .pc-row{display:flex;align-items:center;justify-content:space-between}
+  .pc-size{font-size:11px;color:var(--muted);font-weight:300;letter-spacing:.06em}
+  .pc-price{font-size:16px;color:var(--ink);font-weight:500}
+
+  /* INGREDIENT HERO */
+  .ingredient-deep{display:grid;grid-template-columns:1fr 1fr;min-height:580px}
+  .id-img{overflow:hidden;position:relative}
+  .id-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.85) saturate(.7);transition:transform 12s}
+  .id-img:hover img{transform:scale(1.04)}
+  .id-content{background:var(--white);display:flex;flex-direction:column;justify-content:center;padding:80px}
+  .id-eyebrow{font-size:10px;letter-spacing:.36em;text-transform:uppercase;color:var(--clay);margin-bottom:18px;font-weight:500}
+  .id-title{font-family:'Playfair Display',serif;font-size:clamp(32px,4vw,52px);font-weight:400;color:var(--ink);line-height:1.1;font-style:italic;margin-bottom:18px}
+  .id-rule{width:32px;height:1px;background:var(--clay);margin-bottom:22px}
+  .id-desc{font-size:14px;color:var(--muted);font-weight:300;line-height:1.95;margin-bottom:28px;max-width:380px;letter-spacing:.01em}
+  .id-ingredients{display:flex;flex-direction:column;gap:14px;margin-bottom:36px}
+  .id-ing{display:flex;gap:16px;align-items:flex-start;padding:14px;background:var(--sage-pale);border-left:2px solid var(--sage)}
+  .id-ing-icon{font-size:20px;flex-shrink:0}
+  .id-ing-name{font-size:12px;font-weight:500;color:var(--ink);letter-spacing:.06em;margin-bottom:2px}
+  .id-ing-desc{font-size:12px;color:var(--muted);font-weight:300}
+
+  /* RITUAL — how to use */
+  .ritual-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;background:var(--border)}
+  .ritual-step{background:var(--white);padding:44px 28px;text-align:center;border-right:1px solid var(--border)}
+  .ritual-step:last-child{border-right:none}
+  .rs-num{font-family:'Playfair Display',serif;font-size:52px;font-weight:400;color:rgba(107,143,113,.1);line-height:1;margin-bottom:4px;font-style:italic}
+  .rs-icon{font-size:26px;margin-bottom:16px}
+  .rs-title{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink);margin-bottom:10px;font-weight:500}
+  .rs-desc{font-size:13px;color:var(--muted);font-weight:300;line-height:1.85}
+
+  /* BANNER */
+  .banner{position:relative;height:60vh;min-height:380px;overflow:hidden;display:flex;align-items:center}
+  .banner img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.38) saturate(.5)}
+  .banner::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,rgba(31,43,31,.85) 0%,transparent 55%)}
+  .banner-content{position:relative;z-index:2;padding:80px;max-width:580px}
+  .banner-eyebrow{font-size:10px;letter-spacing:.36em;text-transform:uppercase;color:rgba(254,254,254,.5);margin-bottom:16px;font-weight:300}
+  .banner-title{font-family:'Playfair Display',serif;font-size:clamp(36px,5vw,66px);font-weight:400;color:#fff;line-height:1.05;font-style:italic;margin-bottom:20px}
+  .banner-sub{font-size:14px;color:rgba(255,255,255,.5);font-weight:300;margin-bottom:36px;line-height:1.85;max-width:420px;letter-spacing:.01em}
+
+  /* SUSTAINABILITY */
+  .sustain-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+  .sustain-card{padding:44px 36px;border:1px solid var(--border);background:var(--white);text-align:center;transition:border-color .3s}
+  .sustain-card:hover{border-color:rgba(107,143,113,.3)}
+  .sc-icon{font-size:28px;margin-bottom:18px}
+  .sc-title{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink);margin-bottom:10px;font-weight:500}
+  .sc-desc{font-size:13px;color:var(--muted);font-weight:300;line-height:1.85}
+
+  /* REVIEWS */
+  .reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .review-card{border:1px solid var(--border);padding:36px 28px;background:var(--white);transition:border-color .3s,transform .3s}
+  .review-card:hover{border-color:rgba(107,143,113,.3);transform:translateY(-3px)}
+  .rc-stars{color:var(--sage);letter-spacing:2px;font-size:13px;margin-bottom:14px}
+  .rc-concern{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--sage);margin-bottom:12px;font-weight:500}
+  .rc-text{font-family:'Playfair Display',serif;font-size:15px;font-style:italic;line-height:1.9;color:rgba(31,43,31,.7);margin-bottom:18px;font-weight:400}
+  .rc-author{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:300}
+  .rc-product{font-size:11px;color:var(--sage);margin-top:4px}
+
+  /* NEWSLETTER */
+  .footer-nl{background:var(--ink);padding:64px 56px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+  .nl-eyebrow{font-size:10px;letter-spacing:.36em;text-transform:uppercase;color:var(--clay);margin-bottom:14px;font-weight:400}
+  .nl-title{font-family:'Playfair Display',serif;font-size:40px;font-weight:400;color:var(--cream);line-height:1.15;font-style:italic}
+  .nl-form{display:flex}
+  .nl-input{flex:1;padding:14px 18px;background:rgba(249,246,240,.07);border:1px solid rgba(249,246,240,.1);color:var(--cream);font-family:'Karla',sans-serif;font-size:13px;outline:none;border-right:none}
+  .nl-input::placeholder{color:rgba(249,246,240,.3);font-size:13px}
+  .nl-submit{background:var(--sage);color:#fff;border:none;padding:14px 26px;font-family:'Karla',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;font-weight:500;white-space:nowrap;transition:background .2s}
+  .nl-submit:hover{background:#5a7d60}
+  .nl-note{font-size:11px;color:rgba(249,246,240,.22);margin-top:10px;font-weight:300}
+
+  footer{background:#141e14;padding:80px 56px 40px}
+  .footer-grid{display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:56px;padding-bottom:56px;border-bottom:1px solid rgba(249,246,240,.07)}
+  .footer-logo{font-family:'Playfair Display',serif;font-size:24px;font-weight:400;color:rgba(249,246,240,.9);margin-bottom:14px;font-style:italic}
+  .footer-desc{font-size:13px;line-height:1.9;color:rgba(249,246,240,.28);font-weight:300;margin-bottom:22px;max-width:240px;letter-spacing:.01em}
+  .footer-badges{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+  .fb{border:1px solid rgba(249,246,240,.1);padding:4px 11px;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:rgba(249,246,240,.3);font-weight:300}
+  .footer-col-title{font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:rgba(249,246,240,.7);margin-bottom:20px;font-weight:400}
+  .footer-links{list-style:none;display:flex;flex-direction:column;gap:11px}
+  .footer-links a{font-size:13px;color:rgba(249,246,240,.28);text-decoration:none;font-weight:300;transition:color .2s;letter-spacing:.02em}
+  .footer-links a:hover{color:var(--sage-light)}
+  .footer-contact{list-style:none;display:flex;flex-direction:column;gap:13px}
+  .contact-item{display:flex;gap:10px}
+  .ci-icon{font-size:13px;flex-shrink:0}
+  .ci-text{font-size:12px;color:rgba(249,246,240,.28);font-weight:300;line-height:1.65}
+  .ci-text a{color:inherit;text-decoration:none;transition:color .2s}
+  .ci-text a:hover{color:var(--sage-light)}
+  .footer-bottom{padding-top:28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
+  .footer-legal{font-size:11px;color:rgba(249,246,240,.18);font-weight:300}
+  .footer-legal-links{display:flex;gap:22px}
+  .footer-legal-links a{font-size:11px;color:rgba(249,246,240,.18);text-decoration:none;transition:color .2s;font-weight:300}
+  .footer-legal-links a:hover{color:rgba(249,246,240,.5)}
+  .footer-powered{font-size:9px;letter-spacing:.22em;color:rgba(249,246,240,.1);text-transform:uppercase}
+
+  .sticky-cta{display:none;position:fixed;bottom:0;left:0;right:0;z-index:400;background:rgba(249,246,240,.97);border-top:1px solid var(--border-mid);padding:13px 16px;gap:10px;flex-direction:column;backdrop-filter:blur(14px)}
+  .sticky-label{font-size:11px;letter-spacing:.22em;text-transform:uppercase;text-align:center;color:var(--muted);font-weight:300}
+  .sticky-buttons{display:flex;gap:10px}
+  .s-quiz{flex:1;background:transparent;border:1px solid var(--border-mid);color:var(--sage);padding:12px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-family:'Karla',sans-serif;cursor:pointer;font-weight:500}
+  .s-shop{flex:1.5;background:var(--sage);border:none;color:#fff;padding:12px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-family:'Karla',sans-serif;cursor:pointer;font-weight:500}
+
+  .switcher{position:fixed;bottom:30px;right:30px;z-index:500}
+  .switcher-btn{background:var(--ink);color:var(--sage-light);border:none;width:48px;height:48px;border-radius:50%;font-size:18px;cursor:pointer;box-shadow:0 6px 24px rgba(31,43,31,.2);display:flex;align-items:center;justify-content:center}
+  .switcher-menu{position:absolute;bottom:60px;right:0;background:var(--white);border:1px solid var(--border);padding:14px 18px;min-width:220px;display:none;box-shadow:0 12px 40px rgba(31,43,31,.1)}
+  .switcher-menu.open{display:block}
+  .sm-title{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+  .s-opt{display:flex;align-items:center;gap:10px;padding:8px 0;font-size:12px;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--border);transition:color .2s;font-weight:300}
+  .s-opt:last-child{border-bottom:none}
+  .s-opt.active{color:var(--sage);font-weight:500}
+  .s-dot{width:7px;height:7px;border-radius:50%;border:1.5px solid var(--sage)}
+  .s-dot.filled{background:var(--sage)}
+
+  .fade-up{opacity:0;transform:translateY(22px);transition:opacity .85s ease,transform .85s ease}
+  .fade-up.visible{opacity:1;transform:translateY(0)}
+  .stagger-1{transition-delay:.1s}.stagger-2{transition-delay:.2s}.stagger-3{transition-delay:.3s}
+
+  @media(max-width:768px){
+    nav{padding:0 16px}
+    .nav-links{display:none}
+    .hero{grid-template-columns:1fr}
+    .hero-img-side{height:65vw}
+    .hero-img-side img{position:relative;height:100%}
+    .hero-content{padding:48px 24px}
+    .trust-strip{padding:14px 20px;gap:18px;justify-content:flex-start}
+    .proof-bar{grid-template-columns:repeat(2,1fr)}
+    .section{padding:60px 20px}
+    .product-grid{grid-template-columns:repeat(2,1fr)}
+    .ingredient-deep{grid-template-columns:1fr}
+    .id-img{height:60vw}
+    .id-content{padding:48px 24px}
+    .ritual-grid{grid-template-columns:repeat(2,1fr)}
+    .banner{height:auto;padding:60px 0}
+    .banner-content{padding:48px 24px}
+    .sustain-grid{grid-template-columns:1fr}
+    .reviews-grid{grid-template-columns:1fr}
+    .footer-nl{grid-template-columns:1fr;padding:48px 20px;gap:28px}
+    .nl-form{flex-direction:column}
+    footer{padding:56px 20px 32px}
+    .footer-grid{grid-template-columns:1fr 1fr;gap:32px}
+    .footer-bottom{flex-direction:column;align-items:flex-start}
+    .sticky-cta{display:flex}
+    .switcher{bottom:100px;right:12px}
+  }
+</style>
+</head>
+<body>
+
+<div class="expiry">⏰ Preview expires: <strong id="countdown">6d 23h 41m</strong> — Made for your brand</div>
+
+<nav>
+  <div class="nav-brand">Your Brand</div>
+  <ul class="nav-links">
+    <li><a href="#">Skincare</a></li>
+    <li><a href="#">Body</a></li>
+    <li><a href="#">Hair</a></li>
+    <li><a href="#">Ingredients</a></li>
+    <li><a href="#">Ritual</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="nav-quiz">Skin Quiz</button>
+    <button class="nav-shop">Shop Now</button>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-img-side">
+    <img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=900&q=88" alt="">
+    <div class="hero-tags">
+      <span class="hero-tag">🌿 Bakuchiol</span>
+      <span class="hero-tag">🌸 Rose Hip</span>
+      <span class="hero-tag">🍵 Green Tea</span>
+      <span class="hero-tag">🌙 Retinol Alt.</span>
+    </div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-leaf">🌿</div>
+    <div class="hero-eyebrow">Plant-Powered Skincare</div>
+    <h1 class="hero-title">Skin that<br>knows<br>itself.</h1>
+    <div class="hero-rule"></div>
+    <p class="hero-sub">Formulated with botanicals your skin recognises. No synthetics it has to fight. Every ingredient listed, every source disclosed. Science that works with nature, never against it.</p>
+    <div class="hero-promise">100% natural origin · Certified cruelty-free · Refillable packaging</div>
+    <div class="hero-actions">
+      <a href="#" class="btn-sage">Shop Collection</a>
+      <a href="#" class="btn-outline">Take Skin Quiz</a>
+    </div>
+    <div class="hero-quiz-bar">
+      <span class="hqb-text">Not sure where to start? <span>Our 2-minute quiz builds your ritual.</span></span>
+      <button class="hqb-btn">Start Quiz →</button>
+    </div>
+    <div class="hero-micro">
+      <span class="hm-item"><strong>4.9★</strong> · 3,200 reviews</span>
+      <span class="hm-item"><strong>Free</strong> returns 30 days</span>
+      <span class="hm-item"><strong>Next day</strong> UAE delivery</span>
+    </div>
+  </div>
+</section>
+
+<div class="trust-strip">
+  <span class="ts-item">100% Natural Origin</span>
+  <span class="ts-item">Cruelty Free</span>
+  <span class="ts-item">Refillable Packaging</span>
+  <span class="ts-item">Dermatologist Tested</span>
+  <span class="ts-item">IFRA Certified</span>
+</div>
+
+<div class="ticker">
+  <div class="ticker-inner">
+    Bakuchiol · Rosehip · Sea Buckthorn <span>·</span> Green Tea · Niacinamide <span>·</span> Centella Asiatica · Jojoba <span>·</span> Vitamin C · Hyaluronic Acid <span>·</span>
+    Bakuchiol · Rosehip · Sea Buckthorn <span>·</span> Green Tea · Niacinamide <span>·</span> Centella Asiatica · Jojoba <span>·</span> Vitamin C · Hyaluronic Acid <span>·</span>
+  </div>
+</div>
+
+<div class="proof-bar">
+  <div class="pb fade-up"><div class="pb-num">100%</div><div class="pb-label">Natural Origin</div></div>
+  <div class="pb fade-up stagger-1"><div class="pb-num">4.9★</div><div class="pb-label">3,200 Reviews</div></div>
+  <div class="pb fade-up stagger-2"><div class="pb-num">28</div><div class="pb-label">Active Products</div></div>
+  <div class="pb fade-up stagger-3"><div class="pb-num">30d</div><div class="pb-label">Free Returns</div></div>
+</div>
+
+<section class="section alt">
+  <div class="section-header fade-up">
+    <div><div class="s-eyebrow">The Collection</div><h2 class="s-title">Your ritual,<br>rooted in nature.</h2></div>
+    <a href="#" class="btn-sage">All Products</a>
+  </div>
+  <div class="product-grid">
+    <div class="product-card fade-up"><div class="pc-img"><img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=500&q=85" alt=""><div class="pc-quick"><button class="pc-quick-btn">Quick Add to Bag</button></div><span class="pc-badge">Bestseller</span></div><div class="pc-info"><div class="pc-concern">Brightening</div><div class="pc-name">Vitamin C Glow Serum</div><div class="pc-desc">Sea buckthorn, kakadu plum, hyaluronic acid</div><div class="pc-row"><span class="pc-size">30ml</span><span class="pc-price">AED 185</span></div></div></div>
+    <div class="product-card fade-up stagger-1"><div class="pc-img"><img src="https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=500&q=85" alt=""><div class="pc-quick"><button class="pc-quick-btn">Quick Add to Bag</button></div><span class="pc-badge">New</span></div><div class="pc-info"><div class="pc-concern">Anti-Ageing</div><div class="pc-name">Bakuchiol Night Oil</div><div class="pc-desc">Plant-based retinol alternative, rosehip, squalane</div><div class="pc-row"><span class="pc-size">30ml</span><span class="pc-price">AED 220</span></div></div></div>
+    <div class="product-card fade-up stagger-2"><div class="pc-img"><img src="https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=500&q=85" alt=""><div class="pc-quick"><button class="pc-quick-btn">Quick Add to Bag</button></div></div><div class="pc-info"><div class="pc-concern">Hydration</div><div class="pc-name">Centella Calm Cream</div><div class="pc-desc">Centella asiatica, oat extract, ceramides</div><div class="pc-row"><span class="pc-size">50ml</span><span class="pc-price">AED 165</span></div></div></div>
+  </div>
+</section>
+
+<div class="ingredient-deep">
+  <div class="id-img"><img src="https://images.unsplash.com/photo-1591375275624-c84c01ac1f16?w=900&q=85" alt=""></div>
+  <div class="id-content fade-up">
+    <div class="id-eyebrow">Hero Ingredient</div>
+    <h2 class="id-title">Bakuchiol.<br>Nature's retinol.</h2>
+    <div class="id-rule"></div>
+    <p class="id-desc">Derived from the Psoralea corylifolia plant, bakuchiol delivers retinol-equivalent results without sensitivity, redness, or sun restrictions. Safe during pregnancy. Suitable for all skin types.</p>
+    <div class="id-ingredients">
+      <div class="id-ing"><span class="id-ing-icon">🌱</span><div><div class="id-ing-name">Source: Psoralea corylifolia</div><div class="id-ing-desc">Wildcrafted in India · COSMOS certified</div></div></div>
+      <div class="id-ing"><span class="id-ing-icon">⚗️</span><div><div class="id-ing-name">Concentration: 1% active</div><div class="id-ing-desc">Clinical efficacy level · Peer-reviewed studies</div></div></div>
+      <div class="id-ing"><span class="id-ing-icon">🧪</span><div><div class="id-ing-name">Third-party tested</div><div class="id-ing-desc">Every batch tested before release · COA available</div></div></div>
+    </div>
+    <a href="#" class="btn-sage">Shop Bakuchiol Range</a>
+  </div>
+</div>
+
+<section class="section cream">
+  <div class="s-eyebrow fade-up" style="text-align:center;margin-bottom:14px">Your Daily Ritual</div>
+  <h2 class="s-title fade-up" style="text-align:center;margin-bottom:52px">Four steps.<br><em>Every morning.</em></h2>
+  <div class="ritual-grid">
+    <div class="ritual-step fade-up"><div class="rs-num">01</div><div class="rs-icon">💧</div><div class="rs-title">Cleanse</div><div class="rs-desc">Remove overnight accumulation without stripping your skin's natural barrier. Micellar or cream, choose what your skin needs today.</div></div>
+    <div class="ritual-step fade-up stagger-1"><div class="rs-num">02</div><div class="rs-icon">🌿</div><div class="rs-title">Treat</div><div class="rs-desc">Apply your active serum to clean, slightly damp skin. Pat gently — never rub. Allow 60 seconds to absorb before the next step.</div></div>
+    <div class="ritual-step fade-up stagger-2"><div class="rs-num">03</div><div class="rs-icon">🫧</div><div class="rs-title">Hydrate</div><div class="rs-desc">Seal in your serum with a moisturiser appropriate for your skin type. Our Centella Calm Cream works for all types, all climates.</div></div>
+    <div class="ritual-step fade-up stagger-3"><div class="rs-num">04</div><div class="rs-icon">☀️</div><div class="rs-title">Protect</div><div class="rs-desc">SPF is non-negotiable. Our mineral SPF 50+ sits invisibly under makeup and plays well with every product in the ritual.</div></div>
+  </div>
+</section>
+
+<div class="banner">
+  <img src="https://images.unsplash.com/photo-1509967419530-da38b4704bc6?w=1600&q=85" alt="">
+  <div class="banner-content fade-up">
+    <div class="banner-eyebrow">The Promise</div>
+    <h2 class="banner-title">Nothing<br>to hide.</h2>
+    <p class="banner-sub">We publish the full ingredient list, INCI names, concentrations, and supplier origins for every product we make. If we would not put it on our own skin, it is not in yours.</p>
+    <a href="#" class="btn-sage">Our Ingredient Glossary</a>
+  </div>
+</div>
+
+<section class="section alt">
+  <div class="s-eyebrow fade-up" style="text-align:center;margin-bottom:14px">Our Commitment</div>
+  <h2 class="s-title fade-up" style="text-align:center;margin-bottom:48px">Beauty that gives<br>back to the earth.</h2>
+  <div class="sustain-grid">
+    <div class="sustain-card fade-up"><div class="sc-icon">♻️</div><div class="sc-title">Refillable Packaging</div><div class="sc-desc">Every product ships in returnable glass. Send it back and we refill it. 73% less packaging waste per customer over one year.</div></div>
+    <div class="sustain-card fade-up stagger-1"><div class="sc-icon">🌍</div><div class="sc-title">Carbon Offset Delivery</div><div class="sc-desc">All UAE deliveries are carbon-offset through certified reforestation projects in the UAE and wider GCC region.</div></div>
+    <div class="sustain-card fade-up stagger-2"><div class="sc-icon">🐰</div><div class="sc-title">Leaping Bunny Certified</div><div class="sc-desc">No animal testing at any stage of production. Verified annually by Cruelty Free International — not self-declared.</div></div>
+  </div>
+</section>
+
+<section class="section cream">
+  <div class="section-header fade-up">
+    <div><div class="s-eyebrow">Real Results</div><h2 class="s-title">What your skin<br>will say.</h2></div>
+    <span style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:300">4.9★ · 3,200 Reviews</span>
+  </div>
+  <div class="reviews-grid">
+    <div class="review-card fade-up"><div class="rc-stars">★★★★★</div><div class="rc-concern">Hyperpigmentation</div><p class="rc-text">"Six weeks of the Vitamin C serum and the dark spots I have had for three years are visibly lighter. I have tried every high-street brand. This is the first thing that actually worked."</p><div class="rc-author">Layla K. · Dubai</div><div class="rc-product">Vitamin C Glow Serum</div></div>
+    <div class="review-card fade-up stagger-1"><div class="rc-stars">★★★★★</div><div class="rc-concern">Sensitivity</div><p class="rc-text">"I have rosacea and have been burned by 'natural' brands before. The Centella Cream is genuinely the most calming thing I have found. No fragrance, no reaction. Just results."</p><div class="rc-author">Sara M. · Abu Dhabi</div><div class="rc-product">Centella Calm Cream</div></div>
+    <div class="review-card fade-up stagger-2"><div class="rc-stars">★★★★★</div><div class="rc-concern">Anti-Ageing</div><p class="rc-text">"I switched from a retinol that was tearing my skin apart. The Bakuchiol Night Oil gave me the same results in 8 weeks without a single day of irritation. Game-changing formula."</p><div class="rc-author">Nora F. · Sharjah</div><div class="rc-product">Bakuchiol Night Oil</div></div>
+  </div>
+</section>
+
+<div class="footer-nl">
+  <div class="fade-up"><p class="nl-eyebrow">The Ritual Edit</p><h3 class="nl-title">Ingredient drops.<br>First to know.</h3></div>
+  <div class="fade-up stagger-1">
+    <div class="nl-form"><input class="nl-input" type="email" placeholder="Your email address"><button class="nl-submit">Subscribe</button></div>
+    <p class="nl-note">New launches, ingredient deep-dives, and ritual guides. Unsubscribe anytime.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">Your Brand</div>
+      <p class="footer-desc">Plant-powered skincare built on full transparency. Every ingredient sourced, tested, and disclosed.</p>
+      <div class="footer-badges"><span class="fb">100% Natural</span><span class="fb">Cruelty Free</span><span class="fb">Refillable</span><span class="fb">Vegan</span></div>
+    </div>
+    <div>
+      <div class="footer-col-title">Shop</div>
+      <ul class="footer-links"><li><a href="#">Serums</a></li><li><a href="#">Moisturisers</a></li><li><a href="#">Cleansers</a></li><li><a href="#">Body Care</a></li><li><a href="#">Hair</a></li><li><a href="#">Gift Sets</a></li></ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Learn</div>
+      <ul class="footer-links"><li><a href="#">Ingredient Glossary</a></li><li><a href="#">Skin Quiz</a></li><li><a href="#">Ritual Guides</a></li><li><a href="#">Sustainability</a></li><li><a href="#">Certifications</a></li><li><a href="#">Our Story</a></li></ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contact</div>
+      <ul class="footer-contact">
+        <li class="contact-item"><span class="ci-icon">📍</span><span class="ci-text">Jumeirah, Dubai, UAE</span></li>
+        <li class="contact-item"><span class="ci-icon">📞</span><span class="ci-text"><a href="tel:+97144000000">+971 4 400 0000</a></span></li>
+        <li class="contact-item"><span class="ci-icon">💬</span><span class="ci-text"><a href="#">WhatsApp</a></span></li>
+        <li class="contact-item"><span class="ci-icon">✉️</span><span class="ci-text"><a href="#"><span class="__cf_email__" data-cfemail="6c04090000032c1503191e0e1e0d0208420d09">[email&#160;protected]</span></a></span></li>
+        <li class="contact-item"><span class="ci-icon">🕐</span><span class="ci-text">Daily 9am–9pm · Free Returns 30d</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-legal">© 2026 Your Brand. All rights reserved.</div>
+    <div class="footer-legal-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Sustainability</a><a href="#">Accessibility</a></div>
+    <div class="footer-powered">Preview by MorningStar.ai</div>
+  </div>
+</footer>
+
+<div class="sticky-cta">
+  <div class="sticky-label">Free delivery · 30-day returns · Cruelty free</div>
+  <div class="sticky-buttons">
+    <button class="s-quiz">Skin Quiz</button>
+    <button class="s-shop">Shop Collection →</button>
+  </div>
+</div>
+
+<div class="switcher">
+  <div class="switcher-menu" id="sm">
+    <div class="sm-title">Cosmetics Variants</div>
+    <a class="s-opt" href="template-cosmetics-v2.html"><div class="s-dot"></div> Clinical — Clean White</a>
+    <a class="s-opt active" href="#"><div class="s-dot filled"></div> Botanica — Natural</a>
+    <a class="s-opt" href="cosmetics-luxe.html"><div class="s-dot"></div> Luxe — Dark Glamour</a>
+  </div>
+  <button class="switcher-btn" onclick="document.getElementById('sm').classList.toggle('open')">🎨</button>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const obs=new IntersectionObserver(e=>e.forEach(i=>{if(i.isIntersecting)i.target.classList.add('visible')}),{threshold:.08});
+document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+function tick(){const df=new Date(Date.now()+7*864e5)-Da
