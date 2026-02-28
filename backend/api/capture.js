@@ -34,6 +34,7 @@ module.exports = async function handler(req, res) {
       address,
       google_rating,
       google_maps_url,
+      page_content,
     } = req.body;
 
     if (!page_url) {
@@ -80,6 +81,7 @@ module.exports = async function handler(req, res) {
       has_instagram,
       contact_emails,
       contact_phones,
+      raw_html_snippet: page_content || null,
     };
 
     const { data: capture, error: captureError } = await supabase

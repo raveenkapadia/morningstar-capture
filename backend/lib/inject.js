@@ -6,6 +6,151 @@ const path = require('path');
 
 const TEMPLATES_DIR = path.join(__dirname, '../templates');
 
+// ─── COLOR MATH HELPERS (pure hex, no dependencies) ─────────────────────────
+
+function hexToRgb(hex) {
+  const clean = hex.replace('#', '');
+  return {
+    r: parseInt(clean.substring(0, 2), 16),
+    g: parseInt(clean.substring(2, 4), 16),
+    b: parseInt(clean.substring(4, 6), 16),
+  };
+}
+
+function rgbToHex(r, g, b) {
+  return '#' + [r, g, b].map(x => Math.max(0, Math.min(255, Math.round(x))).toString(16).padStart(2, '0')).join('');
+}
+
+// Mix color with white (factor 0=original, 1=pure white)
+function tintColor(hex, factor) {
+  const { r, g, b } = hexToRgb(hex);
+  return rgbToHex(
+    r + (255 - r) * factor,
+    g + (255 - g) * factor,
+    b + (255 - b) * factor
+  );
+}
+
+// Darken color (factor 0=original, 1=pure black)
+function shadeColor(hex, factor) {
+  const { r, g, b } = hexToRgb(hex);
+  return rgbToHex(r * (1 - factor), g * (1 - factor), b * (1 - factor));
+}
+
+// Generate a complementary dark "ink" color from a primary
+function deriveInk(hex) {
+  const { r, g, b } = hexToRgb(hex);
+  return rgbToHex(
+    Math.round(r * 0.08),
+    Math.round(g * 0.12 + 10),
+    Math.round(b * 0.1 + 5)
+  );
+}
+
+// Generate a muted text color from a primary
+function deriveMuted(hex) {
+  const { r, g, b } = hexToRgb(hex);
+  return rgbToHex(
+    Math.round(r * 0.3 + 80),
+    Math.round(g * 0.35 + 85),
+    Math.round(b * 0.3 + 80)
+  );
+}
+
+// ─── APPLY BRAND COLORS ─────────────────────────────────────────────────────
+// Replaces :root{...} CSS custom properties with prospect's brand colors
+function applyBrandColors(html, colorPalette) {
+  if (!colorPalette || colorPalette.length === 0) return html;
+
+  const primary = colorPalette[0];
+  const secondary = colorPalette.length > 1 ? colorPalette[1] : null;
+
+  // Find the :root block — handles both single-line and multiline formats
+  const rootRegex = /:root\s*\{[^}]+\}/;
+  const rootMatch = html.match(rootRegex);
+  if (!rootMatch) return html;
+
+  const rootBlock = rootMatch[0];
+
+  // Parse existing CSS variables from the :root block
+  const varRegex = /--([\w-]+)\s*:\s*([^;]+)/g;
+  const vars = {};
+  let m;
+  while ((m = varRegex.exec(rootBlock)) !== null) {
+    vars[m[1]] = m[2].trim();
+  }
+
+  const varNames = Object.keys(vars);
+  if (varNames.length === 0) return html;
+
+  // Identify which vars are the "primary" color family
+  // The first CSS variable that's a non-white/non-black color is the primary
+  const structuralNames = ['white', 'off', 'ink', 'muted', 'border', 'text', 'warm-white', 'cream'];
+  const colorVars = varNames.filter(name => {
+    const lower = name.toLowerCase();
+    return !structuralNames.some(s => lower === s) && vars[name].startsWith('#');
+  });
+
+  if (colorVars.length === 0) return html;
+
+  // Build a map of old primary → new primary based on naming patterns
+  // E.g. --teal → primary, --teal-lt → tint, --teal-mid → shade
+  const baseName = colorVars[0]; // e.g. "teal", "navy", "orange", "cyan", "mauve", "sun"
+  const basePrefix = baseName.split('-')[0]; // e.g. "teal" from "teal-lt"
+
+  const newVars = { ...vars };
+
+  // Replace primary color family
+  for (const name of colorVars) {
+    if (name === baseName || name.startsWith(basePrefix)) {
+      // This is part of the primary color family
+      if (name === baseName) {
+        newVars[name] = primary;
+      } else if (name.includes('-lt') || name.includes('-pale')) {
+        newVars[name] = tintColor(primary, 0.88);
+      } else if (name.includes('-mid')) {
+        newVars[name] = shadeColor(primary, 0.1);
+      }
+    }
+  }
+
+  // If there's a secondary color and a second color family in the template, replace it
+  if (secondary) {
+    const remainingColorVars = colorVars.filter(name => !name.startsWith(basePrefix));
+    if (remainingColorVars.length > 0) {
+      const secondBase = remainingColorVars[0];
+      const secondPrefix = secondBase.split('-')[0];
+      for (const name of remainingColorVars) {
+        if (name === secondBase || name.startsWith(secondPrefix)) {
+          if (name === secondBase) {
+            newVars[name] = secondary;
+          } else if (name.includes('-lt') || name.includes('-pale')) {
+            newVars[name] = tintColor(secondary, 0.88);
+          } else if (name.includes('-mid')) {
+            newVars[name] = shadeColor(secondary, 0.1);
+          }
+        }
+      }
+    }
+  }
+
+  // Also update ink/muted if they exist (derived from primary for cohesion)
+  if (vars['ink'] && vars['ink'].startsWith('#')) {
+    newVars['ink'] = deriveInk(primary);
+  }
+  if (vars['muted'] && vars['muted'].startsWith('#') && !vars['muted'].includes('rgba')) {
+    newVars['muted'] = deriveMuted(primary);
+  }
+
+  // Reconstruct the :root block
+  const newRootContent = Object.entries(newVars)
+    .map(([name, value]) => `--${name}:${value}`)
+    .join(';');
+  const newRootBlock = `:root{${newRootContent};}`;
+
+  return html.replace(rootRegex, newRootBlock);
+}
+
 // ─── LOAD TEMPLATE ───────────────────────────────────────────────────────────
 function loadTemplate(filename) {
   const filePath = path.join(TEMPLATES_DIR, filename);
@@ -23,7 +168,8 @@ function injectData(html, data) {
   let result = html;
 
   for (const [key, value] of Object.entries(data)) {
-    const safeValue = (value || '').toString();
+    // If value is null/undefined, replace with empty string so template degrades gracefully
+    const safeValue = (value == null ? '' : value).toString();
     const pattern = new RegExp(`\\{\\{${key}\\}\\}`, 'g');
     result = result.replace(pattern, safeValue);
   }
@@ -117,9 +263,10 @@ function addTracking(html, previewId, baseUrl) {
 }
 
 // ─── MAIN: GENERATE PREVIEW HTML ─────────────────────────────────────────────
-function generatePreview({ templateFilename, injectedData, previewId, prospectName, expiresAt, baseUrl }) {
+function generatePreview({ templateFilename, injectedData, previewId, prospectName, expiresAt, baseUrl, colorPalette }) {
   let html = loadTemplate(templateFilename);
   html = injectData(html, injectedData);
+  html = applyBrandColors(html, colorPalette);
   html = addPreviewBanner(html, previewId, prospectName, expiresAt);
   html = addTracking(html, previewId, baseUrl);
   return html;
@@ -133,4 +280,4 @@ function getTemplateVariables(filename) {
   return [...new Set(matches.map(m => m[1]))];
 }
 
-module.exports = { generatePreview, getTemplateVariables, loadTemplate, injectData };
+module.exports = { generatePreview, getTemplateVariables, loadTemplate, injectData, applyBrandColors };

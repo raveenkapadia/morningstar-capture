@@ -80,6 +80,7 @@ module.exports = async function handler(req, res) {
       google_rating: prospect.google_rating,
       contact_phones: capture.contact_phones || (prospect.phone ? [prospect.phone] : []),
       contact_emails: capture.contact_emails || (prospect.email ? [prospect.email] : []),
+      page_content: capture.raw_html_snippet || null,
     };
 
     // ── 3. Update prospect status ────────────────────────────────────────────
@@ -135,18 +136,18 @@ module.exports = async function handler(req, res) {
     try {
       injectedData = await extractInjectionData(enrichedCapture, detection.vertical, detection.sub_vertical);
     } catch (e) {
-      // Basic fallback
+      // Basic fallback — use real data only, null for unknowns
       injectedData = {
-        CLINIC_NAME: prospect.business_name,
-        BRAND_NAME: prospect.business_name,
-        CLINIC_PHONE: prospect.phone || '+971 4 000 0000',
-        BRAND_PHONE: prospect.phone || '+971 4 000 0000',
-        CLINIC_ADDRESS: prospect.address || 'Dubai, UAE',
-        BRAND_ADDRESS: prospect.address || 'Dubai, UAE',
-        DOCTOR_NAME: prospect.doctor_name || 'Dr. Specialist',
-        DOCTOR_FIRSTNAME: (prospect.doctor_name || 'Doctor').split(' ').pop(),
-        HERO_IMAGE: capture.hero_image_url || '',
-        DOCTOR_IMAGE: '',
+        CLINIC_NAME: prospect.business_name || null,
+        BRAND_NAME: prospect.business_name || null,
+        CLINIC_PHONE: prospect.phone || null,
+        BRAND_PHONE: prospect.phone || null,
+        CLINIC_ADDRESS: prospect.address || null,
+        BRAND_ADDRESS: prospect.address || null,
+        DOCTOR_NAME: prospect.doctor_name || null,
+        DOCTOR_FIRSTNAME: prospect.doctor_name ? prospect.doctor_name.split(' ').pop() : null,
+        HERO_IMAGE: capture.hero_image_url || null,
+        DOCTOR_IMAGE: capture.hero_image_url || null,
       };
     }
 
@@ -165,6 +166,7 @@ module.exports = async function handler(req, res) {
       prospectName: prospect.business_name,
       expiresAt: expiresAt.toISOString(),
       baseUrl: PREVIEW_BASE_URL,
+      colorPalette: capture.color_palette || [],
     });
 
     // ── 9. Save HTML to Supabase Storage ─────────────────────────────────────

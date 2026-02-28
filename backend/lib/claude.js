@@ -111,57 +111,69 @@ async function extractInjectionData(capture, vertical, subVertical) {
   const isMedical = vertical === 'medical';
 
   const system = `You are a data extraction specialist for MorningStar.ai.
-Your job is to extract or intelligently infer all template variables from captured website data.
-If data is missing, generate a realistic, professional placeholder appropriate for Dubai, UAE.
-All content should be professional, accurate and suitable for a UAE healthcare or retail business.
-Return ONLY valid JSON, no explanation.`;
+Your job is to extract template variables from captured website data.
+
+CRITICAL RULES — READ CAREFULLY:
+1. NEVER fabricate, invent, or guess data that is not present in the captured content.
+2. If a value is not found in the captured data, return null — do NOT make up placeholder text.
+3. Do NOT invent doctor names, patient counts, star ratings, years of experience, or opening hours.
+4. Do NOT generate marketing copy. Use actual text from the captured page wherever possible.
+5. For service descriptions: use the real text from the site. Only shorten if over 100 characters.
+6. The business name, phone, email, and address must come from the captured data — never guess these.
+7. For image URLs: use exactly what was captured. Never substitute or invent image URLs.
+8. Return ONLY valid JSON, no explanation.`;
 
   const user = `Extract template injection data from this captured website.
+Use ONLY facts from the captured data below. Return null for anything not found.
 
-Business: ${capture.business_name}
+Business: ${capture.business_name || 'null'}
 Website: ${capture.website_url}
 Vertical: ${vertical} ${subVertical ? `(${subVertical})` : ''}
-Phone found: ${(capture.contact_phones || []).join(', ') || 'not found'}
-Email found: ${(capture.contact_emails || []).join(', ') || 'not found'}
-Address: ${capture.address || 'not found'}
-Hero image URL: ${capture.hero_image_url || ''}
-Logo URL: ${capture.logo_url || ''}
-Doctor name (if known): ${capture.doctor_name || 'not found'}
-Page content: ${capture.h1_text || ''} ${(capture.h2_texts || []).slice(0,5).join(' ')}
+Phone found: ${(capture.contact_phones || []).join(', ') || 'null'}
+Email found: ${(capture.contact_emails || []).join(', ') || 'null'}
+Address: ${capture.address || 'null'}
+Hero image URL: ${capture.hero_image_url || 'null'}
+Logo URL: ${capture.logo_url || 'null'}
+Doctor name found: ${capture.doctor_name || 'null'}
+H1: ${capture.h1_text || ''}
+H2s: ${(capture.h2_texts || []).slice(0, 5).join(' | ')}
+Meta description: ${capture.meta_description || ''}
+Google rating: ${capture.google_rating || 'null'}
 
+${capture.page_content ? `Actual page content:\n${capture.page_content}\n` : ''}
 ${isMedical ? `
-Return this JSON structure:
+Return this JSON. Use null for ANY field where data is not found in the capture above:
 {
-  "CLINIC_NAME": "exact business name",
-  "CLINIC_PHONE": "phone number with UAE format +971...",
-  "CLINIC_WHATSAPP": "whatsapp number",
-  "CLINIC_EMAIL": "email or placeholder",
-  "CLINIC_ADDRESS": "full address",
-  "DOCTOR_NAME": "Dr. Full Name or placeholder",
-  "DOCTOR_FIRSTNAME": "first name only",
-  "DOCTOR_IMAGE": "${capture.hero_image_url || ''}",
-  "HERO_IMAGE": "${capture.hero_image_url || ''}",
-  "SPECIALTY": "exact medical specialty",
-  "YEARS_EXPERIENCE": "number",
-  "PATIENT_COUNT": "realistic number e.g. 5,000+",
-  "RATING": "google rating or 4.8",
-  "LICENSE_TYPE": "DHA or HAAD",
-  "OPENING_HOURS": "realistic UAE clinic hours"
+  "CLINIC_NAME": "exact business name from capture, or null",
+  "CLINIC_PHONE": "phone from capture (first one), or null",
+  "CLINIC_WHATSAPP": "whatsapp-format phone from capture, or null",
+  "CLINIC_EMAIL": "email from capture, or null",
+  "CLINIC_ADDRESS": "address from capture, or null",
+  "DOCTOR_NAME": "doctor name from capture only — NEVER invent a name, or null",
+  "DOCTOR_FIRSTNAME": "first name extracted from doctor_name, or null",
+  "DOCTOR_IMAGE": "${capture.hero_image_url || 'null'}",
+  "HERO_IMAGE": "${capture.hero_image_url || 'null'}",
+  "SPECIALTY": "medical specialty inferred from vertical/sub_vertical, or null",
+  "YEARS_EXPERIENCE": "only if explicitly stated on page, or null",
+  "PATIENT_COUNT": "only if explicitly stated on page, or null",
+  "RATING": "only from google_rating or if explicitly on page, or null",
+  "LICENSE_TYPE": "DHA for Dubai, HAAD for Abu Dhabi, DOH for other — infer from address",
+  "OPENING_HOURS": "only if found on page, or null"
 }` : `
-Return this JSON structure:
+Return this JSON. Use null for ANY field where data is not found in the capture above:
 {
-  "BRAND_NAME": "exact business name",
-  "BRAND_TAGLINE": "short punchy tagline",
-  "BRAND_PHONE": "phone number",
-  "BRAND_EMAIL": "email",
-  "BRAND_ADDRESS": "address",
-  "HERO_IMAGE": "${capture.hero_image_url || ''}",
-  "HERO_HEADING": "compelling headline for their industry",
-  "HERO_SUB": "1-2 sentence subheading",
-  "PRIMARY_COLOR": "hex color from their brand palette or best fit",
-  "PRODUCT_1": "first product/service name",
-  "PRODUCT_2": "second product/service name",
-  "PRODUCT_3": "third product/service name"
+  "BRAND_NAME": "exact business name from capture, or null",
+  "BRAND_TAGLINE": "from page content if found, or null — do NOT invent",
+  "BRAND_PHONE": "phone from capture, or null",
+  "BRAND_EMAIL": "email from capture, or null",
+  "BRAND_ADDRESS": "address from capture, or null",
+  "HERO_IMAGE": "${capture.hero_image_url || 'null'}",
+  "HERO_HEADING": "from H1 or page content — use their actual words, or null",
+  "HERO_SUB": "from meta description or page content — use their actual words, or null",
+  "PRIMARY_COLOR": "first color from palette or null",
+  "PRODUCT_1": "first service/product from page content, or null",
+  "PRODUCT_2": "second service/product from page content, or null",
+  "PRODUCT_3": "third service/product from page content, or null"
 }`}`;
 
   const raw = await callClaude(system, user, 2000);

@@ -31,6 +31,109 @@
     return Array.from(images);
   }
 
+  // ---- 1b. Smart hero image selection ----
+  // Skips SVGs, logos, icons, tiny images. Prefers large photos in hero/banner areas.
+  function selectHeroImage() {
+    const skipWords = ['logo', 'icon', 'favicon', 'sprite', 'pixel', 'spacer', 'arrow', 'chevron', 'placeholder', 'loader', 'spinner'];
+
+    function isSkippable(img) {
+      const src = (img.src || '').toLowerCase();
+      const alt = (img.getAttribute('alt') || '').toLowerCase();
+      const cls = (img.className || '').toLowerCase();
+      const id = (img.id || '').toLowerCase();
+
+      // Skip SVG files
+      if (src.endsWith('.svg') || src.includes('.svg?')) return true;
+
+      // Skip data URIs
+      if (src.startsWith('data:')) return true;
+
+      // Skip images with logo/icon/favicon in attributes
+      for (const word of skipWords) {
+        if (src.includes(word) || alt.includes(word) || cls.includes(word) || id.includes(word)) return true;
+      }
+
+      // Skip tiny images (icons, tracking pixels)
+      if (img.naturalWidth > 0 && img.naturalHeight > 0) {
+        if (img.naturalWidth < 200 || img.naturalHeight < 150) return true;
+      }
+      // Also check CSS dimensions for lazy-loaded images
+      const rect = img.getBoundingClientRect();
+      if (rect.width > 0 && rect.width < 100) return true;
+
+      return false;
+    }
+
+    // Priority 1: Large image inside hero/banner/slider sections
+    const heroContainers = document.querySelectorAll(
+      '.hero, .banner, .slider, .carousel, .hero-section, .main-banner, ' +
+      '[class*="hero"], [class*="banner"], [class*="slider"], [class*="carousel"], ' +
+      '[id*="hero"], [id*="banner"], [id*="slider"]'
+    );
+
+    for (const container of heroContainers) {
+      const imgs = container.querySelectorAll('img');
+      for (const img of imgs) {
+        if (!isSkippable(img) && img.src && img.src.startsWith('http')) {
+          return img.src;
+        }
+      }
+      // Also check background-image on the hero container itself
+      const bg = getComputedStyle(container).backgroundImage;
+      if (bg && bg !== 'none') {
+        const match = bg.match(/url\(["']?(https?:\/\/[^"')]+)["']?\)/);
+        if (match) {
+          const url = match[1];
+          if (!url.endsWith('.svg') && !skipWords.some(w => url.toLowerCase().includes(w))) {
+            return url;
+          }
+        }
+      }
+    }
+
+    // Priority 2: First large <img> in the first few sections (above the fold)
+    const sections = document.querySelectorAll('main, section, article, .content, [role="main"]');
+    const searchAreas = sections.length > 0 ? Array.from(sections).slice(0, 4) : [document.body];
+
+    for (const area of searchAreas) {
+      const imgs = area.querySelectorAll('img');
+      for (const img of imgs) {
+        if (!isSkippable(img) && img.src && img.src.startsWith('http')) {
+          // Prefer images that are visually large
+          const rect = img.getBoundingClientRect();
+          if (rect.width >= 250 || (img.naturalWidth >= 400 && img.naturalHeight >= 250)) {
+            return img.src;
+          }
+        }
+      }
+    }
+
+    // Priority 3: Largest non-logo image on the entire page
+    let bestImg = null;
+    let bestArea = 0;
+    document.querySelectorAll('img').forEach(img => {
+      if (!isSkippable(img) && img.src && img.src.startsWith('http')) {
+        const area = (img.naturalWidth || 0) * (img.naturalHeight || 0);
+        if (area > bestArea) {
+          bestArea = area;
+          bestImg = img.src;
+        }
+      }
+    });
+    if (bestImg) return bestImg;
+
+    // Priority 4: og:image (often a real photo)
+    const ogImage = document.querySelector('meta[property="og:image"]');
+    if (ogImage) {
+      const val = ogImage.getAttribute('content');
+      if (val && val.startsWith('http') && !val.endsWith('.svg') && !val.toLowerCase().includes('logo')) {
+        return val;
+      }
+    }
+
+    return null;
+  }
+
   // ---- 2. Extract brand colors ----
   function collectColors() {
     const colorCounts = {};
@@ -119,16 +222,13 @@
   // ---- 5. Extract phone numbers (UAE formats) ----
   function extractPhones() {
     const phones = new Set();
-    // UAE patterns: +971-X-XXXXXXX, 04-XXXXXXX, 050-XXXXXXX, etc.
     const phoneRegex = /(?:\+971[\s-]?\d[\s-]?\d{3}[\s-]?\d{4})|(?:0(?:4|50|52|54|55|56|58)[\s-]?\d{3}[\s-]?\d{4})|(?:800[\s-]?\d{3,})/g;
 
-    // Check tel: links first (most reliable)
     document.querySelectorAll('a[href^="tel:"]').forEach(a => {
       const tel = a.getAttribute('href').replace('tel:', '').replace(/\s/g, '');
       if (tel.length >= 7) phones.add(tel);
     });
 
-    // Scan visible text for phone patterns
     const bodyText = document.body.innerText || '';
     const matches = bodyText.match(phoneRegex);
     if (matches) {
@@ -142,7 +242,6 @@
   function extractDoctorNames() {
     const names = new Set();
 
-    // Check schema.org Person markup
     document.querySelectorAll('script[type="application/ld+json"]').forEach(script => {
       try {
         const data = JSON.parse(script.textContent);
@@ -151,7 +250,6 @@
           if (item['@type'] === 'Person' || item['@type'] === 'Physician') {
             if (item.name) names.add(item.name.trim());
           }
-          // Check nested members/physicians
           if (item.member) {
             const members = Array.isArray(item.member) ? item.member : [item.member];
             members.forEach(m => { if (m.name) names.add(m.name.trim()); });
@@ -164,7 +262,6 @@
       } catch (e) { /* skip invalid JSON-LD */ }
     });
 
-    // Scan text for "Dr." or "Dr " patterns
     const bodyText = document.body.innerText || '';
     const drRegex = /Dr\.?\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+){0,3})/g;
     let match;
@@ -180,7 +277,6 @@
 
   // ---- 7. Extract address ----
   function extractAddress() {
-    // Priority 1: Schema.org PostalAddress
     const scripts = document.querySelectorAll('script[type="application/ld+json"]');
     for (const script of scripts) {
       try {
@@ -199,20 +295,17 @@
       } catch (e) { /* skip */ }
     }
 
-    // Priority 2: Look for address-like text with UAE keywords
     const addressKeywords = /(?:Dubai|Abu\s*Dhabi|Sharjah|Ajman|UAE|United\s*Arab\s*Emirates|P\.?O\.?\s*Box)/i;
     const allText = document.body.innerText || '';
     const lines = allText.split('\n').map(l => l.trim()).filter(l => l.length > 10 && l.length < 200);
 
     for (const line of lines) {
       if (addressKeywords.test(line)) {
-        // Clean up the line — take just the relevant portion
         const cleaned = line.replace(/\s+/g, ' ').trim();
         if (cleaned.length < 200) return cleaned;
       }
     }
 
-    // Priority 3: Google Maps embed
     const mapIframe = document.querySelector('iframe[src*="google.com/maps"]');
     if (mapIframe) {
       const src = mapIframe.getAttribute('src');
@@ -225,14 +318,12 @@
 
   // ---- 8. Extract business name ----
   function extractBusinessName() {
-    // Priority 1: og:site_name
     const ogSiteName = document.querySelector('meta[property="og:site_name"]');
     if (ogSiteName) {
       const val = ogSiteName.getAttribute('content');
       if (val && val.trim()) return val.trim();
     }
 
-    // Priority 2: Schema.org Organization name
     const scripts = document.querySelectorAll('script[type="application/ld+json"]');
     for (const script of scripts) {
       try {
@@ -248,13 +339,11 @@
       } catch (e) { /* skip */ }
     }
 
-    // Priority 3: First H1
     const h1 = document.querySelector('h1');
     if (h1 && h1.textContent.trim().length > 2 && h1.textContent.trim().length < 80) {
       return h1.textContent.trim();
     }
 
-    // Priority 4: Document title before separator
     const title = document.title || '';
     const separators = [' | ', ' - ', ' – ', ' — ', ' :: '];
     for (const sep of separators) {
@@ -269,20 +358,17 @@
     const emails = new Set();
     const emailRegex = /[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}/g;
 
-    // mailto: links first (most reliable)
     document.querySelectorAll('a[href^="mailto:"]').forEach(a => {
       const email = a.getAttribute('href').replace('mailto:', '').split('?')[0].trim().toLowerCase();
       if (email) emails.add(email);
     });
 
-    // Scan body text
     const bodyText = document.body.innerText || '';
     const matches = bodyText.match(emailRegex);
     if (matches) {
       matches.forEach(m => emails.add(m.toLowerCase()));
     }
 
-    // Filter out common false positives
     const filtered = Array.from(emails).filter(e =>
       !e.endsWith('.png') && !e.endsWith('.jpg') && !e.endsWith('.svg') &&
       !e.includes('example.com') && !e.includes('sentry.io') &&
@@ -294,7 +380,6 @@
 
   // ---- 10. Extract logo URL ----
   function extractLogoUrl() {
-    // Priority 1: img inside header/nav with "logo" in class/alt/src
     const containers = document.querySelectorAll('header, nav, .header, .navbar, .nav, [class*="header"], [class*="nav"]');
     for (const container of containers) {
       const imgs = container.querySelectorAll('img');
@@ -309,7 +394,6 @@
       }
     }
 
-    // Priority 2: Any img on page with "logo" in attributes
     const allImgs = document.querySelectorAll('img');
     for (const img of allImgs) {
       const src = img.src || '';
@@ -320,7 +404,6 @@
       }
     }
 
-    // Priority 3: og:image as last resort for logo
     const ogImage = document.querySelector('meta[property="og:image"]');
     if (ogImage) {
       const val = ogImage.getAttribute('content');
@@ -335,30 +418,17 @@
     const fonts = new Set();
     const genericFonts = ['serif', 'sans-serif', 'monospace', 'cursive', 'fantasy', 'system-ui', 'ui-sans-serif', 'ui-serif', 'ui-monospace'];
 
-    // Check body font
     const bodyFont = getComputedStyle(document.body).fontFamily;
     if (bodyFont) parseFontFamily(bodyFont, fonts, genericFonts);
 
-    // Check h1 font
     const h1 = document.querySelector('h1');
-    if (h1) {
-      const h1Font = getComputedStyle(h1).fontFamily;
-      if (h1Font) parseFontFamily(h1Font, fonts, genericFonts);
-    }
+    if (h1) parseFontFamily(getComputedStyle(h1).fontFamily, fonts, genericFonts);
 
-    // Check h2 font
     const h2 = document.querySelector('h2');
-    if (h2) {
-      const h2Font = getComputedStyle(h2).fontFamily;
-      if (h2Font) parseFontFamily(h2Font, fonts, genericFonts);
-    }
+    if (h2) parseFontFamily(getComputedStyle(h2).fontFamily, fonts, genericFonts);
 
-    // Check nav font
     const nav = document.querySelector('nav');
-    if (nav) {
-      const navFont = getComputedStyle(nav).fontFamily;
-      if (navFont) parseFontFamily(navFont, fonts, genericFonts);
-    }
+    if (nav) parseFontFamily(getComputedStyle(nav).fontFamily, fonts, genericFonts);
 
     return Array.from(fonts).slice(0, 4);
   }
@@ -383,7 +453,6 @@
       const href = (a.getAttribute('href') || '').toLowerCase();
       const text = (a.textContent || '').toLowerCase();
 
-      // Booking detection
       if (href.includes('calendly.com') || href.includes('zocdoc.com') ||
           href.includes('practo.com') || href.includes('booking') ||
           href.includes('appointment') || href.includes('schedule') ||
@@ -392,19 +461,16 @@
         hasBooking = true;
       }
 
-      // WhatsApp detection
       if (href.includes('wa.me') || href.includes('whatsapp.com') ||
           href.includes('api.whatsapp') || href.includes('whatsapp')) {
         hasWhatsapp = true;
       }
 
-      // Instagram detection
       if (href.includes('instagram.com')) {
         hasInstagram = true;
       }
     });
 
-    // Also check for booking buttons/forms
     if (!hasBooking) {
       const bookingSelectors = ['[class*="book"]', '[class*="appointment"]', '[id*="book"]', 'form[action*="book"]'];
       for (const sel of bookingSelectors) {
@@ -419,13 +485,11 @@
 
   // ---- 13. Extract Google Maps URL ----
   function extractGoogleMapsUrl() {
-    // Check for Maps iframe embed
     const mapIframe = document.querySelector('iframe[src*="google.com/maps"], iframe[src*="maps.google.com"]');
     if (mapIframe) {
       return mapIframe.getAttribute('src');
     }
 
-    // Check for Maps links
     const allLinks = document.querySelectorAll('a[href]');
     for (const a of allLinks) {
       const href = a.getAttribute('href') || '';
@@ -435,6 +499,54 @@
     }
 
     return null;
+  }
+
+  // ---- 14. Extract page content (paragraphs, service names) ----
+  // Gives Claude real text to use instead of fabricating
+  function extractPageContent() {
+    const content = [];
+
+    // Collect paragraphs from main content (skip nav/header/footer)
+    const skipTags = ['NAV', 'HEADER', 'FOOTER'];
+    document.querySelectorAll('p').forEach(p => {
+      // Skip if inside nav/header/footer
+      let parent = p.parentElement;
+      let skip = false;
+      while (parent && parent !== document.body) {
+        if (skipTags.includes(parent.tagName) ||
+            (parent.className || '').toLowerCase().match(/nav|header|footer|menu|cookie|banner/)) {
+          skip = true;
+          break;
+        }
+        parent = parent.parentElement;
+      }
+      if (skip) return;
+
+      const text = p.textContent.trim();
+      if (text.length > 30 && text.length < 500) {
+        content.push(text);
+      }
+    });
+
+    // Collect service/card names (h3 headings in card-like containers)
+    const serviceNames = [];
+    document.querySelectorAll('h3').forEach(h3 => {
+      const text = h3.textContent.trim();
+      if (text.length > 2 && text.length < 80) {
+        serviceNames.push(text);
+      }
+    });
+
+    // Build content string, cap at ~2000 chars for token budget
+    let result = '';
+    if (content.length > 0) {
+      result += 'PAGE_PARAGRAPHS:\n' + content.slice(0, 8).join('\n') + '\n\n';
+    }
+    if (serviceNames.length > 0) {
+      result += 'SERVICES_FOUND:\n' + serviceNames.slice(0, 12).join('\n');
+    }
+
+    return result.slice(0, 2000) || null;
   }
 
   // ---- Run everything and return the result ----
@@ -451,6 +563,8 @@
   const fonts = detectFonts();
   const social = detectBookingSocial();
   const googleMapsUrl = extractGoogleMapsUrl();
+  const heroImageUrl = selectHeroImage();
+  const pageContent = extractPageContent();
 
   // Return payload matching backend /api/capture expected format
   return {
@@ -460,7 +574,7 @@
     h1_text: headings.filter(h => h.tag === 'h1').map(h => h.text)[0] || '',
     h2_texts: headings.filter(h => h.tag === 'h2').map(h => h.text),
     logo_url: logoUrl,
-    hero_image_url: images[0] || null,
+    hero_image_url: heroImageUrl,
     all_images: images,
     color_palette: colors,
     font_families: fonts,
@@ -474,5 +588,6 @@
     all_doctor_names: doctorNames,
     address: address,
     google_maps_url: googleMapsUrl,
+    page_content: pageContent,
   };
 })();
