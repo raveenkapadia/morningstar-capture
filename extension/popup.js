@@ -3,10 +3,8 @@
 // Controls the extension popup UI
 // ============================================
 
-// Backend URL — loaded from config.js (which is included before this script)
 const BACKEND_URL = CONFIG.API_URL;
 
-// Store the captured data so we can submit it later
 let capturedData = null;
 
 // ---- On popup open: scan the current page ----
@@ -15,7 +13,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   const contentEl = document.getElementById('content');
 
   try {
-    // Get the current active tab
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 
     if (!tab || !tab.id) {
@@ -23,7 +20,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       return;
     }
 
-    // Check if we can access this tab (can't access chrome:// pages etc)
     if (tab.url.startsWith('chrome://') || tab.url.startsWith('chrome-extension://') || tab.url.startsWith('about:')) {
       loadingEl.style.display = 'none';
       contentEl.style.display = 'block';
@@ -32,13 +28,11 @@ document.addEventListener('DOMContentLoaded', async () => {
       return;
     }
 
-    // Inject the content script into the page and get results
     const results = await chrome.scripting.executeScript({
       target: { tabId: tab.id },
       files: ['content.js']
     });
 
-    // The content script returns data as its result
     const data = results[0].result;
 
     if (!data) {
@@ -46,33 +40,61 @@ document.addEventListener('DOMContentLoaded', async () => {
       return;
     }
 
-    // Save the data for submission
     capturedData = data;
 
-    // Update the UI with scanned data
     loadingEl.style.display = 'none';
     contentEl.style.display = 'block';
 
-    // Show URL
-    document.getElementById('page-url').textContent = data.url;
+    // Populate UI
+    document.getElementById('page-url').textContent = data.page_url;
 
-    // Show image count
-    document.getElementById('image-count').textContent = data.images.length;
+    // Business name
+    setText('business-name', data.business_name || '—');
 
-    // Show color count
-    document.getElementById('color-count').textContent = data.colors.length;
+    // Doctor name
+    setText('doctor-name', data.doctor_name || '—');
 
-    // Show color swatches
+    // Phone numbers
+    setText('phones', data.contact_phones.length > 0 ? data.contact_phones.join(', ') : '—');
+
+    // Emails
+    setText('emails', data.contact_emails.length > 0 ? data.contact_emails.join(', ') : '—');
+
+    // Address
+    setText('address', data.address || '—');
+
+    // Fonts
+    setText('fonts', data.font_families.length > 0 ? data.font_families.join(', ') : '—');
+
+    // Stats
+    document.getElementById('image-count').textContent = data.all_images ? data.all_images.length : 0;
+    document.getElementById('color-count').textContent = data.color_palette.length;
+
+    // Detection badges
+    toggleBadge('badge-logo', !!data.logo_url);
+    toggleBadge('badge-booking', data.has_booking);
+    toggleBadge('badge-whatsapp', data.has_whatsapp);
+    toggleBadge('badge-instagram', data.has_instagram);
+    toggleBadge('badge-maps', !!data.google_maps_url);
+
+    // Color swatches
     const swatchContainer = document.getElementById('color-swatches');
-    if (data.colors.length > 0) {
+    if (data.color_palette.length > 0) {
       swatchContainer.innerHTML = '';
-      data.colors.forEach(color => {
+      data.color_palette.forEach(color => {
         const swatch = document.createElement('div');
         swatch.className = 'swatch';
         swatch.style.backgroundColor = color;
         swatch.title = color;
         swatchContainer.appendChild(swatch);
       });
+    }
+
+    // Logo preview
+    if (data.logo_url) {
+      const logoEl = document.getElementById('logo-preview');
+      logoEl.src = data.logo_url;
+      logoEl.style.display = 'block';
     }
 
   } catch (err) {
@@ -89,28 +111,30 @@ document.getElementById('submit-btn').addEventListener('click', async () => {
   const errorEl = document.getElementById('error-message');
   const successEl = document.getElementById('success-message');
 
-  // Disable button and show loading state
   btn.disabled = true;
   btn.textContent = 'Submitting...';
   errorEl.style.display = 'none';
 
   try {
-    // Send the captured data to our backend
     const response = await fetch(`${BACKEND_URL}/api/capture`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': CONFIG.API_KEY
+      },
       body: JSON.stringify(capturedData)
     });
 
     if (!response.ok) {
-      throw new Error('Server error');
+      const errBody = await response.json().catch(() => ({}));
+      throw new Error(errBody.error || 'Server error');
     }
 
     const result = await response.json();
 
     if (result.success) {
-      // Hide the button, show success
       btn.style.display = 'none';
+      successEl.innerHTML = 'Captured <strong>' + (result.business_name || '') + '</strong>. Preview ready.';
       successEl.style.display = 'block';
     } else {
       throw new Error('Submission failed');
@@ -120,16 +144,29 @@ document.getElementById('submit-btn').addEventListener('click', async () => {
     console.error('Submit error:', err);
     btn.disabled = false;
     btn.textContent = 'Submit for Review';
-    errorEl.textContent = 'Could not connect to server. Is the backend running?';
+    errorEl.textContent = err.message || 'Could not connect to server.';
     errorEl.style.display = 'block';
   }
 });
 
-// ---- Helper: Show error and hide loading ----
+// ---- Helpers ----
 function showError(message) {
   document.getElementById('loading').style.display = 'none';
   document.getElementById('content').style.display = 'block';
   document.getElementById('error-message').textContent = message;
   document.getElementById('error-message').style.display = 'block';
   document.getElementById('submit-btn').disabled = true;
+}
+
+function setText(id, text) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = text;
+}
+
+function toggleBadge(id, active) {
+  const el = document.getElementById(id);
+  if (el) {
+    el.classList.toggle('active', active);
+    el.classList.toggle('inactive', !active);
+  }
 }
