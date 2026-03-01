@@ -24,6 +24,7 @@
     }
   ],
   "rewrites": [
-    { "source": "/p/:id", "destination": "/api/preview/:id" }
+    { "source": "/p/:id", "destination": "/api/preview/:id" },
+    { "source": "/admin", "destination": "/admin/dashboard.html" }
   ]
 }

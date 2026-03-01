@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MorningStar.ai — Dashboard</title>
+<style>
+/* ─── RESET & BASE ──────────────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --sidebar:#1a1a2e;
+  --sidebar-hover:#16213e;
+  --bg:#f5f7fa;
+  --card:#ffffff;
+  --border:#e2e8f0;
+  --text:#1a202c;
+  --muted:#718096;
+  --blue:#3182ce;
+  --blue-lt:#ebf8ff;
+  --green:#38a169;
+  --green-lt:#f0fff4;
+  --amber:#d69e2e;
+  --amber-lt:#fffff0;
+  --red:#e53e3e;
+  --red-lt:#fff5f5;
+  --purple:#805ad5;
+  --purple-lt:#faf5ff;
+  --emerald:#059669;
+  --gray:#a0aec0;
+  --radius:8px;
+  --shadow:0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md:0 4px 12px rgba(0,0,0,0.1);
+}
+html{font-size:14px}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex}
+
+/* ─── SIDEBAR ───────────────────────────────────────────────────────────── */
+.sidebar{
+  width:240px;min-height:100vh;background:var(--sidebar);color:#fff;
+  position:fixed;left:0;top:0;bottom:0;z-index:100;
+  display:flex;flex-direction:column;padding:0;
+  transition:transform .2s;
+}
+.sidebar-brand{padding:20px 20px 16px;border-bottom:1px solid rgba(255,255,255,0.08)}
+.sidebar-brand h1{font-size:14px;font-weight:700;letter-spacing:1.5px;opacity:.9}
+.sidebar-brand span{font-size:11px;opacity:.4;display:block;margin-top:2px}
+.sidebar-nav{flex:1;padding:12px 0}
+.sidebar-nav a{
+  display:flex;align-items:center;gap:12px;padding:11px 20px;
+  color:rgba(255,255,255,0.6);text-decoration:none;font-size:13px;font-weight:500;
+  transition:all .15s;cursor:pointer;
+}
+.sidebar-nav a:hover{background:var(--sidebar-hover);color:rgba(255,255,255,0.9)}
+.sidebar-nav a.active{background:var(--sidebar-hover);color:#fff;border-right:3px solid var(--blue)}
+.sidebar-nav a svg{width:18px;height:18px;opacity:.7;flex-shrink:0}
+.sidebar-nav a.active svg{opacity:1}
+.sidebar-footer{padding:16px 20px;border-top:1px solid rgba(255,255,255,0.08);font-size:11px;opacity:.3}
+
+/* ─── MAIN ──────────────────────────────────────────────────────────────── */
+.main{flex:1;margin-left:240px;padding:24px 32px 100px;min-height:100vh}
+.main-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+.main-header h2{font-size:20px;font-weight:700}
+.main-header .refresh-btn{
+  background:none;border:1px solid var(--border);border-radius:var(--radius);
+  padding:6px 14px;font-size:12px;color:var(--muted);cursor:pointer;display:flex;align-items:center;gap:6px;
+}
+.main-header .refresh-btn:hover{border-color:var(--blue);color:var(--blue)}
+
+/* ─── CARDS ─────────────────────────────────────────────────────────────── */
+.stat-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.stat-card{
+  background:var(--card);border-radius:var(--radius);padding:20px;
+  box-shadow:var(--shadow);border:1px solid var(--border);
+}
+.stat-card .label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:8px}
+.stat-card .value{font-size:28px;font-weight:700}
+.stat-card .sub{font-size:11px;color:var(--muted);margin-top:4px}
+
+/* ─── SECTION PANELS ────────────────────────────────────────────────────── */
+.panel{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--border);margin-bottom:20px;overflow:hidden}
+.panel-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.panel-header h3{font-size:14px;font-weight:600}
+.panel-body{padding:0}
+.panel-body.padded{padding:20px}
+
+/* ─── TABLE ─────────────────────────────────────────────────────────────── */
+table{width:100%;border-collapse:collapse}
+th{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);text-align:left;padding:10px 16px;border-bottom:1px solid var(--border)}
+td{padding:12px 16px;border-bottom:1px solid var(--border);font-size:13px;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover{background:#f7fafc}
+.table-link{color:var(--blue);text-decoration:none;font-weight:500;cursor:pointer}
+.table-link:hover{text-decoration:underline}
+
+/* ─── STATUS BADGES ─────────────────────────────────────────────────────── */
+.badge{display:inline-block;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:600;white-space:nowrap}
+.badge-new{background:#edf2f7;color:#4a5568}
+.badge-preview_ready,.badge-pending{background:var(--blue-lt);color:var(--blue)}
+.badge-outreach_sent,.badge-sent{background:var(--amber-lt);color:var(--amber)}
+.badge-replied{background:var(--green-lt);color:var(--green)}
+.badge-meeting_booked{background:var(--purple-lt);color:var(--purple)}
+.badge-won,.badge-approved{background:var(--green-lt);color:var(--emerald)}
+.badge-lost,.badge-rejected{background:var(--red-lt);color:var(--red)}
+.badge-preview_queued{background:#fefcbf;color:#975a16}
+
+/* ─── BUTTONS ───────────────────────────────────────────────────────────── */
+.btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:8px 16px;border-radius:var(--radius);font-size:12px;font-weight:600;
+  border:none;cursor:pointer;transition:all .15s;text-decoration:none;
+}
+.btn-sm{padding:5px 12px;font-size:11px}
+.btn-blue{background:var(--blue);color:#fff}.btn-blue:hover{background:#2b6cb0}
+.btn-green{background:var(--green);color:#fff}.btn-green:hover{background:#2f855a}
+.btn-red{background:var(--red);color:#fff}.btn-red:hover{background:#c53030}
+.btn-gray{background:#edf2f7;color:#4a5568}.btn-gray:hover{background:#e2e8f0}
+.btn-outline{background:none;border:1px solid var(--border);color:var(--text)}.btn-outline:hover{border-color:var(--blue);color:var(--blue)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+
+/* ─── FORMS ─────────────────────────────────────────────────────────────── */
+.form-group{margin-bottom:14px}
+.form-group label{display:block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:4px}
+.form-group input,.form-group select,.form-group textarea{
+  width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;
+  font-size:13px;font-family:inherit;color:var(--text);background:#fff;
+}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 2px rgba(49,130,206,0.15)}
+.form-group input[type="color"]{width:40px;height:36px;padding:2px;cursor:pointer}
+.form-row{display:flex;gap:12px}
+.form-row .form-group{flex:1}
+.color-input-group{display:flex;align-items:flex-end;gap:8px}
+.color-input-group input[type="color"]{flex-shrink:0}
+.color-input-group input[type="text"]{flex:1}
+
+/* ─── TOGGLE SWITCHES ──────────────────────────────────────────────────── */
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0}
+.toggle-row label{font-size:13px;font-weight:500}
+.toggle{position:relative;width:40px;height:22px;cursor:pointer}
+.toggle input{opacity:0;width:0;height:0}
+.toggle .slider{position:absolute;inset:0;background:#cbd5e0;border-radius:11px;transition:.2s}
+.toggle .slider::before{content:'';position:absolute;width:18px;height:18px;left:2px;bottom:2px;background:#fff;border-radius:50%;transition:.2s}
+.toggle input:checked+.slider{background:var(--blue)}
+.toggle input:checked+.slider::before{transform:translateX(18px)}
+
+/* ─── KANBAN ────────────────────────────────────────────────────────────── */
+.kanban{display:flex;gap:16px;overflow-x:auto;padding-bottom:8px}
+.kanban-col{min-width:240px;flex:1;background:var(--bg);border-radius:var(--radius);border:1px solid var(--border)}
+.kanban-col-header{padding:12px 16px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.kanban-col-header .count{background:var(--border);color:var(--muted);padding:2px 8px;border-radius:10px;font-size:11px}
+.kanban-cards{padding:8px;display:flex;flex-direction:column;gap:8px;max-height:calc(100vh - 250px);overflow-y:auto}
+.kanban-card{
+  background:var(--card);border-radius:6px;padding:12px;
+  box-shadow:var(--shadow);border:1px solid var(--border);cursor:pointer;
+  transition:box-shadow .15s;
+}
+.kanban-card:hover{box-shadow:var(--shadow-md)}
+.kanban-card .kc-name{font-size:13px;font-weight:600;margin-bottom:4px}
+.kanban-card .kc-meta{font-size:11px;color:var(--muted);display:flex;gap:8px}
+
+/* ─── NOTIFICATION FEED ─────────────────────────────────────────────────── */
+.feed{max-height:400px;overflow-y:auto}
+.feed-item{display:flex;gap:12px;padding:12px 16px;border-bottom:1px solid var(--border);font-size:13px;align-items:flex-start}
+.feed-item:last-child{border-bottom:none}
+.feed-dot{width:8px;height:8px;border-radius:50%;background:var(--blue);flex-shrink:0;margin-top:5px}
+.feed-dot.view{background:var(--blue)}
+.feed-dot.cta_click{background:var(--green)}
+.feed-dot.preview_ready{background:var(--purple)}
+.feed-dot.approved{background:var(--emerald)}
+.feed-time{font-size:11px;color:var(--muted);white-space:nowrap;flex-shrink:0}
+
+/* ─── REVIEW SCREEN ─────────────────────────────────────────────────────── */
+.review-header{display:flex;align-items:center;gap:16px;margin-bottom:20px}
+.review-header .back{font-size:20px;cursor:pointer;color:var(--muted);text-decoration:none}
+.review-header .back:hover{color:var(--text)}
+.review-iframes{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
+.iframe-wrap{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;background:#fff}
+.iframe-wrap .iframe-label{padding:8px 16px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.iframe-wrap iframe{width:100%;height:600px;border:none}
+.iframe-wrap .iframe-fallback{padding:40px;text-align:center;color:var(--muted);font-size:13px}
+.review-actions{display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap}
+.review-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+
+/* ─── SEARCH & FILTERS ──────────────────────────────────────────────────── */
+.filters{display:flex;gap:12px;margin-bottom:16px;align-items:center;flex-wrap:wrap}
+.filters input[type="text"]{padding:8px 14px;border:1px solid var(--border);border-radius:6px;font-size:13px;min-width:240px}
+.filters select{padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:13px;background:#fff}
+.filters input:focus,.filters select:focus{outline:none;border-color:var(--blue)}
+
+/* ─── PAGINATION ────────────────────────────────────────────────────────── */
+.pagination{display:flex;align-items:center;justify-content:center;gap:12px;padding:16px;font-size:13px}
+.pagination button{padding:6px 14px;border:1px solid var(--border);border-radius:6px;background:#fff;cursor:pointer;font-size:12px}
+.pagination button:hover{border-color:var(--blue);color:var(--blue)}
+.pagination button:disabled{opacity:.4;cursor:not-allowed}
+
+/* ─── TOAST ─────────────────────────────────────────────────────────────── */
+.toast{position:fixed;top:20px;right:20px;z-index:9999;padding:12px 20px;border-radius:var(--radius);font-size:13px;font-weight:500;color:#fff;box-shadow:var(--shadow-md);transform:translateY(-20px);opacity:0;transition:all .3s;pointer-events:none}
+.toast.show{transform:translateY(0);opacity:1}
+.toast-success{background:var(--green)}
+.toast-error{background:var(--red)}
+.toast-info{background:var(--blue)}
+
+/* ─── LOGIN ─────────────────────────────────────────────────────────────── */
+.login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:var(--sidebar);width:100%}
+.login-box{background:var(--card);border-radius:12px;padding:40px;width:380px;box-shadow:var(--shadow-md);text-align:center}
+.login-box h1{font-size:14px;font-weight:700;letter-spacing:1.5px;margin-bottom:4px}
+.login-box .sub{font-size:12px;color:var(--muted);margin-bottom:28px}
+.login-box input{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:6px;font-size:13px;margin-bottom:12px;font-family:monospace}
+.login-box input:focus{outline:none;border-color:var(--blue)}
+.login-box button{width:100%;padding:10px;background:var(--blue);color:#fff;border:none;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer}
+.login-box button:hover{background:#2b6cb0}
+.login-box .error{color:var(--red);font-size:12px;margin-top:8px}
+
+/* ─── LOADING ───────────────────────────────────────────────────────────── */
+.loading{text-align:center;padding:40px;color:var(--muted)}
+.spinner{display:inline-block;width:24px;height:24px;border:3px solid var(--border);border-top-color:var(--blue);border-radius:50%;animation:spin .6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ─── MOBILE ────────────────────────────────────────────────────────────── */
+.mobile-tabs{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--sidebar);z-index:100;padding:8px 0 calc(8px + env(safe-area-inset-bottom));border-top:1px solid rgba(255,255,255,0.08)}
+.mobile-tabs .tabs{display:flex;justify-content:space-around}
+.mobile-tabs a{display:flex;flex-direction:column;align-items:center;gap:2px;color:rgba(255,255,255,0.5);text-decoration:none;font-size:10px;padding:4px 8px}
+.mobile-tabs a.active{color:#fff}
+.mobile-tabs a svg{width:20px;height:20px}
+
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%)}
+  .main{margin-left:0;padding:16px 16px 100px}
+  .mobile-tabs{display:block}
+  .stat-cards{grid-template-columns:repeat(2,1fr);gap:10px}
+  .review-iframes{grid-template-columns:1fr}
+  .review-grid{grid-template-columns:1fr}
+  .kanban{flex-direction:column}
+  .kanban-col{min-width:100%}
+  .filters{flex-direction:column}
+  .filters input[type="text"]{min-width:100%}
+  .form-row{flex-direction:column;gap:0}
+}
+
+/* ─── EMPTY STATE ───────────────────────────────────────────────────────── */
+.empty{text-align:center;padding:48px 20px;color:var(--muted)}
+.empty svg{width:48px;height:48px;opacity:.3;margin-bottom:12px}
+.empty p{font-size:13px}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ LOGIN SCREEN ═══════════════ -->
+<div id="login-screen" class="login-screen" style="display:none">
+  <div class="login-box">
+    <h1>MORNINGSTAR.AI</h1>
+    <div class="sub">Review Dashboard</div>
+    <input type="password" id="login-key" placeholder="Enter API key" autocomplete="off">
+    <button onclick="doLogin()">Sign In</button>
+    <div id="login-error" class="error" style="display:none"></div>
+  </div>
+</div>
+
+<!-- ═══════════════ SIDEBAR ═══════════════ -->
+<div id="app-shell" style="display:none;width:100%">
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <h1>MORNINGSTAR.AI</h1>
+    <span>Review Dashboard</span>
+  </div>
+  <div class="sidebar-nav" id="sidebar-nav">
+    <a href="#overview" data-screen="overview">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Overview
+    </a>
+    <a href="#pipeline" data-screen="pipeline">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      Pipeline
+    </a>
+    <a href="#prospects" data-screen="prospects">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+      Prospects
+    </a>
+  </div>
+  <div class="sidebar-footer">v1.0 &middot; MorningStar.ai</div>
+</nav>
+
+<!-- ═══════════════ MOBILE TABS ═══════════════ -->
+<div class="mobile-tabs">
+  <div class="tabs" id="mobile-nav">
+    <a href="#overview" data-screen="overview">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Overview
+    </a>
+    <a href="#pipeline" data-screen="pipeline">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      Pipeline
+    </a>
+    <a href="#prospects" data-screen="prospects">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+      Prospects
+    </a>
+  </div>
+</div>
+
+<!-- ═══════════════ MAIN CONTENT ═══════════════ -->
+<main class="main" id="main-content">
+  <div class="loading"><div class="spinner"></div><p style="margin-top:12px">Loading...</p></div>
+</main>
+</div>
+
+<!-- ═══════════════ TOAST ═══════════════ -->
+<div id="toast" class="toast"></div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════════════
+   MORNINGSTAR REVIEW DASHBOARD
+   Single-file vanilla JS application
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+// ─── CONFIG ──────────────────────────────────────────────────────────────────
+const CONFIG = {
+  BASE_URL: '',  // same origin
+  REFRESH_INTERVAL: 30000,
+};
+
+// ─── STATE ───────────────────────────────────────────────────────────────────
+const STATE = {
+  apiKey: null,
+  dashboard: null,
+  prospects: [],
+  prospectTotal: 0,
+  currentProspect: null,
+  filters: { status: '', vertical: '', search: '', offset: 0, limit: 50 },
+  refreshTimer: null,
+  currentScreen: 'overview',
+};
+
+// ─── HELPERS ─────────────────────────────────────────────────────────────────
+function escapeHtml(str) {
+  if (!str) return '';
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
+
+function timeAgo(dateStr) {
+  if (!dateStr) return '';
+  const now = Date.now();
+  const d = new Date(dateStr).getTime();
+  const diff = Math.floor((now - d) / 1000);
+  if (diff < 60) return 'just now';
+  if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+  if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+  if (diff < 604800) return Math.floor(diff / 86400) + 'd ago';
+  return new Date(dateStr).toLocaleDateString();
+}
+
+function statusBadge(status) {
+  if (!status) return '';
+  const label = status.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+  return `<span class="badge badge-${escapeHtml(status)}">${escapeHtml(label)}</span>`;
+}
+
+function showToast(msg, type = 'info') {
+  const t = document.getElementById('toast');
+  t.className = `toast toast-${type} show`;
+  t.textContent = msg;
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ─── API LAYER ───────────────────────────────────────────────────────────────
+async function api(method, endpoint, body) {
+  const opts = {
+    method,
+    headers: { 'Content-Type': 'application/json', 'x-api-key': STATE.apiKey },
+  };
+  if (body) opts.body = JSON.stringify(body);
+  const res = await fetch(CONFIG.BASE_URL + endpoint, opts);
+  const json = await res.json();
+  if (!res.ok) throw new Error(json.error || 'API error');
+  return json;
+}
+
+const API = {
+  getDashboard: () => api('GET', '/api/dashboard'),
+  getProspects: (params = {}) => {
+    const qs = new URLSearchParams(params).toString();
+    return api('GET', '/api/prospects' + (qs ? '?' + qs : ''));
+  },
+  getProspect: (id) => api('GET', '/api/prospects?id=' + id),
+  updateProspect: (data) => api('PATCH', '/api/prospects', data),
+  approve: (data) => api('POST', '/api/approve', data),
+  generate: (data) => api('POST', '/api/generate', data),
+};
+
+// ─── AUTH ────────────────────────────────────────────────────────────────────
+function checkAuth() {
+  STATE.apiKey = sessionStorage.getItem('ms_api_key');
+  if (STATE.apiKey) {
+    showApp();
+  } else {
+    document.getElementById('login-screen').style.display = 'flex';
+    document.getElementById('app-shell').style.display = 'none';
+    document.getElementById('login-key').focus();
+  }
+}
+
+async function doLogin() {
+  const key = document.getElementById('login-key').value.trim();
+  if (!key) return;
+  const errEl = document.getElementById('login-error');
+  errEl.style.display = 'none';
+  try {
+    STATE.apiKey = key;
+    await API.getDashboard();
+    sessionStorage.setItem('ms_api_key', key);
+    showApp();
+  } catch (e) {
+    STATE.apiKey = null;
+    errEl.textContent = 'Invalid API key';
+    errEl.style.display = 'block';
+  }
+}
+
+// Enter key on login input
+document.getElementById('login-key').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') doLogin();
+});
+
+function showApp() {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app-shell').style.display = 'flex';
+  router();
+  startAutoRefresh();
+}
+
+function logout() {
+  sessionStorage.removeItem('ms_api_key');
+  STATE.apiKey = null;
+  stopAutoRefresh();
+  location.reload();
+}
+
+// ─── ROUTER ──────────────────────────────────────────────────────────────────
+function router() {
+  const hash = location.hash.replace('#', '') || 'overview';
+  const parts = hash.split('/');
+  const screen = parts[0];
+  const param = parts[1] || null;
+
+  STATE.currentScreen = screen;
+
+  // Update nav active state
+  document.querySelectorAll('#sidebar-nav a, #mobile-nav a').forEach(a => {
+    a.classList.toggle('active', a.dataset.screen === screen || (screen === 'review' && a.dataset.screen === 'prospects'));
+  });
+
+  const main = document.getElementById('main-content');
+  main.innerHTML = '<div class="loading"><div class="spinner"></div><p style="margin-top:12px">Loading...</p></div>';
+
+  switch (screen) {
+    case 'overview': renderOverview(); break;
+    case 'pipeline': renderPipeline(); break;
+    case 'prospects': renderProspects(); break;
+    case 'review': renderReview(param); break;
+    default: renderOverview();
+  }
+}
+
+window.addEventListener('hashchange', router);
+
+// ─── AUTO-REFRESH ────────────────────────────────────────────────────────────
+function startAutoRefresh() {
+  stopAutoRefresh();
+  STATE.refreshTimer = setInterval(() => {
+    if (STATE.currentScreen === 'overview') renderOverview();
+  }, CONFIG.REFRESH_INTERVAL);
+}
+function stopAutoRefresh() {
+  if (STATE.refreshTimer) clearInterval(STATE.refreshTimer);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SCREEN 1: OVERVIEW
+// ═══════════════════════════════════════════════════════════════════════════════
+async function renderOverview() {
+  try {
+    const res = await API.getDashboard();
+    STATE.dashboard = res;
+    const f = res.funnel || {};
+    const main = document.getElementById('main-content');
+
+    main.innerHTML = `
+      <div class="main-header">
+        <h2>Overview</h2>
+        <button class="refresh-btn" onclick="renderOverview()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
+          Refresh
+        </button>
+      </div>
+
+      <!-- STAT CARDS -->
+      <div class="stat-cards">
+        <div class="stat-card">
+          <div class="label">New Prospects</div>
+          <div class="value">${f.new || 0}</div>
+          <div class="sub">Awaiting capture</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Previews Ready</div>
+          <div class="value" style="color:var(--blue)">${f.preview_ready || 0}</div>
+          <div class="sub">Ready for review</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Outreach Sent</div>
+          <div class="value" style="color:var(--amber)">${f.outreach_sent || 0}</div>
+          <div class="sub">Awaiting response</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Won</div>
+          <div class="value" style="color:var(--emerald)">${f.won || 0}</div>
+          <div class="sub">Converted clients</div>
+        </div>
+      </div>
+
+      <!-- TWO-COLUMN: REVIEW QUEUE + NOTIFICATIONS -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+        <!-- REVIEW QUEUE -->
+        <div class="panel">
+          <div class="panel-header">
+            <h3>Review Queue</h3>
+            <span style="font-size:11px;color:var(--muted)">${(res.pending_reviews || []).length} pending</span>
+          </div>
+          <div class="panel-body">
+            ${(res.pending_reviews || []).length === 0 ? `
+              <div class="empty"><p>No previews pending review</p></div>
+            ` : `
+              <table>
+                <tbody>
+                  ${(res.pending_reviews || []).map(p => `
+                    <tr>
+                      <td>
+                        <div style="font-weight:600">${escapeHtml(p.prospects?.business_name || p.business_name || 'Unknown')}</div>
+                        <div style="font-size:11px;color:var(--muted)">${escapeHtml(p.template_slug || '')} &middot; ${timeAgo(p.created_at)}</div>
+                      </td>
+                      <td style="text-align:right">
+                        <a class="btn btn-sm btn-blue" href="#review/${p.prospect_id || p.prospects?.id || ''}">Review</a>
+                      </td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            `}
+          </div>
+        </div>
+
+        <!-- NOTIFICATIONS -->
+        <div class="panel">
+          <div class="panel-header">
+            <h3>Notifications</h3>
+            <span style="font-size:11px;color:var(--muted)">${(res.notifications || []).length} unread</span>
+          </div>
+          <div class="panel-body">
+            ${(res.notifications || []).length === 0 ? `
+              <div class="empty"><p>No new notifications</p></div>
+            ` : `
+              <div class="feed">
+                ${(res.notifications || []).map(n => `
+                  <div class="feed-item">
+                    <div class="feed-dot ${n.type || ''}"></div>
+                    <div style="flex:1">${escapeHtml(n.message || '')}</div>
+                    <div class="feed-time">${timeAgo(n.created_at)}</div>
+                  </div>
+                `).join('')}
+              </div>
+            `}
+          </div>
+        </div>
+      </div>
+
+      <!-- RECENT PROSPECTS -->
+      <div class="panel" style="margin-top:20px">
+        <div class="panel-header">
+          <h3>Recent Prospects</h3>
+          <a href="#prospects" style="font-size:12px;color:var(--blue);text-decoration:none">View all &rarr;</a>
+        </div>
+        <div class="panel-body">
+          <table>
+            <thead>
+              <tr><th>Business</th><th>Vertical</th><th>Status</th><th>Added</th><th></th></tr>
+            </thead>
+            <tbody>
+              ${(res.recent_prospects || []).map(p => `
+                <tr>
+                  <td><span class="table-link" onclick="location.hash='review/${p.id}'">${escapeHtml(p.business_name || 'Unknown')}</span></td>
+                  <td>${escapeHtml(p.vertical || '-')}</td>
+                  <td>${statusBadge(p.status)}</td>
+                  <td style="color:var(--muted)">${timeAgo(p.created_at)}</td>
+                  <td><a class="btn btn-sm btn-outline" href="#review/${p.id}">View</a></td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `;
+  } catch (e) {
+    document.getElementById('main-content').innerHTML = `<div class="empty"><p>Error loading dashboard: ${escapeHtml(e.message)}</p></div>`;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SCREEN 2: PIPELINE (KANBAN)
+// ═══════════════════════════════════════════════════════════════════════════════
+async function renderPipeline() {
+  try {
+    const res = await API.getProspects({ limit: 200 });
+    const all = res.data || [];
+
+    const columns = [
+      { key: 'new', label: 'New', color: 'var(--gray)' },
+      { key: 'preview_ready', label: 'Preview Ready', color: 'var(--blue)' },
+      { key: 'outreach_sent', label: 'Outreach Sent', color: 'var(--amber)' },
+      { key: 'replied', label: 'Replied', color: 'var(--green)' },
+      { key: 'meeting_booked', label: 'Meeting', color: 'var(--purple)' },
+      { key: 'won', label: 'Won', color: 'var(--emerald)' },
+      { key: 'lost', label: 'Lost', color: 'var(--red)' },
+    ];
+
+    // Group by status
+    const grouped = {};
+    columns.forEach(c => grouped[c.key] = []);
+    all.forEach(p => {
+      const status = p.status || 'new';
+      if (grouped[status]) grouped[status].push(p);
+      else if (grouped['new']) grouped['new'].push(p);
+    });
+
+    const main = document.getElementById('main-content');
+    main.innerHTML = `
+      <div class="main-header">
+        <h2>Pipeline</h2>
+        <span style="font-size:12px;color:var(--muted)">${all.length} total prospects</span>
+      </div>
+      <div class="kanban">
+        ${columns.map(col => `
+          <div class="kanban-col">
+            <div class="kanban-col-header" style="border-top:3px solid ${col.color}">
+              ${col.label}
+              <span class="count">${grouped[col.key].length}</span>
+            </div>
+            <div class="kanban-cards">
+              ${grouped[col.key].length === 0 ? '<div style="padding:20px;text-align:center;color:var(--muted);font-size:12px">Empty</div>' :
+                grouped[col.key].map(p => `
+                  <div class="kanban-card" onclick="location.hash='review/${p.id}'">
+                    <div class="kc-name">${escapeHtml(p.business_name || 'Unknown')}</div>
+                    <div class="kc-meta">
+                      <span>${escapeHtml(p.vertical || '-')}</span>
+                      <span>${timeAgo(p.created_at)}</span>
+                      ${p.view_count ? `<span>${p.view_count} views</span>` : ''}
+                    </div>
+                  </div>
+                `).join('')}
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  } catch (e) {
+    document.getElementById('main-content').innerHTML = `<div class="empty"><p>Error: ${escapeHtml(e.message)}</p></div>`;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SCREEN 3: PROSPECTS TABLE
+// ═══════════════════════════════════════════════════════════════════════════════
+async function renderProspects() {
+  try {
+    const params = {};
+    if (STATE.filters.status) params.status = STATE.filters.status;
+    if (STATE.filters.vertical) params.vertical = STATE.filters.vertical;
+    params.limit = STATE.filters.limit;
+    params.offset = STATE.filters.offset;
+
+    const res = await API.getProspects(params);
+    STATE.prospects = res.data || [];
+
+    // Client-side search filter
+    let filtered = STATE.prospects;
+    if (STATE.filters.search) {
+      const q = STATE.filters.search.toLowerCase();
+      filtered = filtered.filter(p =>
+        (p.business_name || '').toLowerCase().includes(q) ||
+        (p.website_url || '').toLowerCase().includes(q) ||
+        (p.vertical || '').toLowerCase().includes(q)
+      );
+    }
+
+    const main = document.getElementById('main-content');
+    main.innerHTML = `
+      <div class="main-header">
+        <h2>Prospects</h2>
+        <span style="font-size:12px;color:var(--muted)">${filtered.length} shown</span>
+      </div>
+
+      <div class="filters">
+        <input type="text" placeholder="Search by name, URL, or vertical..." value="${escapeHtml(STATE.filters.search)}" oninput="STATE.filters.search=this.value;renderProspects()">
+        <select onchange="STATE.filters.status=this.value;STATE.filters.offset=0;renderProspects()">
+          <option value="">All Statuses</option>
+          <option value="new" ${STATE.filters.status==='new'?'selected':''}>New</option>
+          <option value="preview_ready" ${STATE.filters.status==='preview_ready'?'selected':''}>Preview Ready</option>
+          <option value="outreach_sent" ${STATE.filters.status==='outreach_sent'?'selected':''}>Outreach Sent</option>
+          <option value="replied" ${STATE.filters.status==='replied'?'selected':''}>Replied</option>
+          <option value="meeting_booked" ${STATE.filters.status==='meeting_booked'?'selected':''}>Meeting Booked</option>
+          <option value="won" ${STATE.filters.status==='won'?'selected':''}>Won</option>
+          <option value="lost" ${STATE.filters.status==='lost'?'selected':''}>Lost</option>
+        </select>
+        <select onchange="STATE.filters.vertical=this.value;STATE.filters.offset=0;renderProspects()">
+          <option value="">All Verticals</option>
+          <option value="medical" ${STATE.filters.vertical==='medical'?'selected':''}>Medical</option>
+          <option value="restaurant" ${STATE.filters.vertical==='restaurant'?'selected':''}>Restaurant</option>
+          <option value="jewellery" ${STATE.filters.vertical==='jewellery'?'selected':''}>Jewellery</option>
+          <option value="perfume" ${STATE.filters.vertical==='perfume'?'selected':''}>Perfume</option>
+          <option value="apparel" ${STATE.filters.vertical==='apparel'?'selected':''}>Apparel</option>
+          <option value="cosmetics" ${STATE.filters.vertical==='cosmetics'?'selected':''}>Cosmetics</option>
+          <option value="electronics" ${STATE.filters.vertical==='electronics'?'selected':''}>Electronics</option>
+          <option value="other" ${STATE.filters.vertical==='other'?'selected':''}>Other</option>
+        </select>
+      </div>
+
+      <div class="panel">
+        <div class="panel-body">
+          ${filtered.length === 0 ? '<div class="empty"><p>No prospects found</p></div>' : `
+            <table>
+              <thead>
+                <tr><th>Business</th><th>Website</th><th>Vertical</th><th>Status</th><th>Views</th><th>Added</th><th></th></tr>
+              </thead>
+              <tbody>
+                ${filtered.map(p => `
+                  <tr>
+                    <td><span class="table-link" onclick="location.hash='review/${p.id}'">${escapeHtml(p.business_name || 'Unknown')}</span></td>
+                    <td style="font-size:12px;color:var(--muted);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escapeHtml(p.website_url || '-')}</td>
+                    <td>${escapeHtml(p.vertical || '-')}</td>
+                    <td>${statusBadge(p.status)}</td>
+                    <td>${p.view_count || 0}</td>
+                    <td style="color:var(--muted)">${timeAgo(p.created_at)}</td>
+                    <td><a class="btn btn-sm btn-outline" href="#review/${p.id}">View</a></td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          `}
+        </div>
+      </div>
+
+      <div class="pagination">
+        <button onclick="STATE.filters.offset=Math.max(0,STATE.filters.offset-STATE.filters.limit);renderProspects()" ${STATE.filters.offset === 0 ? 'disabled' : ''}>Previous</button>
+        <span>Page ${Math.floor(STATE.filters.offset / STATE.filters.limit) + 1}</span>
+        <button onclick="STATE.filters.offset+=STATE.filters.limit;renderProspects()" ${filtered.length < STATE.filters.limit ? 'disabled' : ''}>Next</button>
+      </div>
+    `;
+  } catch (e) {
+    document.getElementById('main-content').innerHTML = `<div class="empty"><p>Error: ${escapeHtml(e.message)}</p></div>`;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SCREEN 4: REVIEW (SINGLE PROSPECT)
+// ═══════════════════════════════════════════════════════════════════════════════
+async function renderReview(prospectId) {
+  if (!prospectId) { location.hash = 'prospects'; return; }
+
+  try {
+    const res = await API.getProspect(prospectId);
+    const p = res.data;
+    STATE.currentProspect = p;
+
+    const capture = (p.captures || [])[0] || {};
+    const preview = (p.previews || []).sort((a,b) => new Date(b.created_at) - new Date(a.created_at))[0] || {};
+    const injected = preview.injected_data || {};
+    const colors = capture.color_palette || [];
+
+    const main = document.getElementById('main-content');
+    main.innerHTML = `
+      <div class="review-header">
+        <a class="back" onclick="history.back()">&larr;</a>
+        <div>
+          <h2 style="display:inline">${escapeHtml(p.business_name || 'Unknown')}</h2>
+          ${statusBadge(p.status)}
+        </div>
+      </div>
+
+      <!-- SIDE-BY-SIDE IFRAMES -->
+      <div class="review-iframes">
+        <div class="iframe-wrap">
+          <div class="iframe-label">
+            Original Website
+            <a href="${escapeHtml(p.website_url || '#')}" target="_blank" style="font-size:11px;color:var(--blue);text-decoration:none">Open &nearr;</a>
+          </div>
+          <iframe src="${escapeHtml(p.website_url || '')}" sandbox="allow-scripts allow-same-origin" loading="lazy"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='block'"
+            onload="try{this.contentDocument}catch(e){this.style.display='none';this.nextElementSibling.style.display='block'}"></iframe>
+          <div class="iframe-fallback" style="display:none">
+            <p>Cannot embed this site (X-Frame-Options blocked)</p>
+            <a href="${escapeHtml(p.website_url || '#')}" target="_blank" class="btn btn-sm btn-outline" style="margin-top:8px">Open in new tab</a>
+          </div>
+        </div>
+        <div class="iframe-wrap">
+          <div class="iframe-label">
+            Preview
+            ${preview.preview_url ? `<a href="${escapeHtml(preview.preview_url)}" target="_blank" style="font-size:11px;color:var(--blue);text-decoration:none">Open &nearr;</a>` : ''}
+          </div>
+          ${preview.preview_url ? `
+            <iframe id="preview-iframe" src="${escapeHtml(preview.preview_url)}" loading="lazy"></iframe>
+          ` : `
+            <div class="iframe-fallback">
+              <p>No preview generated yet</p>
+              <button class="btn btn-blue" style="margin-top:8px" onclick="doGenerate('${prospectId}')">Generate Preview</button>
+            </div>
+          `}
+        </div>
+      </div>
+
+      <!-- ACTION BUTTONS -->
+      <div class="review-actions">
+        <button class="btn btn-blue" onclick="doRegenerate('${prospectId}')" id="btn-regenerate">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
+          Regenerate
+        </button>
+        ${preview.id ? `
+          <button class="btn btn-green" onclick="doApprove('${preview.id}','approve')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+            Approve
+          </button>
+          <button class="btn btn-red" onclick="doApprove('${preview.id}','reject')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
+            Reject
+          </button>
+          <button class="btn btn-gray" onclick="doApprove('${preview.id}','mark_sent')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4z"/></svg>
+            Mark as Sent
+          </button>
+        ` : ''}
+      </div>
+
+      <!-- EDIT FORM + DETAILS -->
+      <div class="review-grid">
+        <!-- LEFT: EDIT FORM -->
+        <div class="panel">
+          <div class="panel-header"><h3>Edit Details</h3></div>
+          <div class="panel-body padded" id="edit-form">
+            <div class="form-group">
+              <label>Business Name</label>
+              <input type="text" id="edit-business_name" value="${escapeHtml(p.business_name || '')}">
+            </div>
+            <div class="form-group">
+              <label>Doctor / Owner Name</label>
+              <input type="text" id="edit-doctor_name" value="${escapeHtml(p.doctor_name || injected.DOCTOR_NAME || '')}">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Phone</label>
+                <input type="text" id="edit-phone" value="${escapeHtml(p.phone || injected.CLINIC_PHONE || injected.BRAND_PHONE || injected.PHONE || '')}">
+              </div>
+              <div class="form-group">
+                <label>WhatsApp</label>
+                <input type="text" id="edit-whatsapp" value="${escapeHtml(p.whatsapp || injected.CLINIC_WHATSAPP || injected.WHATSAPP || '')}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="text" id="edit-email" value="${escapeHtml(p.email || injected.CLINIC_EMAIL || injected.BRAND_EMAIL || injected.EMAIL || '')}">
+            </div>
+            <div class="form-group">
+              <label>Address</label>
+              <input type="text" id="edit-address" value="${escapeHtml(p.address || injected.CLINIC_ADDRESS || injected.BRAND_ADDRESS || injected.ADDRESS || '')}">
+            </div>
+            <div class="form-group">
+              <label>Hero Image URL</label>
+              <input type="text" id="edit-hero_image" placeholder="Override stock photo..." value="">
+            </div>
+            <div class="form-group">
+              <label>Logo URL</label>
+              <input type="text" id="edit-logo" placeholder="Logo image URL..." value="">
+            </div>
+
+            <label style="display:block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin:16px 0 8px">Brand Colors</label>
+            <div class="form-row" style="gap:16px">
+              <div class="form-group">
+                <label>Primary</label>
+                <div class="color-input-group">
+                  <input type="color" id="edit-color1" value="${colors[0] || '#3182ce'}" onchange="document.getElementById('edit-color1-hex').value=this.value">
+                  <input type="text" id="edit-color1-hex" value="${escapeHtml(colors[0] || '#3182ce')}" oninput="document.getElementById('edit-color1').value=this.value">
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Secondary</label>
+                <div class="color-input-group">
+                  <input type="color" id="edit-color2" value="${colors[1] || '#ffffff'}" onchange="document.getElementById('edit-color2-hex').value=this.value">
+                  <input type="text" id="edit-color2-hex" value="${escapeHtml(colors[1] || '#ffffff')}" oninput="document.getElementById('edit-color2').value=this.value">
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Accent</label>
+                <div class="color-input-group">
+                  <input type="color" id="edit-color3" value="${colors[2] || '#e2e8f0'}" onchange="document.getElementById('edit-color3-hex').value=this.value">
+                  <input type="text" id="edit-color3-hex" value="${escapeHtml(colors[2] || '#e2e8f0')}" oninput="document.getElementById('edit-color3').value=this.value">
+                </div>
+              </div>
+            </div>
+
+            <label style="display:block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin:16px 0 8px">Section Toggles</label>
+            <div id="section-toggles">
+              <div class="toggle-row">
+                <label>Stats / Social Proof</label>
+                <label class="toggle"><input type="checkbox" id="toggle-stats" checked><span class="slider"></span></label>
+              </div>
+              <div class="toggle-row">
+                <label>Team / Doctors</label>
+                <label class="toggle"><input type="checkbox" id="toggle-team" checked><span class="slider"></span></label>
+              </div>
+              <div class="toggle-row">
+                <label>Booking / Reservation</label>
+                <label class="toggle"><input type="checkbox" id="toggle-booking" checked><span class="slider"></span></label>
+              </div>
+              <div class="toggle-row">
+                <label>Menu (Restaurant)</label>
+                <label class="toggle"><input type="checkbox" id="toggle-menu" checked><span class="slider"></span></label>
+              </div>
+              <div class="toggle-row">
+                <label>Results / Stats Cards</label>
+                <label class="toggle"><input type="checkbox" id="toggle-results" checked><span class="slider"></span></label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: PROSPECT INFO -->
+        <div>
+          <div class="panel">
+            <div class="panel-header"><h3>Prospect Info</h3></div>
+            <div class="panel-body padded">
+              <div style="display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font-size:13px">
+                <span style="color:var(--muted)">ID</span>
+                <span style="font-family:monospace;font-size:11px">${escapeHtml(p.id)}</span>
+                <span style="color:var(--muted)">Website</span>
+                <a href="${escapeHtml(p.website_url || '#')}" target="_blank" style="color:var(--blue);text-decoration:none;overflow:hidden;text-overflow:ellipsis">${escapeHtml(p.website_url || '-')}</a>
+                <span style="color:var(--muted)">Vertical</span>
+                <span>${escapeHtml(p.vertical || '-')} ${p.sub_vertical ? '/ ' + escapeHtml(p.sub_vertical) : ''}</span>
+                <span style="color:var(--muted)">Status</span>
+                <span>${statusBadge(p.status)}</span>
+                <span style="color:var(--muted)">Google Rating</span>
+                <span>${p.google_rating || '-'}</span>
+                <span style="color:var(--muted)">Website Score</span>
+                <span>${p.website_score || '-'} / 10</span>
+                <span style="color:var(--muted)">Added</span>
+                <span>${p.created_at ? new Date(p.created_at).toLocaleDateString() : '-'}</span>
+              </div>
+            </div>
+          </div>
+
+          ${preview.id ? `
+          <div class="panel" style="margin-top:16px">
+            <div class="panel-header"><h3>Latest Preview</h3></div>
+            <div class="panel-body padded">
+              <div style="display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font-size:13px">
+                <span style="color:var(--muted)">Template</span>
+                <span>${escapeHtml(preview.template_slug || '-')}</span>
+                <span style="color:var(--muted)">Status</span>
+                <span>${statusBadge(preview.review_status)}</span>
+                <span style="color:var(--muted)">Views</span>
+                <span>${preview.view_count || 0}</span>
+                <span style="color:var(--muted)">Expires</span>
+                <span>${preview.expires_at ? new Date(preview.expires_at).toLocaleDateString() : '-'}</span>
+                <span style="color:var(--muted)">Created</span>
+                <span>${timeAgo(preview.created_at)}</span>
+              </div>
+            </div>
+          </div>
+          ` : ''}
+
+          ${(p.captures || []).length > 0 ? `
+          <div class="panel" style="margin-top:16px">
+            <div class="panel-header"><h3>Capture Data</h3></div>
+            <div class="panel-body padded">
+              <div style="display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font-size:13px">
+                <span style="color:var(--muted)">Page Title</span>
+                <span>${escapeHtml(capture.page_title || '-')}</span>
+                <span style="color:var(--muted)">H1</span>
+                <span>${escapeHtml(capture.h1_text || '-')}</span>
+                <span style="color:var(--muted)">Colors</span>
+                <div style="display:flex;gap:4px">${(capture.color_palette || []).map(c => `<div style="width:20px;height:20px;border-radius:4px;background:${escapeHtml(c)};border:1px solid var(--border)" title="${escapeHtml(c)}"></div>`).join('')}</div>
+                <span style="color:var(--muted)">Fonts</span>
+                <span style="font-size:12px">${escapeHtml((capture.font_families || []).join(', ') || '-')}</span>
+                <span style="color:var(--muted)">Hero Image</span>
+                <span style="font-size:11px;word-break:break-all">${escapeHtml(capture.hero_image_url || '-')}</span>
+                <span style="color:var(--muted)">Has Booking</span>
+                <span>${capture.has_booking ? 'Yes' : 'No'}</span>
+                <span style="color:var(--muted)">Has WhatsApp</span>
+                <span>${capture.has_whatsapp ? 'Yes' : 'No'}</span>
+              </div>
+            </div>
+          </div>
+          ` : ''}
+        </div>
+      </div>
+    `;
+
+    // Handle iframe X-Frame-Options errors via load check
+    const origIframe = main.querySelector('.review-iframes .iframe-wrap:first-child iframe');
+    if (origIframe) {
+      origIframe.addEventListener('load', function() {
+        try {
+          // Try accessing the iframe content - will throw if blocked
+          const doc = this.contentDocument || this.contentWindow.document;
+          if (!doc || !doc.body || doc.body.innerHTML === '') throw new Error('empty');
+        } catch(e) {
+          this.style.display = 'none';
+          this.nextElementSibling.style.display = 'block';
+        }
+      });
+    }
+
+  } catch (e) {
+    document.getElementById('main-content').innerHTML = `<div class="empty"><p>Error loading prospect: ${escapeHtml(e.message)}</p></div>`;
+  }
+}
+
+// ─── REVIEW ACTIONS ──────────────────────────────────────────────────────────
+function getEditFormData() {
+  return {
+    business_name: document.getElementById('edit-business_name')?.value || '',
+    doctor_name: document.getElementById('edit-doctor_name')?.value || '',
+    phone: document.getElementById('edit-phone')?.value || '',
+    whatsapp: document.getElementById('edit-whatsapp')?.value || '',
+    email: document.getElementById('edit-email')?.value || '',
+    address: document.getElementById('edit-address')?.value || '',
+  };
+}
+
+function getOverrideData() {
+  const form = getEditFormData();
+  const override = {};
+
+  // Map form fields to template variables
+  if (form.business_name) {
+    override.CLINIC_NAME = form.business_name;
+    override.BRAND_NAME = form.business_name;
+    override.RESTAURANT_NAME = form.business_name;
+  }
+  if (form.doctor_name) {
+    override.DOCTOR_NAME = form.doctor_name;
+    override.DOCTOR_FIRSTNAME = form.doctor_name.split(' ').pop();
+  }
+  if (form.phone) {
+    override.CLINIC_PHONE = form.phone;
+    override.BRAND_PHONE = form.phone;
+    override.PHONE = form.phone;
+  }
+  if (form.whatsapp) {
+    override.CLINIC_WHATSAPP = form.whatsapp;
+    override.WHATSAPP = form.whatsapp;
+  }
+  if (form.email) {
+    override.CLINIC_EMAIL = form.email;
+    override.BRAND_EMAIL = form.email;
+    override.EMAIL = form.email;
+  }
+  if (form.address) {
+    override.CLINIC_ADDRESS = form.address;
+    override.BRAND_ADDRESS = form.address;
+    override.ADDRESS = form.address;
+  }
+
+  // Hero image override
+  const heroImg = document.getElementById('edit-hero_image')?.value;
+  if (heroImg) override.heroImageOverride = heroImg;
+
+  // Logo override
+  const logo = document.getElementById('edit-logo')?.value;
+  if (logo) override.logoOverride = logo;
+
+  // Color override
+  const c1 = document.getElementById('edit-color1')?.value;
+  const c2 = document.getElementById('edit-color2')?.value;
+  const c3 = document.getElementById('edit-color3')?.value;
+  if (c1) override.colorOverride = [c1, c2, c3].filter(Boolean);
+
+  // Section toggles
+  override.sectionToggles = {
+    stats: document.getElementById('toggle-stats')?.checked ?? true,
+    team: document.getElementById('toggle-team')?.checked ?? true,
+    booking: document.getElementById('toggle-booking')?.checked ?? true,
+    menu: document.getElementById('toggle-menu')?.checked ?? true,
+    results: document.getElementById('toggle-results')?.checked ?? true,
+  };
+
+  return override;
+}
+
+async function doGenerate(prospectId) {
+  try {
+    showToast('Generating preview...', 'info');
+    const res = await API.generate({ prospect_id: prospectId });
+    showToast('Preview generated!', 'success');
+    renderReview(prospectId);
+  } catch (e) {
+    showToast('Error: ' + e.message, 'error');
+  }
+}
+
+async function doRegenerate(prospectId) {
+  const btn = document.getElementById('btn-regenerate');
+  if (btn) { btn.disabled = true; btn.textContent = 'Regenerating...'; }
+
+  try {
+    // Save edits to prospect first
+    const form = getEditFormData();
+    form.id = prospectId;
+    await API.updateProspect(form);
+
+    // Generate with overrides
+    const override_data = getOverrideData();
+    showToast('Regenerating preview...', 'info');
+    const res = await API.generate({
+      prospect_id: prospectId,
+      force: true,
+      override_data,
+    });
+    showToast('Preview regenerated!', 'success');
+
+    // Refresh the review screen
+    setTimeout(() => renderReview(prospectId), 500);
+  } catch (e) {
+    showToast('Error: ' + e.message, 'error');
+    if (btn) { btn.disabled = false; btn.textContent = 'Regenerate'; }
+  }
+}
+
+async function doApprove(previewId, action) {
+  const labels = { approve: 'Approving', reject: 'Rejecting', mark_sent: 'Marking as sent' };
+  try {
+    showToast(labels[action] + '...', 'info');
+    await API.approve({ preview_id: previewId, action });
+    showToast(action === 'approve' ? 'Preview approved!' : action === 'reject' ? 'Preview rejected' : 'Marked as sent!',
+      action === 'reject' ? 'error' : 'success');
+
+    // Refresh
+    if (STATE.currentProspect) {
+      setTimeout(() => renderReview(STATE.currentProspect.id), 500);
+    }
+  } catch (e) {
+    showToast('Error: ' + e.message, 'error');
+  }
+}
+
+// ─── INIT ────────────────────────────────────────────────────────────────────
+checkAuth();
+</script>
+</body>
+</html>

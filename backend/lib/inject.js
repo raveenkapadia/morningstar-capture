@@ -314,12 +314,71 @@ function addHideEmptyScript(html) {
   return html.replace('</body>', script + '</body>');
 }
 
+// ─── REPLACE STOCK HERO IMAGE ───────────────────────────────────────────────
+// If a heroImageOverride is provided, replace the first Unsplash URL found in
+// CSS background-image or <img src> with the override URL
+function replaceStockHeroImage(html, heroImageOverride) {
+  if (!heroImageOverride) return html;
+  // Replace Unsplash URLs in CSS background or img src (first occurrence only)
+  const unsplashRegex = /https:\/\/images\.unsplash\.com\/[^'")?\s]+/;
+  if (unsplashRegex.test(html)) {
+    return html.replace(unsplashRegex, heroImageOverride);
+  }
+  return html;
+}
+
+// ─── REPLACE LOGO ───────────────────────────────────────────────────────────
+function replaceLogo(html, logoOverride) {
+  if (!logoOverride) return html;
+  // Replace placeholder logo references
+  return html.replace(/\{\{LOGO_URL\}\}/g, logoOverride);
+}
+
+// ─── SECTION TOGGLE SCRIPT ──────────────────────────────────────────────────
+// Injects client-side JS to hide sections based on toggle flags
+function addSectionToggleScript(html, sectionToggles) {
+  if (!sectionToggles || typeof sectionToggles !== 'object') return html;
+
+  const toggleMap = JSON.stringify(sectionToggles);
+  const script = `
+<!-- MORNINGSTAR SECTION TOGGLES -->
+<script>
+(function(){
+  var toggles = ${toggleMap};
+  var selectorMap = {
+    stats: '[data-ms-hide-if-empty="stats"],.hero-social-proof,.trust-bar',
+    team: '[data-ms-hide-if-empty="team"],.team',
+    booking: '.booking,.reserve,.reservation',
+    menu: '[data-ms-hide-if-empty="menu"],.menu-highlights,.menu',
+    results: '[data-ms-hide-if-empty="results"],.results',
+    hours: '[data-ms-hide-if-empty="hours"]'
+  };
+  for (var key in toggles) {
+    if (toggles[key] === false && selectorMap[key]) {
+      var selectors = selectorMap[key].split(',');
+      selectors.forEach(function(sel) {
+        document.querySelectorAll(sel.trim()).forEach(function(el) {
+          el.style.display = 'none';
+        });
+      });
+    }
+  }
+})();
+<\/script>
+<!-- END SECTION TOGGLES -->
+`;
+  return html.replace('</body>', script + '</body>');
+}
+
 // ─── MAIN: GENERATE PREVIEW HTML ─────────────────────────────────────────────
-function generatePreview({ templateFilename, injectedData, previewId, prospectName, expiresAt, baseUrl, colorPalette }) {
+function generatePreview({ templateFilename, injectedData, previewId, prospectName, expiresAt, baseUrl, colorPalette, heroImageOverride, logoOverride, sectionToggles }) {
   let html = loadTemplate(templateFilename);
   html = injectData(html, injectedData);
   html = applyBrandColors(html, colorPalette);
+  html = replaceStockHeroImage(html, heroImageOverride);
+  html = replaceLogo(html, logoOverride);
   html = addHideEmptyScript(html);
+  html = addSectionToggleScript(html, sectionToggles);
   html = addPreviewBanner(html, previewId, prospectName, expiresAt);
   html = addTracking(html, previewId, baseUrl);
   return html;

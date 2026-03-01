@@ -22,7 +22,7 @@ module.exports = async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   try {
-    const { prospect_id, capture_id, force = false } = req.body;
+    const { prospect_id, capture_id, force = false, override_data = {} } = req.body;
 
     if (!prospect_id) {
       return res.status(400).json({ error: 'prospect_id is required' });
@@ -151,7 +151,17 @@ module.exports = async function handler(req, res) {
       };
     }
 
-    // ── 8. Generate preview HTML ─────────────────────────────────────────────
+    // ── 8. Merge override_data on top of Claude extraction ──────────────────
+    if (override_data && typeof override_data === 'object') {
+      const reserved = ['heroImageOverride', 'logoOverride', 'colorOverride', 'sectionToggles'];
+      for (const [key, value] of Object.entries(override_data)) {
+        if (!reserved.includes(key) && value != null && value !== '') {
+          injectedData[key] = value;
+        }
+      }
+    }
+
+    // ── 9. Generate preview HTML ─────────────────────────────────────────────
     const previewId = crypto.randomUUID ? crypto.randomUUID() :
       require('crypto').randomUUID();
 
@@ -166,7 +176,10 @@ module.exports = async function handler(req, res) {
       prospectName: prospect.business_name,
       expiresAt: expiresAt.toISOString(),
       baseUrl: PREVIEW_BASE_URL,
-      colorPalette: capture.color_palette || [],
+      colorPalette: override_data.colorOverride || capture.color_palette || [],
+      heroImageOverride: override_data.heroImageOverride || null,
+      logoOverride: override_data.logoOverride || null,
+      sectionToggles: override_data.sectionToggles || null,
     });
 
     // ── 9. Save HTML to Supabase Storage ─────────────────────────────────────

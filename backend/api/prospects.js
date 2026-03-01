@@ -20,7 +20,7 @@ module.exports = async function handler(req, res) {
         .select(`
           *,
           captures(*),
-          previews(id, preview_url, review_status, view_count, expires_at, template_slug, created_at),
+          previews(id, preview_url, review_status, view_count, expires_at, template_slug, injected_data, created_at),
           outreach(id, channel, status, sent_at, sequence_step),
           deals(id, status, amount_aed, meeting_at, paid_at)
         `)
@@ -55,7 +55,7 @@ module.exports = async function handler(req, res) {
     // Whitelist updatable fields
     const allowed = ['status', 'notes', 'phone', 'whatsapp', 'email',
                      'doctor_name', 'doctor_firstname', 'website_score',
-                     'opportunity_score', 'address'];
+                     'opportunity_score', 'address', 'business_name'];
     const filtered = Object.fromEntries(
       Object.entries(updates).filter(([k]) => allowed.includes(k))
     );
