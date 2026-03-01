@@ -70,9 +70,13 @@ Medical:
 - medical-womens (Women's Health / OB-GYN)
 - medical-eye (Eye Clinic / Ophthalmology)
 
+Restaurant / F&B:
+- restaurant-dubai (Premium restaurant, cafe, lounge, fine dining, casual dining, bakery, food & beverage)
+
 RULES:
 - Choose the template that would most impress THIS specific business
 - For medical: always match the exact specialty
+- For restaurant/cafe/food business: always use restaurant-dubai
 - For e-commerce: consider brand aesthetic (existing colors, tone, photography style)
 - Do NOT pick a template just because it's in the same category — pick the best fit
 - Always return valid JSON, nothing else`;
@@ -92,7 +96,7 @@ Has WhatsApp: ${capture.has_whatsapp}
 
 Respond with ONLY this JSON:
 {
-  "vertical": "medical|jewellery|perfume|apparel|cosmetics|electronics|other",
+  "vertical": "medical|jewellery|perfume|apparel|cosmetics|electronics|restaurant|other",
   "sub_vertical": "dental|cardiology|dermatology|paediatrics|orthopaedics|obgyn|ophthalmology|gp|null",
   "template_slug": "exact-template-slug-from-library",
   "current_site_quality": 1-10,
@@ -109,6 +113,7 @@ Respond with ONLY this JSON:
 // Returns all {{VARIABLES}} filled from capture + web context
 async function extractInjectionData(capture, vertical, subVertical) {
   const isMedical = vertical === 'medical';
+  const isRestaurant = vertical === 'restaurant';
 
   const system = `You are a data extraction specialist for MorningStar.ai.
 Your job is to extract template variables from captured website data.
@@ -162,6 +167,22 @@ Return this JSON. Use null for ANY field where data is not found in the capture 
   "STAT_YEARS": "formatted years like '20+' — only from page content, or null",
   "STAT_PATIENTS": "formatted count like '700K+' or '6,000+' — only from page content, or null",
   "STAT_RATING": "formatted rating like '4.8★' — only from google_rating or page, or null"
+}` : isRestaurant ? `
+Return this JSON. Use null for ANY field where data is not found in the capture above:
+{
+  "RESTAURANT_NAME": "exact business name from capture, or null",
+  "PHONE": "phone from capture (first one), or null",
+  "WHATSAPP": "whatsapp-format phone from capture, or null",
+  "EMAIL": "email from capture, or null",
+  "ADDRESS": "address from capture, or null",
+  "TAGLINE": "restaurant tagline or short description from page content — do NOT invent, or null",
+  "OPENING_HOURS": "opening hours from page content — use exact text found, or null",
+  "STAT_RATING": "formatted rating like '4.8★' — only from google_rating or page, or null",
+  "STAT_YEARS": "formatted years like '15+' — only from page content, or null",
+  "DISH_1": "first featured dish, cuisine item, or menu highlight from page content, or null",
+  "DISH_2": "second featured dish or menu highlight from page content, or null",
+  "DISH_3": "third featured dish or menu highlight from page content, or null",
+  "DISH_4": "fourth featured dish or menu highlight from page content, or null"
 }` : `
 Return this JSON. Use null for ANY field where data is not found in the capture above:
 {

@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{RESTAURANT_NAME}} — Fine Dining Dubai</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--warm:#8B4513;--warm-lt:#FFF5EB;--warm-mid:#7A3C0F;--gold:#C9A96E;--white:#FFFFFF;--off:#FAFAF7;--ink:#1A1612;--muted:#8C7E73;--border:#E8DDD4;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--white);font-family:'DM Sans',sans-serif;color:var(--ink);}
+button{cursor:pointer;border:none;font-family:'DM Sans',sans-serif;}
+a{text-decoration:none;color:inherit;}
+
+/* NAV */
+nav{height:72px;padding:0 64px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(255,255,255,.97);z-index:100;backdrop-filter:blur(12px);}
+.logo{font-family:'Playfair Display',serif;font-size:20px;color:var(--ink);letter-spacing:.5px;}
+.logo span{color:var(--warm);font-style:italic;}
+.nav-links{display:flex;gap:32px;}
+.nav-links a{font-size:13px;color:var(--muted);font-weight:500;transition:color .2s;letter-spacing:.3px;}
+.nav-links a:hover{color:var(--warm);}
+.nav-cta{background:var(--warm);color:#fff;padding:10px 24px;border-radius:6px;font-size:13px;font-weight:600;transition:all .2s;letter-spacing:.3px;}
+.nav-cta:hover{background:var(--warm-mid);}
+.menu-toggle{display:none;background:none;font-size:24px;color:var(--ink);padding:8px;}
+
+/* HERO */
+.hero{position:relative;min-height:85vh;display:flex;align-items:center;padding:0 64px;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1200&q=80') center/cover no-repeat;}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(26,22,18,.85) 0%,rgba(26,22,18,.6) 50%,rgba(26,22,18,.3) 100%);}
+.hero-content{position:relative;z-index:2;max-width:560px;}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(201,169,110,.2);border:1px solid rgba(201,169,110,.3);color:var(--gold);padding:6px 16px;border-radius:100px;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:24px;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(40px,5vw,64px);line-height:1.08;color:#fff;margin-bottom:18px;}
+.hero h1 em{color:var(--gold);font-style:italic;}
+.hero-p{font-size:15px;color:rgba(255,255,255,.7);line-height:1.8;max-width:420px;margin-bottom:36px;}
+.hero-btns{display:flex;gap:12px;}
+.btn-warm{background:var(--warm);color:#fff;padding:14px 32px;border-radius:6px;font-size:13px;font-weight:600;transition:all .2s;letter-spacing:.3px;}
+.btn-warm:hover{background:var(--warm-mid);transform:translateY(-1px);}
+.btn-outline{background:transparent;border:1.5px solid rgba(255,255,255,.3);color:#fff;padding:14px 28px;border-radius:6px;font-size:13px;font-weight:600;transition:all .2s;}
+.btn-outline:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.5);}
+.hero-stats{display:flex;gap:32px;margin-top:40px;padding-top:32px;border-top:1px solid rgba(255,255,255,.12);}
+.hero-stat strong{font-family:'Playfair Display',serif;font-size:28px;color:var(--gold);display:block;}
+.hero-stat span{font-size:11px;color:rgba(255,255,255,.5);letter-spacing:.5px;}
+
+/* TRUST BAR */
+.trust{background:var(--ink);padding:18px 64px;display:flex;gap:48px;align-items:center;justify-content:center;}
+.trust-item{display:flex;align-items:center;gap:10px;color:rgba(255,255,255,.5);font-size:12px;letter-spacing:.3px;}
+.trust-item svg{color:var(--gold);opacity:.7;}
+.trust-divider{width:1px;height:18px;background:rgba(255,255,255,.1);}
+
+/* ABOUT */
+.about{padding:80px 64px;background:var(--white);}
+.about-inner{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;}
+.sec-label{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--warm);margin-bottom:8px;}
+h2{font-family:'Playfair Display',serif;font-size:38px;color:var(--ink);}
+h2 em{color:var(--warm);font-style:italic;}
+.about-text p{font-size:14px;color:var(--muted);line-height:1.85;margin-top:16px;}
+.about-features{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:32px;}
+.about-feat{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--off);border-radius:10px;}
+.about-feat-icon{width:36px;height:36px;background:var(--warm-lt);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.about-feat-icon svg{color:var(--warm);width:18px;height:18px;}
+.about-feat span{font-size:12px;font-weight:500;color:var(--ink);}
+.about-visual{background:var(--warm-lt);border-radius:20px;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.about-visual img{width:100%;height:100%;object-fit:cover;border-radius:20px;}
+
+/* MENU */
+.menu{padding:80px 64px;background:var(--off);}
+.menu-header{text-align:center;margin-bottom:48px;}
+.menu-header p{font-size:14px;color:var(--muted);margin-top:12px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.7;}
+.menu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
+.dish-card{background:var(--white);border-radius:16px;padding:28px;border:1.5px solid var(--border);transition:all .3s;}
+.dish-card:hover{border-color:var(--warm);transform:translateY(-3px);box-shadow:0 12px 32px rgba(139,69,19,.08);}
+.dish-icon{width:48px;height:48px;background:var(--warm-lt);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;}
+.dish-icon svg{color:var(--warm);width:22px;height:22px;}
+.dish-name{font-family:'Playfair Display',serif;font-size:18px;color:var(--ink);margin-bottom:8px;}
+.dish-desc{font-size:12px;color:var(--muted);line-height:1.7;}
+.dish-tag{display:inline-flex;align-items:center;gap:4px;margin-top:12px;font-size:10px;font-weight:600;color:var(--warm);background:var(--warm-lt);padding:4px 10px;border-radius:100px;letter-spacing:.5px;}
+
+/* RESULTS / STATS */
+.results{background:var(--warm-lt);padding:80px 64px;}
+.results-inner{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;}
+.results-copy p{font-size:14px;color:var(--muted);line-height:1.85;margin-bottom:20px;}
+.results-list{display:flex;flex-direction:column;gap:12px;margin-bottom:28px;}
+.result-item{display:flex;align-items:center;gap:12px;font-size:13px;color:var(--ink);}
+.result-item::before{content:'';background:var(--warm);width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;}
+.results-visual{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+.result-card{background:var(--white);border-radius:14px;padding:24px;text-align:center;}
+.result-card .big{font-family:'Playfair Display',serif;font-size:36px;color:var(--warm);}
+.result-card .label{font-size:11px;color:var(--muted);margin-top:4px;}
+
+/* BOOKING */
+.booking{background:var(--warm);padding:80px 64px;}
+.booking-inner{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;}
+.booking-copy h2{font-family:'Playfair Display',serif;font-size:42px;color:#fff;margin-bottom:14px;}
+.booking-copy p{font-size:14px;color:rgba(255,255,255,.7);line-height:1.75;margin-bottom:28px;}
+.whatsapp{background:#25D366;color:#fff;padding:14px 28px;border-radius:6px;font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:8px;transition:all .2s;}
+.whatsapp:hover{background:#1DA851;}
+.hours{margin-top:28px;padding:20px;background:rgba(255,255,255,.1);border-radius:12px;}
+.hours h4{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:10px;}
+.hours p{font-size:13px;color:rgba(255,255,255,.7);line-height:1.9;}
+.booking-form{background:#fff;border-radius:16px;padding:36px;}
+.form-h{font-family:'Playfair Display',serif;font-size:22px;color:var(--ink);margin-bottom:6px;}
+.form-sub{font-size:12px;color:var(--muted);margin-bottom:24px;}
+.f{margin-bottom:16px;}
+.f label{display:block;font-size:11px;font-weight:600;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px;}
+.f input,.f select{width:100%;border:1.5px solid var(--border);border-radius:6px;padding:10px 13px;font-size:13px;font-family:'DM Sans',sans-serif;color:var(--ink);outline:none;transition:border-color .2s;}
+.f input:focus,.f select:focus{border-color:var(--warm);}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.submit{background:var(--warm);color:#fff;width:100%;padding:14px;border-radius:6px;font-size:13px;font-weight:600;margin-top:6px;transition:background .2s;}
+.submit:hover{background:var(--warm-mid);}
+
+/* LOCATION */
+.location{padding:80px 64px;background:var(--white);}
+.location-inner{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;}
+.location-map{background:var(--off);border-radius:16px;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--border);}
+.map-placeholder{text-align:center;color:var(--muted);}
+.map-placeholder svg{margin-bottom:12px;color:var(--warm);opacity:.5;}
+.map-placeholder p{font-size:12px;}
+.location-info h3{font-family:'Playfair Display',serif;font-size:24px;color:var(--ink);margin-bottom:16px;}
+.location-detail{display:flex;align-items:flex-start;gap:12px;margin-bottom:16px;}
+.location-detail svg{color:var(--warm);flex-shrink:0;margin-top:2px;}
+.location-detail p{font-size:13px;color:var(--muted);line-height:1.7;}
+.directions-btn{display:inline-flex;align-items:center;gap:8px;color:var(--warm);font-size:13px;font-weight:600;margin-top:12px;padding:10px 20px;border:1.5px solid var(--warm);border-radius:6px;transition:all .2s;}
+.directions-btn:hover{background:var(--warm);color:#fff;}
+
+/* FOOTER */
+footer{background:var(--ink);padding:48px 64px;}
+.foot-row{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:32px;}
+.foot-logo{font-family:'Playfair Display',serif;font-size:20px;color:#fff;margin-bottom:10px;}
+.foot-logo span{color:var(--gold);}
+.foot-p{font-size:12px;color:rgba(255,255,255,.3);line-height:1.75;}
+.foot-h{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:14px;}
+.foot-ul{list-style:none;}
+.foot-ul li{font-size:12px;color:rgba(255,255,255,.3);margin-bottom:9px;cursor:pointer;transition:color .2s;}
+.foot-ul li:hover{color:var(--gold);}
+.foot-bottom{padding-top:24px;border-top:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;}
+.foot-bottom p{font-size:11px;color:rgba(255,255,255,.15);}
+
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE — 768px and below
+   ═══════════════════════════════════════════════════════════════ */
+@media(max-width:768px){
+
+/* NAV */
+nav{padding:0 20px;height:60px;}
+.nav-links{display:none;}
+.menu-toggle{display:block;}
+.nav-cta{padding:8px 16px;font-size:12px;}
+.logo{font-size:17px;}
+
+/* HERO */
+.hero{min-height:70vh;padding:0 20px;}
+.hero-content{max-width:100%;}
+.hero h1{font-size:34px;line-height:1.12;}
+.hero-p{font-size:14px;max-width:100%;margin-bottom:24px;}
+.hero-btns{flex-direction:column;}
+.hero-btns .btn-warm,.hero-btns .btn-outline{width:100%;text-align:center;min-height:48px;display:flex;align-items:center;justify-content:center;font-size:15px;}
+.hero-stats{gap:20px;flex-wrap:wrap;}
+.hero-stat strong{font-size:22px;}
+
+/* TRUST */
+.trust{padding:14px 20px;flex-wrap:wrap;gap:10px 20px;justify-content:flex-start;}
+.trust-divider{display:none;}
+
+/* ALL SECTIONS */
+.about,.menu,.results,.booking,.location{padding:48px 20px;}
+h2{font-size:26px;}
+
+/* ABOUT */
+.about-inner{grid-template-columns:1fr;gap:32px;}
+.about-visual{order:2;}
+.about-features{grid-template-columns:1fr;gap:10px;}
+
+/* MENU */
+.menu-grid{grid-template-columns:1fr;gap:14px;}
+.dish-card{padding:22px;}
+
+/* RESULTS */
+.results-inner{grid-template-columns:1fr;gap:32px;}
+.results-visual{grid-template-columns:1fr 1fr;gap:10px;}
+.result-card{padding:16px;}
+.result-card .big{font-size:28px;}
+
+/* BOOKING */
+.booking-inner{grid-template-columns:1fr;gap:32px;}
+.booking-copy h2{font-size:28px;}
+.whatsapp{width:100%;justify-content:center;min-height:48px;font-size:15px;}
+.booking-form{padding:24px 20px;}
+.f-row{grid-template-columns:1fr;}
+.f input,.f select{min-height:44px;font-size:14px;}
+.submit{min-height:48px;font-size:15px;}
+
+/* LOCATION */
+.location-inner{grid-template-columns:1fr;gap:24px;}
+
+/* FOOTER */
+footer{padding:36px 20px;}
+.foot-row{grid-template-columns:1fr;gap:28px;}
+.foot-bottom{flex-direction:column;gap:8px;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">{{RESTAURANT_NAME}}</div>
+  <div class="nav-links"><a href="#">Menu</a><a href="#">About</a><a href="#">Reservations</a><a href="#">Contact</a></div>
+  <button class="menu-toggle" aria-label="Menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+  <button class="nav-cta">Reserve a Table</button>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 1l2.09 6.26L20.18 9l-4.64 3.82L17.09 19 12 15.27 6.91 19l1.55-6.18L3.82 9l6.09-1.74L12 1z"/></svg> Premium Dining in Dubai</div>
+    <h1>Welcome to<br><em>{{RESTAURANT_NAME}}</em></h1>
+    <p class="hero-p">{{TAGLINE}}</p>
+    <div class="hero-btns">
+      <button class="btn-warm">Reserve a Table</button>
+      <button class="btn-outline">View Our Menu</button>
+    </div>
+    <div class="hero-stats" data-ms-hide-if-empty="stats">
+      <div class="hero-stat"><strong>{{STAT_RATING}}</strong><span>Google Rating</span></div>
+      <div class="hero-stat"><strong>{{STAT_YEARS}}</strong><span>Years of Excellence</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="trust">
+  <div class="trust-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Dubai Municipality Licensed</div>
+  <div class="trust-divider"></div>
+  <div class="trust-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Halal Certified</div>
+  <div class="trust-divider"></div>
+  <div class="trust-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 1l2.09 6.26L20.18 9l-4.64 3.82L17.09 19 12 15.27 6.91 19l1.55-6.18L3.82 9l6.09-1.74L12 1z"/></svg> Premium Ingredients</div>
+  <div class="trust-divider"></div>
+  <div class="trust-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> Arabic, English, Hindi, Tagalog</div>
+</div>
+
+<section class="about">
+  <div class="about-inner">
+    <div class="about-text">
+      <p class="sec-label">Our Story</p>
+      <h2>A Culinary <em>Experience</em><br>Like No Other</h2>
+      <p>Discover a dining destination where every detail has been carefully considered. From locally sourced ingredients to our signature recipes, we bring together flavours from around the world in a setting that reflects the vibrant spirit of Dubai.</p>
+      <div class="about-features">
+        <div class="about-feat">
+          <div class="about-feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <span>Halal Certified</span>
+        </div>
+        <div class="about-feat">
+          <div class="about-feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M8 10v11M12 10v11M16 10v11M20 10v11"/></svg></div>
+          <span>Licensed Establishment</span>
+        </div>
+        <div class="about-feat">
+          <div class="about-feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1l2.09 6.26L20.18 9l-4.64 3.82L17.09 19 12 15.27 6.91 19l1.55-6.18L3.82 9l6.09-1.74L12 1z"/></svg></div>
+          <span>Premium Ingredients</span>
+        </div>
+        <div class="about-feat">
+          <div class="about-feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <span>Family Friendly</span>
+        </div>
+      </div>
+    </div>
+    <div class="about-visual">
+      <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80" alt="Fine dining">
+    </div>
+  </div>
+</section>
+
+<section class="menu" data-ms-hide-if-empty="menu">
+  <div class="menu-header">
+    <p class="sec-label">Our Menu</p>
+    <h2>Signature <em>Dishes</em></h2>
+    <p>Carefully crafted by our executive chef, each dish tells a story of flavour, tradition and innovation.</p>
+  </div>
+  <div class="menu-grid">
+    <div class="dish-card">
+      <div class="dish-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg></div>
+      <div class="dish-name">{{DISH_1}}</div>
+      <p class="dish-desc">A signature creation from our kitchen, prepared fresh daily using the finest locally sourced ingredients.</p>
+      <div class="dish-tag"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 1l2.09 6.26L20.18 9l-4.64 3.82L17.09 19 12 15.27 6.91 19l1.55-6.18L3.82 9l6.09-1.74L12 1z"/></svg> Chef's Favourite</div>
+    </div>
+    <div class="dish-card">
+      <div class="dish-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
+      <div class="dish-name">{{DISH_2}}</div>
+      <p class="dish-desc">Thoughtfully prepared with seasonal produce and authentic spices from around the world.</p>
+      <div class="dish-tag"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 1l2.09 6.26L20.18 9l-4.64 3.82L17.09 19 12 15.27 6.91 19l1.55-6.18L3.82 9l6.09-1.74L12 1z"/></svg> Popular Choice</div>
+    </div>
+    <div class="dish-card">
+      <div class="dish-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l4 6-10 13L2 9z"/><path d="M2 9h20"/></svg></div>
+      <div class="dish-name">{{DISH_3}}</div>
+      <p class="dish-desc">An exquisite dish that celebrates the rich culinary traditions of our heritage.</p>
+      <div class="dish-tag"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 1l2.09 6.26L20.18 9l-4.64 3.82L17.09 19 12 15.27 6.91 19l1.55-6.18L3.82 9l6.09-1.74L12 1z"/></svg> Must Try</div>
+    </div>
+    <div class="dish-card">
+      <div class="dish-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8l4 4-4 4"/><path d="M3 12h14"/><path d="M7 8l-4 4 4 4"/></svg></div>
+      <div class="dish-name">{{DISH_4}}</div>
+      <p class="dish-desc">A contemporary twist on a timeless classic, finished with our house special sauce.</p>
+      <div class="dish-tag"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 1l2.09 6.26L20.18 9l-4.64 3.82L17.09 19 12 15.27 6.91 19l1.55-6.18L3.82 9l6.09-1.74L12 1z"/></svg> New Addition</div>
+    </div>
+  </div>
+</section>
+
+<section class="results">
+  <div class="results-inner">
+    <div class="results-copy">
+      <p class="sec-label">Why Choose Us</p>
+      <h2>Exceptional Dining,<br><em>Every Visit</em></h2>
+      <p>We believe great food starts with great ingredients. Every dish is prepared with care, using recipes perfected over years of culinary expertise.</p>
+      <div class="results-list">
+        <div class="result-item">Fresh ingredients sourced daily from premium suppliers</div>
+        <div class="result-item">Expert chefs with international culinary experience</div>
+        <div class="result-item">Private dining rooms available for special occasions</div>
+        <div class="result-item">Catering services for corporate and social events</div>
+        <div class="result-item">Complimentary valet parking for all guests</div>
+      </div>
+      <button class="btn-warm">Reserve Your Table</button>
+    </div>
+    <div class="results-visual" data-ms-hide-if-empty="results">
+      <div class="result-card"><div class="big">{{STAT_YEARS}}</div><div class="label">Years of Excellence</div></div>
+      <div class="result-card"><div class="big">{{STAT_RATING}}</div><div class="label">Google Rating</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="booking">
+  <div class="booking-inner">
+    <div class="booking-copy">
+      <h2>Reserve Your<br>Table Tonight</h2>
+      <p>Book your table online, call us, or message us on WhatsApp. Walk-ins are welcome but reservations are recommended for dinner service.</p>
+      <button class="whatsapp"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> WhatsApp Us Now</button>
+      <div class="hours" data-ms-hide-if-empty="hours">
+        <h4>Opening Hours</h4>
+        <p>{{OPENING_HOURS}}</p>
+      </div>
+    </div>
+    <div class="booking-form">
+      <div class="form-h">Book a Table</div>
+      <div class="form-sub">We'll confirm your reservation within 30 minutes.</div>
+      <div class="f-row">
+        <div class="f"><label>Full Name</label><input type="text" placeholder="Your name"></div>
+        <div class="f"><label>Phone</label><input type="text" placeholder="+971 xx xxx xxxx"></div>
+      </div>
+      <div class="f-row">
+        <div class="f"><label>Date</label><input type="date"></div>
+        <div class="f"><label>Time</label>
+          <select><option>Lunch (12–3pm)</option><option>Early Dinner (6–8pm)</option><option>Late Dinner (8–11pm)</option></select>
+        </div>
+      </div>
+      <div class="f"><label>Number of Guests</label>
+        <select><option>2 Guests</option><option>3-4 Guests</option><option>5-6 Guests</option><option>7-8 Guests</option><option>9+ Guests (Group)</option></select>
+      </div>
+      <button class="submit">Reserve My Table</button>
+    </div>
+  </div>
+</section>
+
+<section class="location">
+  <div class="location-inner">
+    <div class="location-map">
+      <div class="map-placeholder">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <p>Map view available on live site</p>
+      </div>
+    </div>
+    <div class="location-info">
+      <p class="sec-label">Find Us</p>
+      <h3>Visit {{RESTAURANT_NAME}}</h3>
+      <div class="location-detail">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <p>{{ADDRESS}}</p>
+      </div>
+      <div class="location-detail">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <p>{{PHONE}}</p>
+      </div>
+      <div class="location-detail">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <p>{{EMAIL}}</p>
+      </div>
+      <a href="#" class="directions-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg> Get Directions</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-row">
+    <div><div class="foot-logo">{{RESTAURANT_NAME}}</div><p class="foot-p">A premium dining experience in the heart of Dubai. Fresh ingredients, exceptional flavours, unforgettable moments.</p></div>
+    <div><div class="foot-h">Menu</div><ul class="foot-ul"><li>Starters</li><li>Main Course</li><li>Desserts</li><li>Beverages</li></ul></div>
+    <div><div class="foot-h">Visit</div><ul class="foot-ul"><li>Reservations</li><li>Private Dining</li><li>Catering</li><li>Events</li></ul></div>
+    <div><div class="foot-h">Contact</div><ul class="foot-ul"><li>{{PHONE}}</li><li>{{EMAIL}}</li><li>{{ADDRESS}}</li></ul></div>
+  </div>
+  <div class="foot-bottom"><p>{{RESTAURANT_NAME}} · Dubai · All Rights Reserved</p><p>Privacy Policy · Terms</p></div>
+</footer>
+</body>
+</html>

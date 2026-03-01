@@ -270,7 +270,7 @@ function addHideEmptyScript(html) {
 <script>
 (function(){
   // Hide individual stat items with empty values
-  document.querySelectorAll('.proof-item').forEach(function(el){
+  document.querySelectorAll('.proof-item,.hero-stat').forEach(function(el){
     var s=el.querySelector('strong');
     if(s&&!s.textContent.trim()) el.style.display='none';
   });
@@ -282,7 +282,7 @@ function addHideEmptyScript(html) {
   document.querySelectorAll('[data-ms-hide-if-empty]').forEach(function(el){
     var t=el.dataset.msHideIfEmpty;
     if(t==='stats'){
-      var items=el.querySelectorAll('.proof-item');
+      var items=el.querySelectorAll('.proof-item,.hero-stat');
       var vis=Array.prototype.filter.call(items,function(i){return i.style.display!=='none';});
       if(items.length>0&&vis.length===0) el.style.display='none';
     }
@@ -295,6 +295,15 @@ function addHideEmptyScript(html) {
       var names=el.querySelectorAll('.team-name');
       var filled=Array.prototype.filter.call(names,function(n){return n.textContent.trim();});
       if(names.length>0&&filled.length===0) el.style.display='none';
+    }
+    if(t==='menu'){
+      var dishes=el.querySelectorAll('.dish-name');
+      var hasDish=Array.prototype.filter.call(dishes,function(d){return d.textContent.trim();});
+      if(dishes.length>0&&hasDish.length===0) el.style.display='none';
+    }
+    if(t==='hours'){
+      var txt=el.textContent.replace(/opening hours/i,'').trim();
+      if(!txt) el.style.display='none';
     }
   });
 })();
