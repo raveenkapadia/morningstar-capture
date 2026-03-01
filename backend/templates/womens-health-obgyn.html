@@ -43,7 +43,7 @@ nav{background:var(--white);height:72px;padding:0 60px;display:flex;align-items:
 .pillar strong{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--mauve);display:block;font-weight:600;}
 .pillar span{font-size:10px;letter-spacing:1px;color:var(--muted);}
 .hero-right{background:var(--mauve);position:relative;overflow:hidden;}
-.hero-bg{position:absolute;inset:0;background:url('{{HERO_IMAGE}}') center/cover;opacity:.25;}
+.hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1559757175-7b21e7842b62?w=800&q=80') center/cover;opacity:.25;}
 .hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(139,94,126,.9) 0%,transparent 50%);}
 .hero-right-content{position:relative;z-index:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;padding:48px;}
 .service-pills{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;}
@@ -84,7 +84,7 @@ h2 em{font-style:italic;color:var(--mauve);}
 
 /* DOCTOR */
 .doctor{background:var(--white);padding:80px 60px;}
-.doctor-inner{display:grid;grid-template-columns:1fr 1.3fr;gap:64px;align-items:center;}
+.doctor-inner{display:grid;grid-template-columns:1fr;gap:32px;align-items:center;max-width:380px;margin:0 auto;}
 .doc-photo{background:var(--mauve-lt);aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;font-size:64px;overflow:hidden;position:relative;}
 .doc-photo img{width:100%;height:100%;object-fit:cover;}
 .doc-accent{position:absolute;bottom:0;left:0;right:0;height:6px;background:linear-gradient(to right,var(--blush),var(--mauve));}
@@ -162,7 +162,7 @@ h2{font-size:28px;}
 .phil-visual{grid-template-columns:1fr 1fr;gap:10px;}
 
 .doctor{padding:48px 20px;}
-.doctor-inner{grid-template-columns:1fr;gap:32px;}
+.doctor-inner{grid-template-columns:1fr;gap:32px;max-width:100%;}
 
 .booking{padding:48px 20px;}
 .booking-inner{grid-template-columns:1fr;gap:32px;}
@@ -198,10 +198,10 @@ footer{padding:36px 20px;}
       <button class="btn-mauve">Book Appointment</button>
       <button class="btn-outline">Our Services</button>
     </div>
-    <div class="hero-pillars">
-      <div class="pillar"><strong>15+</strong><span>Years Experience</span></div>
-      <div class="pillar"><strong>3,000+</strong><span>Patients</span></div>
-      <div class="pillar"><strong>4.9★</strong><span>Google Rating</span></div>
+    <div class="hero-pillars" data-ms-hide-if-empty="stats">
+      <div class="pillar"><strong>{{STAT_YEARS}}</strong><span>Years Experience</span></div>
+      <div class="pillar"><strong>{{STAT_PATIENTS}}</strong><span>Patients</span></div>
+      <div class="pillar"><strong>{{STAT_RATING}}</strong><span>Google Rating</span></div>
     </div>
   </div>
   <div class="hero-right">
@@ -255,26 +255,24 @@ footer{padding:36px 20px;}
       </div>
       <button class="btn-mauve">Book Consultation</button>
     </div>
-    <div class="phil-visual">
-      <div class="phil-card"><strong>15+</strong><span>Years of Women's Care</span></div>
-      <div class="phil-card"><strong>98%</strong><span>Patient Satisfaction</span></div>
-      <div class="phil-card"><strong>3K+</strong><span>Patients Treated</span></div>
-      <div class="phil-card"><strong>4.9★</strong><span>Google Rating</span></div>
+    <div class="phil-visual" data-ms-hide-if-empty="results">
+      <div class="phil-card"><strong>{{STAT_YEARS}}</strong><span>Years of Women's Care</span></div>
+      <div class="phil-card"><strong>{{STAT_PATIENTS}}</strong><span>Patients Treated</span></div>
+      <div class="phil-card"><strong>{{STAT_RATING}}</strong><span>Google Rating</span></div>
     </div>
   </div>
 </section>
 
-<section class="doctor">
+<section class="doctor" data-ms-hide-if-empty="team">
   <div class="doctor-inner">
-    <div class="doc-photo"><img src="{{DOCTOR_IMAGE}}" alt=""><svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><line x1="12" y1="11" x2="12" y2="14"/><line x1="10.5" y1="12.5" x2="13.5" y2="12.5"/></svg><div class="doc-accent"></div></div>
+    <div class="doc-photo"><svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><line x1="12" y1="11" x2="12" y2="14"/><line x1="10.5" y1="12.5" x2="13.5" y2="12.5"/></svg><div class="doc-accent"></div></div>
     <div class="doc-copy">
       <p class="sec-label">Your Gynaecologist</p>
       <div class="doc-name">{{DOCTOR_NAME}}</div>
-      <div class="doc-spec">MRCOG · Consultant Gynaecologist & Obstetrician</div>
-      <p class="doc-bio">A compassionate and highly experienced gynaecologist dedicated to providing patient-centred women's healthcare. Known for her warmth, thoroughness and ability to put even anxious patients completely at ease. Fluent in Arabic and English.</p>
+      <div class="doc-spec">{{SPECIALTY}}</div>
+      <p class="doc-bio">{{DOCTOR_BIO}}</p>
       <div class="doc-quals">
-        <span class="qual">MBBS</span><span class="qual">MRCOG</span>
-        <span class="qual">DHA Licensed</span><span class="qual">Fertility Specialist</span>
+        <span class="qual">{{LICENSE_TYPE}} Licensed</span>
       </div>
       <button class="btn-mauve">Book with {{DOCTOR_FIRSTNAME}}</button>
     </div>

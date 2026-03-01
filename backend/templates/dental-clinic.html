@@ -75,14 +75,14 @@ h2{font-family:'DM Serif Display',serif;font-size:38px;color:var(--ink);}
 .results-list{display:flex;flex-direction:column;gap:12px;margin-bottom:32px;}
 .result-item{display:flex;align-items:center;gap:12px;font-size:13px;color:var(--ink);}
 .result-item::before{content:'✓';background:var(--teal);color:#fff;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;}
-.results-visual{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.results-visual{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
 .result-card{background:var(--white);border-radius:16px;padding:20px;text-align:center;}
 .result-card .big{font-family:'DM Serif Display',serif;font-size:36px;color:var(--teal);}
 .result-card .label{font-size:11px;color:var(--muted);}
 
 /* DOCTOR */
 .team{background:var(--white);padding:80px 64px;}
-.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px;}
+.team-grid{display:grid;grid-template-columns:1fr;max-width:380px;gap:24px;margin-top:48px;}
 .team-card{border:1.5px solid var(--border);border-radius:20px;overflow:hidden;transition:all .3s;}
 .team-card:hover{border-color:var(--teal);transform:translateY(-4px);}
 .team-photo{aspect-ratio:1;background:var(--teal-lt);display:flex;align-items:center;justify-content:center;font-size:48px;overflow:hidden;}
@@ -178,12 +178,12 @@ h2{font-size:26px;}
 .results-inner{grid-template-columns:1fr;gap:36px;}
 .results-copy p{font-size:13px;}
 .results-copy .btn-teal{width:100%;min-height:48px;display:flex;align-items:center;justify-content:center;font-size:15px;}
-.results-visual{grid-template-columns:1fr 1fr;gap:10px;}
+.results-visual{grid-template-columns:1fr;gap:10px;}
 .result-card{padding:16px;}
 .result-card .big{font-size:28px;}
 
 /* TEAM */
-.team-grid{grid-template-columns:1fr;gap:16px;}
+.team-grid{grid-template-columns:1fr;max-width:100%;gap:16px;}
 .team-card{display:flex;flex-direction:row;align-items:stretch;}
 .team-photo{aspect-ratio:1;width:120px;min-height:120px;flex-shrink:0;}
 .team-info{padding:16px;display:flex;flex-direction:column;justify-content:center;}
@@ -230,15 +230,15 @@ footer{padding:36px 20px;}
       <button class="btn-teal">Book Appointment</button>
       <button class="btn-ghost">View Services</button>
     </div>
-    <div class="hero-social-proof">
-      <div class="proof-item"><strong>10+</strong><span>Years Serving Dubai</span></div>
-      <div class="proof-item"><strong>6,000+</strong><span>Happy Patients</span></div>
-      <div class="proof-item"><strong>4.9★</strong><span>Google Reviews</span></div>
+    <div class="hero-social-proof" data-ms-hide-if-empty="stats">
+      <div class="proof-item"><strong>{{STAT_YEARS}}</strong><span>Years Serving Dubai</span></div>
+      <div class="proof-item"><strong>{{STAT_PATIENTS}}</strong><span>Happy Patients</span></div>
+      <div class="proof-item"><strong>{{STAT_RATING}}</strong><span>Google Reviews</span></div>
     </div>
   </div>
   <div class="hero-visual">
     <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c-1.7 0-3 .5-4 1.5C7 4.5 6.5 6 6.5 7.5c0 1.5.4 3 .8 4.5.5 1.8 1 3.8 1.7 5.5.4 1 .9 1.5 1.5 1.5h3c.6 0 1.1-.5 1.5-1.5.7-1.7 1.2-3.7 1.7-5.5.4-1.5.8-3 .8-4.5 0-1.5-.5-3-1.5-4C15 2.5 13.7 2 12 2z"/></svg>
-    <img src="{{HERO_IMAGE}}" alt="">
+    <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800&q=80" alt="Modern dental clinic">
     <div class="hero-visual-badge">
       <div class="badge-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 1l2.09 6.26L20.18 9l-4.64 3.82L17.09 19 12 15.27 6.91 19l1.55-6.18L3.82 9l6.09-1.74L12 1z"/></svg></div>
       <div class="badge-text"><strong>Free Consultation</strong><span>For new patients — No commitment</span></div>
@@ -288,44 +288,25 @@ footer{padding:36px 20px;}
       </div>
       <button class="btn-teal">Book Free Consultation</button>
     </div>
-    <div class="results-visual">
-      <div class="result-card"><div class="big">98%</div><div class="label">Patient Satisfaction</div></div>
-      <div class="result-card"><div class="big">6K+</div><div class="label">Smiles Transformed</div></div>
-      <div class="result-card"><div class="big">15+</div><div class="label">Insurance Plans</div></div>
-      <div class="result-card"><div class="big">4.9★</div><div class="label">Google Rating</div></div>
+    <div class="results-visual" data-ms-hide-if-empty="results">
+      <div class="result-card"><div class="big">{{STAT_YEARS}}</div><div class="label">Years of Experience</div></div>
+      <div class="result-card"><div class="big">{{STAT_PATIENTS}}</div><div class="label">Happy Patients</div></div>
+      <div class="result-card"><div class="big">{{STAT_RATING}}</div><div class="label">Google Rating</div></div>
     </div>
   </div>
 </section>
 
-<section class="team">
+<section class="team" data-ms-hide-if-empty="team">
   <p class="sec-label">Our Team</p>
   <h2>Meet Your Dental Specialists</h2>
   <div class="team-grid">
     <div class="team-card">
-      <div class="team-photo"><img src="{{DOCTOR_IMAGE}}" alt=""><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><line x1="12" y1="11" x2="12" y2="14"/><line x1="10.5" y1="12.5" x2="13.5" y2="12.5"/></svg></div>
+      <div class="team-photo"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><line x1="12" y1="11" x2="12" y2="14"/><line x1="10.5" y1="12.5" x2="13.5" y2="12.5"/></svg></div>
       <div class="team-info">
         <div class="team-name">{{DOCTOR_NAME}}</div>
         <div class="team-spec">General & Cosmetic Dentistry</div>
-        <p class="team-desc">BDS, MDentSci. 15+ years experience in comprehensive dental care. Special interest in smile design and cosmetic dentistry.</p>
-        <div class="team-exp"><span class="exp-tag">15+ Years</span><span class="exp-tag">DHA Licensed</span></div>
-      </div>
-    </div>
-    <div class="team-card">
-      <div class="team-photo"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><line x1="12" y1="11" x2="12" y2="14"/><line x1="10.5" y1="12.5" x2="13.5" y2="12.5"/></svg></div>
-      <div class="team-info">
-        <div class="team-name">Dr. Specialist</div>
-        <div class="team-spec">Orthodontics & Invisalign</div>
-        <p class="team-desc">Specialist orthodontist with extensive experience in clear aligner therapy and complex orthodontic cases.</p>
-        <div class="team-exp"><span class="exp-tag">10+ Years</span><span class="exp-tag">Invisalign Certified</span></div>
-      </div>
-    </div>
-    <div class="team-card">
-      <div class="team-photo"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c-1.7 0-3 .5-4 1.5C7 4.5 6.5 6 6.5 7.5c0 1.5.4 3 .8 4.5.5 1.8 1 3.8 1.7 5.5.4 1 .9 1.5 1.5 1.5h3c.6 0 1.1-.5 1.5-1.5.7-1.7 1.2-3.7 1.7-5.5.4-1.5.8-3 .8-4.5 0-1.5-.5-3-1.5-4C15 2.5 13.7 2 12 2z"/></svg></div>
-      <div class="team-info">
-        <div class="team-name">Dr. Implant Specialist</div>
-        <div class="team-spec">Oral Surgery & Implants</div>
-        <p class="team-desc">Oral and maxillofacial surgeon specialising in dental implants, extractions and surgical procedures.</p>
-        <div class="team-exp"><span class="exp-tag">12+ Years</span><span class="exp-tag">Implant Specialist</span></div>
+        <p class="team-desc">{{SPECIALTY}}</p>
+        <div class="team-exp"><span class="exp-tag">{{LICENSE_TYPE}} Licensed</span></div>
       </div>
     </div>
   </div>

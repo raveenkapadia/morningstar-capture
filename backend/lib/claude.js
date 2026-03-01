@@ -158,7 +158,10 @@ Return this JSON. Use null for ANY field where data is not found in the capture 
   "PATIENT_COUNT": "only if explicitly stated on page, or null",
   "RATING": "only from google_rating or if explicitly on page, or null",
   "LICENSE_TYPE": "DHA for Dubai, HAAD for Abu Dhabi, DOH for other — infer from address",
-  "OPENING_HOURS": "only if found on page, or null"
+  "OPENING_HOURS": "only if found on page, or null",
+  "STAT_YEARS": "formatted years like '20+' — only from page content, or null",
+  "STAT_PATIENTS": "formatted count like '700K+' or '6,000+' — only from page content, or null",
+  "STAT_RATING": "formatted rating like '4.8★' — only from google_rating or page, or null"
 }` : `
 Return this JSON. Use null for ANY field where data is not found in the capture above:
 {

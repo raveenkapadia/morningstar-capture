@@ -195,14 +195,14 @@ footer{padding:36px 20px;}
       <button class="btn-coral">Book Appointment</button>
       <button class="btn-mint">WhatsApp Us</button>
     </div>
-    <div class="hero-stats">
-      <div class="stat-pill"><strong>12+</strong><span>Years Caring</span></div>
-      <div class="stat-pill"><strong>10K+</strong><span>Happy Children</span></div>
-      <div class="stat-pill"><strong>4.9★</strong><span>Google Rating</span></div>
+    <div class="hero-stats" data-ms-hide-if-empty="stats">
+      <div class="stat-pill"><strong>{{STAT_YEARS}}</strong><span>Years Caring</span></div>
+      <div class="stat-pill"><strong>{{STAT_PATIENTS}}</strong><span>Happy Children</span></div>
+      <div class="stat-pill"><strong>{{STAT_RATING}}</strong><span>Google Rating</span></div>
     </div>
   </div>
   <div class="hero-visual">
-    <div class="hero-main-box"><img src="{{HERO_IMAGE}}" alt=""><svg width="80" height="80" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+    <div class="hero-main-box"><img src="https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?w=800&q=80" alt=""><svg width="80" height="80" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
     <div class="floating-card top"><div class="fc-emoji"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2l4 4M7.5 13.5L2 19l3 3 5.5-5.5M15 7l-8 8M10 12l-2 2M13 9l-2 2"/><line x1="16" y1="5" x2="19" y2="8"/></svg></div><div class="fc-text">Vaccinations</div><div class="fc-sub">Full schedule available</div></div>
     <div class="floating-card bottom"><div class="fc-emoji"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div><div class="fc-text">Same-Day Appointments</div><div class="fc-sub">No long waiting</div></div>
   </div>
@@ -230,20 +230,19 @@ footer{padding:36px 20px;}
   </div>
 </section>
 
-<section class="doctor">
+<section class="doctor" data-ms-hide-if-empty="team">
   <div class="doctor-inner">
     <div class="doc-photo-wrap">
-      <div class="doc-photo"><img src="{{DOCTOR_IMAGE}}" alt=""><svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><line x1="12" y1="11" x2="12" y2="14"/><line x1="10.5" y1="12.5" x2="13.5" y2="12.5"/></svg></div>
-      <div class="doc-badge"><strong>12+</strong><span>Years Caring<br>for Children</span></div>
+      <div class="doc-photo"><svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><line x1="12" y1="11" x2="12" y2="14"/><line x1="10.5" y1="12.5" x2="13.5" y2="12.5"/></svg></div>
+      <div class="doc-badge"><strong>{{STAT_YEARS}}</strong><span>Years Caring<br>for Children</span></div>
     </div>
     <div class="doc-copy">
       <p class="sec-tag">Your Paediatrician</p>
       <div class="doc-name">{{DOCTOR_NAME}}</div>
-      <div class="doc-spec">MD Paediatrics · Child Development Specialist</div>
-      <p class="doc-bio">A warm, patient and highly skilled paediatrician who has dedicated his career to children's health. Known for a calming bedside manner that puts even the most anxious children at ease.</p>
+      <div class="doc-spec">{{SPECIALTY}}</div>
+      <p class="doc-bio">{{SPECIALTY}}</p>
       <div class="doc-tags">
-        <span class="doc-tag">MD Paediatrics</span><span class="doc-tag">DHA Licensed</span>
-        <span class="doc-tag">Neonatology</span><span class="doc-tag">Child Development</span>
+        <span class="doc-tag">{{LICENSE_TYPE}} Licensed</span>
       </div>
       <button class="btn-coral">Book with Dr. {{DOCTOR_FIRSTNAME}}</button>
     </div>

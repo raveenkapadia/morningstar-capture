@@ -42,7 +42,7 @@ nav{height:68px;padding:0 60px;display:flex;align-items:center;justify-content:s
 .h-stat strong{font-family:'Space Mono',monospace;font-size:26px;color:var(--cyan);display:block;}
 .h-stat span{font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.25);}
 .hero-right{background:var(--slate);position:relative;display:flex;align-items:stretch;overflow:hidden;}
-.hero-right-bg{position:absolute;inset:0;background:url('{{HERO_IMAGE}}') center/cover;opacity:.15;}
+.hero-right-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1551884170-09fb70a3a2ed?w=800&q=80') center/cover;opacity:.15;}
 .hero-right-grid{position:relative;z-index:1;display:grid;grid-template-rows:1fr 1fr;width:100%;}
 .hero-top-card{padding:44px 40px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;flex-direction:column;justify-content:center;}
 .hc-label{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:10px;}
@@ -87,7 +87,7 @@ h2{font-size:40px;font-weight:700;color:var(--dark);letter-spacing:-1px;}
 
 /* DOCTOR */
 .doctor{background:var(--off);padding:80px 60px;}
-.doctor-inner{display:grid;grid-template-columns:1fr 1.3fr;gap:64px;align-items:center;}
+.doctor-inner{display:grid;grid-template-columns:1fr;max-width:380px;gap:32px;align-items:center;}
 .doc-photo{background:var(--slate);border-radius:12px;aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;font-size:64px;overflow:hidden;}
 .doc-photo img{width:100%;height:100%;object-fit:cover;border-radius:12px;}
 .doc-copy .sec-label{color:var(--cyan);}
@@ -164,7 +164,7 @@ h2{font-size:30px;}
 .tech-stat-grid{grid-template-columns:1fr 1fr;gap:12px;}
 
 .doctor{padding:48px 20px;}
-.doctor-inner{grid-template-columns:1fr;gap:32px;}
+.doctor-inner{grid-template-columns:1fr;max-width:100%;gap:32px;}
 
 .booking{padding:48px 20px;}
 .booking-inner{grid-template-columns:1fr;gap:32px;}
@@ -200,10 +200,10 @@ footer{padding:36px 20px;}
       <button class="btn-cyan">Book Eye Consultation</button>
       <button class="btn-ghost">View Services</button>
     </div>
-    <div class="hero-stats">
-      <div class="h-stat"><strong>20+</strong><span>Years Expert</span></div>
-      <div class="h-stat"><strong>8,000+</strong><span>Patients</span></div>
-      <div class="h-stat"><strong>4.9★</strong><span>Rated</span></div>
+    <div class="hero-stats" data-ms-hide-if-empty="stats">
+      <div class="h-stat"><strong>{{STAT_YEARS}}</strong><span>Years Expert</span></div>
+      <div class="h-stat"><strong>{{STAT_PATIENTS}}</strong><span>Patients</span></div>
+      <div class="h-stat"><strong>{{STAT_RATING}}</strong><span>Rated</span></div>
     </div>
   </div>
   <div class="hero-right">
@@ -259,26 +259,24 @@ footer{padding:36px 20px;}
         <div class="tech-item"><div class="ti-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><div><div class="ti-label">Corneal Topography</div><div class="ti-desc">3D mapping of corneal curvature for LASIK screening and contact lens fitting</div></div></div>
       </div>
     </div>
-    <div class="tech-stat-grid">
-      <div class="tech-stat"><strong>99%</strong><span>LASIK Success</span></div>
-      <div class="tech-stat"><strong>8K+</strong><span>Patients Treated</span></div>
-      <div class="tech-stat"><strong>20+</strong><span>Years Expert</span></div>
-      <div class="tech-stat"><strong>4.9★</strong><span>Google Rating</span></div>
+    <div class="tech-stat-grid" data-ms-hide-if-empty="results">
+      <div class="tech-stat"><strong>{{STAT_YEARS}}</strong><span>Years Expert</span></div>
+      <div class="tech-stat"><strong>{{STAT_PATIENTS}}</strong><span>Patients Treated</span></div>
+      <div class="tech-stat"><strong>{{STAT_RATING}}</strong><span>Google Rating</span></div>
     </div>
   </div>
 </section>
 
-<section class="doctor">
+<section class="doctor" data-ms-hide-if-empty="team">
   <div class="doctor-inner">
-    <div class="doc-photo"><img src="{{DOCTOR_IMAGE}}" alt=""><svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
+    <div class="doc-photo"><svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
     <div class="doc-copy">
       <p class="sec-label">Your Eye Surgeon</p>
       <div class="doc-name">{{DOCTOR_NAME}}</div>
-      <div class="doc-spec">FRCOphth · Consultant Ophthalmologist & Refractive Surgeon</div>
-      <p class="doc-bio">Fellowship-trained ophthalmologist with subspecialty expertise in refractive surgery, cataract and medical retina. Performed over 4,000 LASIK procedures with industry-leading outcomes. Trusted by Dubai's most demanding patients for his precision and exceptional results.</p>
+      <div class="doc-spec">{{SPECIALTY}}</div>
+      <p class="doc-bio">{{SPECIALTY}}</p>
       <div class="doc-tags">
-        <span class="doc-tag">FRCOphth</span><span class="doc-tag">LASIK Expert</span>
-        <span class="doc-tag">DHA Licensed</span><span class="doc-tag">Cataract Surgery</span>
+        <span class="doc-tag">{{LICENSE_TYPE}} Licensed</span>
       </div>
       <button class="btn-cyan">Book with {{DOCTOR_FIRSTNAME}}</button>
     </div>

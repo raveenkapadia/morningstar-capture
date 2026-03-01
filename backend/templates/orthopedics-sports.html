@@ -44,7 +44,7 @@ nav{height:68px;padding:0 60px;display:flex;align-items:center;justify-content:s
 .h-num strong{font-family:'Barlow Condensed',sans-serif;font-size:42px;font-weight:800;color:#fff;line-height:1;display:block;}
 .h-num span{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.3);}
 .hero-right{background:var(--grey);position:relative;display:flex;align-items:center;justify-content:center;}
-.hero-right-img{position:absolute;inset:0;background:url('{{HERO_IMAGE}}') center/cover;opacity:.2;}
+.hero-right-img{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&q=80') center/cover;opacity:.2;}
 .hero-right-content{position:relative;z-index:1;padding:40px;}
 .speciality-tags{display:flex;flex-direction:column;gap:8px;}
 .spec-tag{background:rgba(255,255,255,.05);border-left:3px solid var(--orange);padding:14px 20px;color:#fff;font-size:13px;font-weight:600;letter-spacing:.5px;transition:background .2s;}
@@ -190,10 +190,10 @@ footer{padding:36px 20px;}
       <button class="btn-orange">Book Consultation</button>
       <button class="btn-border">View Treatments</button>
     </div>
-    <div class="hero-numbers">
-      <div class="h-num"><strong>18+</strong><span>Years Expertise</span></div>
-      <div class="h-num"><strong>4,000+</strong><span>Surgeries</span></div>
-      <div class="h-num"><strong>4.9★</strong><span>Google Rating</span></div>
+    <div class="hero-numbers" data-ms-hide-if-empty="stats">
+      <div class="h-num"><strong>{{STAT_YEARS}}</strong><span>Years Expertise</span></div>
+      <div class="h-num"><strong>{{STAT_PATIENTS}}</strong><span>Surgeries</span></div>
+      <div class="h-num"><strong>{{STAT_RATING}}</strong><span>Google Rating</span></div>
     </div>
   </div>
   <div class="hero-right">
@@ -244,17 +244,16 @@ footer{padding:36px 20px;}
   </div>
 </section>
 
-<section class="doctor">
+<section class="doctor" data-ms-hide-if-empty="team">
   <div class="doctor-inner">
-    <div class="doc-photo"><img src="{{DOCTOR_IMAGE}}" alt=""><svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 10c1.1 0 2-.9 2-2s-.9-2-2-2c0-1.1-.9-2-2-2s-2 .9-2 2L7 14c0-1.1-.9-2-2-2s-2 .9-2 2 .9 2 2 2c0 1.1.9 2 2 2s2-.9 2-2l6-6z"/></svg></div>
+    <div class="doc-photo"><svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 10c1.1 0 2-.9 2-2s-.9-2-2-2c0-1.1-.9-2-2-2s-2 .9-2 2L7 14c0-1.1-.9-2-2-2s-2 .9-2 2 .9 2 2 2c0 1.1.9 2 2 2s2-.9 2-2l6-6z"/></svg></div>
     <div class="doc-copy">
       <p class="sec-tag">Your Orthopaedic Surgeon</p>
       <div class="doc-name">{{DOCTOR_NAME}}</div>
-      <div class="doc-spec">FRCS (Orth) · Consultant Orthopaedic Surgeon</div>
-      <p class="doc-p">Fellowship-trained orthopaedic surgeon with subspecialty expertise in sports medicine and arthroscopic surgery. Operated on professional athletes and weekend warriors alike — with the same commitment to excellent outcomes.</p>
+      <div class="doc-spec">{{SPECIALTY}}</div>
+      <p class="doc-p">{{SPECIALTY}}</p>
       <div class="doc-creds">
-        <span class="cred">MBBS</span><span class="cred">FRCS (Orth)</span>
-        <span class="cred">DHA Licensed</span><span class="cred">Sports Medicine</span>
+        <span class="cred">{{LICENSE_TYPE}} Licensed</span>
       </div>
       <button class="btn-orange">Book with {{DOCTOR_FIRSTNAME}}</button>
     </div>

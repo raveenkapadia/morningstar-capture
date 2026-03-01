@@ -262,11 +262,55 @@ function addTracking(html, previewId, baseUrl) {
   return html.replace('</body>', trackingScript + '</body>');
 }
 
+// ─── HIDE EMPTY SECTIONS ────────────────────────────────────────────────────
+// Client-side script that hides sections where injected data was empty/null
+function addHideEmptyScript(html) {
+  const script = `
+<!-- MORNINGSTAR HIDE-EMPTY SECTIONS -->
+<script>
+(function(){
+  // Hide individual stat items with empty values
+  document.querySelectorAll('.proof-item').forEach(function(el){
+    var s=el.querySelector('strong');
+    if(s&&!s.textContent.trim()) el.style.display='none';
+  });
+  document.querySelectorAll('.result-card').forEach(function(el){
+    var b=el.querySelector('.big');
+    if(b&&!b.textContent.trim()) el.style.display='none';
+  });
+  // Hide entire sections if all child items are empty
+  document.querySelectorAll('[data-ms-hide-if-empty]').forEach(function(el){
+    var t=el.dataset.msHideIfEmpty;
+    if(t==='stats'){
+      var items=el.querySelectorAll('.proof-item');
+      var vis=Array.prototype.filter.call(items,function(i){return i.style.display!=='none';});
+      if(items.length>0&&vis.length===0) el.style.display='none';
+    }
+    if(t==='results'){
+      var cards=el.querySelectorAll('.result-card');
+      var v=Array.prototype.filter.call(cards,function(c){return c.style.display!=='none';});
+      if(cards.length>0&&v.length===0) el.style.display='none';
+    }
+    if(t==='team'){
+      var names=el.querySelectorAll('.team-name');
+      var filled=Array.prototype.filter.call(names,function(n){return n.textContent.trim();});
+      if(names.length>0&&filled.length===0) el.style.display='none';
+    }
+  });
+})();
+<\/script>
+<!-- END HIDE-EMPTY -->
+`;
+
+  return html.replace('</body>', script + '</body>');
+}
+
 // ─── MAIN: GENERATE PREVIEW HTML ─────────────────────────────────────────────
 function generatePreview({ templateFilename, injectedData, previewId, prospectName, expiresAt, baseUrl, colorPalette }) {
   let html = loadTemplate(templateFilename);
   html = injectData(html, injectedData);
   html = applyBrandColors(html, colorPalette);
+  html = addHideEmptyScript(html);
   html = addPreviewBanner(html, previewId, prospectName, expiresAt);
   html = addTracking(html, previewId, baseUrl);
   return html;

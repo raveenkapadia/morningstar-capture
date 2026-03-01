@@ -60,7 +60,7 @@ nav{background:var(--warm-white);padding:0 60px;height:76px;display:flex;align-i
 .hero-stat strong{font-family:'Playfair Display',serif;font-size:32px;color:var(--gold-lt);display:block;font-weight:600;}
 .hero-stat span{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.45);}
 .hero-image{background:linear-gradient(135deg,#2C5282 0%,#1B3A5C 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
-.hero-image-bg{position:absolute;inset:0;background:url('{{HERO_IMAGE}}') center/cover no-repeat;opacity:.4;}
+.hero-image-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=800&q=80') center/cover no-repeat;opacity:.4;}
 .hero-image-content{position:relative;z-index:1;text-align:center;padding:40px;}
 .hero-doctor-card{background:rgba(255,255,255,.1);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.15);padding:28px 36px;}
 .hero-doctor-card .title{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
@@ -90,7 +90,7 @@ h2 em{font-style:italic;}
 
 /* DOCTOR SECTION */
 .doctor{background:var(--navy);padding:80px 60px;}
-.doctor-inner{display:grid;grid-template-columns:1fr 1.4fr;gap:72px;align-items:center;}
+.doctor-inner{display:grid;grid-template-columns:1fr;max-width:380px;gap:32px;align-items:center;}
 .doctor-photo{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;font-size:48px;position:relative;overflow:hidden;}
 .doctor-photo img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;}
 .doctor-copy .eyebrow{color:var(--gold);}
@@ -168,7 +168,7 @@ h2{font-size:28px;}
 .services-grid{grid-template-columns:1fr;gap:14px;}
 
 .doctor{padding:48px 20px;}
-.doctor-inner{grid-template-columns:1fr;gap:36px;}
+.doctor-inner{grid-template-columns:1fr;max-width:100%;gap:36px;}
 
 .booking{padding:48px 20px;}
 .booking-inner{grid-template-columns:1fr;gap:32px;}
@@ -227,10 +227,10 @@ footer{padding:36px 20px;}
       <button class="btn-gold">Book Appointment</button>
       <button class="btn-outline">WhatsApp Us</button>
     </div>
-    <div class="hero-stats">
-      <div class="hero-stat"><strong>12+</strong><span>Years of Care</span></div>
-      <div class="hero-stat"><strong>8,000+</strong><span>Patients</span></div>
-      <div class="hero-stat"><strong>4.9★</strong><span>Google Rating</span></div>
+    <div class="hero-stats" data-ms-hide-if-empty="stats">
+      <div class="hero-stat"><strong>{{STAT_YEARS}}</strong><span>Years of Care</span></div>
+      <div class="hero-stat"><strong>{{STAT_PATIENTS}}</strong><span>Patients</span></div>
+      <div class="hero-stat"><strong>{{STAT_RATING}}</strong><span>Google Rating</span></div>
     </div>
   </div>
   <div class="hero-image">
@@ -239,7 +239,7 @@ footer{padding:36px 20px;}
       <div class="hero-doctor-card">
         <div class="title">Lead Physician</div>
         <div class="name">{{DOCTOR_NAME}}</div>
-        <div class="spec">MBBS · Family Medicine Specialist</div>
+        <div class="spec">{{SPECIALTY}}</div>
       </div>
     </div>
   </div>
@@ -270,19 +270,16 @@ footer{padding:36px 20px;}
 </section>
 
 <!-- DOCTOR -->
-<section class="doctor">
+<section class="doctor" data-ms-hide-if-empty="team">
   <div class="doctor-inner">
-    <div class="doctor-photo"><img src="{{DOCTOR_IMAGE}}" alt="{{DOCTOR_NAME}}"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><line x1="12" y1="11" x2="12" y2="14"/><line x1="10.5" y1="12.5" x2="13.5" y2="12.5"/></svg></div>
+    <div class="doctor-photo"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><line x1="12" y1="11" x2="12" y2="14"/><line x1="10.5" y1="12.5" x2="13.5" y2="12.5"/></svg></div>
     <div class="doctor-copy">
       <p class="eyebrow">Meet Your Doctor</p>
       <h2 style="color:#fff;">{{DOCTOR_NAME}}</h2>
-      <div class="spec">MBBS · Family Medicine Specialist · 12 Years Experience</div>
-      <p>A compassionate and highly experienced family physician dedicated to providing personalised, evidence-based care for patients of all ages. Known for taking time to listen and explain, Dr. {{DOCTOR_FIRSTNAME}} believes in treating the whole person — not just the symptoms.</p>
+      <div class="spec">{{SPECIALTY}}</div>
+      <p>{{SPECIALTY}}</p>
       <div class="doctor-quals">
-        <div class="qual-badge">MBBS — AIIMS</div>
-        <div class="qual-badge">DHA Licensed</div>
-        <div class="qual-badge">Family Medicine</div>
-        <div class="qual-badge">Diabetes Specialist</div>
+        <div class="qual-badge">{{LICENSE_TYPE}} Licensed</div>
       </div>
       <button class="btn-gold">Book with {{DOCTOR_FIRSTNAME}}</button>
     </div>

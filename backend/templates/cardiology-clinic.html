@@ -50,7 +50,7 @@ nav{background:var(--navy);height:72px;padding:0 64px;display:flex;align-items:c
 .metric strong{font-family:'Libre Baskerville',serif;font-size:28px;color:var(--silver);display:block;}
 .metric span{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.3);}
 .hero-right{background:var(--blue-lt);display:grid;grid-template-rows:1fr auto;position:relative;}
-.hero-img{background:url('{{HERO_IMAGE}}') center/cover;opacity:.15;position:absolute;inset:0;}
+.hero-img{background:url('https://images.unsplash.com/photo-1628348068343-c6a848d2b6dd?w=800&q=80') center/cover;opacity:.15;position:absolute;inset:0;}
 .hero-right-content{padding:60px;position:relative;z-index:1;display:flex;align-items:center;justify-content:center;}
 .doctor-panel{background:rgba(255,255,255,.95);padding:32px;border-left:4px solid var(--red);max-width:320px;box-shadow:0 24px 64px rgba(6,18,43,.12);}
 .panel-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:10px;}
@@ -95,7 +95,7 @@ h2{font-family:'Libre Baskerville',serif;font-size:36px;font-weight:400;color:va
 .tech-item-icon{font-size:20px;flex-shrink:0;}
 .tech-item-label{font-size:12px;font-weight:600;color:rgba(255,255,255,.7);margin-bottom:3px;}
 .tech-item-desc{font-size:11px;color:rgba(255,255,255,.3);line-height:1.6;}
-.tech-visual{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);padding:36px;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.05);}
+.tech-visual{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);padding:36px;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.05);}
 .tech-stat{background:var(--deep);padding:28px;text-align:center;}
 .tech-stat strong{font-family:'Libre Baskerville',serif;font-size:34px;color:var(--silver);display:block;margin-bottom:6px;}
 .tech-stat span{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.3);}
@@ -224,10 +224,10 @@ footer{padding:36px 20px;}
       <button class="btn-red">Book Consultation</button>
       <button class="btn-outline">View Services</button>
     </div>
-    <div class="hero-metrics">
-      <div class="metric"><strong>20+</strong><span>Years Expertise</span></div>
-      <div class="metric"><strong>5,000+</strong><span>Patients Treated</span></div>
-      <div class="metric"><strong>4.9★</strong><span>Google Rating</span></div>
+    <div class="hero-metrics" data-ms-hide-if-empty="stats">
+      <div class="metric"><strong>{{STAT_YEARS}}</strong><span>Years Expertise</span></div>
+      <div class="metric"><strong>{{STAT_PATIENTS}}</strong><span>Patients Treated</span></div>
+      <div class="metric"><strong>{{STAT_RATING}}</strong><span>Google Rating</span></div>
     </div>
   </div>
   <div class="hero-right">
@@ -284,11 +284,10 @@ footer{padding:36px 20px;}
         <div class="tech-item"><div class="tech-item-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="17" cy="4" r="2"/><path d="M15 7l-5 5 4 4-3 6M7 12l-2 6M2 17l3.5-1"/></svg></div><div><div class="tech-item-label">Treadmill Stress Test</div><div class="tech-item-desc">Exercise ECG testing with continuous BP and cardiac monitoring</div></div></div>
       </div>
     </div>
-    <div class="tech-visual">
-      <div class="tech-stat"><strong>99%</strong><span>Diagnostic Accuracy</span></div>
-      <div class="tech-stat"><strong>24/7</strong><span>Emergency Line</span></div>
-      <div class="tech-stat"><strong>5K+</strong><span>Patients Treated</span></div>
-      <div class="tech-stat"><strong>20+</strong><span>Years Experience</span></div>
+    <div class="tech-visual" data-ms-hide-if-empty="results">
+      <div class="tech-stat"><strong>{{STAT_YEARS}}</strong><span>Years Experience</span></div>
+      <div class="tech-stat"><strong>{{STAT_PATIENTS}}</strong><span>Patients Treated</span></div>
+      <div class="tech-stat"><strong>{{STAT_RATING}}</strong><span>Google Rating</span></div>
     </div>
   </div>
 </section>
