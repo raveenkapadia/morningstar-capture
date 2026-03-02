@@ -313,7 +313,7 @@
 <nav>
   <div class="nav-brand">
     <div class="nav-logo">🏥</div>
-    <span class="nav-name">Your Clinic</span>
+    <span class="nav-name">{{BRAND_NAME}}</span>
   </div>
   <ul class="nav-links">
     <li><a href="#">Specialities</a></li>
@@ -322,7 +322,7 @@
     <li><a href="#">About</a></li>
   </ul>
   <div class="nav-actions">
-    <a href="tel:+97144000000" class="nav-tel">+971 4 400 0000</a>
+    <a href="tel:{{BRAND_PHONE}}" class="nav-tel">{{BRAND_PHONE}}</a>
     <button class="nav-book">Book Appointment</button>
   </div>
 </nav>
@@ -331,12 +331,10 @@
 <section class="hero">
   <div class="hero-left">
     <div class="hero-trust-badges">
-      <span class="trust-badge"><span class="trust-badge-icon">✓</span> DHA Licensed</span>
-      <span class="trust-badge"><span class="trust-badge-icon">⭐</span> 4.9 Google Rating</span>
-      <span class="trust-badge"><span class="trust-badge-icon">🏆</span> JCI Accredited</span>
+      <span class="trust-badge"><span class="trust-badge-icon">✓</span> {{BRAND_TAGLINE}}</span>
     </div>
-    <h1 class="hero-title">Healthcare that<br>puts <em>you first.</em></h1>
-    <p class="hero-sub">Expert consultants, same-day appointments, and a care experience built around your comfort. Modern medicine delivered with genuine warmth.</p>
+    <h1 class="hero-title">{{HERO_HEADING}}</h1>
+    <p class="hero-sub">{{HERO_SUB}}</p>
 
     <!-- INLINE BOOKING — highest UX conversion element -->
     <div class="hero-book-bar fade-up">
@@ -399,7 +397,7 @@
 </div>
 
 <!-- SPECIALITIES -->
-<section class="section alt">
+<section class="section alt" data-ms-hide-if-empty="products">
   <div class="section-header fade-up">
     <div>
       <div class="s-eyebrow">Our Specialities</div>
@@ -408,10 +406,10 @@
     <a href="#" style="background:var(--teal);color:#fff;border:none;padding:11px 24px;font-size:13px;font-weight:500;cursor:pointer;text-decoration:none;font-family:'DM Sans',sans-serif">All Specialities</a>
   </div>
   <div class="specialities-grid">
-    <div class="spec-card fade-up"><div class="spec-icon">❤️</div><div class="spec-title">Cardiology</div><div class="spec-desc">Comprehensive cardiac care including ECG, echocardiography, stress testing, and specialist consultations for all heart conditions.</div><a href="#" class="spec-link">Book Appointment →</a></div>
-    <div class="spec-card fade-up stagger-1"><div class="spec-icon">🦴</div><div class="spec-title">Orthopaedics</div><div class="spec-desc">Diagnosis and treatment of bone, joint, and muscle conditions. Sports injuries, joint replacements, and physiotherapy programmes.</div><a href="#" class="spec-link">Book Appointment →</a></div>
-    <div class="spec-card fade-up stagger-2"><div class="spec-icon">🧴</div><div class="spec-title">Dermatology</div><div class="spec-desc">Medical and aesthetic dermatology. Acne, eczema, psoriasis, skin cancer screening, and laser treatments under specialist care.</div><a href="#" class="spec-link">Book Appointment →</a></div>
-    <div class="spec-card fade-up"><div class="spec-icon">🧠</div><div class="spec-title">Neurology</div><div class="spec-desc">Diagnosis and management of neurological conditions including migraines, epilepsy, and movement disorders by board-certified neurologists.</div><a href="#" class="spec-link">Book Appointment →</a></div>
+    <div class="spec-card fade-up"><div class="spec-icon">❤️</div><div class="spec-title">{{PRODUCT_1}}</div><div class="spec-desc">Comprehensive cardiac care including ECG, echocardiography, stress testing, and specialist consultations for all heart conditions.</div><a href="#" class="spec-link">Book Appointment →</a></div>
+    <div class="spec-card fade-up stagger-1"><div class="spec-icon">🦴</div><div class="spec-title">{{PRODUCT_2}}</div><div class="spec-desc">Diagnosis and treatment of bone, joint, and muscle conditions. Sports injuries, joint replacements, and physiotherapy programmes.</div><a href="#" class="spec-link">Book Appointment →</a></div>
+    <div class="spec-card fade-up stagger-2"><div class="spec-icon">🧴</div><div class="spec-title">{{PRODUCT_3}}</div><div class="spec-desc">Medical and aesthetic dermatology. Acne, eczema, psoriasis, skin cancer screening, and laser treatments under specialist care.</div><a href="#" class="spec-link">Book Appointment →</a></div>
+    <div class="spec-card fade-up"><div class="spec-icon">🧠</div><div class="spec-title">{{PRODUCT_4}}</div><div class="spec-desc">Diagnosis and management of neurological conditions including migraines, epilepsy, and movement disorders by board-certified neurologists.</div><a href="#" class="spec-link">Book Appointment →</a></div>
     <div class="spec-card fade-up stagger-1"><div class="spec-icon">👶</div><div class="spec-title">Paediatrics</div><div class="spec-desc">Compassionate care for children from birth through adolescence. Vaccinations, development reviews, and illness management.</div><a href="#" class="spec-link">Book Appointment →</a></div>
     <div class="spec-card fade-up stagger-2"><div class="spec-icon">🔬</div><div class="spec-title">Diagnostics</div><div class="spec-desc">On-site laboratory, radiology, and imaging. Results within 24 hours. No referral required for most standard investigations.</div><a href="#" class="spec-link">Book Appointment →</a></div>
   </div>
@@ -611,7 +609,7 @@
     <div>
       <div class="footer-brand">
         <div class="footer-logo-mark">🏥</div>
-        <span class="footer-name">Your Clinic</span>
+        <span class="footer-name">{{BRAND_NAME}}</span>
       </div>
       <p class="footer-desc">Expert healthcare delivered with genuine warmth. DHA licensed, JCI accredited. Serving Dubai since 2012.</p>
       <div class="footer-accreds">
@@ -651,10 +649,10 @@
     <div>
       <div class="footer-col-title">Contact & Hours</div>
       <ul class="footer-contact">
-        <li class="contact-item"><span class="contact-icon">📍</span><span class="contact-text">Dubai Healthcare City<br>Building 27, Clinic 204<br>Dubai, UAE</span></li>
-        <li class="contact-item"><span class="contact-icon">📞</span><span class="contact-text"><a href="tel:+97144000000">+971 4 400 0000</a></span></li>
+        <li class="contact-item"><span class="contact-icon">📍</span><span class="contact-text">{{BRAND_ADDRESS}}</span></li>
+        <li class="contact-item"><span class="contact-icon">📞</span><span class="contact-text"><a href="tel:{{BRAND_PHONE}}">{{BRAND_PHONE}}</a></span></li>
         <li class="contact-item"><span class="contact-icon">💬</span><span class="contact-text"><a href="#">WhatsApp Bookings</a></span></li>
-        <li class="contact-item"><span class="contact-icon">✉️</span><span class="contact-text"><a href="/cdn-cgi/l/email-protection#d9bab8abbc99a0b6acabbab5b0b7b0baf7b8bc"><span class="__cf_email__" data-cfemail="caa9abb8af8ab3a5bfb8a9a6a3a4a3a9e4abaf">[email&#160;protected]</span></a></span></li>
+        <li class="contact-item"><span class="contact-icon">✉️</span><span class="contact-text"><a href="mailto:{{BRAND_EMAIL}}">{{BRAND_EMAIL}}</a></span></li>
         <li class="contact-item"><span class="contact-icon">🕐</span><span class="contact-text">Sat–Thu: 8am–9pm<br>Fri: 2pm–9pm</span></li>
       </ul>
       <div class="emergency-line">
@@ -664,7 +662,7 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <div class="footer-legal">© 2026 Your Clinic. DHA Licence No. 00000. All rights reserved.</div>
+    <div class="footer-legal">© 2026 {{BRAND_NAME}}. All rights reserved.</div>
     <div class="footer-legal-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Patient Rights</a><a href="#">Accessibility</a></div>
     <div class="footer-powered">Preview by MorningStar.ai</div>
   </div>
@@ -692,7 +690,7 @@
   <button class="switcher-btn" onclick="document.getElementById('sm').classList.toggle('open')">🎨</button>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 const obs = new IntersectionObserver(e => e.forEach(i => { if (i.isIntersecting) i.target.classList.add('visible') }), { threshold: .08 });
 document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
 function tick() { const df = new Date(Dat

@@ -249,7 +249,7 @@
 <div class="expiry">⏰ Preview expires in: <strong id="countdown">6d 23h 41m</strong> &nbsp;·&nbsp; Designed exclusively for your brand</div>
 
 <nav>
-  <div class="nav-brand">Your<span>Brand</span></div>
+  <div class="nav-brand">{{BRAND_NAME}}</div>
   <ul class="nav-links">
     <li><a href="#">Products</a></li>
     <li><a href="#">Technology</a></li>
@@ -262,9 +262,9 @@
 <!-- HERO — SPLIT CINEMATIC + INSTANT SPECS -->
 <section class="hero">
   <div class="hero-content fade-up">
-    <div class="hero-badge">New Arrival 2026</div>
-    <h1 class="hero-title">Precision<br><strong>Engineered.</strong></h1>
-    <p class="hero-tagline">Technology that disappears into life. Designed for those who demand the finest without compromise. Built to last.</p>
+    <div class="hero-badge">{{BRAND_TAGLINE}}</div>
+    <h1 class="hero-title">{{HERO_HEADING}}</h1>
+    <p class="hero-tagline">{{HERO_SUB}}</p>
     <div class="hero-actions">
       <a href="#" class="btn-glow">Explore Range</a>
       <a href="#" class="btn-outline">Watch Film</a>
@@ -293,7 +293,7 @@
   <div class="stat fade-up"><div class="stat-num">IP68</div><div class="stat-label">Waterproof</div></div>
 </div>
 
-<section class="section">
+<section class="section" data-ms-hide-if-empty="products">
   <div class="section-header fade-up">
     <p class="section-tag">The Range</p>
     <h2 class="section-title">Featured <strong>Products</strong></h2>
@@ -302,21 +302,21 @@
     <div class="product-card fade-up">
       <div class="product-img-wrap"><img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&q=80" alt=""></div>
       <div class="product-tag">Flagship</div>
-      <div class="product-name">Pro Max Series</div>
+      <div class="product-name">{{PRODUCT_1}}</div>
       <div class="product-spec">6.7" AMOLED · 48MP · 5000mAh<br>Titanium build · IP68</div>
       <div class="product-price-row"><div class="product-price">AED 3,499</div><button class="product-add">Buy Now</button></div>
     </div>
     <div class="product-card fade-up">
       <div class="product-img-wrap"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&q=80" alt=""></div>
       <div class="product-tag">Audio</div>
-      <div class="product-name">Studio Headphones</div>
+      <div class="product-name">{{PRODUCT_2}}</div>
       <div class="product-spec">Active Noise Cancellation<br>40hr Battery · Hi-Res Audio</div>
       <div class="product-price-row"><div class="product-price">AED 1,299</div><button class="product-add">Buy Now</button></div>
     </div>
     <div class="product-card fade-up">
       <div class="product-img-wrap"><img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=400&q=80" alt=""></div>
       <div class="product-tag">Wearable</div>
-      <div class="product-name">Smart Watch Ultra</div>
+      <div class="product-name">{{PRODUCT_3}}</div>
       <div class="product-spec">Health Monitoring · GPS<br>7-Day Battery · AMOLED</div>
       <div class="product-price-row"><div class="product-price">AED 1,599</div><button class="product-add">Buy Now</button></div>
     </div>
@@ -381,7 +381,7 @@
 <footer>
   <div class="footer-grid">
     <div>
-      <div class="footer-logo">Your<span>Brand</span></div>
+      <div class="footer-logo">{{BRAND_NAME}}</div>
       <p class="footer-brand-desc">Precision-engineered technology for those who demand excellence. Designed and serviced in Dubai.</p>
       <div class="footer-social">
         <a href="#" class="social-link">𝕏</a>
@@ -420,15 +420,15 @@
     <div>
       <div class="footer-col-title">Contact</div>
       <ul class="footer-contact-list">
-        <li class="contact-item"><span class="contact-icon">📍</span><span class="contact-text">Dubai Silicon Oasis<br>Building A3, Dubai, UAE</span></li>
-        <li class="contact-item"><span class="contact-icon">📞</span><span class="contact-text"><a href="tel:+97144000000">+971 4 400 0000</a></span></li>
-        <li class="contact-item"><span class="contact-icon">✉️</span><span class="contact-text"><a href="/cdn-cgi/l/email-protection#2a595f5a5a45585e6a53455f5848584b444e04494547"><span class="__cf_email__" data-cfemail="9ae9efeaeaf5e8eedae3f5efe8f8e8fbf4feb4f9f5f7">[email&#160;protected]</span></a></span></li>
+        <li class="contact-item"><span class="contact-icon">📍</span><span class="contact-text">{{BRAND_ADDRESS}}</span></li>
+        <li class="contact-item"><span class="contact-icon">📞</span><span class="contact-text"><a href="tel:{{BRAND_PHONE}}">{{BRAND_PHONE}}</a></span></li>
+        <li class="contact-item"><span class="contact-icon">✉️</span><span class="contact-text"><a href="mailto:{{BRAND_EMAIL}}">{{BRAND_EMAIL}}</a></span></li>
         <li class="contact-item"><span class="contact-icon">🕐</span><span class="contact-text">24/7 Online Support<br>Walk-in: 9am–7pm Daily</span></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <div class="footer-legal">© 2026 YourBrand Technologies. All rights reserved.</div>
+    <div class="footer-legal">© 2026 {{BRAND_NAME}}. All rights reserved.</div>
     <div class="footer-legal-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Warranty Policy</a><a href="#">Accessibility</a></div>
     <div class="footer-powered">Preview by MorningStar.ai</div>
   </div>

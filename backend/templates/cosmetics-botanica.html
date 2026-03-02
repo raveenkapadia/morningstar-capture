@@ -253,7 +253,7 @@
 <div class="expiry">⏰ Preview expires: <strong id="countdown">6d 23h 41m</strong> — Made for your brand</div>
 
 <nav>
-  <div class="nav-brand">Your Brand</div>
+  <div class="nav-brand">{{BRAND_NAME}}</div>
   <ul class="nav-links">
     <li><a href="#">Skincare</a></li>
     <li><a href="#">Body</a></li>
@@ -279,10 +279,10 @@
   </div>
   <div class="hero-content">
     <div class="hero-leaf">🌿</div>
-    <div class="hero-eyebrow">Plant-Powered Skincare</div>
-    <h1 class="hero-title">Skin that<br>knows<br>itself.</h1>
+    <div class="hero-eyebrow">{{BRAND_TAGLINE}}</div>
+    <h1 class="hero-title">{{HERO_HEADING}}</h1>
     <div class="hero-rule"></div>
-    <p class="hero-sub">Formulated with botanicals your skin recognises. No synthetics it has to fight. Every ingredient listed, every source disclosed. Science that works with nature, never against it.</p>
+    <p class="hero-sub">{{HERO_SUB}}</p>
     <div class="hero-promise">100% natural origin · Certified cruelty-free · Refillable packaging</div>
     <div class="hero-actions">
       <a href="#" class="btn-sage">Shop Collection</a>
@@ -322,15 +322,15 @@
   <div class="pb fade-up stagger-3"><div class="pb-num">30d</div><div class="pb-label">Free Returns</div></div>
 </div>
 
-<section class="section alt">
+<section class="section alt" data-ms-hide-if-empty="products">
   <div class="section-header fade-up">
     <div><div class="s-eyebrow">The Collection</div><h2 class="s-title">Your ritual,<br>rooted in nature.</h2></div>
     <a href="#" class="btn-sage">All Products</a>
   </div>
   <div class="product-grid">
-    <div class="product-card fade-up"><div class="pc-img"><img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=500&q=85" alt=""><div class="pc-quick"><button class="pc-quick-btn">Quick Add to Bag</button></div><span class="pc-badge">Bestseller</span></div><div class="pc-info"><div class="pc-concern">Brightening</div><div class="pc-name">Vitamin C Glow Serum</div><div class="pc-desc">Sea buckthorn, kakadu plum, hyaluronic acid</div><div class="pc-row"><span class="pc-size">30ml</span><span class="pc-price">AED 185</span></div></div></div>
-    <div class="product-card fade-up stagger-1"><div class="pc-img"><img src="https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=500&q=85" alt=""><div class="pc-quick"><button class="pc-quick-btn">Quick Add to Bag</button></div><span class="pc-badge">New</span></div><div class="pc-info"><div class="pc-concern">Anti-Ageing</div><div class="pc-name">Bakuchiol Night Oil</div><div class="pc-desc">Plant-based retinol alternative, rosehip, squalane</div><div class="pc-row"><span class="pc-size">30ml</span><span class="pc-price">AED 220</span></div></div></div>
-    <div class="product-card fade-up stagger-2"><div class="pc-img"><img src="https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=500&q=85" alt=""><div class="pc-quick"><button class="pc-quick-btn">Quick Add to Bag</button></div></div><div class="pc-info"><div class="pc-concern">Hydration</div><div class="pc-name">Centella Calm Cream</div><div class="pc-desc">Centella asiatica, oat extract, ceramides</div><div class="pc-row"><span class="pc-size">50ml</span><span class="pc-price">AED 165</span></div></div></div>
+    <div class="product-card fade-up"><div class="pc-img"><img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=500&q=85" alt=""><div class="pc-quick"><button class="pc-quick-btn">Quick Add to Bag</button></div><span class="pc-badge">Bestseller</span></div><div class="pc-info"><div class="pc-concern">Brightening</div><div class="pc-name">{{PRODUCT_1}}</div><div class="pc-desc">Sea buckthorn, kakadu plum, hyaluronic acid</div><div class="pc-row"><span class="pc-size">30ml</span><span class="pc-price">AED 185</span></div></div></div>
+    <div class="product-card fade-up stagger-1"><div class="pc-img"><img src="https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=500&q=85" alt=""><div class="pc-quick"><button class="pc-quick-btn">Quick Add to Bag</button></div><span class="pc-badge">New</span></div><div class="pc-info"><div class="pc-concern">Anti-Ageing</div><div class="pc-name">{{PRODUCT_2}}</div><div class="pc-desc">Plant-based retinol alternative, rosehip, squalane</div><div class="pc-row"><span class="pc-size">30ml</span><span class="pc-price">AED 220</span></div></div></div>
+    <div class="product-card fade-up stagger-2"><div class="pc-img"><img src="https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=500&q=85" alt=""><div class="pc-quick"><button class="pc-quick-btn">Quick Add to Bag</button></div></div><div class="pc-info"><div class="pc-concern">Hydration</div><div class="pc-name">{{PRODUCT_3}}</div><div class="pc-desc">Centella asiatica, oat extract, ceramides</div><div class="pc-row"><span class="pc-size">50ml</span><span class="pc-price">AED 165</span></div></div></div>
   </div>
 </section>
 
@@ -404,7 +404,7 @@
 <footer>
   <div class="footer-grid">
     <div>
-      <div class="footer-logo">Your Brand</div>
+      <div class="footer-logo">{{BRAND_NAME}}</div>
       <p class="footer-desc">Plant-powered skincare built on full transparency. Every ingredient sourced, tested, and disclosed.</p>
       <div class="footer-badges"><span class="fb">100% Natural</span><span class="fb">Cruelty Free</span><span class="fb">Refillable</span><span class="fb">Vegan</span></div>
     </div>
@@ -419,16 +419,16 @@
     <div>
       <div class="footer-col-title">Contact</div>
       <ul class="footer-contact">
-        <li class="contact-item"><span class="ci-icon">📍</span><span class="ci-text">Jumeirah, Dubai, UAE</span></li>
-        <li class="contact-item"><span class="ci-icon">📞</span><span class="ci-text"><a href="tel:+97144000000">+971 4 400 0000</a></span></li>
+        <li class="contact-item"><span class="ci-icon">📍</span><span class="ci-text">{{BRAND_ADDRESS}}</span></li>
+        <li class="contact-item"><span class="ci-icon">📞</span><span class="ci-text"><a href="tel:{{BRAND_PHONE}}">{{BRAND_PHONE}}</a></span></li>
         <li class="contact-item"><span class="ci-icon">💬</span><span class="ci-text"><a href="#">WhatsApp</a></span></li>
-        <li class="contact-item"><span class="ci-icon">✉️</span><span class="ci-text"><a href="#"><span class="__cf_email__" data-cfemail="6c04090000032c1503191e0e1e0d0208420d09">[email&#160;protected]</span></a></span></li>
+        <li class="contact-item"><span class="ci-icon">✉️</span><span class="ci-text"><a href="mailto:{{BRAND_EMAIL}}">{{BRAND_EMAIL}}</a></span></li>
         <li class="contact-item"><span class="ci-icon">🕐</span><span class="ci-text">Daily 9am–9pm · Free Returns 30d</span></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <div class="footer-legal">© 2026 Your Brand. All rights reserved.</div>
+    <div class="footer-legal">© 2026 {{BRAND_NAME}}. All rights reserved.</div>
     <div class="footer-legal-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Sustainability</a><a href="#">Accessibility</a></div>
     <div class="footer-powered">Preview by MorningStar.ai</div>
   </div>

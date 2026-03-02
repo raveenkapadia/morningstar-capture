@@ -285,7 +285,7 @@
 <div class="expiry">Preview expires: <strong id="countdown-top">6d 23h 41m</strong> &nbsp;·&nbsp; Created exclusively for your brand</div>
 
 <nav>
-  <div class="nav-brand">Your Brand</div>
+  <div class="nav-brand">{{BRAND_NAME}}</div>
   <ul class="nav-links">
     <li><a href="#">New Season</a></li>
     <li><a href="#">Ready-to-Wear</a></li>
@@ -311,10 +311,10 @@
   </div>
   <div class="hero-content">
     <div class="hero-vert-label">SS26 · Ready to Wear</div>
-    <div class="hero-eyebrow">Spring / Summer 2026</div>
-    <h1 class="hero-title">Dressed<br>in<br><em>silence.</em></h1>
+    <div class="hero-eyebrow">{{BRAND_TAGLINE}}</div>
+    <h1 class="hero-title">{{HERO_HEADING}}</h1>
     <div class="hero-rule"></div>
-    <p class="hero-sub">Clothes that say nothing and mean everything. Precise cuts, noble fabrics, and a restraint that commands a room without raising its voice.</p>
+    <p class="hero-sub">{{HERO_SUB}}</p>
     <div class="hero-actions">
       <a href="#" class="btn-dark">Shop the Collection</a>
       <a href="#" class="btn-ghost">View Lookbook</a>
@@ -345,7 +345,7 @@
 </div>
 
 <!-- COLLECTION -->
-<section class="section alt">
+<section class="section alt" data-ms-hide-if-empty="products">
   <div class="section-header fade-up">
     <div>
       <div class="s-eyebrow">SS26 Collection</div>
@@ -356,22 +356,22 @@
   <div class="collection-layout">
     <div class="col-item tall fade-up">
       <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=700&q=85" alt="" class="ci-img">
-      <div class="ci-info"><div class="ci-cat">Outerwear</div><div class="ci-name">The Atelier Coat</div><div class="ci-price">AED 2,400</div></div>
+      <div class="ci-info"><div class="ci-cat">Outerwear</div><div class="ci-name">{{PRODUCT_1}}</div><div class="ci-price">AED 2,400</div></div>
       <div class="ci-cta"><a href="#" class="ci-btn">Quick Add</a></div>
     </div>
     <div class="col-item fade-up stagger-1">
       <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&q=85" alt="" class="ci-img">
-      <div class="ci-info"><div class="ci-cat">Dress</div><div class="ci-name">Column Silk Dress</div><div class="ci-price">AED 1,850</div></div>
+      <div class="ci-info"><div class="ci-cat">Dress</div><div class="ci-name">{{PRODUCT_2}}</div><div class="ci-price">AED 1,850</div></div>
       <div class="ci-cta"><a href="#" class="ci-btn">Quick Add</a></div>
     </div>
     <div class="col-item fade-up stagger-2">
       <img src="https://images.unsplash.com/photo-1529139574466-a303027614b9?w=600&q=85" alt="" class="ci-img">
-      <div class="ci-info"><div class="ci-cat">Top</div><div class="ci-name">Cashmere Knit</div><div class="ci-price">AED 960</div></div>
+      <div class="ci-info"><div class="ci-cat">Top</div><div class="ci-name">{{PRODUCT_3}}</div><div class="ci-price">AED 960</div></div>
       <div class="ci-cta"><a href="#" class="ci-btn">Quick Add</a></div>
     </div>
     <div class="col-item fade-up">
       <img src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=600&q=85" alt="" class="ci-img">
-      <div class="ci-info"><div class="ci-cat">Separates</div><div class="ci-name">Wide Leg Trouser</div><div class="ci-price">AED 1,100</div></div>
+      <div class="ci-info"><div class="ci-cat">Separates</div><div class="ci-name">{{PRODUCT_4}}</div><div class="ci-price">AED 1,100</div></div>
       <div class="ci-cta"><a href="#" class="ci-btn">Quick Add</a></div>
     </div>
     <div class="col-item fade-up stagger-1">
@@ -504,7 +504,7 @@
 <footer>
   <div class="footer-grid">
     <div>
-      <div class="footer-logo">Your Brand</div>
+      <div class="footer-logo">{{BRAND_NAME}}</div>
       <p class="footer-desc">Considered fashion for those who dress with intention. Atelier-made, responsibly sourced. Established in Dubai.</p>
       <div class="footer-social">
         <a href="#" class="social-link">📷</a>
@@ -537,15 +537,15 @@
     <div>
       <div class="footer-col-title">Visit & Contact</div>
       <ul class="footer-contact">
-        <li class="ci"><span class="ci-icon">📍</span><span class="ci-text">Gate Village, DIFC<br>Dubai, UAE</span></li>
-        <li class="ci"><span class="ci-icon">📞</span><span class="ci-text"><a href="tel:+97144000000">+971 4 400 0000</a></span></li>
-        <li class="ci"><span class="ci-icon">✉️</span><span class="ci-text"><a href="/cdn-cgi/l/email-protection#0f7c7b7a6b66604f76607a7d6d7d6e616b216e6a"><span class="__cf_email__" data-cfemail="90e3e4e5f4f9ffd0e9ffe5e2f2e2f1fef4bef1f5">[email&#160;protected]</span></a></span></li>
+        <li class="ci"><span class="ci-icon">📍</span><span class="ci-text">{{BRAND_ADDRESS}}</span></li>
+        <li class="ci"><span class="ci-icon">📞</span><span class="ci-text"><a href="tel:{{BRAND_PHONE}}">{{BRAND_PHONE}}</a></span></li>
+        <li class="ci"><span class="ci-icon">✉️</span><span class="ci-text"><a href="mailto:{{BRAND_EMAIL}}">{{BRAND_EMAIL}}</a></span></li>
         <li class="ci"><span class="ci-icon">🕐</span><span class="ci-text">Mon–Sat 10am–8pm<br>Sun 12pm–6pm</span></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <div class="footer-legal">© 2026 Your Brand. All rights reserved.</div>
+    <div class="footer-legal">© 2026 {{BRAND_NAME}}. All rights reserved.</div>
     <div class="footer-legal-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Sustainability</a><a href="#">Accessibility</a></div>
     <div class="footer-powered">Preview by MorningStar.ai</div>
   </div>
@@ -569,7 +569,7 @@
   <button class="switcher-btn" onclick="document.getElementById('sm').classList.toggle('open')">🎨</button>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 const obs = new IntersectionObserver(e => e.forEach(i => { if(i.isIntersecting) i.target.classList.add('visible') }), { threshold: .08 });
 document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
 function tick() {

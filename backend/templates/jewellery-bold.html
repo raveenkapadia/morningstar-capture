@@ -198,16 +198,16 @@
 <body>
 <div class="expiry">⏰ Preview expires in <strong id="cd">6d 23h 41m</strong> &nbsp;·&nbsp; Exclusive redesign for your brand</div>
 <nav>
-  <div class="nav-brand">Your<span>Brand</span></div>
+  <div class="nav-brand">{{BRAND_NAME}}</div>
   <ul class="nav-links"><li><a href="#">Collections</a></li><li><a href="#">Watches</a></li><li><a href="#">Bespoke</a></li><li><a href="#">About</a></li></ul>
   <button class="nav-cta">Book Viewing</button>
 </nav>
 
 <section class="hero">
   <div class="hero-content fade-up">
-    <div class="hero-badge">High Jewellery · 2026</div>
-    <h1 class="hero-title">Rare.<br>Eternal.<br><em>Yours.</em></h1>
-    <p class="hero-tagline">Masterworks in platinum and gold. Every stone GIA certified. Every piece made to outlast generations.</p>
+    <div class="hero-badge">{{BRAND_TAGLINE}}</div>
+    <h1 class="hero-title">{{HERO_HEADING}}</h1>
+    <p class="hero-tagline">{{HERO_SUB}}</p>
     <div class="hero-actions">
       <a href="#" class="btn-gold">Explore Collection</a>
       <a href="#" class="btn-outline">Book Private Viewing</a>
@@ -234,12 +234,12 @@
   <div class="stat fade-up"><div class="stat-num">3</div><div class="stat-label">GCC Boutiques</div></div>
 </div>
 
-<section class="section alt">
+<section class="section alt" data-ms-hide-if-empty="products">
   <div class="s-header fade-up"><div><p class="s-label">The Collection</p><h2 class="s-title">Most Coveted<br><em>Pieces</em></h2></div><a href="#" class="view-all">View All</a></div>
   <div class="products-grid">
-    <div class="product-card fade-up"><div class="product-img"><img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=500&q=85" alt=""></div><div class="product-overlay"><div class="product-info"><div class="product-name">Étoile Ring</div><div class="product-material">18k White Gold · 2.1ct</div><div class="product-price">AED 42,000</div><button class="product-add">View Details</button></div></div></div>
-    <div class="product-card fade-up"><div class="product-img"><img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=500&q=85" alt=""></div><div class="product-overlay"><div class="product-info"><div class="product-name">Lumière Necklace</div><div class="product-material">Gold · Emerald</div><div class="product-price">AED 68,500</div><button class="product-add">View Details</button></div></div></div>
-    <div class="product-card fade-up"><div class="product-img"><img src="https://images.unsplash.com/photo-1506630448388-4e683c67ddb0?w=500&q=85" alt=""></div><div class="product-overlay"><div class="product-info"><div class="product-name">Soleil Bracelet</div><div class="product-material">Platinum · Pavé</div><div class="product-price">AED 54,000</div><button class="product-add">View Details</button></div></div></div>
+    <div class="product-card fade-up"><div class="product-img"><img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=500&q=85" alt=""></div><div class="product-overlay"><div class="product-info"><div class="product-name">{{PRODUCT_1}}</div><div class="product-material">18k White Gold · 2.1ct</div><div class="product-price">AED 42,000</div><button class="product-add">View Details</button></div></div></div>
+    <div class="product-card fade-up"><div class="product-img"><img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=500&q=85" alt=""></div><div class="product-overlay"><div class="product-info"><div class="product-name">{{PRODUCT_2}}</div><div class="product-material">Gold · Emerald</div><div class="product-price">AED 68,500</div><button class="product-add">View Details</button></div></div></div>
+    <div class="product-card fade-up"><div class="product-img"><img src="https://images.unsplash.com/photo-1506630448388-4e683c67ddb0?w=500&q=85" alt=""></div><div class="product-overlay"><div class="product-info"><div class="product-name">{{PRODUCT_3}}</div><div class="product-material">Platinum · Pavé</div><div class="product-price">AED 54,000</div><button class="product-add">View Details</button></div></div></div>
   </div>
 </section>
 
@@ -276,12 +276,12 @@
 
 <footer>
   <div class="footer-grid">
-    <div><div class="footer-logo">Your<span>Brand</span></div><div class="footer-tagline">High Jewellery · Est. 1987</div><p class="footer-desc">Masters of fine jewellery and haute horlogerie. Crafted in our Dubai atelier with ethically sourced stones.</p><div class="footer-social"><a href="#" class="social-link">𝕏</a><a href="#" class="social-link">in</a><a href="#" class="social-link">📷</a><a href="#" class="social-link">▶</a></div><div class="footer-cert"><span class="cert-item">GIA Certified</span><span class="cert-item">RJC Member</span></div></div>
+    <div><div class="footer-logo">{{BRAND_NAME}}</div><div class="footer-tagline">High Jewellery · Est. 1987</div><p class="footer-desc">Masters of fine jewellery and haute horlogerie. Crafted in our Dubai atelier with ethically sourced stones.</p><div class="footer-social"><a href="#" class="social-link">𝕏</a><a href="#" class="social-link">in</a><a href="#" class="social-link">📷</a><a href="#" class="social-link">▶</a></div><div class="footer-cert"><span class="cert-item">GIA Certified</span><span class="cert-item">RJC Member</span></div></div>
     <div><div class="footer-col-title">Collections</div><ul class="footer-links"><li><a href="#">Engagement</a></li><li><a href="#">Necklaces</a></li><li><a href="#">Bracelets</a></li><li><a href="#">Earrings</a></li><li><a href="#">Watches</a></li><li><a href="#">Bespoke</a></li></ul></div>
     <div><div class="footer-col-title">Services</div><ul class="footer-links"><li><a href="#">Private Viewing</a></li><li><a href="#">Bespoke Design</a></li><li><a href="#">Ring Sizing</a></li><li><a href="#">Valuation</a></li><li><a href="#">Repair & Service</a></li><li><a href="#">Gift Wrapping</a></li></ul></div>
-    <div><div class="footer-col-title">Visit Us</div><ul class="footer-contact"><li class="fc-item"><span class="fc-icon">📍</span><span class="fc-text">Dubai Mall, Level 1<br>Fashion Avenue, UAE</span></li><li class="fc-item"><span class="fc-icon">📞</span><span class="fc-text"><a href="tel:+97144000000">+971 4 400 0000</a></span></li><li class="fc-item"><span class="fc-icon">✉️</span><span class="fc-text"><a href="#"><span class="__cf_email__" data-cfemail="224a474e4e4d625b4d57504050434c460c414d4f">[email&#160;protected]</span></a></span></li><li class="fc-item"><span class="fc-icon">🕐</span><span class="fc-text">Daily: 10am–10pm<br>Private viewings by appt.</span></li></ul></div>
+    <div><div class="footer-col-title">Visit Us</div><ul class="footer-contact"><li class="fc-item"><span class="fc-icon">📍</span><span class="fc-text">{{BRAND_ADDRESS}}</span></li><li class="fc-item"><span class="fc-icon">📞</span><span class="fc-text"><a href="tel:{{BRAND_PHONE}}">{{BRAND_PHONE}}</a></span></li><li class="fc-item"><span class="fc-icon">✉️</span><span class="fc-text"><a href="mailto:{{BRAND_EMAIL}}">{{BRAND_EMAIL}}</a></span></li><li class="fc-item"><span class="fc-icon">🕐</span><span class="fc-text">Daily: 10am–10pm<br>Private viewings by appt.</span></li></ul></div>
   </div>
-  <div class="footer-bottom"><div class="footer-legal">© 2026 Your Brand. All rights reserved.</div><div class="footer-legal-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></div><div class="footer-powered">Preview by MorningStar.ai</div></div>
+  <div class="footer-bottom"><div class="footer-legal">© 2026 {{BRAND_NAME}}. All rights reserved.</div><div class="footer-legal-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></div><div class="footer-powered">Preview by MorningStar.ai</div></div>
 </footer>
 
 <div class="sticky-cta"><div class="sticky-label">Like this redesign?</div><div class="sticky-buttons"><button class="s-book">Book a Call</button><button class="s-buy">Get This — AED 9,200</button></div></div>

@@ -275,7 +275,7 @@
     <li><a href="#">New Arrivals</a></li>
     <li><a href="#">Sale</a></li>
   </ul>
-  <div class="nav-brand">Your Brand</div>
+  <div class="nav-brand">{{BRAND_NAME}}</div>
   <ul class="nav-right">
     <li><a href="#">About</a></li>
     <li><a href="#">Stores</a></li>
@@ -289,9 +289,9 @@
     <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=1400&q=90" alt="">
   </div>
   <div class="hero-content">
-    <p class="hero-season">SS 2026 · New Collection</p>
-    <h1 class="hero-title">Wear<br><em>the Difference.</em></h1>
-    <p class="hero-tagline">Luxury ready-to-wear crafted for the modern woman. New collection — available now in UAE.</p>
+    <p class="hero-season">{{BRAND_TAGLINE}}</p>
+    <h1 class="hero-title">{{HERO_HEADING}}</h1>
+    <p class="hero-tagline">{{HERO_SUB}}</p>
     <div class="hero-actions">
       <a href="#" class="btn-white">Shop Collection</a>
       <a href="#" class="btn-ghost-light">View Lookbook</a>
@@ -321,22 +321,22 @@
 </div>
 
 <!-- LOOKBOOK GRID -->
-<div class="lookbook">
+<div class="lookbook" data-ms-hide-if-empty="products">
   <div class="lb-item">
     <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=800&q=85" alt="">
-    <div class="lb-overlay"><div class="lb-name">Silk Midi Dress</div><div class="lb-price">AED 1,450</div><button class="lb-add">Add to Bag</button></div>
+    <div class="lb-overlay"><div class="lb-name">{{PRODUCT_1}}</div><div class="lb-price">AED 1,450</div><button class="lb-add">Add to Bag</button></div>
   </div>
   <div class="lb-item">
     <img src="https://images.unsplash.com/photo-1551803091-e20673f15770?w=600&q=80" alt="">
-    <div class="lb-overlay"><div class="lb-name">Linen Blazer</div><div class="lb-price">AED 890</div><button class="lb-add">Add to Bag</button></div>
+    <div class="lb-overlay"><div class="lb-name">{{PRODUCT_2}}</div><div class="lb-price">AED 890</div><button class="lb-add">Add to Bag</button></div>
   </div>
   <div class="lb-item">
     <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600&q=80" alt="">
-    <div class="lb-overlay"><div class="lb-name">Wide Leg Trousers</div><div class="lb-price">AED 720</div><button class="lb-add">Add to Bag</button></div>
+    <div class="lb-overlay"><div class="lb-name">{{PRODUCT_3}}</div><div class="lb-price">AED 720</div><button class="lb-add">Add to Bag</button></div>
   </div>
   <div class="lb-item">
     <img src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=600&q=80" alt="">
-    <div class="lb-overlay"><div class="lb-name">Cashmere Knit</div><div class="lb-price">AED 650</div><button class="lb-add">Add to Bag</button></div>
+    <div class="lb-overlay"><div class="lb-name">{{PRODUCT_4}}</div><div class="lb-price">AED 650</div><button class="lb-add">Add to Bag</button></div>
   </div>
   <div class="lb-item">
     <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&q=80" alt="">
@@ -389,7 +389,7 @@
 <footer>
   <div class="footer-grid">
     <div class="footer-brand-col">
-      <div class="footer-logo">Your Brand</div>
+      <div class="footer-logo">{{BRAND_NAME}}</div>
       <p class="footer-brand-desc">Luxury ready-to-wear crafted for the modern woman. Designed in Dubai, worn worldwide. Each piece made in limited quantities.</p>
       <div class="footer-social">
         <a href="#" class="social-link">𝕏</a>
@@ -423,15 +423,15 @@
     <div>
       <div class="footer-col-title">Contact Us</div>
       <ul class="footer-contact-list">
-        <li class="contact-item"><span class="contact-icon">📍</span><span class="contact-text">Dubai Mall, Fashion Avenue<br>Level 2, Dubai, UAE</span></li>
-        <li class="contact-item"><span class="contact-icon">📞</span><span class="contact-text"><a href="tel:+97144000000">+971 4 400 0000</a></span></li>
-        <li class="contact-item"><span class="contact-icon">✉️</span><span class="contact-text"><a href="/cdn-cgi/l/email-protection#a9c1ccc5c5c6e9d0c6dcdbcbdbc8c7cd87cac6c4"><span class="__cf_email__" data-cfemail="432b262f2f2c033a2c36312131222d276d202c2e">[email&#160;protected]</span></a></span></li>
+        <li class="contact-item"><span class="contact-icon">📍</span><span class="contact-text">{{BRAND_ADDRESS}}</span></li>
+        <li class="contact-item"><span class="contact-icon">📞</span><span class="contact-text"><a href="tel:{{BRAND_PHONE}}">{{BRAND_PHONE}}</a></span></li>
+        <li class="contact-item"><span class="contact-icon">✉️</span><span class="contact-text"><a href="mailto:{{BRAND_EMAIL}}">{{BRAND_EMAIL}}</a></span></li>
         <li class="contact-item"><span class="contact-icon">🕐</span><span class="contact-text">Sun–Thu: 10am–10pm<br>Fri–Sat: 10am–12am</span></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <div class="footer-legal">© 2026 Your Brand. All rights reserved.</div>
+    <div class="footer-legal">© 2026 {{BRAND_NAME}}. All rights reserved.</div>
     <div class="footer-legal-links">
       <a href="#">Privacy Policy</a>
       <a href="#">Terms of Service</a>

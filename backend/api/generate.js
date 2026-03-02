@@ -188,6 +188,11 @@ module.exports = async function handler(req, res) {
       }
     }
 
+    // Store color override in injectedData so dashboard can read it back
+    if (override_data.colorOverride) {
+      injectedData._color_override = override_data.colorOverride;
+    }
+
     // ── 9. Generate preview HTML ─────────────────────────────────────────────
     const previewId = crypto.randomUUID ? crypto.randomUUID() :
       require('crypto').randomUUID();

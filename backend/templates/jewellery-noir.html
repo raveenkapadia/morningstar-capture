@@ -253,7 +253,7 @@
     <li><a href="#">Bespoke</a></li>
     <li><a href="#">Watches</a></li>
   </ul>
-  <div class="nav-brand">Your Brand</div>
+  <div class="nav-brand">{{BRAND_NAME}}</div>
   <ul class="nav-right">
     <li><a href="#">Heritage</a></li>
     <li><a href="#">Stores</a></li>
@@ -267,9 +267,9 @@
     <img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=1600&q=90" alt="">
   </div>
   <div class="hero-content">
-    <p class="hero-season">Fine Jewellery · Handcrafted Since 1998</p>
-    <h1 class="hero-title">Worn<br>by the<br><em>Fearless.</em></h1>
-    <p class="hero-tagline">Each piece carries a story. Handcrafted in 18-karat gold, set with ethically sourced stones. For those who choose significance over trend.</p>
+    <p class="hero-season">{{BRAND_TAGLINE}}</p>
+    <h1 class="hero-title">{{HERO_HEADING}}</h1>
+    <p class="hero-tagline">{{HERO_SUB}}</p>
     <div class="hero-actions">
       <a href="#" class="btn-gold">Explore Collections</a>
       <a href="#" class="btn-ghost">Book Private View</a>
@@ -304,25 +304,25 @@
 </div>
 
 <!-- PRODUCTS -->
-<section class="section alt">
+<section class="section alt" data-ms-hide-if-empty="products">
   <div class="section-label fade-up">The Collection</div>
   <h2 class="section-title fade-up" style="margin-bottom:52px">Signature <em>Pieces</em></h2>
   <div class="product-grid">
     <div class="product-card fade-up">
       <div class="product-img"><img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">View Piece</button></div></div>
-      <div class="product-info"><div class="product-tag">Necklace</div><div class="product-name">Noir Solitaire</div><div class="product-material">18K White Gold · Black Diamond</div><div class="product-price">AED 18,500</div></div>
+      <div class="product-info"><div class="product-tag">Necklace</div><div class="product-name">{{PRODUCT_1}}</div><div class="product-material">18K White Gold · Black Diamond</div><div class="product-price">AED 18,500</div></div>
     </div>
     <div class="product-card fade-up stagger-1">
       <div class="product-img"><img src="https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">View Piece</button></div></div>
-      <div class="product-info"><div class="product-tag">Ring</div><div class="product-name">Eternal Arc</div><div class="product-material">18K Yellow Gold · Sapphire</div><div class="product-price">AED 12,200</div></div>
+      <div class="product-info"><div class="product-tag">Ring</div><div class="product-name">{{PRODUCT_2}}</div><div class="product-material">18K Yellow Gold · Sapphire</div><div class="product-price">AED 12,200</div></div>
     </div>
     <div class="product-card fade-up stagger-2">
       <div class="product-img"><img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">View Piece</button></div></div>
-      <div class="product-info"><div class="product-tag">Earrings</div><div class="product-name">Shadow Drop</div><div class="product-material">18K Rose Gold · Onyx</div><div class="product-price">AED 8,900</div></div>
+      <div class="product-info"><div class="product-tag">Earrings</div><div class="product-name">{{PRODUCT_3}}</div><div class="product-material">18K Rose Gold · Onyx</div><div class="product-price">AED 8,900</div></div>
     </div>
     <div class="product-card fade-up">
       <div class="product-img"><img src="https://images.unsplash.com/photo-1603974372039-adc49044b6bd?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">View Piece</button></div></div>
-      <div class="product-info"><div class="product-tag">Bracelet</div><div class="product-name">Pavé Noir</div><div class="product-material">18K Gold · Black Diamonds</div><div class="product-price">AED 24,000</div></div>
+      <div class="product-info"><div class="product-tag">Bracelet</div><div class="product-name">{{PRODUCT_4}}</div><div class="product-material">18K Gold · Black Diamonds</div><div class="product-price">AED 24,000</div></div>
     </div>
     <div class="product-card fade-up stagger-1">
       <div class="product-img"><img src="https://images.unsplash.com/photo-1576022162533-4e38d14c4b5c?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">View Piece</button></div></div>
@@ -413,7 +413,7 @@
 <footer>
   <div class="footer-grid">
     <div>
-      <div class="footer-logo">Your Brand</div>
+      <div class="footer-logo">{{BRAND_NAME}}</div>
       <p class="footer-brand-desc">Fine jewellery and timepieces handcrafted in Dubai since 1998. Each piece made to last a lifetime — and longer.</p>
       <div class="footer-social">
         <a href="#" class="social-link">𝕏</a>
@@ -447,15 +447,15 @@
     <div>
       <div class="footer-col-title">Visit Us</div>
       <ul class="footer-contact-list">
-        <li class="contact-item"><span class="contact-icon">📍</span><span class="contact-text">Dubai Mall, Gold Souk Level<br>Dubai, UAE</span></li>
-        <li class="contact-item"><span class="contact-icon">📞</span><span class="contact-text"><a href="tel:+97144000000">+971 4 400 0000</a></span></li>
-        <li class="contact-item"><span class="contact-icon">✉️</span><span class="contact-text"><a href="/cdn-cgi/l/email-protection#3747455e41564352774e58424555455659531954585a"><span class="__cf_email__" data-cfemail="2252504b54435647625b4d57504050434c460c414d4f">[email&#160;protected]</span></a></span></li>
+        <li class="contact-item"><span class="contact-icon">📍</span><span class="contact-text">{{BRAND_ADDRESS}}</span></li>
+        <li class="contact-item"><span class="contact-icon">📞</span><span class="contact-text"><a href="tel:{{BRAND_PHONE}}">{{BRAND_PHONE}}</a></span></li>
+        <li class="contact-item"><span class="contact-icon">✉️</span><span class="contact-text"><a href="mailto:{{BRAND_EMAIL}}">{{BRAND_EMAIL}}</a></span></li>
         <li class="contact-item"><span class="contact-icon">🕐</span><span class="contact-text">By Appointment: Daily<br>Walk-In: 10am–10pm</span></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <div class="footer-legal">© 2026 Your Brand Jewellery. All rights reserved.</div>
+    <div class="footer-legal">© 2026 {{BRAND_NAME}}. All rights reserved.</div>
     <div class="footer-legal-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Authentication Policy</a><a href="#">Accessibility</a></div>
     <div class="footer-powered">Preview by MorningStar.ai</div>
   </div>

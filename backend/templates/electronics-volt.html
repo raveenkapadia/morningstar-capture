@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Electronics Redesign Preview — Volt</title>
+<title>Electronics Redesign Preview — {{BRAND_NAME}}</title>
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Exo+2:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
@@ -289,7 +289,7 @@
 <div class="expiry">⚡ Preview expires: <strong id="countdown">6d 23h 41m</strong> // Limited stock — No restock</div>
 
 <nav>
-  <div class="nav-brand">Your<span>VOLT</span></div>
+  <div class="nav-brand">{{BRAND_NAME}}</div>
   <ul class="nav-links">
     <li><a href="#">Laptops</a></li>
     <li><a href="#">Peripherals</a></li>
@@ -311,8 +311,8 @@
       <span class="hs-divider"></span>
       <span class="hs-stock">23 units remaining</span>
     </div>
-    <h1 class="hero-title">FRAME<br><span class="volt">RATE</span><br><span class="dim">GODS.</span></h1>
-    <p class="hero-tagline">The Apex X1 doesn't ask what you play. It asks what you haven't been able to play yet. 280Hz. RTX 5090. 7.6ms response. Built for one thing: winning.</p>
+    <h1 class="hero-title">{{HERO_HEADING}}</h1>
+    <p class="hero-tagline">{{HERO_SUB}}</p>
     <div class="hero-specs">
       <div class="hs-spec"><span class="hss-icon">🖥️</span><div><div class="hss-text">Display</div><div class="hss-val">280Hz OLED</div></div></div>
       <div class="hs-spec"><span class="hss-icon">⚡</span><div><div class="hss-text">GPU</div><div class="hss-val">RTX 5090</div></div></div>
@@ -359,22 +359,22 @@
   <div class="pb fade-up stagger-3"><div class="pb-num">0%</div><div class="pb-label">24-Month EMI</div></div>
 </div>
 
-<section class="section alt">
+<section class="section alt" data-ms-hide-if-empty="products">
   <div class="section-header fade-up">
     <div><div class="s-label">The Arsenal</div><h2 class="s-title">CHOOSE YOUR<br><span class="volt">WEAPON.</span></h2></div>
     <a href="#" class="btn-volt">All Products</a>
   </div>
   <div class="product-grid">
-    <div class="product-card fade-up"><div class="pc-img"><img src="https://images.unsplash.com/photo-1593640408182-31c228b2a5fa?w=600&q=85" alt=""><span class="pc-badge">New</span></div><div class="pc-info"><div class="pc-cat">// Gaming Laptop</div><div class="pc-name">APEX X1</div><div class="pc-tagline">The pro-tier gaming beast</div><div class="pc-specs"><span class="pcs">RTX 5090</span><span class="pcs">280Hz</span><span class="pcs">64GB</span><span class="pcs">4TB</span></div><div class="pc-bottom"><span class="pc-price">AED 12,999</span><button class="pc-buy">Buy Now</button></div></div></div>
-    <div class="product-card fade-up stagger-1"><div class="pc-img"><img src="https://images.unsplash.com/photo-1587202372616-b43abea06c2a?w=600&q=85" alt=""></div><div class="pc-info"><div class="pc-cat">// Gaming Chair</div><div class="pc-name">THRONE PRO</div><div class="pc-tagline">Built for 12-hour sessions</div><div class="pc-specs"><span class="pcs">4D Armrests</span><span class="pcs">Lumbar</span><span class="pcs">Recline 165°</span></div><div class="pc-bottom"><span class="pc-price">AED 2,299</span><button class="pc-buy">Buy Now</button></div></div></div>
-    <div class="product-card fade-up stagger-2"><div class="pc-img"><img src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=600&q=85" alt=""><span class="pc-badge">Hot</span></div><div class="pc-info"><div class="pc-cat">// Headset</div><div class="pc-name">SOUNDSTRIKE X</div><div class="pc-tagline">7.1 surround · 40hr battery</div><div class="pc-specs"><span class="pcs">7.1 Surround</span><span class="pcs">40hr</span><span class="pcs">ANC</span></div><div class="pc-bottom"><span class="pc-price">AED 899</span><button class="pc-buy">Buy Now</button></div></div></div>
+    <div class="product-card fade-up"><div class="pc-img"><img src="https://images.unsplash.com/photo-1593640408182-31c228b2a5fa?w=600&q=85" alt=""><span class="pc-badge">New</span></div><div class="pc-info"><div class="pc-cat">// Gaming Laptop</div><div class="pc-name">{{PRODUCT_1}}</div><div class="pc-tagline">The pro-tier gaming beast</div><div class="pc-specs"><span class="pcs">RTX 5090</span><span class="pcs">280Hz</span><span class="pcs">64GB</span><span class="pcs">4TB</span></div><div class="pc-bottom"><span class="pc-price">AED 12,999</span><button class="pc-buy">Buy Now</button></div></div></div>
+    <div class="product-card fade-up stagger-1"><div class="pc-img"><img src="https://images.unsplash.com/photo-1587202372616-b43abea06c2a?w=600&q=85" alt=""></div><div class="pc-info"><div class="pc-cat">// Gaming Chair</div><div class="pc-name">{{PRODUCT_2}}</div><div class="pc-tagline">Built for 12-hour sessions</div><div class="pc-specs"><span class="pcs">4D Armrests</span><span class="pcs">Lumbar</span><span class="pcs">Recline 165°</span></div><div class="pc-bottom"><span class="pc-price">AED 2,299</span><button class="pc-buy">Buy Now</button></div></div></div>
+    <div class="product-card fade-up stagger-2"><div class="pc-img"><img src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=600&q=85" alt=""><span class="pc-badge">Hot</span></div><div class="pc-info"><div class="pc-cat">// Headset</div><div class="pc-name">{{PRODUCT_3}}</div><div class="pc-tagline">7.1 surround · 40hr battery</div><div class="pc-specs"><span class="pcs">7.1 Surround</span><span class="pcs">40hr</span><span class="pcs">ANC</span></div><div class="pc-bottom"><span class="pc-price">AED 899</span><button class="pc-buy">Buy Now</button></div></div></div>
   </div>
 </section>
 
 <div class="feature-split">
   <div class="fs-visual"><img src="https://images.unsplash.com/photo-1593640408182-31c228b2a5fa?w=700&q=85" alt=""></div>
   <div class="fs-content fade-up">
-    <div class="fs-label">// Featured // Apex X1</div>
+    <div class="fs-label">// Featured // {{PRODUCT_4}}</div>
     <h2 class="fs-title">THE APEX.<br><span>NOTHING</span><br>CLOSE.</h2>
     <p class="fs-desc">Every component selected for one outcome: maximum competitive performance. The RTX 5090 paired with DDR5 memory delivers frame rates that make every other machine feel like it's standing still.</p>
     <div class="spec-grid">
@@ -408,7 +408,7 @@
   </div>
   <div class="comp-wrap fade-up">
     <table class="comp-table">
-      <thead><tr><th>Spec</th><th>Apex X1</th><th class="highlight">Apex X1 Pro</th><th>Apex Pro Max</th></tr></thead>
+      <thead><tr><th>Spec</th><th>{{PRODUCT_1}}</th><th class="highlight">{{PRODUCT_4}}</th><th>Apex Pro Max</th></tr></thead>
       <tbody>
         <tr><td>GPU</td><td>RTX 5080</td><td class="highlight">RTX 5090</td><td>RTX 5090 Ti</td></tr>
         <tr><td>Display</td><td>165Hz IPS</td><td class="highlight">280Hz OLED</td><td>360Hz OLED</td></tr>
@@ -427,7 +427,7 @@
   <div class="banner-content fade-up">
     <div class="b-label">// Limited Offer</div>
     <h2 class="b-title">BUNDLE.<br><span>SAVE.</span><br>DOMINATE.</h2>
-    <p class="b-desc">Apex X1 Pro + Throne Chair + SoundStrike X headset. Full setup, AED 4,200 less than buying separately. Stock limited to 15 bundles.</p>
+    <p class="b-desc">{{PRODUCT_4}} + {{PRODUCT_2}} + {{PRODUCT_3}} headset. Full setup, AED 4,200 less than buying separately. Stock limited to 15 bundles.</p>
     <a href="#" class="btn-volt">Shop the Bundle →</a>
   </div>
   <div class="banner-visual"><img src="https://images.unsplash.com/photo-1593640408182-31c228b2a5fa?w=600&q=85" alt=""></div>
@@ -456,8 +456,8 @@
 <footer>
   <div class="footer-grid">
     <div>
-      <div class="footer-logo">Your<span>VOLT</span></div>
-      <p class="footer-desc">UAE's specialist gaming hardware retailer. Authorised reseller. Free delivery. 2-year warranty on every build.</p>
+      <div class="footer-logo">{{BRAND_NAME}}</div>
+      <p class="footer-desc">{{BRAND_TAGLINE}}</p>
       <div class="footer-social"><a href="#" class="social-link">📷</a><a href="#" class="social-link">𝕏</a><a href="#" class="social-link">▶</a><a href="#" class="social-link">💬</a></div>
     </div>
     <div>
@@ -471,22 +471,22 @@
     <div>
       <div class="footer-col-title">// Find Us</div>
       <ul class="footer-contact">
-        <li class="contact-item"><span class="ci-icon">📍</span><span class="ci-text">Dubai Silicon Oasis<br>Tech Hub, Dubai</span></li>
-        <li class="contact-item"><span class="ci-icon">📞</span><span class="ci-text"><a href="tel:+97144000000">+971 4 400 0000</a></span></li>
-        <li class="contact-item"><span class="ci-icon">💬</span><span class="ci-text"><a href="#">Discord & WhatsApp</a></span></li>
+        <li class="contact-item"><span class="ci-icon">📍</span><span class="ci-text">{{BRAND_ADDRESS}}</span></li>
+        <li class="contact-item"><span class="ci-icon">📞</span><span class="ci-text"><a href="tel:{{BRAND_PHONE}}">{{BRAND_PHONE}}</a></span></li>
+        <li class="contact-item"><span class="ci-icon">✉️</span><span class="ci-text"><a href="mailto:{{BRAND_EMAIL}}">{{BRAND_EMAIL}}</a></span></li>
         <li class="contact-item"><span class="ci-icon">🕐</span><span class="ci-text">Daily 10am–11pm<br>Online 24/7</span></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <div class="footer-legal">// © 2026 YOURVOLT · All specs verified · UAE authorised</div>
+    <div class="footer-legal">// © 2026 {{BRAND_NAME}} · All specs verified · UAE authorised</div>
     <div class="footer-legal-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Warranty</a><a href="#">Returns</a></div>
     <div class="footer-powered">Preview by MorningStar.ai</div>
   </div>
 </footer>
 
 <div class="sticky-cta">
-  <div class="sticky-label">// APEX X1 PRO — 23 units left // Delivering 24hrs</div>
+  <div class="sticky-label">// {{PRODUCT_4}} — 23 units left // Delivering 24hrs</div>
   <div class="sticky-buttons">
     <button class="s-specs">Full Specs</button>
     <button class="s-shop">Buy Now — AED 12,999 ⚡</button>

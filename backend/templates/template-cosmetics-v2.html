@@ -227,7 +227,7 @@
 <div class="expiry">⏰ Preview expires in: <strong id="countdown">6d 23h 41m</strong> &nbsp;·&nbsp; Designed exclusively for your brand</div>
 
 <nav>
-  <div class="nav-brand">Your Brand</div>
+  <div class="nav-brand">{{BRAND_NAME}}</div>
   <ul class="nav-links">
     <li><a href="#">Skincare</a></li>
     <li><a href="#">Body</a></li>
@@ -240,9 +240,9 @@
 <!-- HERO — SPLIT WITH INSTANT PROOF -->
 <section class="hero">
   <div class="hero-left">
-    <div class="hero-badge">Conscious Beauty · UAE</div>
-    <h1 class="hero-title">Skin That<br><em>Speaks.</em></h1>
-    <p class="hero-tagline">Science-led skincare rooted in nature. Formulated for every skin tone, every climate. No compromise.</p>
+    <div class="hero-badge">{{BRAND_TAGLINE}}</div>
+    <h1 class="hero-title">{{HERO_HEADING}}</h1>
+    <p class="hero-tagline">{{HERO_SUB}}</p>
     <div class="hero-actions">
       <a href="#" class="btn-pale-hero">Shop the Ritual</a>
       <a href="#" class="btn-ghost-hero">Our Ingredients</a>
@@ -284,7 +284,7 @@
 </div>
 
 <!-- PRODUCTS -->
-<section class="section">
+<section class="section" data-ms-hide-if-empty="products">
   <div class="section-header fade-up">
     <p class="section-label">The Collection</p>
     <h2 class="section-title">Formulated for<br><em>Every Ritual</em></h2>
@@ -293,19 +293,19 @@
   <div class="product-grid">
     <div class="product-card fade-up">
       <div class="product-img"><img src="https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=500&q=85" alt=""><div class="product-overlay"><button class="po-btn">Add to Bag</button></div></div>
-      <div class="product-name">Luminous Serum</div>
+      <div class="product-name">{{PRODUCT_1}}</div>
       <div class="product-type">Vitamin C · 30ml</div>
       <div class="product-price">AED 285</div>
     </div>
     <div class="product-card fade-up">
       <div class="product-img"><img src="https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=500&q=85" alt=""><div class="product-overlay"><button class="po-btn">Add to Bag</button></div></div>
-      <div class="product-name">Hydra Barrier Cream</div>
+      <div class="product-name">{{PRODUCT_2}}</div>
       <div class="product-type">Peptide Complex · 50ml</div>
       <div class="product-price">AED 340</div>
     </div>
     <div class="product-card fade-up">
       <div class="product-img"><img src="https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=500&q=85" alt=""><div class="product-overlay"><button class="po-btn">Add to Bag</button></div></div>
-      <div class="product-name">Renewal Night Oil</div>
+      <div class="product-name">{{PRODUCT_3}}</div>
       <div class="product-type">Retinol Blend · 30ml</div>
       <div class="product-price">AED 420</div>
     </div>
@@ -366,7 +366,7 @@
 <footer>
   <div class="footer-grid">
     <div>
-      <div class="footer-logo">Your Brand</div>
+      <div class="footer-logo">{{BRAND_NAME}}</div>
       <p class="footer-brand-desc">Conscious beauty formulated for the modern woman. Science-led, nature-rooted. Proudly made in UAE.</p>
       <div class="footer-certifications">
         <span class="cert-badge">Cruelty Free</span>
@@ -400,15 +400,15 @@
     <div>
       <div class="footer-col-title">Contact</div>
       <ul class="footer-contact-list">
-        <li class="contact-item"><span class="contact-icon">📍</span><span class="contact-text">Level 1, Dubai Design District<br>Dubai, UAE</span></li>
-        <li class="contact-item"><span class="contact-icon">📞</span><span class="contact-text"><a href="tel:+97144000000">+971 4 400 0000</a></span></li>
-        <li class="contact-item"><span class="contact-icon">✉️</span><span class="contact-text"><a href="/cdn-cgi/l/email-protection#91f9f4fdfdfed1e8fee4e3f3e3f0fff5bff2fefc"><span class="__cf_email__" data-cfemail="2149444d4d4e61584e54534353404f450f424e4c">[email&#160;protected]</span></a></span></li>
+        <li class="contact-item"><span class="contact-icon">📍</span><span class="contact-text">{{BRAND_ADDRESS}}</span></li>
+        <li class="contact-item"><span class="contact-icon">📞</span><span class="contact-text"><a href="tel:{{BRAND_PHONE}}">{{BRAND_PHONE}}</a></span></li>
+        <li class="contact-item"><span class="contact-icon">✉️</span><span class="contact-text"><a href="mailto:{{BRAND_EMAIL}}">{{BRAND_EMAIL}}</a></span></li>
         <li class="contact-item"><span class="contact-icon">🕐</span><span class="contact-text">Mon–Sat: 9am–9pm<br>Sun: 12pm–6pm</span></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <div class="footer-legal">© 2026 Your Brand. All rights reserved.</div>
+    <div class="footer-legal">© 2026 {{BRAND_NAME}}. All rights reserved.</div>
     <div class="footer-legal-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a><a href="#">Accessibility</a></div>
     <div class="footer-powered">Preview by MorningStar.ai</div>
   </div>

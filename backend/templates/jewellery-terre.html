@@ -240,7 +240,7 @@
 <div class="expiry">⏰ Preview expires in: <strong id="countdown">6d 23h 41m</strong> &nbsp;·&nbsp; Crafted exclusively for your brand</div>
 
 <nav>
-  <div class="nav-brand">Your Brand</div>
+  <div class="nav-brand">{{BRAND_NAME}}</div>
   <ul class="nav-links">
     <li><a href="#">Collections</a></li>
     <li><a href="#">Bespoke</a></li>
@@ -253,9 +253,9 @@
 <section class="hero">
   <div class="hero-bg"><img src="https://images.unsplash.com/photo-1573408301185-9519f94f4e12?w=1600&q=90" alt=""></div>
   <div class="hero-content">
-    <p class="hero-season">Bridal & Fine Jewellery · Handcrafted in Rose Gold</p>
-    <h1 class="hero-title">Jewellery<br>that tells<br><em>your story.</em></h1>
-    <p class="hero-tagline">Rose gold and warm stones. Pieces made with warmth, worn with meaning. Designed for life's most luminous moments.</p>
+    <p class="hero-season">{{BRAND_TAGLINE}}</p>
+    <h1 class="hero-title">{{HERO_HEADING}}</h1>
+    <p class="hero-tagline">{{HERO_SUB}}</p>
     <div class="hero-actions">
       <a href="#" class="btn-rose">Explore Bridal</a>
       <a href="#" class="btn-ghost">Our Collections</a>
@@ -282,12 +282,12 @@
   </div>
 </section>
 
-<section class="section alt">
+<section class="section alt" data-ms-hide-if-empty="products">
   <div class="product-grid">
-    <div class="product-card fade-up"><div class="product-img"><img src="https://images.unsplash.com/photo-1603974372039-adc49044b6bd?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">View Piece</button></div></div><div class="product-tag">Engagement</div><div class="product-name">Rosé Solitaire</div><div class="product-material">18K Rose Gold · Round Brilliant</div><div class="product-price">AED 22,000</div></div>
-    <div class="product-card fade-up stagger-1"><div class="product-img"><img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">View Piece</button></div></div><div class="product-tag">Necklace</div><div class="product-name">Blush Pendant</div><div class="product-material">18K Rose Gold · Pink Tourmaline</div><div class="product-price">AED 9,800</div></div>
-    <div class="product-card fade-up stagger-2"><div class="product-img"><img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">View Piece</button></div></div><div class="product-tag">Earrings</div><div class="product-name">Petal Drop</div><div class="product-material">18K Rose Gold · Morganite</div><div class="product-price">AED 7,400</div></div>
-    <div class="product-card fade-up"><div class="product-img"><img src="https://images.unsplash.com/photo-1576022162533-4e38d14c4b5c?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">View Piece</button></div></div><div class="product-tag">Bracelet</div><div class="product-name">Warm Pavé</div><div class="product-material">18K Rose Gold · Champagne Diamonds</div><div class="product-price">AED 18,500</div></div>
+    <div class="product-card fade-up"><div class="product-img"><img src="https://images.unsplash.com/photo-1603974372039-adc49044b6bd?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">View Piece</button></div></div><div class="product-tag">Engagement</div><div class="product-name">{{PRODUCT_1}}</div><div class="product-material">18K Rose Gold · Round Brilliant</div><div class="product-price">AED 22,000</div></div>
+    <div class="product-card fade-up stagger-1"><div class="product-img"><img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">View Piece</button></div></div><div class="product-tag">Necklace</div><div class="product-name">{{PRODUCT_2}}</div><div class="product-material">18K Rose Gold · Pink Tourmaline</div><div class="product-price">AED 9,800</div></div>
+    <div class="product-card fade-up stagger-2"><div class="product-img"><img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">View Piece</button></div></div><div class="product-tag">Earrings</div><div class="product-name">{{PRODUCT_3}}</div><div class="product-material">18K Rose Gold · Morganite</div><div class="product-price">AED 7,400</div></div>
+    <div class="product-card fade-up"><div class="product-img"><img src="https://images.unsplash.com/photo-1576022162533-4e38d14c4b5c?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">View Piece</button></div></div><div class="product-tag">Bracelet</div><div class="product-name">{{PRODUCT_4}}</div><div class="product-material">18K Rose Gold · Champagne Diamonds</div><div class="product-price">AED 18,500</div></div>
     <div class="product-card fade-up stagger-1"><div class="product-img"><img src="https://images.unsplash.com/photo-1508057198894-247b23fe5ade?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">View Piece</button></div></div><div class="product-tag">Watch</div><div class="product-name">La Belle</div><div class="product-material">Rose Gold · Diamond Dial</div><div class="product-price">AED 96,000</div></div>
     <div class="product-card fade-up stagger-2"><div class="product-img"><img src="https://images.unsplash.com/photo-1613063022498-c90db543d7f6?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">View Piece</button></div></div><div class="product-tag">Ring</div><div class="product-name">Floral Halo</div><div class="product-material">18K Rose Gold · Ruby Centre</div><div class="product-price">AED 14,200</div></div>
   </div>
@@ -362,7 +362,7 @@
 <footer>
   <div class="footer-grid">
     <div>
-      <div class="footer-logo">Your Brand</div>
+      <div class="footer-logo">{{BRAND_NAME}}</div>
       <p class="footer-brand-desc">Fine jewellery in rose gold and warm stones. For life's most luminous moments.</p>
       <div class="footer-social">
         <a href="#" class="social-link">𝕏</a>
@@ -382,15 +382,15 @@
     <div>
       <div class="footer-col-title">Visit Us</div>
       <ul class="footer-contact-list">
-        <li class="contact-item"><span class="contact-icon">📍</span><span class="contact-text">Jumeirah Road, Dubai<br>UAE</span></li>
-        <li class="contact-item"><span class="contact-icon">📞</span><span class="contact-text"><a href="tel:+97144000000">+971 4 400 0000</a></span></li>
-        <li class="contact-item"><span class="contact-icon">✉️</span><span class="contact-text"><a href="/cdn-cgi/l/email-protection#2149444d4d4e61584e54534353404f450f424e4c"><span class="__cf_email__" data-cfemail="6008050c0c0f20190f15120212010e044e030f0d">[email&#160;protected]</span></a></span></li>
+        <li class="contact-item"><span class="contact-icon">📍</span><span class="contact-text">{{BRAND_ADDRESS}}</span></li>
+        <li class="contact-item"><span class="contact-icon">📞</span><span class="contact-text"><a href="tel:{{BRAND_PHONE}}">{{BRAND_PHONE}}</a></span></li>
+        <li class="contact-item"><span class="contact-icon">✉️</span><span class="contact-text"><a href="mailto:{{BRAND_EMAIL}}">{{BRAND_EMAIL}}</a></span></li>
         <li class="contact-item"><span class="contact-icon">🕐</span><span class="contact-text">Sat–Thu: 10am–9pm<br>Fri: 2pm–9pm</span></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <div class="footer-legal">© 2026 Your Brand Jewellery. All rights reserved.</div>
+    <div class="footer-legal">© 2026 {{BRAND_NAME}}. All rights reserved.</div>
     <div class="footer-legal-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Returns Policy</a><a href="#">Accessibility</a></div>
     <div class="footer-powered">Preview by MorningStar.ai</div>
   </div>
@@ -411,7 +411,7 @@
   <button class="switcher-btn" onclick="document.getElementById('sm').classList.toggle('open')">🎨</button>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 const obs=new IntersectionObserver(e=>e.forEach(i=>{if(i.isIntersecting)i.target.classList.add('visible')}),{threshold:.1});
 document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
 function tick

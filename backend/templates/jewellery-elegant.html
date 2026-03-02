@@ -251,7 +251,7 @@
 <!-- 2. NAV -->
 <nav>
   <ul class="nav-left"><li><a href="#">Collections</a></li><li><a href="#">Fine Jewellery</a></li><li><a href="#">Watches</a></li></ul>
-  <div class="nav-brand">Your Brand</div>
+  <div class="nav-brand">{{BRAND_NAME}}</div>
   <ul class="nav-right"><li><a href="#">About</a></li><li><a href="#">Boutiques</a></li><li><button class="nav-btn">Boutique Book</button></li></ul>
 </nav>
 
@@ -260,9 +260,9 @@
   <div class="hero-bg"><img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=1400&q=90" alt=""></div>
   <div class="hero-content">
     <div class="hero-left">
-      <p class="hero-season">High Jewellery · 2026 Collection</p>
-      <h1 class="hero-title">Crafted<br>for the<br><em>Eternal.</em></h1>
-      <p class="hero-tagline">Each piece a testament to master craftsmanship. Designed to be worn for generations and admired forever.</p>
+      <p class="hero-season">{{BRAND_TAGLINE}}</p>
+      <h1 class="hero-title">{{HERO_HEADING}}</h1>
+      <p class="hero-tagline">{{HERO_SUB}}</p>
       <div class="hero-actions">
         <a href="#" class="btn-gold">Explore Collection</a>
         <a href="#" class="btn-ghost-gold">Book Private Viewing</a>
@@ -301,15 +301,15 @@
 </div>
 
 <!-- 7. PRODUCTS -->
-<section class="products-section">
+<section class="products-section" data-ms-hide-if-empty="products">
   <div class="section-header fade-up">
     <div><p class="section-label">The Collection</p><h2 class="section-title">Most Coveted<br><em>Pieces</em></h2></div>
     <a href="#" class="view-all">View All</a>
   </div>
   <div class="products-grid">
-    <div class="product-card fade-up"><div class="product-img"><img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=500&q=85" alt=""><div class="product-img-overlay"><button class="pio-btn">View Details</button></div></div><div class="product-name">Étoile Diamond Ring</div><div class="product-material">18k White Gold · 2.1ct</div><div class="product-price">AED 42,000</div></div>
-    <div class="product-card fade-up"><div class="product-img"><img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=500&q=85" alt=""><div class="product-img-overlay"><button class="pio-btn">View Details</button></div></div><div class="product-name">Lumière Necklace</div><div class="product-material">18k Yellow Gold · Emerald</div><div class="product-price">AED 68,500</div></div>
-    <div class="product-card fade-up"><div class="product-img"><img src="https://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=500&q=85" alt=""><div class="product-img-overlay"><button class="pio-btn">View Details</button></div></div><div class="product-name">Soleil Bracelet</div><div class="product-material">Platinum · Diamond Pavé</div><div class="product-price">AED 54,000</div></div>
+    <div class="product-card fade-up"><div class="product-img"><img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=500&q=85" alt=""><div class="product-img-overlay"><button class="pio-btn">View Details</button></div></div><div class="product-name">{{PRODUCT_1}}</div><div class="product-material">18k White Gold · 2.1ct</div><div class="product-price">AED 42,000</div></div>
+    <div class="product-card fade-up"><div class="product-img"><img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=500&q=85" alt=""><div class="product-img-overlay"><button class="pio-btn">View Details</button></div></div><div class="product-name">{{PRODUCT_2}}</div><div class="product-material">18k Yellow Gold · Emerald</div><div class="product-price">AED 68,500</div></div>
+    <div class="product-card fade-up"><div class="product-img"><img src="https://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=500&q=85" alt=""><div class="product-img-overlay"><button class="pio-btn">View Details</button></div></div><div class="product-name">{{PRODUCT_3}}</div><div class="product-material">Platinum · Diamond Pavé</div><div class="product-price">AED 54,000</div></div>
   </div>
 </section>
 
@@ -375,8 +375,8 @@
 <footer>
   <div class="footer-grid">
     <div>
-      <div class="footer-logo">Your Brand</div>
-      <div class="footer-tagline">High Jewellery · Est. 1987</div>
+      <div class="footer-logo">{{BRAND_NAME}}</div>
+      <div class="footer-tagline">{{BRAND_TAGLINE}}</div>
       <p class="footer-desc">Masters of fine jewellery and haute horlogerie. Crafted in our Dubai atelier with stones sourced from the world's finest mines.</p>
       <div class="footer-social"><a href="#" class="social-link">𝕏</a><a href="#" class="social-link">in</a><a href="#" class="social-link">📷</a><a href="#" class="social-link">▶</a></div>
       <div class="footer-cert"><span class="cert-item">GIA Certified</span><span class="cert-item">RJC Member</span><span class="cert-item">Kimberley Process</span></div>
@@ -392,15 +392,15 @@
     <div>
       <div class="footer-col-title">Visit Us</div>
       <ul class="footer-contact">
-        <li class="fc-item"><span class="fc-icon">📍</span><span class="fc-text">Dubai Mall, Level 1<br>Fashion Avenue, Dubai, UAE</span></li>
-        <li class="fc-item"><span class="fc-icon">📞</span><span class="fc-text"><a href="tel:+97144000000">+971 4 400 0000</a></span></li>
-        <li class="fc-item"><span class="fc-icon">✉️</span><span class="fc-text"><a href="#"><span class="__cf_email__" data-cfemail="abc3cec7c7c4ebd2c4ded9c9d9cac5cf85c8c4c6">[email&#160;protected]</span></a></span></li>
+        <li class="fc-item"><span class="fc-icon">📍</span><span class="fc-text">{{BRAND_ADDRESS}}</span></li>
+        <li class="fc-item"><span class="fc-icon">📞</span><span class="fc-text"><a href="tel:{{BRAND_PHONE}}">{{BRAND_PHONE}}</a></span></li>
+        <li class="fc-item"><span class="fc-icon">✉️</span><span class="fc-text"><a href="mailto:{{BRAND_EMAIL}}">{{BRAND_EMAIL}}</a></span></li>
         <li class="fc-item"><span class="fc-icon">🕐</span><span class="fc-text">Daily: 10am–10pm<br>Private viewings by appt.</span></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <div class="footer-legal">© 2026 Your Brand. All rights reserved.</div>
+    <div class="footer-legal">© 2026 {{BRAND_NAME}}. All rights reserved.</div>
     <div class="footer-legal-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookie Policy</a><a href="#">Accessibility</a></div>
     <div class="footer-powered">Preview by MorningStar.ai</div>
   </div>
@@ -421,7 +421,7 @@
   <button class="switcher-btn" onclick="document.getElementById('sm').classList.toggle('open')">🎨</button>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 const obs=new IntersectionObserver(e=>e.forEach(i=>{if(i.isIntersecting)i.target.classList.add('visible')}),{threshold:.1});
 document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
 function tick(){const df=new Date(Date.now()+7*86

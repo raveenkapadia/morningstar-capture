@@ -250,7 +250,7 @@
 <div class="expiry">⏰ Preview expires in: <strong id="countdown">6d 23h 41m</strong> &nbsp;·&nbsp; Crafted exclusively for your brand</div>
 
 <nav>
-  <div class="nav-brand">Your Brand</div>
+  <div class="nav-brand">{{BRAND_NAME}}</div>
   <ul class="nav-links">
     <li><a href="#">Collections</a></li>
     <li><a href="#">Oud</a></a></li>
@@ -263,9 +263,9 @@
 <section class="hero">
   <div class="hero-bg"><img src="https://images.unsplash.com/photo-1547887538-e3a2f32cb1cc?w=1600&q=90" alt=""></div>
   <div class="hero-content">
-    <div class="hero-badge">Arabian Perfumery · Est. 1982</div>
-    <h1 class="hero-title">Worn by<br>those who<br><em>dare.</em></h1>
-    <p class="hero-tagline">Oud from Cambodia. Rose from Taif. Musk from the heart of the Arabian Peninsula. Fragrances built for depth, for presence, for memory.</p>
+    <div class="hero-badge">{{BRAND_TAGLINE}}</div>
+    <h1 class="hero-title">{{HERO_HEADING}}</h1>
+    <p class="hero-tagline">{{HERO_SUB}}</p>
     <div class="hero-actions">
       <a href="#" class="btn-amber">Explore Collection</a>
       <a href="#" class="btn-ghost">Our Heritage</a>
@@ -290,13 +290,13 @@
   <div class="proof-stat fade-up stagger-3"><div class="ps-num">GCC</div><div class="ps-label">Award Winner</div></div>
 </div>
 
-<section class="section alt">
+<section class="section alt" data-ms-hide-if-empty="products">
   <div class="s-label fade-up" style="margin-bottom:14px">The Collection</div>
   <h2 class="s-title fade-up" style="margin-bottom:52px">Scents of the <em>Ancient World</em></h2>
   <div class="fragrance-grid">
-    <div class="frag-card fade-up"><div class="frag-img"><img src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=600&q=85" alt=""><div class="frag-overlay"><button class="fo-btn">Discover</button></div></div><div class="frag-info"><div class="frag-family">Oud Oriental</div><div class="frag-name">Cambodian Night</div><div class="frag-notes">Oud · Rose · Amber · Saffron</div><div class="frag-size-price"><div class="frag-sizes"><span class="frag-size">30ml</span><span class="frag-size">50ml</span><span class="frag-size">100ml</span></div><div class="frag-price">AED 450</div></div></div></div>
-    <div class="frag-card fade-up stagger-1"><div class="frag-img"><img src="https://images.unsplash.com/photo-1541643600914-78b084683702?w=600&q=85" alt=""><div class="frag-overlay"><button class="fo-btn">Discover</button></div></div><div class="frag-info"><div class="frag-family">Floral Musk</div><div class="frag-name">Taif Rosé</div><div class="frag-notes">Rose · White Musk · Sandalwood</div><div class="frag-size-price"><div class="frag-sizes"><span class="frag-size">30ml</span><span class="frag-size">75ml</span></div><div class="frag-price">AED 320</div></div></div></div>
-    <div class="frag-card fade-up stagger-2"><div class="frag-img"><img src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=600&q=85" alt=""><div class="frag-overlay"><button class="fo-btn">Discover</button></div></div><div class="frag-info"><div class="frag-family">Amber Woody</div><div class="frag-name">Desert Smoke</div><div class="frag-notes">Amber · Incense · Patchouli · Musk</div><div class="frag-size-price"><div class="frag-sizes"><span class="frag-size">50ml</span><span class="frag-size">100ml</span></div><div class="frag-price">AED 380</div></div></div></div>
+    <div class="frag-card fade-up"><div class="frag-img"><img src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=600&q=85" alt=""><div class="frag-overlay"><button class="fo-btn">Discover</button></div></div><div class="frag-info"><div class="frag-family">Oud Oriental</div><div class="frag-name">{{PRODUCT_1}}</div><div class="frag-notes">Oud · Rose · Amber · Saffron</div><div class="frag-size-price"><div class="frag-sizes"><span class="frag-size">30ml</span><span class="frag-size">50ml</span><span class="frag-size">100ml</span></div><div class="frag-price">AED 450</div></div></div></div>
+    <div class="frag-card fade-up stagger-1"><div class="frag-img"><img src="https://images.unsplash.com/photo-1541643600914-78b084683702?w=600&q=85" alt=""><div class="frag-overlay"><button class="fo-btn">Discover</button></div></div><div class="frag-info"><div class="frag-family">Floral Musk</div><div class="frag-name">{{PRODUCT_2}}</div><div class="frag-notes">Rose · White Musk · Sandalwood</div><div class="frag-size-price"><div class="frag-sizes"><span class="frag-size">30ml</span><span class="frag-size">75ml</span></div><div class="frag-price">AED 320</div></div></div></div>
+    <div class="frag-card fade-up stagger-2"><div class="frag-img"><img src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=600&q=85" alt=""><div class="frag-overlay"><button class="fo-btn">Discover</button></div></div><div class="frag-info"><div class="frag-family">Amber Woody</div><div class="frag-name">{{PRODUCT_3}}</div><div class="frag-notes">Amber · Incense · Patchouli · Musk</div><div class="frag-size-price"><div class="frag-sizes"><span class="frag-size">50ml</span><span class="frag-size">100ml</span></div><div class="frag-price">AED 380</div></div></div></div>
   </div>
 </section>
 
@@ -372,7 +372,7 @@
 <footer>
   <div class="footer-grid">
     <div>
-      <div class="footer-logo">Your Brand</div>
+      <div class="footer-logo">{{BRAND_NAME}}</div>
       <p class="footer-brand-desc">Arabian perfumery rooted in 40 years of tradition. Oud, rose, and the rarest raw materials — crafted into scents that last a lifetime.</p>
       <div class="footer-social">
         <a href="#" class="social-link">𝕏</a>
@@ -392,15 +392,15 @@
     <div>
       <div class="footer-col-title">Visit Us</div>
       <ul class="footer-contact-list">
-        <li class="contact-item"><span class="contact-icon">📍</span><span class="contact-text">Gold Souk, Deira<br>Dubai, UAE</span></li>
-        <li class="contact-item"><span class="contact-icon">📞</span><span class="contact-text"><a href="tel:+97144000000">+971 4 400 0000</a></span></li>
-        <li class="contact-item"><span class="contact-icon">✉️</span><span class="contact-text"><a href="/cdn-cgi/l/email-protection#563722223724162f39232434243738327835393b"><span class="__cf_email__" data-cfemail="7f1e0b0b1e0d3f06100a0d1d0d1e111b511c1012">[email&#160;protected]</span></a></span></li>
+        <li class="contact-item"><span class="contact-icon">📍</span><span class="contact-text">{{BRAND_ADDRESS}}</span></li>
+        <li class="contact-item"><span class="contact-icon">📞</span><span class="contact-text"><a href="tel:{{BRAND_PHONE}}">{{BRAND_PHONE}}</a></span></li>
+        <li class="contact-item"><span class="contact-icon">✉️</span><span class="contact-text"><a href="mailto:{{BRAND_EMAIL}}">{{BRAND_EMAIL}}</a></span></li>
         <li class="contact-item"><span class="contact-icon">🕐</span><span class="contact-text">Sat–Thu: 9am–11pm<br>Fri: 2pm–11pm</span></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <div class="footer-legal">© 2026 Your Brand Perfumes. All rights reserved.</div>
+    <div class="footer-legal">© 2026 {{BRAND_NAME}}. All rights reserved.</div>
     <div class="footer-legal-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Returns</a><a href="#">Accessibility</a></div>
     <div class="footer-powered">Preview by MorningStar.ai</div>
   </div>

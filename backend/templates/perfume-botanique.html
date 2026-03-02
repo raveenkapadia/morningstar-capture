@@ -149,7 +149,7 @@ amp(28px,3.5vw,50px);font-weight:400;color:var(--ink);line-height:1.1;margin-bot
 <div class="expiry">⏰ Preview expires in: <strong id="countdown">6d 23h 41m</strong> &nbsp;·&nbsp; Designed exclusively for your brand</div>
 
 <nav>
-  <div class="nav-brand">Your Brand</div>
+  <div class="nav-brand">{{BRAND_NAME}}</div>
   <ul class="nav-links">
     <li><a href="#">Collections</a></li>
     <li><a href="#">Ingredients</a></li>
@@ -164,9 +164,9 @@ amp(28px,3.5vw,50px);font-weight:400;color:var(--ink);line-height:1.1;margin-bot
     <img src="https://images.unsplash.com/photo-1516802273409-68526ee1bdd6?w=900&q=85" alt="">
   </div>
   <div class="hero-right">
-    <div class="hero-badge">Natural · Transparent · Botanical</div>
-    <h1 class="hero-title">From the<br>garden.<br><em>To your skin.</em></h1>
-    <p class="hero-tagline">Fragrance rooted in nature. Every ingredient traceable. Every bottle refillable. Beauty that doesn't cost the earth — literally.</p>
+    <div class="hero-badge">{{BRAND_TAGLINE}}</div>
+    <h1 class="hero-title">{{HERO_HEADING}}</h1>
+    <p class="hero-tagline">{{HERO_SUB}}</p>
     <div class="hero-actions">
       <a href="#" class="btn-sage">Shop Collection</a>
       <a href="#" class="btn-ghost">Our Ingredients</a>
@@ -196,13 +196,13 @@ amp(28px,3.5vw,50px);font-weight:400;color:var(--ink);line-height:1.1;margin-bot
   <div class="pi fade-up stagger-3"><div class="pi-num">♻️</div><div class="pi-label">Refillable Bottles</div></div>
 </div>
 
-<section class="section alt">
+<section class="section alt" data-ms-hide-if-empty="products">
   <div class="s-label fade-up" style="margin-bottom:14px">The Collection</div>
   <h2 class="s-title fade-up" style="margin-bottom:52px">Grown in <em>Nature</em></h2>
   <div class="product-grid">
-    <div class="product-card fade-up"><div class="product-img"><img src="https://images.unsplash.com/photo-1541643600914-78b084683702?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">Discover</button></div></div><div class="product-family">Floral</div><div class="product-name">Garden Rose</div><div class="product-notes">Rose · Peony · White Musk · Vetiver</div><div class="product-row"><span class="product-vol">50ml · 100ml</span><span class="product-price">AED 295</span></div></div>
-    <div class="product-card fade-up stagger-1"><div class="product-img"><img src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">Discover</button></div></div><div class="product-family">Woody</div><div class="product-name">Forest Cedar</div><div class="product-notes">Cedarwood · Oakmoss · Bergamot</div><div class="product-row"><span class="product-vol">50ml · 100ml</span><span class="product-price">AED 320</span></div></div>
-    <div class="product-card fade-up stagger-2"><div class="product-img"><img src="https://images.unsplash.com/photo-1512207846876-bb54ef5056fe?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">Discover</button></div></div><div class="product-family">Citrus</div><div class="product-name">White Tea & Neroli</div><div class="product-notes">White Tea · Neroli · Green Accord</div><div class="product-row"><span class="product-vol">50ml · 100ml</span><span class="product-price">AED 275</span></div></div>
+    <div class="product-card fade-up"><div class="product-img"><img src="https://images.unsplash.com/photo-1541643600914-78b084683702?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">Discover</button></div></div><div class="product-family">Floral</div><div class="product-name">{{PRODUCT_1}}</div><div class="product-notes">Rose · Peony · White Musk · Vetiver</div><div class="product-row"><span class="product-vol">50ml · 100ml</span><span class="product-price">AED 295</span></div></div>
+    <div class="product-card fade-up stagger-1"><div class="product-img"><img src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">Discover</button></div></div><div class="product-family">Woody</div><div class="product-name">{{PRODUCT_2}}</div><div class="product-notes">Cedarwood · Oakmoss · Bergamot</div><div class="product-row"><span class="product-vol">50ml · 100ml</span><span class="product-price">AED 320</span></div></div>
+    <div class="product-card fade-up stagger-2"><div class="product-img"><img src="https://images.unsplash.com/photo-1512207846876-bb54ef5056fe?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">Discover</button></div></div><div class="product-family">Citrus</div><div class="product-name">{{PRODUCT_3}}</div><div class="product-notes">White Tea · Neroli · Green Accord</div><div class="product-row"><span class="product-vol">50ml · 100ml</span><span class="product-price">AED 275</span></div></div>
   </div>
 </section>
 
@@ -290,7 +290,7 @@ amp(28px,3.5vw,50px);font-weight:400;color:var(--ink);line-height:1.1;margin-bot
 <footer>
   <div class="footer-grid">
     <div>
-      <div class="footer-logo">Your Brand</div>
+      <div class="footer-logo">{{BRAND_NAME}}</div>
       <p class="footer-brand-desc">Natural fragrance rooted in transparency. Every ingredient traceable. Every bottle refillable.</p>
       <div class="footer-badges">
         <span class="fb">100% Natural</span>
@@ -310,15 +310,15 @@ amp(28px,3.5vw,50px);font-weight:400;color:var(--ink);line-height:1.1;margin-bot
     <div>
       <div class="footer-col-title">Visit Us</div>
       <ul class="footer-contact-list">
-        <li class="contact-item"><span class="contact-icon">📍</span><span class="contact-text">Alserkal Avenue<br>Al Quoz, Dubai, UAE</span></li>
-        <li class="contact-item"><span class="contact-icon">📞</span><span class="contact-text"><a href="tel:+97144000000">+971 4 400 0000</a></span></li>
-        <li class="contact-item"><span class="contact-icon">✉️</span><span class="contact-text"><a href="mailto:hello@yourbrand.com">hello@yourbrand.com</a></span></li>
+        <li class="contact-item"><span class="contact-icon">📍</span><span class="contact-text">{{BRAND_ADDRESS}}</span></li>
+        <li class="contact-item"><span class="contact-icon">📞</span><span class="contact-text"><a href="tel:{{BRAND_PHONE}}">{{BRAND_PHONE}}</a></span></li>
+        <li class="contact-item"><span class="contact-icon">✉️</span><span class="contact-text"><a href="mailto:{{BRAND_EMAIL}}">{{BRAND_EMAIL}}</a></span></li>
         <li class="contact-item"><span class="contact-icon">🕐</span><span class="contact-text">Mon–Sat: 10am–9pm<br>Sun: 12pm–7pm</span></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <div class="footer-legal">© 2026 Your Brand Botanicals. All rights reserved.</div>
+    <div class="footer-legal">© 2026 {{BRAND_NAME}}. All rights reserved.</div>
     <div class="footer-legal-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Sustainability Policy</a><a href="#">Accessibility</a></div>
     <div class="footer-powered">Preview by MorningStar.ai</div>
   </div>

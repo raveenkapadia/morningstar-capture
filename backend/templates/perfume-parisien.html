@@ -244,7 +244,7 @@
     <li><a href="#">Eaux de Parfum</a></li>
     <li><a href="#">Bespoke</a></li>
   </ul>
-  <div class="nav-brand">Your Brand</div>
+  <div class="nav-brand">{{BRAND_NAME}}</div>
   <ul class="nav-right">
     <li><a href="#">Maison</a></li>
     <li><a href="#">Stores</a></li>
@@ -255,9 +255,9 @@
 <section class="hero">
   <div class="hero-bg"><img src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=1600&q=90" alt=""></div>
   <div class="hero-content">
-    <p class="hero-maison">Maison de Parfum · Paris × Dubai</p>
-    <h1 class="hero-title">The scent<br>of<br><em>Paris.</em></h1>
-    <p class="hero-tagline">White florals. Crisp aldehydes. The memory of a morning on the Seine. French perfumery made for a world that never stops moving.</p>
+    <p class="hero-maison">{{BRAND_TAGLINE}}</p>
+    <h1 class="hero-title">{{HERO_HEADING}}</h1>
+    <p class="hero-tagline">{{HERO_SUB}}</p>
     <div class="hero-actions">
       <a href="#" class="btn-gold">Explore Collection</a>
       <a href="#" class="btn-ghost">Our Maison</a>
@@ -282,13 +282,13 @@
   <div class="proof-item fade-up stagger-3"><div class="pi-num">🇫🇷</div><div class="pi-label">Grasse Sourced</div></div>
 </div>
 
-<section class="section alt">
+<section class="section alt" data-ms-hide-if-empty="products">
   <div class="s-label fade-up" style="margin-bottom:14px">La Collection</div>
   <h2 class="s-title fade-up" style="margin-bottom:52px">Scents of <em>Pure Elegance</em></h2>
   <div class="fragrance-grid">
-    <div class="frag-card fade-up"><div class="frag-img"><img src="https://images.unsplash.com/photo-1541643600914-78b084683702?w=600&q=85" alt=""><div class="frag-overlay"><button class="fo-btn">Discover</button></div></div><div class="frag-concentration">Eau de Parfum</div><div class="frag-name">Blanc de Rose</div><div class="frag-notes-text">Rose · Jasmine · White Musk · Vetiver</div><div class="frag-bottom"><span class="frag-size">50ml · 100ml</span><span class="frag-price">AED 380</span></div></div>
-    <div class="frag-card fade-up stagger-1"><div class="frag-img"><img src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=600&q=85" alt=""><div class="frag-overlay"><button class="fo-btn">Discover</button></div></div><div class="frag-concentration">Extrait de Parfum</div><div class="frag-name">Nuit Aldéhydée</div><div class="frag-notes-text">Aldehydes · Iris · Sandalwood · Amber</div><div class="frag-bottom"><span class="frag-size">30ml · 50ml</span><span class="frag-price">AED 520</span></div></div>
-    <div class="frag-card fade-up stagger-2"><div class="frag-img"><img src="https://images.unsplash.com/photo-1512207846876-bb54ef5056fe?w=600&q=85" alt=""><div class="frag-overlay"><button class="fo-btn">Discover</button></div></div><div class="frag-concentration">Eau de Parfum</div><div class="frag-name">Lumière Dorée</div><div class="frag-notes-text">Ylang-Ylang · Neroli · Vanilla · Musk</div><div class="frag-bottom"><span class="frag-size">75ml · 150ml</span><span class="frag-price">AED 440</span></div></div>
+    <div class="frag-card fade-up"><div class="frag-img"><img src="https://images.unsplash.com/photo-1541643600914-78b084683702?w=600&q=85" alt=""><div class="frag-overlay"><button class="fo-btn">Discover</button></div></div><div class="frag-concentration">Eau de Parfum</div><div class="frag-name">{{PRODUCT_1}}</div><div class="frag-notes-text">Rose · Jasmine · White Musk · Vetiver</div><div class="frag-bottom"><span class="frag-size">50ml · 100ml</span><span class="frag-price">AED 380</span></div></div>
+    <div class="frag-card fade-up stagger-1"><div class="frag-img"><img src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=600&q=85" alt=""><div class="frag-overlay"><button class="fo-btn">Discover</button></div></div><div class="frag-concentration">Extrait de Parfum</div><div class="frag-name">{{PRODUCT_2}}</div><div class="frag-notes-text">Aldehydes · Iris · Sandalwood · Amber</div><div class="frag-bottom"><span class="frag-size">30ml · 50ml</span><span class="frag-price">AED 520</span></div></div>
+    <div class="frag-card fade-up stagger-2"><div class="frag-img"><img src="https://images.unsplash.com/photo-1512207846876-bb54ef5056fe?w=600&q=85" alt=""><div class="frag-overlay"><button class="fo-btn">Discover</button></div></div><div class="frag-concentration">Eau de Parfum</div><div class="frag-name">{{PRODUCT_3}}</div><div class="frag-notes-text">Ylang-Ylang · Neroli · Vanilla · Musk</div><div class="frag-bottom"><span class="frag-size">75ml · 150ml</span><span class="frag-price">AED 440</span></div></div>
   </div>
 </section>
 
@@ -360,7 +360,7 @@
 <footer>
   <div class="footer-grid">
     <div>
-      <div class="footer-logo">Your Brand</div>
+      <div class="footer-logo">{{BRAND_NAME}}</div>
       <p class="footer-brand-desc">French perfumery crafted in Grasse. Worn in Dubai. Remembered everywhere.</p>
       <div class="footer-social">
         <a href="#" class="social-link">𝕏</a>
@@ -380,15 +380,15 @@
     <div>
       <div class="footer-col-title">Visit Us</div>
       <ul class="footer-contact-list">
-        <li class="contact-item"><span class="contact-icon">📍</span><span class="contact-text">Galleria Mall, Al Wasl<br>Dubai, UAE</span></li>
-        <li class="contact-item"><span class="contact-icon">📞</span><span class="contact-text"><a href="tel:+97144000000">+971 4 400 0000</a></span></li>
-        <li class="contact-item"><span class="contact-icon">✉️</span><span class="contact-text"><a href="/cdn-cgi/l/email-protection#3d505c544e52537d4452484f5f4f5c5359135e5250"><span class="__cf_email__" data-cfemail="781519110b17163801170d0a1a0a19161c561b1715">[email&#160;protected]</span></a></span></li>
+        <li class="contact-item"><span class="contact-icon">📍</span><span class="contact-text">{{BRAND_ADDRESS}}</span></li>
+        <li class="contact-item"><span class="contact-icon">📞</span><span class="contact-text"><a href="tel:{{BRAND_PHONE}}">{{BRAND_PHONE}}</a></span></li>
+        <li class="contact-item"><span class="contact-icon">✉️</span><span class="contact-text"><a href="mailto:{{BRAND_EMAIL}}">{{BRAND_EMAIL}}</a></span></li>
         <li class="contact-item"><span class="contact-icon">🕐</span><span class="contact-text">Mon–Sat: 10am–10pm<br>Sun: 12pm–8pm</span></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <div class="footer-legal">© 2026 Your Brand Maison. All rights reserved.</div>
+    <div class="footer-legal">© 2026 {{BRAND_NAME}}. All rights reserved.</div>
     <div class="footer-legal-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Returns</a><a href="#">Accessibility</a></div>
     <div class="footer-powered">Preview by MorningStar.ai</div>
   </div>

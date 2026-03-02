@@ -262,7 +262,7 @@
 <div class="expiry">⏰ Preview expires in: <strong id="countdown">6d 23h 41m</strong> &nbsp;·&nbsp; Exclusive redesign for your business</div>
 
 <nav>
-  <div class="nav-brand">Your Brand</div>
+  <div class="nav-brand">{{BRAND_NAME}}</div>
   <ul class="nav-links">
     <li><a href="#">Services</a></li>
     <li><a href="#">Results</a></li>
@@ -270,7 +270,7 @@
     <li><a href="#">Contact</a></li>
   </ul>
   <div class="nav-actions">
-    <a href="tel:+97144000000" class="nav-tel">+971 4 400 0000</a>
+    <a href="tel:{{BRAND_PHONE}}" class="nav-tel">{{BRAND_PHONE}}</a>
     <button class="nav-cta">Get Free Consultation</button>
   </div>
 </nav>
@@ -280,10 +280,10 @@
   <div class="hero-left">
     <div class="hero-eyebrow">
       <span class="eyebrow-dot"></span>
-      <span class="eyebrow-text">Currently accepting new clients</span>
+      <span class="eyebrow-text">{{BRAND_TAGLINE}}</span>
     </div>
-    <h1 class="hero-title">Results you<br>can measure.<br><span>Growth you</span><br>can see.</h1>
-    <p class="hero-sub">Trusted by 200+ businesses across the UAE. We deliver strategies that work — backed by data, driven by outcomes.</p>
+    <h1 class="hero-title">{{HERO_HEADING}}</h1>
+    <p class="hero-sub">{{HERO_SUB}}</p>
     <div class="hero-cta-group">
       <div class="hero-cta-row">
         <a href="#" class="btn-primary">Get Free Consultation →</a>
@@ -329,7 +329,7 @@
 </div>
 
 <!-- SERVICES -->
-<section class="section">
+<section class="section" data-ms-hide-if-empty="products">
   <div class="section-header-row fade-up">
     <div>
       <div class="section-eyebrow">What We Do</div>
@@ -338,10 +338,10 @@
     <a href="#" class="btn-primary">View All Services</a>
   </div>
   <div class="services-grid">
-    <div class="service-card fade-up"><div class="sc-num">01</div><div class="sc-icon">📊</div><div class="sc-title">Strategy & Consulting</div><div class="sc-desc">Market entry, growth planning, and competitive positioning for businesses ready to scale in the UAE and wider GCC region.</div><a href="#" class="sc-link">Learn more →</a></div>
-    <div class="service-card fade-up stagger-1"><div class="sc-num">02</div><div class="sc-icon">⚡</div><div class="sc-title">Digital Transformation</div><div class="sc-desc">End-to-end digital solutions that modernise your operations and create measurable efficiency improvements across every department.</div><a href="#" class="sc-link">Learn more →</a></div>
-    <div class="service-card fade-up stagger-2"><div class="sc-num">03</div><div class="sc-icon">🎯</div><div class="sc-title">Growth Marketing</div><div class="sc-desc">Data-driven campaigns that generate qualified leads, build brand authority, and deliver trackable return on every dirham invested.</div><a href="#" class="sc-link">Learn more →</a></div>
-    <div class="service-card fade-up"><div class="sc-num">04</div><div class="sc-icon">💼</div><div class="sc-title">Financial Advisory</div><div class="sc-desc">Expert guidance on company formation, funding structures, and financial planning for sustainable long-term growth.</div><a href="#" class="sc-link">Learn more →</a></div>
+    <div class="service-card fade-up"><div class="sc-num">01</div><div class="sc-icon">📊</div><div class="sc-title">{{PRODUCT_1}}</div><div class="sc-desc">Market entry, growth planning, and competitive positioning for businesses ready to scale in the UAE and wider GCC region.</div><a href="#" class="sc-link">Learn more →</a></div>
+    <div class="service-card fade-up stagger-1"><div class="sc-num">02</div><div class="sc-icon">⚡</div><div class="sc-title">{{PRODUCT_2}}</div><div class="sc-desc">End-to-end digital solutions that modernise your operations and create measurable efficiency improvements across every department.</div><a href="#" class="sc-link">Learn more →</a></div>
+    <div class="service-card fade-up stagger-2"><div class="sc-num">03</div><div class="sc-icon">🎯</div><div class="sc-title">{{PRODUCT_3}}</div><div class="sc-desc">Data-driven campaigns that generate qualified leads, build brand authority, and deliver trackable return on every dirham invested.</div><a href="#" class="sc-link">Learn more →</a></div>
+    <div class="service-card fade-up"><div class="sc-num">04</div><div class="sc-icon">💼</div><div class="sc-title">{{PRODUCT_4}}</div><div class="sc-desc">Expert guidance on company formation, funding structures, and financial planning for sustainable long-term growth.</div><a href="#" class="sc-link">Learn more →</a></div>
     <div class="service-card fade-up stagger-1"><div class="sc-num">05</div><div class="sc-icon">🌐</div><div class="sc-title">Market Expansion</div><div class="sc-desc">GCC market intelligence, partnership networks, and local expertise to accelerate your expansion across the region.</div><a href="#" class="sc-link">Learn more →</a></div>
     <div class="service-card fade-up stagger-2"><div class="sc-num">06</div><div class="sc-icon">🛡️</div><div class="sc-title">Risk & Compliance</div><div class="sc-desc">Regulatory compliance, risk assessment, and governance frameworks that protect your business as it grows.</div><a href="#" class="sc-link">Learn more →</a></div>
   </div>
@@ -459,7 +459,7 @@
 <footer>
   <div class="footer-grid">
     <div>
-      <div class="footer-logo">Your Brand</div>
+      <div class="footer-logo">{{BRAND_NAME}}</div>
       <p class="footer-desc">Business strategy and growth consulting for UAE and GCC companies. Results-driven, data-backed, and always accountable.</p>
       <div class="footer-social">
         <a href="#" class="social-link">in</a>
@@ -497,16 +497,16 @@
     <div>
       <div class="footer-col-title">Contact</div>
       <ul class="footer-contact">
-        <li class="contact-item"><span class="contact-icon">📍</span><span class="contact-text">Office 2401, Vision Tower<br>Business Bay, Dubai, UAE</span></li>
-        <li class="contact-item"><span class="contact-icon">📞</span><span class="contact-text"><a href="tel:+97144000000">+971 4 400 0000</a></span></li>
+        <li class="contact-item"><span class="contact-icon">📍</span><span class="contact-text">{{BRAND_ADDRESS}}</span></li>
+        <li class="contact-item"><span class="contact-icon">📞</span><span class="contact-text"><a href="tel:{{BRAND_PHONE}}">{{BRAND_PHONE}}</a></span></li>
         <li class="contact-item"><span class="contact-icon">💬</span><span class="contact-text"><a href="#">WhatsApp Us</a></span></li>
-        <li class="contact-item"><span class="contact-icon">✉️</span><span class="contact-text"><a href="/cdn-cgi/l/email-protection#b2dad7dededdf2cbddc7c0d0c0d3dcd69cd1dddf"><span class="__cf_email__" data-cfemail="274f424b4b48675e48525545554649430944484a">[email&#160;protected]</span></a></span></li>
+        <li class="contact-item"><span class="contact-icon">✉️</span><span class="contact-text"><a href="mailto:{{BRAND_EMAIL}}">{{BRAND_EMAIL}}</a></span></li>
         <li class="contact-item"><span class="contact-icon">🕐</span><span class="contact-text">Sun–Thu: 8am–7pm<br>Urgent: 24/7 WhatsApp</span></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <div class="footer-legal">© 2026 Your Brand Consulting. All rights reserved.</div>
+    <div class="footer-legal">© 2026 {{BRAND_NAME}}. All rights reserved.</div>
     <div class="footer-legal-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookie Policy</a><a href="#">Accessibility</a></div>
     <div class="footer-powered">Preview by MorningStar.ai</div>
   </div>
@@ -534,7 +534,7 @@
   <button class="switcher-btn" onclick="document.getElementById('sm').classList.toggle('open')">🎨</button>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 const obs=new IntersectionObserver(e=>e.forEach(i=>{if(i.isIntersecting)i.target.classList.add('visible')}),{threshold:.08});
 document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
 function tick

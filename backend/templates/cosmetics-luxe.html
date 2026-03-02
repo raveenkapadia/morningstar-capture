@@ -269,7 +269,7 @@
 <div class="expiry">✦ Preview expires: <strong id="countdown">6d 23h 41m</strong> — Designed for your brand only</div>
 
 <nav>
-  <div class="nav-brand">Your Brand</div>
+  <div class="nav-brand">{{BRAND_NAME}}</div>
   <ul class="nav-links">
     <li><a href="#">Face</a></li>
     <li><a href="#">Lips</a></li>
@@ -288,16 +288,16 @@
     <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=900&q=90" alt="">
     <div class="hero-product-float">
       <div class="hpf-label">Hero Product</div>
-      <div class="hpf-name">Velvet Noir Lipstick</div>
+      <div class="hpf-name">{{PRODUCT_1}}</div>
       <div class="hpf-price">AED 185 · 36 Shades</div>
       <a href="#" class="hpf-add">Add to Bag →</a>
     </div>
   </div>
   <div class="hero-content">
-    <div class="hero-eyebrow">Luxury Colour Collection</div>
-    <h1 class="hero-title">Wear what<br>the room<br><em>remembers.</em></h1>
+    <div class="hero-eyebrow">{{BRAND_TAGLINE}}</div>
+    <h1 class="hero-title">{{HERO_HEADING}}</h1>
     <div class="hero-rule"></div>
-    <p class="hero-sub">Pigments so precise they never apologise. Formulas that stay as long as the occasion demands. A colour range that understands that beauty is not subtle — it is intentional.</p>
+    <p class="hero-sub">{{HERO_SUB}}</p>
     <p class="hero-sensory">"Like wearing confidence you can see from across the room."</p>
     <div class="hero-actions">
       <a href="#" class="btn-gold">Shop Collection →</a>
@@ -326,15 +326,15 @@
   <div class="pb fade-up stagger-3"><div class="pb-num">GCC</div><div class="pb-label">Award Winner</div></div>
 </div>
 
-<section class="section alt">
+<section class="section alt" data-ms-hide-if-empty="products">
   <div class="section-header fade-up">
     <div><div class="s-eyebrow">The Collection</div><h2 class="s-title">Colour that<br>commands.</h2></div>
     <a href="#" class="btn-gold">All Products</a>
   </div>
   <div class="product-grid">
-    <div class="product-card fade-up"><div class="pc-img"><img src="https://images.unsplash.com/photo-1625093742435-6d63e3a1c9b5?w=500&q=85" alt=""><div class="pc-reveal"><button class="pc-add">Add to Bag</button><div class="pc-shade-row"><div class="pc-shade" style="background:#8B1A1A"></div><div class="pc-shade" style="background:#C4546A"></div><div class="pc-shade" style="background:#B07030"></div><div class="pc-shade" style="background:#3D1A2E"></div></div></div></div><div class="pc-info"><div class="pc-cat">Lips</div><div class="pc-name">Velvet Noir Lipstick</div><div class="pc-tagline">16-hour satin matte · 36 shades</div><div class="pc-price-row"><span class="pc-price">AED 185</span><span class="pc-shades">36 shades</span></div></div></div>
-    <div class="product-card fade-up stagger-1"><div class="pc-img"><img src="https://images.unsplash.com/photo-1599305445671-ac291c6acfea?w=500&q=85" alt=""><div class="pc-reveal"><button class="pc-add">Add to Bag</button></div></div><div class="pc-info"><div class="pc-cat">Eyes</div><div class="pc-name">Midnight Palette</div><div class="pc-tagline">12 buildable shades · Smoky to editorial</div><div class="pc-price-row"><span class="pc-price">AED 320</span><span class="pc-shades">12 shades</span></div></div></div>
-    <div class="product-card fade-up stagger-2"><div class="pc-img"><img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=500&q=85" alt=""><div class="pc-reveal"><button class="pc-add">Add to Bag</button></div></div><div class="pc-info"><div class="pc-cat">Face</div><div class="pc-name">Sérum Éclat Foundation</div><div class="pc-tagline">Skincare-infused · 40 shades · 24H</div><div class="pc-price-row"><span class="pc-price">AED 265</span><span class="pc-shades">40 shades</span></div></div></div>
+    <div class="product-card fade-up"><div class="pc-img"><img src="https://images.unsplash.com/photo-1625093742435-6d63e3a1c9b5?w=500&q=85" alt=""><div class="pc-reveal"><button class="pc-add">Add to Bag</button><div class="pc-shade-row"><div class="pc-shade" style="background:#8B1A1A"></div><div class="pc-shade" style="background:#C4546A"></div><div class="pc-shade" style="background:#B07030"></div><div class="pc-shade" style="background:#3D1A2E"></div></div></div></div><div class="pc-info"><div class="pc-cat">Lips</div><div class="pc-name">{{PRODUCT_2}}</div><div class="pc-tagline">16-hour satin matte · 36 shades</div><div class="pc-price-row"><span class="pc-price">AED 185</span><span class="pc-shades">36 shades</span></div></div></div>
+    <div class="product-card fade-up stagger-1"><div class="pc-img"><img src="https://images.unsplash.com/photo-1599305445671-ac291c6acfea?w=500&q=85" alt=""><div class="pc-reveal"><button class="pc-add">Add to Bag</button></div></div><div class="pc-info"><div class="pc-cat">Eyes</div><div class="pc-name">{{PRODUCT_3}}</div><div class="pc-tagline">12 buildable shades · Smoky to editorial</div><div class="pc-price-row"><span class="pc-price">AED 320</span><span class="pc-shades">12 shades</span></div></div></div>
+    <div class="product-card fade-up stagger-2"><div class="pc-img"><img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=500&q=85" alt=""><div class="pc-reveal"><button class="pc-add">Add to Bag</button></div></div><div class="pc-info"><div class="pc-cat">Face</div><div class="pc-name">{{PRODUCT_4}}</div><div class="pc-tagline">Skincare-infused · 40 shades · 24H</div><div class="pc-price-row"><span class="pc-price">AED 265</span><span class="pc-shades">40 shades</span></div></div></div>
   </div>
 </section>
 
@@ -424,7 +424,7 @@
 <footer>
   <div class="footer-grid">
     <div>
-      <div class="footer-logo">Your Brand</div>
+      <div class="footer-logo">{{BRAND_NAME}}</div>
       <p class="footer-desc">Luxury colour cosmetics for women who dress with intention. GCC Award Winner. Cruelty Free. Free delivery across the UAE.</p>
       <div class="footer-social"><a href="#" class="social-link">📷</a><a href="#" class="social-link">𝕏</a><a href="#" class="social-link">▶</a></div>
     </div>
@@ -439,15 +439,16 @@
     <div>
       <div class="footer-col-title">Contact</div>
       <ul class="footer-contact">
-        <li class="contact-item"><span class="ci-icon">📍</span><span class="ci-text">Dubai Mall, Level 2<br>Downtown Dubai</span></li>
-        <li class="contact-item"><span class="ci-icon">📞</span><span class="ci-text"><a href="tel:+97144000000">+971 4 400 0000</a></span></li>
+        <li class="contact-item"><span class="ci-icon">📍</span><span class="ci-text">{{BRAND_ADDRESS}}</span></li>
+        <li class="contact-item"><span class="ci-icon">📞</span><span class="ci-text"><a href="tel:{{BRAND_PHONE}}">{{BRAND_PHONE}}</a></span></li>
+        <li class="contact-item"><span class="ci-icon">✉</span><span class="ci-text"><a href="mailto:{{BRAND_EMAIL}}">{{BRAND_EMAIL}}</a></span></li>
         <li class="contact-item"><span class="ci-icon">💬</span><span class="ci-text"><a href="#">WhatsApp</a></span></li>
         <li class="contact-item"><span class="ci-icon">🕐</span><span class="ci-text">Daily 10am–10pm</span></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <div class="footer-legal">© 2026 Your Brand. Cruelty Free · GCC Award Winner.</div>
+    <div class="footer-legal">© 2026 {{BRAND_NAME}}. Cruelty Free · GCC Award Winner.</div>
     <div class="footer-legal-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Returns</a><a href="#">Accessibility</a></div>
     <div class="footer-powered">Preview by MorningStar.ai</div>
   </div>

@@ -252,7 +252,7 @@
 <div class="expiry">⏰ Preview expires in: <strong id="countdown">6d 23h 41m</strong> &nbsp;·&nbsp; Designed exclusively for your restaurant</div>
 
 <nav>
-  <div class="nav-brand">Your Restaurant</div>
+  <div class="nav-brand">{{BRAND_NAME}}</div>
   <ul class="nav-links">
     <li><a href="#">Menu</a></li>
     <li><a href="#">Experience</a></li>
@@ -260,7 +260,7 @@
     <li><a href="#">About</a></li>
   </ul>
   <div class="nav-actions">
-    <a href="tel:+97144000000" class="nav-tel">+971 4 400 0000</a>
+    <a href="tel:{{BRAND_PHONE}}" class="nav-tel">{{BRAND_PHONE}}</a>
     <button class="nav-reserve">Reserve a Table</button>
   </div>
 </nav>
@@ -272,9 +272,9 @@
   </div>
   <div class="hero-content">
     <div class="hero-left">
-      <div class="hero-tag">Open Now · Business Bay, Dubai</div>
-      <h1 class="hero-title">Food that stays<br>with you.</h1>
-      <p class="hero-tagline">A dining experience rooted in craft and warmth. Seasonal ingredients, handmade everything, and a kitchen that takes its time so you can take yours.</p>
+      <div class="hero-tag">{{BRAND_TAGLINE}}</div>
+      <h1 class="hero-title">{{HERO_HEADING}}</h1>
+      <p class="hero-tagline">{{HERO_SUB}}</p>
       <div class="hero-actions">
         <a href="#" class="btn-terracotta">Reserve Your Table →</a>
         <a href="#" class="btn-ghost-light">View Today's Menu</a>
@@ -308,21 +308,21 @@
 <div class="info-bar">
   <div class="ib-item fade-up"><span class="ib-icon">🕐</span><div><div class="ib-label">Opening Hours</div><div class="ib-value">12pm – 11pm Daily</div></div></div>
   <div class="ib-item fade-up stagger-1"><span class="ib-icon">📍</span><div><div class="ib-label">Location</div><div class="ib-value">Business Bay, Dubai</div></div></div>
-  <div class="ib-item fade-up stagger-2"><span class="ib-icon">📞</span><div><div class="ib-label">Reservations</div><div class="ib-value">+971 4 400 0000</div></div></div>
+  <div class="ib-item fade-up stagger-2"><span class="ib-icon">📞</span><div><div class="ib-label">Reservations</div><div class="ib-value">{{BRAND_PHONE}}</div></div></div>
   <div class="ib-item fade-up stagger-3"><span class="ib-icon">🏆</span><div><div class="ib-label">Recognition</div><div class="ib-value">Time Out Dubai 2025</div></div></div>
 </div>
 
 <!-- MENU HIGHLIGHTS -->
-<section class="section alt">
+<section class="section alt" data-ms-hide-if-empty="products">
   <div class="section-header fade-up">
     <div><div class="s-label">Today's Highlights</div><h2 class="s-title">Dishes worth<br>coming back for</h2></div>
     <a href="#" class="btn-terracotta">Full Menu</a>
   </div>
   <div class="menu-grid">
-    <div class="menu-card fade-up"><div class="menu-img"><img src="https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?w=500&q=85" alt=""><div class="menu-overlay"></div><button class="menu-add">Add to Order</button></div><div class="menu-info"><div class="menu-cat">Signature</div><div class="menu-name">Slow Braised Lamb</div><div class="menu-desc">48-hour lamb shoulder, pomegranate jus, saffron rice</div><div class="menu-price">AED 145</div></div></div>
-    <div class="menu-card fade-up stagger-1"><div class="menu-img"><img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=500&q=85" alt=""><div class="menu-overlay"></div><button class="menu-add">Add to Order</button></div><div class="menu-info"><div class="menu-cat">From the Grill</div><div class="menu-name">Wagyu Zaatar Burger</div><div class="menu-desc">100g wagyu, labneh, dukkah crust, truffle fries</div><div class="menu-price">AED 98</div></div></div>
-    <div class="menu-card fade-up stagger-2"><div class="menu-img"><img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=500&q=85" alt=""><div class="menu-overlay"></div><button class="menu-add">Add to Order</button></div><div class="menu-info"><div class="menu-cat">Seasonal</div><div class="menu-name">Heritage Grain Bowl</div><div class="menu-desc">Freekeh, roasted squash, preserved lemon, tahini</div><div class="menu-price">AED 72</div></div></div>
-    <div class="menu-card fade-up stagger-3"><div class="menu-img"><img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?w=500&q=85" alt=""><div class="menu-overlay"></div><button class="menu-add">Add to Order</button></div><div class="menu-info"><div class="menu-cat">Dessert</div><div class="menu-name">Knafeh Brûlée</div><div class="menu-desc">Orange blossom custard, shredded pastry, pistachio</div><div class="menu-price">AED 48</div></div></div>
+    <div class="menu-card fade-up"><div class="menu-img"><img src="https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?w=500&q=85" alt=""><div class="menu-overlay"></div><button class="menu-add">Add to Order</button></div><div class="menu-info"><div class="menu-cat">Signature</div><div class="menu-name">{{PRODUCT_1}}</div><div class="menu-desc">48-hour lamb shoulder, pomegranate jus, saffron rice</div><div class="menu-price">AED 145</div></div></div>
+    <div class="menu-card fade-up stagger-1"><div class="menu-img"><img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=500&q=85" alt=""><div class="menu-overlay"></div><button class="menu-add">Add to Order</button></div><div class="menu-info"><div class="menu-cat">From the Grill</div><div class="menu-name">{{PRODUCT_2}}</div><div class="menu-desc">100g wagyu, labneh, dukkah crust, truffle fries</div><div class="menu-price">AED 98</div></div></div>
+    <div class="menu-card fade-up stagger-2"><div class="menu-img"><img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=500&q=85" alt=""><div class="menu-overlay"></div><button class="menu-add">Add to Order</button></div><div class="menu-info"><div class="menu-cat">Seasonal</div><div class="menu-name">{{PRODUCT_3}}</div><div class="menu-desc">Freekeh, roasted squash, preserved lemon, tahini</div><div class="menu-price">AED 72</div></div></div>
+    <div class="menu-card fade-up stagger-3"><div class="menu-img"><img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?w=500&q=85" alt=""><div class="menu-overlay"></div><button class="menu-add">Add to Order</button></div><div class="menu-info"><div class="menu-cat">Dessert</div><div class="menu-name">{{PRODUCT_4}}</div><div class="menu-desc">Orange blossom custard, shredded pastry, pistachio</div><div class="menu-price">AED 48</div></div></div>
   </div>
 </section>
 
@@ -397,7 +397,7 @@
 <footer>
   <div class="footer-grid">
     <div>
-      <div class="footer-logo">Your Restaurant</div>
+      <div class="footer-logo">{{BRAND_NAME}}</div>
       <p class="footer-desc">Contemporary dining rooted in craft and seasonality. Business Bay, Dubai. Open daily from noon.</p>
       <div class="footer-social">
         <a href="#" class="social-link">📷</a>
@@ -416,8 +416,9 @@
     <div>
       <div class="footer-col-title">Find Us</div>
       <ul class="footer-contact">
-        <li class="contact-item"><span class="contact-icon">📍</span><span class="contact-text">Level 1, Bay Square<br>Business Bay, Dubai</span></li>
-        <li class="contact-item"><span class="contact-icon">📞</span><span class="contact-text"><a href="tel:+97144000000">+971 4 400 0000</a></span></li>
+        <li class="contact-item"><span class="contact-icon">📍</span><span class="contact-text">{{BRAND_ADDRESS}}</span></li>
+        <li class="contact-item"><span class="contact-icon">📞</span><span class="contact-text"><a href="tel:{{BRAND_PHONE}}">{{BRAND_PHONE}}</a></span></li>
+        <li class="contact-item"><span class="contact-icon">✉</span><span class="contact-text"><a href="mailto:{{BRAND_EMAIL}}">{{BRAND_EMAIL}}</a></span></li>
         <li class="contact-item"><span class="contact-icon">💬</span><span class="contact-text"><a href="#">WhatsApp Reservations</a></span></li>
         <li class="contact-item"><span class="contact-icon">🕐</span><span class="contact-text">Daily: 12pm – 11pm<br>Fri–Sat: 12pm – 12am</span></li>
         <li class="contact-item"><span class="contact-icon">🚗</span><span class="contact-text">Valet available<br>P1 & P2 self-parking</span></li>
@@ -425,7 +426,7 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <div class="footer-legal">© 2026 Your Restaurant. All rights reserved. Halal Certified.</div>
+    <div class="footer-legal">© 2026 {{BRAND_NAME}}. All rights reserved.</div>
     <div class="footer-legal-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Allergen Info</a><a href="#">Accessibility</a></div>
     <div class="footer-powered">Preview by MorningStar.ai</div>
   </div>

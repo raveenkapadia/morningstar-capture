@@ -774,7 +774,7 @@ async function renderReview(prospectId) {
     const capture = (p.captures || [])[0] || {};
     const preview = (p.previews || []).sort((a,b) => new Date(b.created_at) - new Date(a.created_at))[0] || {};
     const injected = preview.injected_data || {};
-    const colors = capture.color_palette || [];
+    const colors = injected._color_override || capture.color_palette || [];
     const currentSlug = preview.template_slug || '';
 
     // Build template dropdown grouped by vertical

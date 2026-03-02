@@ -237,7 +237,7 @@
     <li><a href="#">Bespoke</a></li>
     <li><a href="#">Watches</a></li>
   </ul>
-  <div class="nav-brand">Your Brand</div>
+  <div class="nav-brand">{{BRAND_NAME}}</div>
   <ul class="nav-right">
     <li><a href="#">Heritage</a></li>
     <li><a href="#">Stores</a></li>
@@ -251,9 +251,9 @@
     <img src="https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?w=900&q=85" alt="">
   </div>
   <div class="hero-right">
-    <div class="hero-badge">Fine Jewellery · Est. 1998</div>
-    <h1 class="hero-title">Precision<br>Cut.<br><em>Perfection</em><br>Set.</h1>
-    <p class="hero-tagline">Jewellery that honours the stone as much as the wearer. White gold, platinum, and the finest colourless diamonds — crafted for those who understand difference.</p>
+    <div class="hero-badge">{{BRAND_TAGLINE}}</div>
+    <h1 class="hero-title">{{HERO_HEADING}}</h1>
+    <p class="hero-tagline">{{HERO_SUB}}</p>
     <div class="hero-actions">
       <a href="#" class="btn-ink">Explore Collection</a>
       <a href="#" class="btn-line">Book Appointment</a>
@@ -271,16 +271,16 @@
 </div>
 
 <!-- PRODUCTS -->
-<section class="section">
+<section class="section" data-ms-hide-if-empty="products">
   <div class="section-header-row fade-up">
     <div><div class="section-label">The Collection</div><h2 class="section-title">Signature <em>Pieces</em></h2></div>
     <a href="#" class="btn-ink" style="align-self:flex-end">View All</a>
   </div>
   <div class="product-grid">
-    <div class="product-card fade-up"><div class="product-img"><img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">View Piece</button></div></div><div class="product-tag">Ring</div><div class="product-name">The Eternal</div><div class="product-material">Platinum · 2ct D–IF Diamond</div><div class="product-price">AED 42,000</div></div>
-    <div class="product-card fade-up stagger-1"><div class="product-img"><img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">View Piece</button></div></div><div class="product-tag">Earrings</div><div class="product-name">Arc Drop</div><div class="product-material">White Gold · Pear Diamonds</div><div class="product-price">AED 18,500</div></div>
-    <div class="product-card fade-up stagger-2"><div class="product-img"><img src="https://images.unsplash.com/photo-1576022162533-4e38d14c4b5c?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">View Piece</button></div></div><div class="product-tag">Necklace</div><div class="product-name">Solitary Light</div><div class="product-material">Platinum · Round Brilliant</div><div class="product-price">AED 28,000</div></div>
-    <div class="product-card fade-up"><div class="product-img"><img src="https://images.unsplash.com/photo-1603974372039-adc49044b6bd?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">View Piece</button></div></div><div class="product-tag">Bracelet</div><div class="product-name">Tennis Classic</div><div class="product-material">White Gold · Round Diamonds</div><div class="product-price">AED 65,000</div></div>
+    <div class="product-card fade-up"><div class="product-img"><img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">View Piece</button></div></div><div class="product-tag">Ring</div><div class="product-name">{{PRODUCT_1}}</div><div class="product-material">Platinum · 2ct D–IF Diamond</div><div class="product-price">AED 42,000</div></div>
+    <div class="product-card fade-up stagger-1"><div class="product-img"><img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">View Piece</button></div></div><div class="product-tag">Earrings</div><div class="product-name">{{PRODUCT_2}}</div><div class="product-material">White Gold · Pear Diamonds</div><div class="product-price">AED 18,500</div></div>
+    <div class="product-card fade-up stagger-2"><div class="product-img"><img src="https://images.unsplash.com/photo-1576022162533-4e38d14c4b5c?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">View Piece</button></div></div><div class="product-tag">Necklace</div><div class="product-name">{{PRODUCT_3}}</div><div class="product-material">Platinum · Round Brilliant</div><div class="product-price">AED 28,000</div></div>
+    <div class="product-card fade-up"><div class="product-img"><img src="https://images.unsplash.com/photo-1603974372039-adc49044b6bd?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">View Piece</button></div></div><div class="product-tag">Bracelet</div><div class="product-name">{{PRODUCT_4}}</div><div class="product-material">White Gold · Round Diamonds</div><div class="product-price">AED 65,000</div></div>
     <div class="product-card fade-up stagger-1"><div class="product-img"><img src="https://images.unsplash.com/photo-1508057198894-247b23fe5ade?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">View Piece</button></div></div><div class="product-tag">Watch</div><div class="product-name">Grand Complication</div><div class="product-material">White Gold · Sapphire Dial</div><div class="product-price">AED 280,000</div></div>
     <div class="product-card fade-up stagger-2"><div class="product-img"><img src="https://images.unsplash.com/photo-1613063022498-c90db543d7f6?w=600&q=85" alt=""><div class="product-overlay"><button class="po-btn">View Piece</button></div></div><div class="product-tag">Ring</div><div class="product-name">Halo Pavé</div><div class="product-material">Platinum · Centre + Halo Diamonds</div><div class="product-price">AED 36,000</div></div>
   </div>
@@ -367,7 +367,7 @@
 <footer>
   <div class="footer-grid">
     <div>
-      <div class="footer-logo">Your Brand</div>
+      <div class="footer-logo">{{BRAND_NAME}}</div>
       <p class="footer-brand-desc">Precision fine jewellery crafted in platinum and white gold. For those who know the difference.</p>
       <div class="footer-social">
         <a href="#" class="social-link">𝕏</a>
@@ -387,15 +387,15 @@
     <div>
       <div class="footer-col-title">Visit Us</div>
       <ul class="footer-contact-list">
-        <li class="contact-item"><span class="contact-icon">📍</span><span class="contact-text">Gate Village, DIFC<br>Dubai, UAE</span></li>
-        <li class="contact-item"><span class="contact-icon">📞</span><span class="contact-text"><a href="tel:+97144000000">+971 4 400 0000</a></span></li>
-        <li class="contact-item"><span class="contact-icon">✉️</span><span class="contact-text"><a href="/cdn-cgi/l/email-protection#eb9b99829d8a9f8eab92849e9989998a858fc5888486"><span class="__cf_email__" data-cfemail="f9898b908f988d9cb980968c8b9b8b98979dd79a9694">[email&#160;protected]</span></a></span></li>
+        <li class="contact-item"><span class="contact-icon">📍</span><span class="contact-text">{{BRAND_ADDRESS}}</span></li>
+        <li class="contact-item"><span class="contact-icon">📞</span><span class="contact-text"><a href="tel:{{BRAND_PHONE}}">{{BRAND_PHONE}}</a></span></li>
+        <li class="contact-item"><span class="contact-icon">✉️</span><span class="contact-text"><a href="mailto:{{BRAND_EMAIL}}">{{BRAND_EMAIL}}</a></span></li>
         <li class="contact-item"><span class="contact-icon">🕐</span><span class="contact-text">Mon–Sat: 10am–8pm<br>Appointments: 7 Days</span></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <div class="footer-legal">© 2026 Your Brand Fine Jewellery. All rights reserved.</div>
+    <div class="footer-legal">© 2026 {{BRAND_NAME}}. All rights reserved.</div>
     <div class="footer-legal-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Authentication</a><a href="#">Accessibility</a></div>
     <div class="footer-powered">Preview by MorningStar.ai</div>
   </div>
