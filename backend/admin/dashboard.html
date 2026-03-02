@@ -768,12 +768,28 @@ async function renderReview(prospectId) {
   try {
     const res = await API.getProspect(prospectId);
     const p = res.data;
+    const templates = res.templates || [];
     STATE.currentProspect = p;
 
     const capture = (p.captures || [])[0] || {};
     const preview = (p.previews || []).sort((a,b) => new Date(b.created_at) - new Date(a.created_at))[0] || {};
     const injected = preview.injected_data || {};
     const colors = capture.color_palette || [];
+    const currentSlug = preview.template_slug || '';
+
+    // Build template dropdown grouped by vertical
+    const verticalLabels = { medical: 'Medical', jewellery: 'Jewellery', perfume: 'Perfume', apparel: 'Apparel', cosmetics: 'Cosmetics', electronics: 'Electronics', restaurant: 'Restaurant / F&B', other: 'Other' };
+    const grouped = {};
+    templates.forEach(t => {
+      const vLabel = verticalLabels[t.vertical] || t.vertical;
+      if (!grouped[vLabel]) grouped[vLabel] = [];
+      grouped[vLabel].push(t);
+    });
+    const templateOptions = Object.entries(grouped).map(([label, tpls]) =>
+      `<optgroup label="${escapeHtml(label)}">${tpls.map(t =>
+        `<option value="${escapeHtml(t.slug)}" ${t.slug === currentSlug ? 'selected' : ''}>${escapeHtml(t.name)}${t.sub_vertical ? ' (' + escapeHtml(t.sub_vertical) + ')' : ''}</option>`
+      ).join('')}</optgroup>`
+    ).join('');
 
     const main = document.getElementById('main-content');
     main.innerHTML = `
@@ -847,6 +863,11 @@ async function renderReview(prospectId) {
             <div class="form-group">
               <label>Business Name</label>
               <input type="text" id="edit-business_name" value="${escapeHtml(p.business_name || '')}">
+            </div>
+            <div class="form-group">
+              <label>Template</label>
+              <select id="edit-template">${templateOptions}</select>
+              ${currentSlug ? `<div style="font-size:11px;color:var(--muted);margin-top:3px">Auto-detected: ${escapeHtml(currentSlug)}</div>` : ''}
             </div>
             <div class="form-group">
               <label>Doctor / Owner Name</label>
@@ -1080,6 +1101,10 @@ function getOverrideData() {
   const c2 = document.getElementById('edit-color2')?.value;
   const c3 = document.getElementById('edit-color3')?.value;
   if (c1) override.colorOverride = [c1, c2, c3].filter(Boolean);
+
+  // Template override
+  const selectedTemplate = document.getElementById('edit-template')?.value;
+  if (selectedTemplate) override.template_override = selectedTemplate;
 
   // Section toggles
   override.sectionToggles = {

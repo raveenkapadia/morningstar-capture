@@ -28,7 +28,16 @@ module.exports = async function handler(req, res) {
         .single();
 
       if (error) return res.status(404).json({ error: 'Prospect not found' });
-      return res.status(200).json({ data });
+
+      // Also fetch all active templates for the template selector dropdown
+      const { data: templates } = await supabase
+        .from('templates')
+        .select('slug, name, vertical, sub_vertical')
+        .eq('is_active', true)
+        .order('vertical')
+        .order('name');
+
+      return res.status(200).json({ data, templates: templates || [] });
     }
 
     // List with optional filters

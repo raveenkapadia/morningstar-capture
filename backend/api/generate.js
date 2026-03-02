@@ -89,32 +89,59 @@ module.exports = async function handler(req, res) {
       .update({ status: 'preview_queued' })
       .eq('id', prospect_id);
 
-    // ── 4. Claude: detect vertical + template ───────────────────────────────
-    console.log(`🤖 Detecting template for: ${prospect.business_name}`);
+    // ── 4. Detect template (auto or manual override) ────────────────────────
+    const templateOverride = override_data?.template_override;
     let detection;
-    try {
-      detection = await detectTemplate(enrichedCapture);
-    } catch (e) {
-      // Fallback to generic if Claude fails
+    let template;
+
+    if (templateOverride) {
+      // Manual template override from dashboard — skip Claude detection
+      console.log(`📌 Manual template override: ${templateOverride}`);
+      const { data: tpl } = await supabase
+        .from('templates')
+        .select('*')
+        .eq('slug', templateOverride)
+        .single();
+
+      if (!tpl) {
+        return res.status(400).json({ error: `Template not found: ${templateOverride}` });
+      }
+      template = tpl;
       detection = {
-        vertical: prospect.vertical || 'other',
-        sub_vertical: prospect.sub_vertical || null,
-        template_slug: 'other-clarity',
-        current_site_quality: 5,
-        reasoning: 'Fallback — Claude detection failed',
-        confidence: 'low',
+        vertical: tpl.vertical,
+        sub_vertical: tpl.sub_vertical,
+        template_slug: tpl.slug,
+        current_site_quality: prospect.website_score || 5,
+        reasoning: 'Manual template override from dashboard',
+        confidence: 'manual',
       };
-    }
+    } else {
+      // Auto-detect via Claude
+      console.log(`🤖 Detecting template for: ${prospect.business_name}`);
+      try {
+        detection = await detectTemplate(enrichedCapture);
+      } catch (e) {
+        detection = {
+          vertical: prospect.vertical || 'other',
+          sub_vertical: prospect.sub_vertical || null,
+          template_slug: 'other-clarity',
+          current_site_quality: 5,
+          reasoning: 'Fallback — Claude detection failed',
+          confidence: 'low',
+        };
+      }
 
-    // ── 5. Fetch template filename from DB ───────────────────────────────────
-    const { data: template } = await supabase
-      .from('templates')
-      .select('*')
-      .eq('slug', detection.template_slug)
-      .single();
+      // ── 5. Fetch template filename from DB ─────────────────────────────────
+      const { data: tpl } = await supabase
+        .from('templates')
+        .select('*')
+        .eq('slug', detection.template_slug)
+        .single();
 
-    if (!template) {
-      return res.status(500).json({ error: `Template not found: ${detection.template_slug}` });
+      if (!tpl) {
+        return res.status(500).json({ error: `Template not found: ${detection.template_slug}` });
+      }
+      template = tpl;
     }
 
     // ── 6. Update capture with analysis ─────────────────────────────────────
@@ -153,7 +180,7 @@ module.exports = async function handler(req, res) {
 
     // ── 8. Merge override_data on top of Claude extraction ──────────────────
     if (override_data && typeof override_data === 'object') {
-      const reserved = ['heroImageOverride', 'logoOverride', 'colorOverride', 'sectionToggles'];
+      const reserved = ['heroImageOverride', 'logoOverride', 'colorOverride', 'sectionToggles', 'template_override'];
       for (const [key, value] of Object.entries(override_data)) {
         if (!reserved.includes(key) && value != null && value !== '') {
           injectedData[key] = value;
