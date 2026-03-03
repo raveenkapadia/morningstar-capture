@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{BRAND_NAME}} — Artisan Chocolates & Cakes</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Nunito+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--brand:#9B6B7D;--brand-lt:#FDF5F7;--brand-mid:#7D5566;--accent:#D4A574;--cream:#FFFBF9;--white:#FFFFFF;--off:#FEF9F6;--ink:#3D2B33;--muted:#9B8F94;--border:#F0E4E8;--rose:#F5E1E6;--blush:#FCEEF2;--radius:16px;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--cream);font-family:'Nunito Sans',sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;}
+button{cursor:pointer;border:none;font-family:'Nunito Sans',sans-serif;}
+a{text-decoration:none;color:inherit;}
+img{max-width:100%;display:block;}
+
+.topbar{background:var(--brand);padding:10px 20px;text-align:center;font-size:12px;color:rgba(255,255,255,.85);letter-spacing:.8px;font-weight:400;}
+.topbar strong{color:var(--accent);font-weight:500;}
+
+nav{height:76px;padding:0 64px;display:flex;align-items:center;justify-content:space-between;background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;}
+.logo{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:500;color:var(--brand);letter-spacing:1px;}
+.nav-links{display:flex;gap:36px;}
+.nav-links a{font-size:12px;color:var(--muted);font-weight:400;letter-spacing:1.5px;text-transform:uppercase;transition:color .2s;}
+.nav-links a:hover{color:var(--brand);}
+.nav-cta{background:var(--brand);color:var(--white);padding:10px 26px;border-radius:100px;font-size:12px;font-weight:500;letter-spacing:.5px;transition:all .2s;}
+.nav-cta:hover{background:var(--brand-mid);transform:translateY(-1px);}
+.menu-toggle{display:none;background:none;font-size:24px;color:var(--ink);padding:8px;}
+
+/* HERO — full width image with overlay text */
+.hero{position:relative;min-height:85vh;display:flex;align-items:center;overflow:hidden;background:var(--blush);}
+.hero-bg{position:absolute;inset:0;width:100%;height:100%;}
+.hero-bg img{width:100%;height:100%;object-fit:cover;}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(253,245,247,.95) 0%,rgba(253,245,247,.7) 50%,transparent 100%);}
+.hero-content{position:relative;z-index:2;padding:80px 64px;max-width:600px;}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;color:var(--brand);font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;margin-bottom:28px;}
+.hero-tag::before{content:'';width:32px;height:1px;background:var(--brand);}
+.hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(40px,5vw,68px);line-height:1.06;color:var(--ink);margin-bottom:24px;font-weight:400;}
+.hero-h1 em{color:var(--brand);font-style:italic;}
+.hero-p{font-size:16px;color:var(--muted);line-height:1.85;max-width:440px;margin-bottom:40px;font-weight:300;}
+.hero-btns{display:flex;gap:16px;flex-wrap:wrap;}
+.btn-brand{background:var(--brand);color:var(--white);padding:15px 34px;border-radius:100px;font-size:13px;font-weight:500;letter-spacing:.3px;transition:all .25s;display:inline-flex;align-items:center;gap:8px;}
+.btn-brand:hover{background:var(--brand-mid);transform:translateY(-2px);box-shadow:0 8px 24px rgba(155,107,125,.2);}
+.btn-outline{background:transparent;border:1.5px solid var(--brand);color:var(--brand);padding:15px 30px;border-radius:100px;font-size:13px;font-weight:500;transition:all .25s;}
+.btn-outline:hover{background:var(--brand);color:var(--white);}
+
+/* TRUST */
+.trust{background:var(--white);padding:22px 64px;display:flex;gap:40px;align-items:center;justify-content:center;flex-wrap:wrap;border-bottom:1px solid var(--border);}
+.trust-item{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--muted);font-weight:400;letter-spacing:.3px;}
+.trust-item svg{width:16px;height:16px;stroke:var(--accent);flex-shrink:0;}
+.trust-sep{width:4px;height:4px;background:var(--rose);border-radius:50%;}
+
+/* SECTION COMMON */
+.sec-label{font-size:11px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:var(--brand);margin-bottom:10px;}
+h2{font-family:'Cormorant Garamond',serif;font-size:clamp(30px,3.5vw,46px);color:var(--ink);line-height:1.12;margin-bottom:16px;font-weight:400;}
+h2 em{color:var(--brand);font-style:italic;}
+
+/* FEATURED PRODUCTS */
+.featured{padding:80px 64px;background:var(--cream);}
+.featured-head{text-align:center;max-width:560px;margin:0 auto 52px;}
+.featured-head p{font-size:14px;color:var(--muted);line-height:1.8;font-weight:300;margin-top:8px;}
+.products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.product-card{background:var(--white);border-radius:20px;overflow:hidden;transition:all .35s;border:1px solid var(--border);}
+.product-card:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(155,107,125,.08);border-color:var(--rose);}
+.product-img{aspect-ratio:4/3;background:linear-gradient(135deg,var(--blush) 0%,var(--rose) 50%,var(--brand-lt) 100%);display:flex;align-items:center;justify-content:center;position:relative;padding:28px;}
+.product-initial{width:72px;height:72px;background:var(--white);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:30px;color:var(--brand);font-weight:500;box-shadow:0 4px 16px rgba(155,107,125,.12);}
+.product-badge{position:absolute;top:14px;right:14px;background:var(--brand);color:var(--white);padding:4px 14px;border-radius:100px;font-size:10px;font-weight:500;letter-spacing:.8px;text-transform:uppercase;}
+.product-info{padding:24px;}
+.product-name{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--ink);margin-bottom:6px;font-weight:500;}
+.product-desc{font-size:12px;color:var(--muted);line-height:1.65;margin-bottom:14px;font-weight:300;}
+.product-cta{font-size:12px;color:var(--brand);font-weight:500;display:inline-flex;align-items:center;gap:6px;letter-spacing:.3px;transition:gap .2s;}
+.product-cta:hover{gap:10px;}
+.product-cta svg{width:14px;height:14px;}
+
+/* STORY */
+.story{padding:80px 64px;background:var(--white);}
+.story-inner{display:grid;grid-template-columns:1.1fr 1fr;gap:80px;align-items:center;}
+.story-visual{border-radius:24px;overflow:hidden;aspect-ratio:3/4;position:relative;}
+.story-visual img{width:100%;height:100%;object-fit:cover;}
+.story-visual-tag{position:absolute;bottom:24px;left:24px;background:rgba(255,255,255,.92);backdrop-filter:blur(6px);padding:10px 18px;border-radius:100px;font-size:11px;color:var(--brand);font-weight:500;letter-spacing:.5px;}
+.story-text p{font-size:15px;color:var(--muted);line-height:1.9;margin-bottom:14px;font-weight:300;}
+.story-features{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:28px;}
+.story-feature{display:flex;align-items:center;gap:12px;font-size:13px;color:var(--ink);font-weight:400;}
+.story-feature-dot{width:8px;height:8px;background:var(--rose);border-radius:50%;flex-shrink:0;}
+
+/* PROCESS */
+.process{padding:80px 64px;background:var(--blush);}
+.process-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:52px;}
+.process-card{background:var(--white);border-radius:24px;padding:40px 28px;text-align:center;border:1px solid var(--border);transition:all .3s;}
+.process-card:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(155,107,125,.06);}
+.process-icon{width:64px;height:64px;background:var(--brand-lt);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;}
+.process-icon svg{width:28px;height:28px;color:var(--brand);}
+.process-title{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--ink);margin-bottom:10px;font-weight:500;}
+.process-desc{font-size:13px;color:var(--muted);line-height:1.7;font-weight:300;}
+
+/* BESTSELLERS */
+.bestsellers{padding:80px 64px;background:var(--cream);}
+
+/* WHY */
+.why{padding:80px 64px;background:var(--white);}
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:52px;}
+.why-card{background:var(--brand-lt);border-radius:20px;padding:36px 28px;border:1px solid transparent;transition:all .3s;text-align:center;}
+.why-card:hover{border-color:var(--rose);transform:translateY(-2px);}
+.why-icon{width:56px;height:56px;background:var(--white);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;box-shadow:0 2px 8px rgba(155,107,125,.08);}
+.why-icon svg{width:24px;height:24px;color:var(--brand);}
+.why-title{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--ink);margin-bottom:8px;font-weight:500;}
+.why-desc{font-size:13px;color:var(--muted);line-height:1.75;font-weight:300;}
+
+/* REVIEWS */
+.reviews{padding:80px 64px;background:var(--blush);}
+.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:52px;}
+.review-card{background:var(--white);border-radius:20px;padding:32px;border:1px solid var(--border);}
+.review-stars{display:flex;gap:3px;margin-bottom:16px;}
+.review-stars svg{width:16px;height:16px;fill:var(--accent);stroke:none;}
+.review-text{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--ink);line-height:1.65;margin-bottom:18px;font-style:italic;font-weight:400;}
+.review-author{font-size:12px;font-weight:600;color:var(--brand);}
+.review-source{font-size:11px;color:var(--muted);}
+
+/* FAQ */
+.faq{padding:80px 64px;background:var(--white);}
+.faq-inner{max-width:700px;margin:0 auto;}
+.faq-list{margin-top:48px;}
+.faq-item{border-bottom:1px solid var(--border);padding:22px 0;}
+.faq-q{display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:500;color:var(--ink);gap:16px;user-select:none;}
+.faq-q svg{width:18px;height:18px;color:var(--muted);flex-shrink:0;transition:transform .3s;}
+.faq-item.open .faq-q svg{transform:rotate(45deg);}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s ease;}
+.faq-item.open .faq-a{max-height:300px;padding-top:14px;}
+.faq-a p{font-size:14px;color:var(--muted);line-height:1.85;font-weight:300;}
+
+/* NEWSLETTER */
+.newsletter{padding:80px 64px;background:var(--brand);text-align:center;}
+.newsletter h2{color:var(--white);font-weight:400;}
+.newsletter p{font-size:15px;color:rgba(255,255,255,.6);max-width:440px;margin:0 auto 32px;line-height:1.8;font-weight:300;}
+.newsletter-form{display:flex;gap:12px;max-width:440px;margin:0 auto;}
+.newsletter-input{flex:1;padding:14px 20px;border:1.5px solid rgba(255,255,255,.2);border-radius:100px;background:rgba(255,255,255,.1);color:var(--white);font-size:14px;font-family:'Nunito Sans',sans-serif;}
+.newsletter-input::placeholder{color:rgba(255,255,255,.35);}
+.newsletter-input:focus{outline:none;border-color:rgba(255,255,255,.5);}
+.newsletter-btn{background:var(--white);color:var(--brand);padding:14px 28px;border-radius:100px;font-size:13px;font-weight:500;transition:all .2s;white-space:nowrap;}
+.newsletter-btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.1);}
+
+/* CTA */
+.cta-section{padding:80px 64px;text-align:center;background:var(--cream);}
+.cta-section p{font-size:16px;color:var(--muted);max-width:480px;margin:0 auto 36px;line-height:1.8;font-weight:300;}
+.cta-buttons{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+
+/* CONTACT */
+.contact{padding:80px 64px;background:var(--white);}
+.contact-inner{display:grid;grid-template-columns:1fr 1fr;gap:64px;}
+.contact-info{display:flex;flex-direction:column;gap:24px;margin-top:32px;}
+.contact-item{display:flex;align-items:flex-start;gap:14px;}
+.contact-item svg{width:20px;height:20px;color:var(--brand);flex-shrink:0;margin-top:2px;}
+.contact-item-text strong{font-size:13px;color:var(--ink);display:block;margin-bottom:2px;font-weight:500;}
+.contact-item-text span{font-size:13px;color:var(--muted);font-weight:300;}
+.contact-form{background:var(--brand-lt);border-radius:24px;padding:40px;border:1px solid var(--border);}
+.contact-form h3{font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--ink);margin-bottom:6px;font-weight:500;}
+.contact-form p{font-size:13px;color:var(--muted);margin-bottom:24px;font-weight:300;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+.form-field{display:flex;flex-direction:column;gap:4px;}
+.form-field label{font-size:11px;font-weight:500;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);}
+.form-field input,.form-field textarea{border:1px solid var(--border);border-radius:12px;padding:12px 16px;font-size:14px;font-family:'Nunito Sans',sans-serif;transition:border-color .2s;background:var(--white);color:var(--ink);}
+.form-field input:focus,.form-field textarea:focus{outline:none;border-color:var(--brand);}
+.form-field textarea{resize:vertical;min-height:80px;}
+.form-submit{width:100%;background:var(--brand);color:var(--white);padding:14px;border-radius:100px;font-size:14px;font-weight:500;margin-top:8px;transition:all .2s;}
+.form-submit:hover{background:var(--brand-mid);}
+
+/* FOOTER */
+footer{background:var(--ink);padding:64px 64px 32px;color:rgba(255,255,255,.5);}
+.footer-top{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px;}
+.footer-brand{font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--white);margin-bottom:12px;font-weight:400;letter-spacing:1px;}
+.footer-desc{font-size:13px;line-height:1.7;max-width:280px;font-weight:300;}
+.footer-heading{font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:18px;}
+.footer-links{display:flex;flex-direction:column;gap:10px;}
+.footer-links a,.footer-links span{font-size:13px;color:rgba(255,255,255,.5);transition:color .2s;font-weight:300;}
+.footer-links a:hover{color:var(--white);}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:24px;display:flex;justify-content:space-between;align-items:center;font-size:12px;}
+.footer-social{display:flex;gap:14px;}
+.footer-social a{width:36px;height:36px;border:1px solid rgba(255,255,255,.12);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.footer-social a:hover{border-color:var(--accent);}
+.footer-social svg{width:16px;height:16px;color:rgba(255,255,255,.5);}
+
+.wa-float{position:fixed;bottom:24px;right:24px;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(37,211,102,.35);z-index:200;transition:transform .2s;}
+.wa-float:hover{transform:scale(1.1);}
+.wa-float svg{width:28px;height:28px;fill:#fff;}
+
+@media(max-width:768px){
+  .topbar{font-size:11px;padding:8px 16px;}
+  nav{padding:0 20px;height:64px;}
+  .nav-links{display:none;}
+  .menu-toggle{display:block;}
+  .hero{min-height:auto;}
+  .hero-bg::after{background:linear-gradient(180deg,rgba(253,245,247,.95) 0%,rgba(253,245,247,.85) 100%);}
+  .hero-content{padding:60px 20px;max-width:100%;text-align:center;}
+  .hero-tag{justify-content:center;}
+  .hero-p{margin:0 auto 32px;text-align:center;}
+  .hero-btns{justify-content:center;}
+  .trust{padding:16px 20px;gap:16px;}
+  .trust-sep{display:none;}
+  .featured,.bestsellers{padding:48px 20px;}
+  .featured-head{text-align:left;}
+  .products-grid{grid-template-columns:1fr;gap:16px;}
+  .story{padding:48px 20px;}
+  .story-inner{grid-template-columns:1fr;gap:32px;}
+  .story-features{grid-template-columns:1fr;}
+  .process{padding:48px 20px;}
+  .process-grid{grid-template-columns:1fr;gap:16px;}
+  .why{padding:48px 20px;}
+  .why-grid{grid-template-columns:1fr;gap:16px;}
+  .reviews{padding:48px 20px;}
+  .reviews-grid{grid-template-columns:1fr;gap:16px;}
+  .faq{padding:48px 20px;}
+  .newsletter{padding:48px 20px;}
+  .newsletter-form{flex-direction:column;}
+  .cta-section{padding:48px 20px;}
+  .contact{padding:48px 20px;}
+  .contact-inner{grid-template-columns:1fr;gap:32px;}
+  .form-row{grid-template-columns:1fr;}
+  footer{padding:40px 20px 24px;}
+  .footer-top{grid-template-columns:1fr 1fr;gap:28px;}
+  h2{font-size:28px;}
+  .btn-brand,.btn-outline{width:100%;text-align:center;justify-content:center;min-height:48px;}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">Crafted with Passion — <strong>Free Delivery Across the UAE</strong></div>
+
+<nav>
+  <a href="#" class="logo">{{BRAND_NAME}}</a>
+  <div class="nav-links"><a href="#products">Collections</a><a href="#story">Our Story</a><a href="#products2">Gift Boxes</a><a href="#contact">Contact</a></div>
+  <div style="display:flex;align-items:center;gap:16px;"><a href="#contact" class="nav-cta">Order Now</a><button class="menu-toggle" aria-label="Menu">&#9776;</button></div>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"><img src="https://images.unsplash.com/photo-1558326567-98ae2405596b?w=1200&q=80" alt="{{BRAND_NAME}}"></div>
+  <div class="hero-content">
+    <div class="hero-tag">{{HERO_BADGE}}</div>
+    <h1 class="hero-h1">{{HERO_HEADING}}</h1>
+    <p class="hero-p">{{HERO_SUB}}</p>
+    <div class="hero-btns"><a href="#products" class="btn-brand"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg> Shop Now</a><a href="#story" class="btn-outline">Our Story</a></div>
+  </div>
+</section>
+
+<div class="trust">
+  <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h5l3 5v5h-4M8 18h9M12 18a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg> Free UAE Delivery</div><div class="trust-sep"></div>
+  <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Freshly Made Daily</div><div class="trust-sep"></div>
+  <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Premium Ingredients</div><div class="trust-sep"></div>
+  <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> Beautiful Gifting</div>
+</div>
+
+<section class="featured" id="products">
+  <div class="featured-head"><div class="sec-label">Signature Collection</div><h2>Crafted with <em>Love</em></h2><p>Each creation is a work of art — handmade daily with the finest ingredients.</p></div>
+  <div class="products-grid">
+    <div class="product-card" data-ms-hide-if-empty="product1"><div class="product-img"><div class="product-initial" data-ms-product-initial="1">C</div></div><div class="product-info"><div class="product-name">{{PRODUCT_1}}</div><div class="product-desc">{{PRODUCT_1_DESC}}</div><a href="#" class="product-cta">View details <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div></div>
+    <div class="product-card" data-ms-hide-if-empty="product2"><div class="product-img"><div class="product-initial" data-ms-product-initial="2">C</div></div><div class="product-info"><div class="product-name">{{PRODUCT_2}}</div><div class="product-desc">{{PRODUCT_2_DESC}}</div><a href="#" class="product-cta">View details <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div></div>
+    <div class="product-card" data-ms-hide-if-empty="product3"><div class="product-img"><div class="product-initial" data-ms-product-initial="3">C</div></div><div class="product-info"><div class="product-name">{{PRODUCT_3}}</div><div class="product-desc">{{PRODUCT_3_DESC}}</div><a href="#" class="product-cta">View details <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div></div>
+  </div>
+</section>
+
+<section class="story" id="story">
+  <div class="story-inner">
+    <div class="story-visual"><img src="https://images.unsplash.com/photo-1486427944544-d2c246c4df4d?w=600&q=80" alt="Our Story"><div class="story-visual-tag">Handmade with Care</div></div>
+    <div>
+      <div class="sec-label">{{ABOUT_LABEL}}</div>
+      <h2>{{ABOUT_HEADING}}</h2>
+      <div class="story-text"><p>{{ABOUT_TEXT}}</p></div>
+      <div class="story-features">
+        <div class="story-feature"><div class="story-feature-dot"></div><span>{{FEATURE_1}}</span></div>
+        <div class="story-feature"><div class="story-feature-dot"></div><span>{{FEATURE_2}}</span></div>
+        <div class="story-feature"><div class="story-feature-dot"></div><span>{{FEATURE_3}}</span></div>
+        <div class="story-feature"><div class="story-feature-dot"></div><span>{{FEATURE_4}}</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="process">
+  <div style="text-align:center;"><div class="sec-label">The Art of Making</div><h2>From Kitchen to <em>Doorstep</em></h2></div>
+  <div class="process-grid">
+    <div class="process-card"><div class="process-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><div class="process-title">We Source</div><div class="process-desc">Premium cocoa, fine butter, and the freshest ingredients — carefully selected from trusted suppliers.</div></div>
+    <div class="process-card"><div class="process-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><div class="process-title">We Handcraft</div><div class="process-desc">Every piece is lovingly made by our artisans in small batches for maximum freshness and quality.</div></div>
+    <div class="process-card"><div class="process-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h5l3 5v5h-4M8 18h9M12 18a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg></div><div class="process-title">We Deliver</div><div class="process-desc">Beautifully packaged and delivered fresh to your doorstep across the UAE within 24 hours.</div></div>
+  </div>
+</section>
+
+<section class="bestsellers" id="products2" data-ms-hide-if-empty="bestsellers">
+  <div class="featured-head"><div class="sec-label">Customer Favourites</div><h2>Most <em>Loved</em></h2><p>The ones our customers come back for again and again.</p></div>
+  <div class="products-grid">
+    <div class="product-card" data-ms-hide-if-empty="product4"><div class="product-img"><div class="product-initial" data-ms-product-initial="4">C</div></div><div class="product-info"><div class="product-name">{{PRODUCT_4}}</div><div class="product-desc">{{PRODUCT_4_DESC}}</div><a href="#" class="product-cta">View details <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div></div>
+    <div class="product-card" data-ms-hide-if-empty="product5"><div class="product-img"><div class="product-initial" data-ms-product-initial="5">C</div></div><div class="product-info"><div class="product-name">{{PRODUCT_5}}</div><div class="product-desc">{{PRODUCT_5_DESC}}</div><a href="#" class="product-cta">View details <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div></div>
+    <div class="product-card" data-ms-hide-if-empty="product6"><div class="product-img"><div class="product-initial" data-ms-product-initial="6">C</div></div><div class="product-info"><div class="product-name">{{PRODUCT_6}}</div><div class="product-desc">{{PRODUCT_6_DESC}}</div><a href="#" class="product-cta">View details <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div></div>
+  </div>
+</section>
+
+<section class="why">
+  <div style="text-align:center;margin-bottom:52px;"><div class="sec-label">The {{BRAND_NAME}} Difference</div><h2>Why Customers <em>Love</em> Us</h2></div>
+  <div class="why-grid">
+    <div class="why-card"><div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="why-title">Artisan Quality</div><div class="why-desc">Handcrafted in small batches using premium ingredients for an unforgettable taste in every bite.</div></div>
+    <div class="why-card"><div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div class="why-title">Same-Day Delivery</div><div class="why-desc">Order before 2 PM and receive your treats the same day, fresh and perfectly packaged.</div></div>
+    <div class="why-card"><div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><div class="why-title">Perfect Gifting</div><div class="why-desc">Beautifully designed gift boxes for birthdays, anniversaries, Eid, and every special occasion.</div></div>
+  </div>
+</section>
+
+<section class="reviews" data-ms-hide-if-empty="reviews-section">
+  <div style="text-align:center;margin-bottom:52px;"><div class="sec-label">Customer Reviews</div><h2>What Our <em>Customers</em> Say</h2></div>
+  <div class="reviews-grid">
+    <div class="review-card" data-ms-hide-if-empty="review1"><div class="review-stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div class="review-text">{{REVIEW_1_TEXT}}</div><div class="review-author">{{REVIEW_1_AUTHOR}}</div><div class="review-source">{{REVIEW_1_SOURCE}}</div></div>
+    <div class="review-card" data-ms-hide-if-empty="review2"><div class="review-stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div class="review-text">{{REVIEW_2_TEXT}}</div><div class="review-author">{{REVIEW_2_AUTHOR}}</div><div class="review-source">{{REVIEW_2_SOURCE}}</div></div>
+    <div class="review-card" data-ms-hide-if-empty="review3"><div class="review-stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div class="review-text">{{REVIEW_3_TEXT}}</div><div class="review-author">{{REVIEW_3_AUTHOR}}</div><div class="review-source">{{REVIEW_3_SOURCE}}</div></div>
+  </div>
+</section>
+
+<section class="faq" data-ms-hide-if-empty="faq-section">
+  <div class="faq-inner">
+    <div style="text-align:center;"><div class="sec-label">Common Questions</div><h2>Frequently <em>Asked</em></h2></div>
+    <div class="faq-list">
+      <div class="faq-item" data-ms-hide-if-empty="faq1"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">{{FAQ_1_Q}} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div><div class="faq-a"><p>{{FAQ_1_A}}</p></div></div>
+      <div class="faq-item" data-ms-hide-if-empty="faq2"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">{{FAQ_2_Q}} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div><div class="faq-a"><p>{{FAQ_2_A}}</p></div></div>
+      <div class="faq-item" data-ms-hide-if-empty="faq3"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">{{FAQ_3_Q}} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div><div class="faq-a"><p>{{FAQ_3_A}}</p></div></div>
+      <div class="faq-item" data-ms-hide-if-empty="faq4"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">{{FAQ_4_Q}} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div><div class="faq-a"><p>{{FAQ_4_A}}</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="newsletter">
+  <h2>Stay <em style="color:var(--accent);font-style:italic;">Sweet</em></h2>
+  <p>Be the first to know about new creations, seasonal specials, and exclusive offers.</p>
+  <div class="newsletter-form"><input type="email" class="newsletter-input" placeholder="Enter your email address"><button class="newsletter-btn">Subscribe</button></div>
+</section>
+
+<section class="cta-section">
+  <h2>Ready to <em>Indulge</em>?</h2>
+  <p>Order your favourite treats today and enjoy delivery anywhere in the UAE.</p>
+  <div class="cta-buttons"><a href="#contact" class="btn-brand">Order Now</a><a href="https://wa.me/{{WHATSAPP}}" class="btn-outline" target="_blank">WhatsApp Us</a></div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div>
+      <div class="sec-label">Get in Touch</div>
+      <h2>We'd Love to <em>Hear</em> From You</h2>
+      <div class="contact-info">
+        <div class="contact-item" data-ms-hide-if-empty="phone"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><div class="contact-item-text"><strong>Phone</strong><span>{{BRAND_PHONE}}</span></div></div>
+        <div class="contact-item" data-ms-hide-if-empty="email"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><div class="contact-item-text"><strong>Email</strong><span>{{BRAND_EMAIL}}</span></div></div>
+        <div class="contact-item" data-ms-hide-if-empty="address"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><div class="contact-item-text"><strong>Visit Us</strong><span>{{BRAND_ADDRESS}}</span></div></div>
+        <div class="contact-item" data-ms-hide-if-empty="hours"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><div class="contact-item-text"><strong>Hours</strong><span>{{OPENING_HOURS}}</span></div></div>
+      </div>
+    </div>
+    <div class="contact-form">
+      <h3>Send a Message</h3><p>We'd love to hear from you.</p>
+      <div class="form-row"><div class="form-field"><label>Full Name</label><input type="text" placeholder="Your name"></div><div class="form-field"><label>Phone</label><input type="tel" placeholder="+971 xx xxx xxxx"></div></div>
+      <div class="form-field" style="margin-bottom:14px;"><label>Email</label><input type="email" placeholder="your@email.com"></div>
+      <div class="form-field" style="margin-bottom:14px;"><label>Message</label><textarea placeholder="How can we help you?"></textarea></div>
+      <button class="form-submit">Send Message</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <div><div class="footer-brand">{{BRAND_NAME}}</div><p class="footer-desc">Handcrafted chocolates and artisan cakes, made with love and delivered fresh across the UAE.</p></div>
+    <div><div class="footer-heading">Explore</div><div class="footer-links"><a href="#products">Collections</a><a href="#story">Our Story</a><a href="#products2">Gift Boxes</a><a href="#contact">Contact</a></div></div>
+    <div><div class="footer-heading">Contact</div><div class="footer-links"><a href="tel:{{BRAND_PHONE}}">{{BRAND_PHONE}}</a><a href="mailto:{{BRAND_EMAIL}}">{{BRAND_EMAIL}}</a><a>{{BRAND_ADDRESS}}</a></div></div>
+    <div><div class="footer-heading">Hours</div><div class="footer-links"><span>{{OPENING_HOURS}}</span></div></div>
+  </div>
+  <div class="footer-bottom"><span>&copy; 2026 {{BRAND_NAME}}. All rights reserved.</span><div class="footer-social"><a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a><a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a></div></div>
+</footer>
+
+<a href="https://wa.me/{{WHATSAPP}}" class="wa-float" target="_blank" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492a.5.5 0 0 0 .611.611l4.458-1.495A11.96 11.96 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-2.387 0-4.594-.822-6.34-2.199l-.442-.361-3.245 1.088 1.088-3.245-.361-.442A9.958 9.958 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg></a>
+
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  document.querySelectorAll('[data-ms-hide-if-empty]').forEach(function(el){var t=el.innerHTML;if(!t||t.indexOf('{{')!==-1){el.style.display='none';}});
+  document.querySelectorAll('.product-name').forEach(function(name){var card=name.closest('.product-card');if(!card)return;var initial=card.querySelector('.product-initial');if(initial&&name.textContent&&name.textContent.indexOf('{{')===-1){initial.textContent=name.textContent.trim().charAt(0).toUpperCase();}});
+  var reviewTexts=document.querySelectorAll('.review-text');var hasReviews=false;reviewTexts.forEach(function(r){if(r.textContent.indexOf('{{')===-1&&r.textContent.trim())hasReviews=true;});if(!hasReviews){var rs=document.querySelector('.reviews');if(rs)rs.style.display='none';}
+  var faqQs=document.querySelectorAll('.faq-q');var hasFaq=false;faqQs.forEach(function(q){if(q.textContent.indexOf('{{')===-1&&q.textContent.trim().length>5)hasFaq=true;});if(!hasFaq){var fs=document.querySelector('.faq');if(fs)fs.style.display='none';}
+  document.querySelectorAll('.contact-item-text span').forEach(function(s){if(!s.textContent.trim()||s.textContent.indexOf('{{')!==-1){var item=s.closest('.contact-item');if(item)item.style.display='none';}});
+});
+</script>
+</body>
+</html>

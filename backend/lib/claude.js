@@ -53,8 +53,13 @@ You analyse captured website data and choose the best redesign template from our
 
 TEMPLATE LIBRARY:
 
-E-Commerce (NEW — fully variable-driven, use these for ANY e-commerce/retail business):
-- ecommerce-general (warm professional, Playfair Display — DEFAULT for food, chocolate, grocery, homeware, gifts, general retail, and ANY business that doesn't fit the specific categories below)
+Bakery / Chocolate / Confectionery (NEW — use for ANY bakery, chocolate, patisserie, confectionery, cake, dessert, or sweets e-commerce):
+- bakery-indulgence (warm brown with gold accents, Playfair Display + Jost — DEFAULT for chocolate, premium bakery, luxury confectionery, rich/warm brand aesthetics)
+- bakery-modern (sage green, Fraunces + Plus Jakarta Sans — modern/fresh bakery, health-conscious, organic, minimalist brand aesthetics)
+- bakery-patisserie (rose/mauve, Cormorant Garamond + Nunito Sans — French patisserie, elegant cakes, wedding cakes, delicate/feminine brand aesthetics)
+
+E-Commerce (General — use for non-bakery/non-chocolate e-commerce/retail):
+- ecommerce-general (warm professional, Playfair Display — DEFAULT for grocery, homeware, gifts, general retail, and ANY business that doesn't fit the specific categories below)
 - ecommerce-bold (dark luxury with gold accents, Syne font — premium fashion, luxury brands, high-end retail)
 - ecommerce-minimal (editorial minimal, Cormorant Garamond — artisanal brands, organic products, curated boutiques)
 
@@ -77,13 +82,16 @@ Medical:
 - medical-eye (Eye Clinic / Ophthalmology)
 
 Restaurant / F&B:
-- restaurant-dubai (Premium restaurant, cafe, lounge, fine dining, casual dining, bakery, food & beverage — NOT for food product e-commerce)
+- restaurant-dubai (Premium restaurant, cafe, lounge, fine dining, casual dining, dine-in bakery/cafe — NOT for food product e-commerce)
 
 RULES:
-- For food/chocolate/grocery/confectionery/gourmet e-commerce: use ecommerce-general (NOT restaurant-dubai — that's for dine-in restaurants)
+- For bakery/chocolate/confectionery/patisserie/cake/dessert/sweets e-commerce: ALWAYS use one of the 3 bakery templates (bakery-indulgence, bakery-modern, bakery-patisserie)
+- Choose bakery-indulgence for chocolate brands, premium/luxury bakery, warm/rich aesthetics (DEFAULT for bakery/chocolate)
+- Choose bakery-modern for fresh/modern bakery, health-conscious, organic baked goods
+- Choose bakery-patisserie for French patisserie, elegant cakes, wedding cakes, delicate/feminine aesthetics
 - For restaurant/cafe/dine-in: use restaurant-dubai
 - For medical: always match the exact specialty
-- For e-commerce that doesn't exactly match jewellery/perfume/apparel/cosmetics/electronics: ALWAYS use one of the 3 new ecommerce templates (general, bold, or minimal)
+- For general e-commerce (NOT bakery/chocolate): use ecommerce-general, ecommerce-bold, or ecommerce-minimal
 - Choose ecommerce-bold for dark/luxury/premium brand aesthetics
 - Choose ecommerce-minimal for editorial/artisanal/organic/curated aesthetics
 - Choose ecommerce-general as the safe default for anything else
@@ -107,7 +115,7 @@ ${capture.page_content ? `\nPage content excerpt:\n${(capture.page_content || ''
 Respond with ONLY this JSON:
 {
   "vertical": "medical|jewellery|perfume|apparel|cosmetics|electronics|restaurant|food|ecommerce|other",
-  "sub_vertical": "dental|cardiology|dermatology|paediatrics|orthopaedics|obgyn|ophthalmology|gp|chocolate|bakery|confectionery|grocery|general|bold|minimal|null",
+  "sub_vertical": "dental|cardiology|dermatology|paediatrics|orthopaedics|obgyn|ophthalmology|gp|chocolate|bakery|patisserie|confectionery|cake|dessert|grocery|general|bold|minimal|null",
   "template_slug": "exact-template-slug-from-library",
   "current_site_quality": 1-10,
   "reasoning": "2-3 sentences explaining your choice",
@@ -124,9 +132,11 @@ Respond with ONLY this JSON:
 async function extractInjectionData(capture, vertical, subVertical) {
   const isMedical = vertical === 'medical';
   const isRestaurant = vertical === 'restaurant';
+  // Bakery templates (bakery-indulgence, bakery-modern, bakery-patisserie) use ~40 variables
+  const isBakery = subVertical && ['chocolate', 'bakery', 'patisserie', 'confectionery', 'cake', 'dessert'].includes(subVertical);
   // New ecommerce templates (ecommerce-general, ecommerce-bold, ecommerce-minimal) use 73 variables
-  const isNewEcommerce = vertical === 'food' || vertical === 'ecommerce' ||
-    (subVertical && ['general', 'bold', 'minimal', 'chocolate', 'bakery', 'confectionery', 'grocery'].includes(subVertical));
+  const isNewEcommerce = !isBakery && (vertical === 'food' || vertical === 'ecommerce' ||
+    (subVertical && ['general', 'bold', 'minimal', 'grocery'].includes(subVertical)));
 
   const system = `You are a data extraction specialist for MorningStar.ai.
 Your job is to extract template variables from captured website data.
@@ -160,7 +170,64 @@ Meta description: ${capture.meta_description || ''}
 Google rating: ${capture.google_rating || 'null'}
 
 ${capture.page_content ? `Actual page content:\n${capture.page_content}\n` : ''}
-${isMedical ? `
+${isBakery ? `
+This is a BAKERY template with ~40 variables. Extract ALL of them.
+For FACTUAL fields (name, phone, products): use ONLY data from the capture. Return null if not found.
+For STRUCTURAL fields (section labels, features, FAQ): write short professional copy appropriate for this bakery/chocolate brand.
+
+Return this JSON:
+{
+  "BRAND_NAME": "exact business name from capture, or null",
+  "BRAND_PHONE": "phone from capture, or null",
+  "BRAND_EMAIL": "email from capture, or null",
+  "BRAND_ADDRESS": "address from capture, or null",
+  "OPENING_HOURS": "opening hours if found on page, or null",
+  "WHATSAPP": "WhatsApp number (digits only, e.g. 971501234567) from capture, or null",
+
+  "HERO_BADGE": "short badge text from page, e.g. 'Handcrafted Since 2015' or 'Premium Quality', or null",
+  "HERO_HEADING": "from H1 or prominent heading — use their actual words, or null",
+  "HERO_SUB": "from meta description or page content — use their actual words, or null",
+
+  "PRODUCT_1": "first product/item name from page, or null",
+  "PRODUCT_1_DESC": "first product short description, or null",
+  "PRODUCT_2": "second product name, or null",
+  "PRODUCT_2_DESC": "second product description, or null",
+  "PRODUCT_3": "third product name, or null",
+  "PRODUCT_3_DESC": "third product description, or null",
+  "PRODUCT_4": "fourth product name, or null",
+  "PRODUCT_4_DESC": "fourth product description, or null",
+  "PRODUCT_5": "fifth product name, or null",
+  "PRODUCT_5_DESC": "fifth product description, or null",
+  "PRODUCT_6": "sixth product name, or null",
+  "PRODUCT_6_DESC": "sixth product description, or null",
+
+  "ABOUT_LABEL": "about section label, e.g. 'Our Story'",
+  "ABOUT_HEADING": "about heading from page, or write one based on brand",
+  "ABOUT_TEXT": "about text from page content — use their actual words, or null",
+  "FEATURE_1": "first feature/USP from page, or write appropriate one (e.g. 'All-Natural Ingredients')",
+  "FEATURE_2": "second feature/USP",
+  "FEATURE_3": "third feature/USP",
+  "FEATURE_4": "fourth feature/USP",
+
+  "REVIEW_1_TEXT": "first review text from page, or null — NEVER invent reviews",
+  "REVIEW_1_AUTHOR": "first reviewer name, or null",
+  "REVIEW_1_SOURCE": "review source like 'Google Review', or null",
+  "REVIEW_2_TEXT": "second review text, or null",
+  "REVIEW_2_AUTHOR": "second reviewer, or null",
+  "REVIEW_2_SOURCE": "review source, or null",
+  "REVIEW_3_TEXT": "third review text, or null",
+  "REVIEW_3_AUTHOR": "third reviewer, or null",
+  "REVIEW_3_SOURCE": "review source, or null",
+
+  "FAQ_1_Q": "first FAQ question — write appropriate for this bakery/chocolate business",
+  "FAQ_1_A": "first FAQ answer",
+  "FAQ_2_Q": "second FAQ question",
+  "FAQ_2_A": "second FAQ answer",
+  "FAQ_3_Q": "third FAQ question",
+  "FAQ_3_A": "third FAQ answer",
+  "FAQ_4_Q": "fourth FAQ question",
+  "FAQ_4_A": "fourth FAQ answer"
+}` : isMedical ? `
 Return this JSON. Use null for ANY field where data is not found in the capture above:
 {
   "CLINIC_NAME": "exact business name from capture, or null",
@@ -352,7 +419,7 @@ Return this JSON. Use null for ANY field where data is not found in the capture 
   "PRODUCT_3": "third service/product from page content, or null"
 }`}`;
 
-  const raw = await callClaude(system, user, isNewEcommerce ? 4000 : 2000);
+  const raw = await callClaude(system, user, isNewEcommerce ? 4000 : isBakery ? 3000 : 2000);
   const cleaned = raw.replace(/```json|```/g, '').trim();
   return JSON.parse(cleaned);
 }
