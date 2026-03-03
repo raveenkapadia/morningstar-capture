@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{BRAND_NAME}} — {{BRAND_TAGLINE}}</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--brand:#E8C547;--brand-lt:#1A1A1A;--brand-mid:#D4B13E;--accent:#E8C547;--white:#FFFFFF;--off:#0D0D0D;--ink:#FFFFFF;--muted:#888888;--border:#2A2A2A;--radius:8px;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#111111;font-family:'Space Grotesk',sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;}
+button{cursor:pointer;border:none;font-family:'Space Grotesk',sans-serif;}
+a{text-decoration:none;color:inherit;}
+img{max-width:100%;display:block;}
+
+.announce{background:var(--brand);padding:10px 20px;text-align:center;font-size:12px;color:var(--off);letter-spacing:1px;font-weight:600;text-transform:uppercase;}
+.announce strong{color:var(--off);font-weight:700;}
+
+nav{height:72px;padding:0 64px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(17,17,17,.95);backdrop-filter:blur(16px);z-index:100;}
+.logo{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:var(--white);letter-spacing:-1px;text-transform:uppercase;}
+.nav-links{display:flex;gap:36px;}
+.nav-links a{font-size:12px;color:var(--muted);font-weight:500;letter-spacing:1.5px;text-transform:uppercase;transition:color .2s;}
+.nav-links a:hover{color:var(--brand);}
+.nav-right{display:flex;align-items:center;gap:16px;}
+.nav-cta{background:var(--brand);color:var(--off);padding:10px 28px;border-radius:var(--radius);font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;transition:all .2s;}
+.nav-cta:hover{background:var(--brand-mid);transform:translateY(-1px);}
+.menu-toggle{display:none;background:none;font-size:24px;color:var(--ink);padding:8px;}
+
+.hero{padding:0 64px;display:grid;grid-template-columns:1fr 1fr;min-height:90vh;align-items:center;gap:64px;background:var(--off);}
+.hero-content{padding:80px 0;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--brand);color:var(--brand);padding:6px 16px;border-radius:100px;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:28px;background:transparent;}
+.hero-badge svg{width:14px;height:14px;}
+.hero-h1{font-family:'Syne',sans-serif;font-size:clamp(40px,5vw,72px);line-height:1.0;color:var(--white);margin-bottom:24px;font-weight:800;letter-spacing:-2px;text-transform:uppercase;}
+.hero-h1 em{color:var(--brand);font-style:normal;}
+.hero-p{font-size:16px;color:var(--muted);line-height:1.75;max-width:480px;margin-bottom:36px;font-weight:300;}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap;}
+.btn-brand{background:var(--brand);color:var(--off);padding:16px 36px;border-radius:var(--radius);font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;transition:all .2s;display:inline-flex;align-items:center;gap:10px;}
+.btn-brand:hover{background:var(--brand-mid);transform:translateY(-2px);box-shadow:0 8px 24px rgba(232,197,71,.3);}
+.btn-outline{background:transparent;border:1.5px solid var(--border);color:var(--white);padding:16px 32px;border-radius:var(--radius);font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;transition:all .2s;}
+.btn-outline:hover{border-color:var(--brand);color:var(--brand);}
+.hero-visual{position:relative;height:100%;min-height:500px;overflow:hidden;}
+.hero-visual img{width:100%;height:100%;object-fit:cover;}
+.hero-floating{position:absolute;bottom:32px;left:32px;right:32px;background:rgba(0,0,0,.8);backdrop-filter:blur(8px);border-radius:var(--radius);padding:16px 20px;display:flex;align-items:center;gap:14px;border:1px solid var(--border);}
+.hero-floating-icon{width:40px;height:40px;background:var(--brand);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--white);flex-shrink:0;}
+.hero-floating-text strong{font-size:13px;color:var(--ink);display:block;}
+.hero-floating-text span{font-size:11px;color:var(--muted);}
+
+.trust{background:var(--brand);padding:18px 64px;display:flex;gap:48px;align-items:center;justify-content:center;flex-wrap:wrap;}
+.trust-item{display:flex;align-items:center;gap:10px;color:rgba(255,255,255,.75);font-size:12px;font-weight:500;letter-spacing:.3px;}
+.trust-item svg{width:16px;height:16px;stroke:var(--accent);flex-shrink:0;}
+.trust-divider{width:1px;height:18px;background:rgba(255,255,255,.15);}
+
+.partners{padding:48px 64px;border-bottom:1px solid var(--border);text-align:center;background:var(--off);}
+.partners-label{font-size:11px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;font-weight:500;margin-bottom:28px;}
+.partners-grid{display:flex;align-items:center;justify-content:center;gap:48px;flex-wrap:wrap;}
+.partner-item{font-family:'Syne',sans-serif;font-size:16px;color:var(--muted);opacity:.5;transition:opacity .3s;font-weight:700;letter-spacing:1px;text-transform:uppercase;}
+.partner-item:hover{opacity:.8;}
+
+.stats{padding:60px 64px;background:var(--off);border-bottom:1px solid var(--border);}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center;}
+.stat-card{padding:32px 20px;border:1px solid var(--border);border-radius:var(--radius);transition:all .3s;background:transparent;}
+.stat-card:hover{border-color:var(--brand);transform:translateY(-2px);}
+.stat-num{font-family:'Syne',sans-serif;font-size:48px;font-weight:800;color:var(--brand);margin-bottom:8px;letter-spacing:-2px;}
+.stat-label{font-size:11px;color:var(--muted);font-weight:500;letter-spacing:2px;text-transform:uppercase;}
+
+.sec-label{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--brand);margin-bottom:12px;}
+h2{font-family:'Syne',sans-serif;font-size:clamp(28px,3.5vw,48px);color:var(--white);line-height:1.1;margin-bottom:20px;font-weight:800;letter-spacing:-1px;text-transform:uppercase;}
+
+.about{padding:80px 64px;background:var(--off);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.about-inner{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;}
+.about-visual{border-radius:var(--radius);overflow:hidden;aspect-ratio:4/3;border:1px solid var(--border);}
+.about-visual img{width:100%;height:100%;object-fit:cover;}
+.about-text p{font-size:15px;color:var(--muted);line-height:1.9;margin-bottom:16px;font-weight:300;}
+.about-features{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:28px;}
+.about-feature{display:flex;align-items:flex-start;gap:12px;}
+.about-feature svg{width:20px;height:20px;color:var(--brand);flex-shrink:0;margin-top:2px;}
+.about-feature span{font-size:13px;color:var(--white);font-weight:500;}
+
+.products,.bestsellers{padding:80px 64px;}
+.products{background:#111111;}
+.bestsellers{background:var(--off);border-top:1px solid var(--border);}
+.products-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px;}
+.products-head p{font-size:14px;color:var(--muted);max-width:380px;line-height:1.7;}
+.products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.product-card{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:all .4s;background:var(--off);}
+.product-card:hover{border-color:var(--brand);transform:translateY(-6px);box-shadow:0 16px 40px rgba(232,197,71,.1);}
+.product-img{aspect-ratio:1;background:#1a1a1a;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;}
+.product-img-placeholder svg{width:48px;height:48px;opacity:.3;stroke:var(--muted);}
+.product-badge{position:absolute;top:12px;left:12px;background:var(--brand);color:var(--white);padding:4px 12px;border-radius:100px;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;}
+.product-info{padding:20px;}
+.product-name{font-family:'Syne',sans-serif;font-size:18px;color:var(--white);margin-bottom:8px;font-weight:700;}
+.product-desc{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:12px;}
+.product-cta{font-size:11px;color:var(--brand);font-weight:700;display:flex;align-items:center;gap:6px;letter-spacing:1px;text-transform:uppercase;transition:gap .2s;}
+.product-cta:hover{gap:10px;}
+.product-cta svg{width:14px;height:14px;}
+
+.process{padding:80px 64px;background:#111111;border-top:1px solid var(--border);}
+.process-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:48px;position:relative;}
+.process-card{text-align:center;padding:24px;position:relative;}
+.process-num{width:56px;height:56px;background:var(--brand);color:var(--white);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin:0 auto 20px;}
+.process-title{font-family:'Syne',sans-serif;font-size:18px;color:var(--white);margin-bottom:10px;font-weight:700;}
+.process-desc{font-size:13px;color:var(--muted);line-height:1.7;}
+.process-connector{position:absolute;top:28px;right:-16px;width:32px;height:2px;background:var(--border);}
+.process-card:last-child .process-connector{display:none;}
+
+.why{padding:80px 64px;background:#111111;}
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px;}
+.why-card{background:var(--off);border-radius:var(--radius);padding:36px 28px;transition:all .3s;border:1px solid var(--border);}
+.why-card:hover{border-color:var(--brand);}
+.why-icon{width:48px;height:48px;border:1px solid var(--brand);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;margin-bottom:20px;}
+.why-icon svg{width:24px;height:24px;color:var(--brand);}
+.why-title{font-family:'Syne',sans-serif;font-size:18px;color:var(--white);margin-bottom:10px;font-weight:700;}
+.why-desc{font-size:13px;color:var(--muted);line-height:1.7;}
+
+.reviews{padding:80px 64px;background:var(--off);border-top:1px solid var(--border);}
+.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px;}
+.review-card{background:#111111;border-radius:var(--radius);padding:28px;border:1px solid var(--border);}
+.review-stars{display:flex;gap:2px;margin-bottom:14px;}
+.review-stars svg{width:16px;height:16px;fill:var(--accent);stroke:none;}
+.star-svg{display:inline-block;}
+.review-text{font-size:14px;color:var(--white);line-height:1.8;margin-bottom:18px;font-style:italic;opacity:.9;}
+.review-author{font-size:12px;font-weight:700;color:var(--brand);letter-spacing:1px;text-transform:uppercase;}
+.review-source{font-size:11px;color:var(--muted);}
+
+.gallery{padding:80px 64px;background:#111111;border-top:1px solid var(--border);}
+.gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:48px;}
+.gallery-item{aspect-ratio:1;background:#1a1a1a;border-radius:var(--radius);overflow:hidden;position:relative;cursor:pointer;transition:all .3s;border:1px solid var(--border);}
+.gallery-item:hover{transform:scale(1.03);box-shadow:0 8px 20px rgba(0,0,0,.1);}
+.gallery-item img{width:100%;height:100%;object-fit:cover;}
+.gallery-placeholder{display:flex;align-items:center;justify-content:center;width:100%;height:100%;}
+.gallery-placeholder svg{width:32px;height:32px;color:var(--muted);opacity:.25;}
+.gallery-handle{text-align:center;margin-top:24px;}
+.gallery-handle a{font-size:13px;color:var(--brand);font-weight:600;display:inline-flex;align-items:center;gap:6px;}
+
+.faq{padding:80px 64px;background:var(--off);}
+.faq-inner{max-width:720px;margin:0 auto;}
+.faq-list{margin-top:48px;}
+.faq-item{border-bottom:1px solid var(--border);padding:20px 0;}
+.faq-q{display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-size:16px;font-weight:600;color:var(--white);gap:16px;user-select:none;}
+.faq-q svg{width:20px;height:20px;color:var(--muted);flex-shrink:0;transition:transform .3s;}
+.faq-item.open .faq-q svg{transform:rotate(45deg);}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s ease;}
+.faq-item.open .faq-a{max-height:300px;padding-top:14px;}
+.faq-a p{font-size:14px;color:var(--muted);line-height:1.8;}
+
+.newsletter{padding:80px 64px;background:var(--brand);text-align:center;}
+.newsletter h2{color:var(--off);margin-bottom:12px;}
+.newsletter p{font-size:15px;color:rgba(0,0,0,.5);max-width:480px;margin:0 auto 32px;line-height:1.7;}
+.newsletter-form{display:flex;gap:12px;max-width:480px;margin:0 auto;}
+.newsletter-input{flex:1;padding:14px 20px;border:1.5px solid rgba(0,0,0,.15);border-radius:var(--radius);background:rgba(0,0,0,.08);color:var(--off);font-size:14px;font-family:'Space Grotesk',sans-serif;}
+.newsletter-input::placeholder{color:rgba(0,0,0,.3);}
+.newsletter-input:focus{outline:none;border-color:rgba(0,0,0,.4);}
+.newsletter-btn{background:var(--off);color:var(--brand);padding:14px 28px;border-radius:var(--radius);font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;transition:all .2s;white-space:nowrap;}
+.newsletter-btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.2);}
+.newsletter-note{font-size:11px;color:rgba(0,0,0,.3);margin-top:14px;}
+
+.cta-section{background:#111111;padding:100px 64px;text-align:center;border-top:1px solid var(--border);position:relative;overflow:hidden;}
+.cta-section p{font-size:16px;color:var(--muted);max-width:520px;margin:0 auto 36px;line-height:1.7;}
+.cta-buttons{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+
+.contact{padding:80px 64px;background:var(--off);border-top:1px solid var(--border);}
+.contact-inner{display:grid;grid-template-columns:1fr 1fr;gap:64px;}
+.contact-info{display:flex;flex-direction:column;gap:24px;margin-top:32px;}
+.contact-item{display:flex;align-items:flex-start;gap:14px;}
+.contact-item svg{width:20px;height:20px;color:var(--brand);flex-shrink:0;margin-top:2px;}
+.contact-item-text strong{font-size:13px;color:var(--ink);display:block;margin-bottom:2px;}
+.contact-item-text span{font-size:13px;color:var(--muted);}
+.contact-form{background:#111111;border-radius:var(--radius);padding:40px;border:1px solid var(--border);}
+.contact-form h3{font-family:'Syne',sans-serif;font-size:24px;color:var(--white);margin-bottom:8px;font-weight:700;}
+.contact-form p{font-size:13px;color:var(--muted);margin-bottom:24px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+.form-field{display:flex;flex-direction:column;gap:4px;}
+.form-field label{font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);}
+.form-field input,.form-field textarea{border:1px solid var(--border);border-radius:6px;padding:12px 14px;font-size:14px;font-family:'Space Grotesk',sans-serif;transition:border-color .2s;background:var(--off);color:var(--white);}
+.form-field input:focus,.form-field textarea:focus{outline:none;border-color:var(--brand);}
+.form-field textarea{resize:vertical;min-height:80px;}
+.form-submit{width:100%;background:var(--brand);color:var(--off);padding:14px;border-radius:var(--radius);font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-top:8px;transition:all .2s;}
+.form-submit:hover{background:var(--brand-mid);}
+
+footer{background:var(--off);padding:64px 64px 32px;color:var(--muted);border-top:1px solid var(--border);}
+.footer-top{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px;}
+.footer-brand{font-family:'Syne',sans-serif;font-size:24px;color:var(--white);margin-bottom:12px;font-weight:800;letter-spacing:-1px;text-transform:uppercase;}
+.footer-desc{font-size:13px;line-height:1.7;max-width:300px;}
+.footer-heading{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--white);margin-bottom:18px;}
+.footer-links{display:flex;flex-direction:column;gap:10px;}
+.footer-links a,.footer-links span{font-size:13px;color:rgba(255,255,255,.6);transition:color .2s;}
+.footer-links a:hover{color:var(--white);}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:24px;display:flex;justify-content:space-between;align-items:center;font-size:12px;}
+.footer-social{display:flex;gap:16px;}
+.footer-social a{width:36px;height:36px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.footer-social a:hover{border-color:var(--accent);background:rgba(255,255,255,.05);}
+.footer-social svg{width:16px;height:16px;color:rgba(255,255,255,.6);}
+
+.wa-float{position:fixed;bottom:24px;right:24px;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(37,211,102,.4);z-index:200;transition:transform .2s;}
+.wa-float:hover{transform:scale(1.1);}
+.wa-float svg{width:28px;height:28px;fill:#fff;}
+
+@media(max-width:768px){
+  .announce{font-size:11px;padding:8px 16px;}
+  nav{padding:0 20px;height:64px;}
+  .nav-links{display:none;}
+  .menu-toggle{display:block;}
+  .hero{grid-template-columns:1fr;padding:0 20px;min-height:auto;}
+  .hero-content{padding:40px 0 20px;text-align:center;}
+  .hero-badge{margin:0 auto 20px;}
+  .hero-p{margin:0 auto 28px;text-align:center;}
+  .hero-btns{justify-content:center;}
+  .hero-visual{min-height:300px;border-radius:16px;margin-bottom:40px;}
+  .hero-floating{bottom:16px;left:16px;right:16px;}
+  .trust{padding:16px 20px;gap:20px;}
+  .trust-divider{display:none;}
+  .partners{padding:32px 20px;}
+  .partners-grid{gap:24px;}
+  .stats{padding:40px 20px;}
+  .stats-grid{grid-template-columns:1fr 1fr;gap:14px;}
+  .about{padding:48px 20px;}
+  .about-inner{grid-template-columns:1fr;gap:32px;}
+  .about-features{grid-template-columns:1fr;}
+  .products,.bestsellers{padding:48px 20px;}
+  .products-head{flex-direction:column;gap:12px;align-items:flex-start;}
+  .products-grid{grid-template-columns:1fr;gap:16px;}
+  .process{padding:48px 20px;}
+  .process-grid{grid-template-columns:1fr;gap:24px;}
+  .process-connector{display:none;}
+  .why{padding:48px 20px;}
+  .why-grid{grid-template-columns:1fr;gap:16px;}
+  .reviews{padding:48px 20px;}
+  .reviews-grid{grid-template-columns:1fr;gap:16px;}
+  .gallery{padding:48px 20px;}
+  .gallery-grid{grid-template-columns:1fr 1fr;gap:8px;}
+  .faq{padding:48px 20px;}
+  .newsletter{padding:48px 20px;}
+  .newsletter-form{flex-direction:column;}
+  .cta-section{padding:48px 20px;}
+  .contact{padding:48px 20px;}
+  .contact-inner{grid-template-columns:1fr;gap:32px;}
+  .form-row{grid-template-columns:1fr;}
+  footer{padding:40px 20px 24px;}
+  .footer-top{grid-template-columns:1fr 1fr;gap:32px;}
+  h2{font-size:28px;}
+  .btn-brand,.btn-outline{width:100%;text-align:center;justify-content:center;min-height:48px;}
+}
+</style>
+</head>
+<body>
+
+<div class="announce" data-ms-hide-if-empty="announce"><strong>{{ANNOUNCE_TEXT}}</strong></div>
+
+<nav>
+  <a href="#" class="logo">{{BRAND_NAME}}</a>
+  <div class="nav-links"><a href="#products">{{NAV_1}}</a><a href="#about">{{NAV_2}}</a><a href="#reviews">{{NAV_3}}</a><a href="#contact">{{NAV_4}}</a></div>
+  <div class="nav-right"><a href="#contact" class="nav-cta">{{CTA_TEXT}}</a><button class="menu-toggle" aria-label="Menu">&#9776;</button></div>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge" data-ms-hide-if-empty="badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> {{HERO_BADGE}}</div>
+    <h1 class="hero-h1">{{HERO_HEADING}}</h1>
+    <p class="hero-p">{{HERO_SUB}}</p>
+    <div class="hero-btns"><a href="#products" class="btn-brand"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg> {{CTA_PRIMARY}}</a><a href="#about" class="btn-outline">{{CTA_SECONDARY}}</a></div>
+  </div>
+  <div class="hero-visual">
+    <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80" alt="{{BRAND_NAME}}">
+    <div class="hero-floating" data-ms-hide-if-empty="floating"><div class="hero-floating-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><div class="hero-floating-text"><strong>{{FLOATING_TITLE}}</strong><span>{{FLOATING_SUB}}</span></div></div>
+  </div>
+</section>
+
+<div class="trust">
+  <div class="trust-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h5l3 5v5h-4M8 18h9M12 18a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg> {{TRUST_1}}</div><div class="trust-divider"></div>
+  <div class="trust-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> {{TRUST_2}}</div><div class="trust-divider"></div>
+  <div class="trust-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> {{TRUST_3}}</div><div class="trust-divider"></div>
+  <div class="trust-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg> {{TRUST_4}}</div>
+</div>
+
+<section class="partners" data-ms-hide-if-empty="partners">
+  <div class="partners-label">Trusted By</div>
+  <div class="partners-grid"><span class="partner-item">{{PARTNER_1}}</span><span class="partner-item">{{PARTNER_2}}</span><span class="partner-item">{{PARTNER_3}}</span><span class="partner-item">{{PARTNER_4}}</span><span class="partner-item">{{PARTNER_5}}</span></div>
+</section>
+
+<section class="stats" data-ms-hide-if-empty="stats">
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-num">{{STAT_1_NUM}}</div><div class="stat-label">{{STAT_1_LABEL}}</div></div>
+    <div class="stat-card"><div class="stat-num">{{STAT_2_NUM}}</div><div class="stat-label">{{STAT_2_LABEL}}</div></div>
+    <div class="stat-card"><div class="stat-num">{{STAT_3_NUM}}</div><div class="stat-label">{{STAT_3_LABEL}}</div></div>
+    <div class="stat-card"><div class="stat-num">{{STAT_4_NUM}}</div><div class="stat-label">{{STAT_4_LABEL}}</div></div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="about-inner">
+    <div class="about-visual"><img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=80" alt="About {{BRAND_NAME}}"></div>
+    <div>
+      <div class="sec-label">{{ABOUT_LABEL}}</div>
+      <h2>{{ABOUT_HEADING}}</h2>
+      <div class="about-text"><p>{{ABOUT_TEXT}}</p></div>
+      <div class="about-features">
+        <div class="about-feature"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span>{{FEATURE_1}}</span></div>
+        <div class="about-feature"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span>{{FEATURE_2}}</span></div>
+        <div class="about-feature"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span>{{FEATURE_3}}</span></div>
+        <div class="about-feature"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span>{{FEATURE_4}}</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="products" id="products" data-ms-hide-if-empty="products">
+  <div class="products-head"><div><div class="sec-label">{{PRODUCTS_LABEL}}</div><h2>{{PRODUCTS_HEADING}}</h2></div><p>{{PRODUCTS_SUB}}</p></div>
+  <div class="products-grid">
+    <div class="product-card" data-ms-hide-if-empty="product1"><div class="product-img"><div class="product-img-placeholder"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg></div><span class="product-badge" data-ms-hide-if-empty="p1badge">{{PRODUCT_1_BADGE}}</span></div><div class="product-info"><div class="product-name">{{PRODUCT_1}}</div><div class="product-desc">{{PRODUCT_1_DESC}}</div><a href="#" class="product-cta">View details <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div></div>
+    <div class="product-card" data-ms-hide-if-empty="product2"><div class="product-img"><div class="product-img-placeholder"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg></div><span class="product-badge" data-ms-hide-if-empty="p2badge">{{PRODUCT_2_BADGE}}</span></div><div class="product-info"><div class="product-name">{{PRODUCT_2}}</div><div class="product-desc">{{PRODUCT_2_DESC}}</div><a href="#" class="product-cta">View details <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div></div>
+    <div class="product-card" data-ms-hide-if-empty="product3"><div class="product-img"><div class="product-img-placeholder"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg></div><span class="product-badge" data-ms-hide-if-empty="p3badge">{{PRODUCT_3_BADGE}}</span></div><div class="product-info"><div class="product-name">{{PRODUCT_3}}</div><div class="product-desc">{{PRODUCT_3_DESC}}</div><a href="#" class="product-cta">View details <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div></div>
+  </div>
+</section>
+
+<section class="bestsellers" data-ms-hide-if-empty="bestsellers">
+  <div class="products-head"><div><div class="sec-label">{{BESTSELLERS_LABEL}}</div><h2>{{BESTSELLERS_HEADING}}</h2></div><p>{{BESTSELLERS_SUB}}</p></div>
+  <div class="products-grid">
+    <div class="product-card" data-ms-hide-if-empty="product4"><div class="product-img"><div class="product-img-placeholder"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg></div><span class="product-badge" data-ms-hide-if-empty="p4badge">{{PRODUCT_4_BADGE}}</span></div><div class="product-info"><div class="product-name">{{PRODUCT_4}}</div><div class="product-desc">{{PRODUCT_4_DESC}}</div><a href="#" class="product-cta">View details <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div></div>
+    <div class="product-card" data-ms-hide-if-empty="product5"><div class="product-img"><div class="product-img-placeholder"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg></div><span class="product-badge" data-ms-hide-if-empty="p5badge">{{PRODUCT_5_BADGE}}</span></div><div class="product-info"><div class="product-name">{{PRODUCT_5}}</div><div class="product-desc">{{PRODUCT_5_DESC}}</div><a href="#" class="product-cta">View details <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div></div>
+    <div class="product-card" data-ms-hide-if-empty="product6"><div class="product-img"><div class="product-img-placeholder"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg></div><span class="product-badge" data-ms-hide-if-empty="p6badge">{{PRODUCT_6_BADGE}}</span></div><div class="product-info"><div class="product-name">{{PRODUCT_6}}</div><div class="product-desc">{{PRODUCT_6_DESC}}</div><a href="#" class="product-cta">View details <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div></div>
+  </div>
+</section>
+
+<section class="process" data-ms-hide-if-empty="process">
+  <div style="text-align:center;"><div class="sec-label">{{PROCESS_LABEL}}</div><h2>{{PROCESS_HEADING}}</h2></div>
+  <div class="process-grid">
+    <div class="process-card"><div class="process-num">1</div><div class="process-title">{{STEP_1_TITLE}}</div><div class="process-desc">{{STEP_1_DESC}}</div><div class="process-connector"></div></div>
+    <div class="process-card"><div class="process-num">2</div><div class="process-title">{{STEP_2_TITLE}}</div><div class="process-desc">{{STEP_2_DESC}}</div><div class="process-connector"></div></div>
+    <div class="process-card"><div class="process-num">3</div><div class="process-title">{{STEP_3_TITLE}}</div><div class="process-desc">{{STEP_3_DESC}}</div></div>
+  </div>
+</section>
+
+<section class="why">
+  <div style="text-align:center;margin-bottom:48px;"><div class="sec-label">{{WHY_LABEL}}</div><h2>{{WHY_HEADING}}</h2></div>
+  <div class="why-grid">
+    <div class="why-card"><div class="why-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="why-title">{{WHY_1_TITLE}}</div><div class="why-desc">{{WHY_1_DESC}}</div></div>
+    <div class="why-card"><div class="why-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div class="why-title">{{WHY_2_TITLE}}</div><div class="why-desc">{{WHY_2_DESC}}</div></div>
+    <div class="why-card"><div class="why-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><div class="why-title">{{WHY_3_TITLE}}</div><div class="why-desc">{{WHY_3_DESC}}</div></div>
+  </div>
+</section>
+
+<section class="reviews" id="reviews" data-ms-hide-if-empty="reviews">
+  <div style="text-align:center;margin-bottom:48px;"><div class="sec-label">{{REVIEWS_LABEL}}</div><h2>{{REVIEWS_HEADING}}</h2></div>
+  <div class="reviews-grid">
+    <div class="review-card" data-ms-hide-if-empty="review1"><div class="review-stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div class="review-text">{{REVIEW_1_TEXT}}</div><div class="review-author">{{REVIEW_1_AUTHOR}}</div><div class="review-source">{{REVIEW_1_SOURCE}}</div></div>
+    <div class="review-card" data-ms-hide-if-empty="review2"><div class="review-stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div class="review-text">{{REVIEW_2_TEXT}}</div><div class="review-author">{{REVIEW_2_AUTHOR}}</div><div class="review-source">{{REVIEW_2_SOURCE}}</div></div>
+    <div class="review-card" data-ms-hide-if-empty="review3"><div class="review-stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div class="review-text">{{REVIEW_3_TEXT}}</div><div class="review-author">{{REVIEW_3_AUTHOR}}</div><div class="review-source">{{REVIEW_3_SOURCE}}</div></div>
+  </div>
+</section>
+
+<section class="gallery" data-ms-hide-if-empty="gallery">
+  <div style="text-align:center;"><div class="sec-label">{{GALLERY_LABEL}}</div><h2>{{GALLERY_HEADING}}</h2></div>
+  <div class="gallery-grid">
+    <div class="gallery-item"><div class="gallery-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg></div></div>
+    <div class="gallery-item"><div class="gallery-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg></div></div>
+    <div class="gallery-item"><div class="gallery-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg></div></div>
+    <div class="gallery-item"><div class="gallery-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg></div></div>
+  </div>
+  <div class="gallery-handle" data-ms-hide-if-empty="instagram"><a href="{{INSTAGRAM_URL}}" target="_blank">Follow @{{INSTAGRAM_HANDLE}} <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div>
+</section>
+
+<section class="faq" data-ms-hide-if-empty="faq">
+  <div class="faq-inner">
+    <div style="text-align:center;"><div class="sec-label">{{FAQ_LABEL}}</div><h2>{{FAQ_HEADING}}</h2></div>
+    <div class="faq-list">
+      <div class="faq-item" data-ms-hide-if-empty="faq1"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">{{FAQ_1_Q}} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div><div class="faq-a"><p>{{FAQ_1_A}}</p></div></div>
+      <div class="faq-item" data-ms-hide-if-empty="faq2"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">{{FAQ_2_Q}} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div><div class="faq-a"><p>{{FAQ_2_A}}</p></div></div>
+      <div class="faq-item" data-ms-hide-if-empty="faq3"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">{{FAQ_3_Q}} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div><div class="faq-a"><p>{{FAQ_3_A}}</p></div></div>
+      <div class="faq-item" data-ms-hide-if-empty="faq4"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">{{FAQ_4_Q}} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div><div class="faq-a"><p>{{FAQ_4_A}}</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="newsletter">
+  <h2>{{NEWSLETTER_HEADING}}</h2>
+  <p>{{NEWSLETTER_SUB}}</p>
+  <div class="newsletter-form"><input type="email" class="newsletter-input" placeholder="Enter your email address"><button class="newsletter-btn">Subscribe</button></div>
+  <div class="newsletter-note">{{NEWSLETTER_NOTE}}</div>
+</section>
+
+<section class="cta-section">
+  <h2>{{CTA_HEADING}}</h2>
+  <p>{{CTA_SUB}}</p>
+  <div class="cta-buttons"><a href="#contact" class="btn-brand">{{CTA_PRIMARY}}</a><a href="https://wa.me/{{WHATSAPP}}" class="btn-outline" target="_blank">WhatsApp Us</a></div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div>
+      <div class="sec-label">Get in Touch</div>
+      <h2>{{CONTACT_HEADING}}</h2>
+      <div class="contact-info">
+        <div class="contact-item" data-ms-hide-if-empty="phone"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><div class="contact-item-text"><strong>Phone</strong><span>{{BRAND_PHONE}}</span></div></div>
+        <div class="contact-item" data-ms-hide-if-empty="email"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><div class="contact-item-text"><strong>Email</strong><span>{{BRAND_EMAIL}}</span></div></div>
+        <div class="contact-item" data-ms-hide-if-empty="address"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><div class="contact-item-text"><strong>Visit Us</strong><span>{{BRAND_ADDRESS}}</span></div></div>
+        <div class="contact-item" data-ms-hide-if-empty="hours"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><div class="contact-item-text"><strong>Hours</strong><span>{{OPENING_HOURS}}</span></div></div>
+      </div>
+    </div>
+    <div class="contact-form">
+      <h3>Send a Message</h3>
+      <p>We'd love to hear from you.</p>
+      <div class="form-row"><div class="form-field"><label>Full Name</label><input type="text" placeholder="Your name"></div><div class="form-field"><label>Phone</label><input type="tel" placeholder="+971 xx xxx xxxx"></div></div>
+      <div class="form-field" style="margin-bottom:14px;"><label>Email</label><input type="email" placeholder="your@email.com"></div>
+      <div class="form-field" style="margin-bottom:14px;"><label>Message</label><textarea placeholder="How can we help you?"></textarea></div>
+      <button class="form-submit">Send Message</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <div><div class="footer-brand">{{BRAND_NAME}}</div><p class="footer-desc">{{BRAND_TAGLINE}}</p></div>
+    <div><div class="footer-heading">Quick Links</div><div class="footer-links"><a href="#products">{{NAV_1}}</a><a href="#about">{{NAV_2}}</a><a href="#reviews">{{NAV_3}}</a><a href="#contact">{{NAV_4}}</a></div></div>
+    <div><div class="footer-heading">Contact</div><div class="footer-links"><a href="tel:{{BRAND_PHONE}}">{{BRAND_PHONE}}</a><a href="mailto:{{BRAND_EMAIL}}">{{BRAND_EMAIL}}</a><a>{{BRAND_ADDRESS}}</a></div></div>
+    <div><div class="footer-heading">Hours</div><div class="footer-links"><span>{{OPENING_HOURS}}</span></div></div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 {{BRAND_NAME}}. All rights reserved.</span>
+    <div class="footer-social">
+      <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+      <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+      <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/{{WHATSAPP}}" class="wa-float" target="_blank" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492a.5.5 0 0 0 .611.611l4.458-1.495A11.96 11.96 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-2.387 0-4.594-.822-6.34-2.199l-.442-.361-3.245 1.088 1.088-3.245-.361-.442A9.958 9.958 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg></a>
+
+<script>document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('[data-ms-hide-if-empty]').forEach(function(el){var t=el.innerHTML;if(!t||t.indexOf('{{')!==-1){el.style.display='none';}});});</script>
+</body>
+</html>

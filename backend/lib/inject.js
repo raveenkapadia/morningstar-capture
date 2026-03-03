@@ -175,7 +175,7 @@ function injectData(html, data) {
   }
 
   // Warn about any unfilled variables
-  const unfilled = [...result.matchAll(/\{\{([A-Z_]+)\}\}/g)].map(m => m[1]);
+  const unfilled = [...result.matchAll(/\{\{([A-Z_0-9]+)\}\}/g)].map(m => m[1]);
   if (unfilled.length > 0) {
     console.warn(`  ⚠️  Unfilled variables in template: ${unfilled.join(', ')}`);
   }
@@ -282,7 +282,7 @@ function addHideEmptyScript(html) {
   document.querySelectorAll('[data-ms-hide-if-empty]').forEach(function(el){
     var t=el.dataset.msHideIfEmpty;
     if(t==='stats'){
-      var items=el.querySelectorAll('.proof-item,.hero-stat');
+      var items=el.querySelectorAll('.proof-item,.hero-stat,.stat-card');
       var vis=Array.prototype.filter.call(items,function(i){return i.style.display!=='none';});
       if(items.length>0&&vis.length===0) el.style.display='none';
     }
@@ -302,8 +302,15 @@ function addHideEmptyScript(html) {
       if(dishes.length>0&&hasDish.length===0) el.style.display='none';
     }
     if(t==='hours'){
-      var txt=el.textContent.replace(/opening hours/i,'').trim();
+      var txt=el.textContent.replace(/opening hours/i,'').replace(/hours/i,'').trim();
       if(!txt) el.style.display='none';
+    }
+    // Generic: hide any section/element whose inner HTML still contains unreplaced {{VAR}} or is empty
+    var inner=el.innerHTML||'';
+    if(!inner.trim()||inner.indexOf('{{')!==-1){
+      // Check if it has meaningful text content (not just whitespace/HTML tags)
+      var textOnly=(el.textContent||'').replace(/[\\s\\n]+/g,' ').trim();
+      if(!textOnly||textOnly.indexOf('{{')!==-1) el.style.display='none';
     }
   });
 })();
@@ -388,7 +395,7 @@ function generatePreview({ templateFilename, injectedData, previewId, prospectNa
 // Utility: scan a template and return all {{VARIABLES}} it needs
 function getTemplateVariables(filename) {
   const html = loadTemplate(filename);
-  const matches = [...html.matchAll(/\{\{([A-Z_]+)\}\}/g)];
+  const matches = [...html.matchAll(/\{\{([A-Z_0-9]+)\}\}/g)];
   return [...new Set(matches.map(m => m[1]))];
 }
 
