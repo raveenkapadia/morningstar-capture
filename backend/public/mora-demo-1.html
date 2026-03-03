@@ -204,43 +204,101 @@ footer{background:var(--ink);padding:64px 64px 32px;color:rgba(255,255,255,.55);
 /* MOBILE */
 @media(max-width:768px){
   .topbar{font-size:11px;padding:8px 16px;}
-  nav{padding:0 20px;height:64px;}
+  nav{padding:0 16px;height:60px;}
+  .logo-img{height:36px;}
   .nav-links,.nav-phone{display:none;}
   .menu-toggle{display:block;}
+  .nav-cta{padding:8px 20px;font-size:12px;}
   .hero{grid-template-columns:1fr;min-height:auto;}
-  .hero-content{padding:40px 20px;text-align:center;}
-  .hero-tag{margin:0 auto 20px;}
-  .hero-p{margin:0 auto 28px;text-align:center;}
-  .hero-btns{justify-content:center;}
-  .hero-trust{justify-content:center;}
-  .hero-visual{min-height:350px;}
-  .hero-price-card{bottom:16px;left:16px;padding:12px 16px;}
-  .trust{padding:16px 20px;gap:16px;}
+  .hero-content{padding:32px 20px 24px;text-align:center;order:2;}
+  .hero-tag{margin:0 auto 16px;font-size:10px;padding:6px 14px;}
+  .hero-h1{font-size:32px;margin-bottom:14px;}
+  .hero-p{margin:0 auto 24px;text-align:center;font-size:14px;line-height:1.7;}
+  .hero-btns{justify-content:center;gap:10px;}
+  .hero-trust{justify-content:center;gap:16px;}
+  .hero-trust-item{font-size:11px;}
+  .hero-visual{min-height:280px;order:1;}
+  .hero-price-card{bottom:12px;left:12px;padding:10px 14px;border-radius:14px;}
+  .hero-price-card strong{font-size:13px;}
+  .hero-price-card span{font-size:10px;}
+  .trust{padding:14px 16px;gap:12px;}
   .trust-sep{display:none;}
-  .products-sec,.bestsellers{padding:48px 20px;}
-  .products-head{flex-direction:column;gap:12px;align-items:flex-start;}
-  .products-grid{grid-template-columns:1fr 1fr;gap:14px;}
-  .story{padding:48px 20px;}
-  .story-inner{grid-template-columns:1fr;gap:32px;}
-  .process{padding:48px 20px;}
-  .process-grid{grid-template-columns:1fr;gap:16px;}
-  .why{padding:48px 20px;}
-  .why-grid{grid-template-columns:1fr;gap:16px;}
-  .reviews{padding:48px 20px;}
-  .reviews-grid{grid-template-columns:1fr;gap:16px;}
-  .insta{padding:48px 20px;}
-  .insta-grid{grid-template-columns:1fr 1fr;gap:8px;}
-  .faq{padding:48px 20px;}
-  .newsletter{padding:48px 20px;}
-  .newsletter-form{flex-direction:column;}
-  .cta-section{padding:48px 20px;}
-  .contact{padding:48px 20px;}
-  .contact-inner{grid-template-columns:1fr;gap:32px;}
-  .form-row{grid-template-columns:1fr;}
-  footer{padding:40px 20px 24px;}
-  .footer-top{grid-template-columns:1fr 1fr;gap:28px;}
-  h2{font-size:28px;}
-  .btn-pink,.btn-outline{width:100%;text-align:center;justify-content:center;min-height:48px;}
+  .trust-item{font-size:11px;gap:6px;}
+  .trust-item svg{width:14px;height:14px;}
+  .sec-label{font-size:10px;letter-spacing:2px;margin-bottom:8px;}
+  h2{font-size:26px;margin-bottom:10px;}
+  .products-sec,.bestsellers{padding:36px 16px;}
+  .products-head{flex-direction:column;gap:8px;align-items:flex-start;margin-bottom:28px;}
+  .products-head p{font-size:13px;}
+  .products-grid{grid-template-columns:1fr;gap:16px;}
+  .p-card-img{aspect-ratio:4/3;}
+  .p-card-info{padding:16px 18px;}
+  .p-card-name{font-size:16px;}
+  .p-card-desc{font-size:12px;margin-bottom:10px;}
+  .p-card-price{font-size:18px;}
+  .story{padding:36px 16px;}
+  .story-inner{grid-template-columns:1fr;gap:24px;}
+  .story-visual{aspect-ratio:16/9;border-radius:16px;}
+  .story-text p{font-size:14px;}
+  .story-features{gap:10px;margin-top:20px;}
+  .story-feature{font-size:12px;gap:10px;}
+  .story-feature svg{width:16px;height:16px;}
+  .process{padding:36px 16px;}
+  .process-grid{grid-template-columns:1fr;gap:12px;margin-top:28px;}
+  .process-card{padding:24px 20px;border-radius:16px;}
+  .process-num{width:40px;height:40px;font-size:18px;margin-bottom:12px;}
+  .process-title{font-size:16px;}
+  .process-desc{font-size:12px;}
+  .why{padding:36px 16px;}
+  .why-grid{grid-template-columns:1fr;gap:12px;margin-top:28px;}
+  .why-card{padding:24px 20px;border-radius:16px;}
+  .why-icon{width:44px;height:44px;border-radius:12px;margin-bottom:14px;}
+  .why-icon svg{width:20px;height:20px;}
+  .why-title{font-size:16px;margin-bottom:6px;}
+  .why-desc{font-size:12px;}
+  .reviews{padding:36px 16px;}
+  .reviews-grid{grid-template-columns:1fr;gap:12px;margin-top:28px;}
+  .review-card{padding:20px;border-radius:16px;}
+  .review-text{font-size:13px;}
+  .insta{padding:36px 16px;}
+  .insta-grid{grid-template-columns:1fr 1fr;gap:8px;margin-top:28px;}
+  .insta-item{border-radius:12px;}
+  .faq{padding:36px 16px;}
+  .faq-inner{margin-top:0;}
+  .faq-list{margin-top:28px;}
+  .faq-item{padding:16px 0;}
+  .faq-q{font-size:14px;}
+  .faq-a p{font-size:13px;}
+  .newsletter{padding:36px 16px;}
+  .newsletter h2{font-size:26px;}
+  .newsletter p{font-size:13px;margin-bottom:24px;}
+  .newsletter-form{flex-direction:column;gap:10px;}
+  .newsletter-input{padding:12px 16px;font-size:14px;}
+  .newsletter-btn{padding:12px 20px;font-size:14px;}
+  .cta-section{padding:36px 16px;}
+  .cta-section p{font-size:14px;margin-bottom:24px;}
+  .cta-buttons{flex-direction:column;gap:10px;}
+  .contact{padding:36px 16px;}
+  .contact-inner{grid-template-columns:1fr;gap:28px;}
+  .contact-info{gap:18px;margin-top:20px;}
+  .contact-item-text strong{font-size:12px;}
+  .contact-item-text span{font-size:12px;}
+  .contact-form{padding:28px 20px;border-radius:20px;}
+  .contact-form h3{font-size:20px;}
+  .form-row{grid-template-columns:1fr;gap:10px;margin-bottom:10px;}
+  .form-field input,.form-field textarea{padding:10px 14px;font-size:13px;}
+  .form-submit{padding:12px;font-size:13px;}
+  footer{padding:32px 16px 24px;}
+  .footer-top{grid-template-columns:1fr;gap:24px;margin-bottom:28px;}
+  .footer-brand-img{height:30px;margin-bottom:10px;}
+  .footer-desc{font-size:12px;}
+  .footer-heading{font-size:10px;margin-bottom:12px;}
+  .footer-links a,.footer-links span{font-size:12px;}
+  .footer-bottom{flex-direction:column;gap:16px;text-align:center;font-size:11px;}
+  .footer-pay span{font-size:9px;padding:3px 8px;}
+  .btn-pink,.btn-outline{width:100%;text-align:center;justify-content:center;min-height:48px;font-size:14px;}
+  .wa-float{width:52px;height:52px;bottom:20px;right:16px;}
+  .wa-float svg{width:26px;height:26px;}
 }
 </style>
 </head>
